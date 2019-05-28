@@ -29,7 +29,13 @@
        </div>
        <a href="//www.bilibili.com" class="head-logo"   ></a>
         <div class="search_box">
-             
+            <a href="//www.bilibili.com/ranking" target="_blank" class="link-ranking"><span>排行榜</span></a> 
+            <div class="search-form" >
+                <div class="input-group">
+                    <input type="text" class="form-control search-input" placeholder="Search for...">
+                    <button class="form-btn"></button> 
+                </div> 
+            </div> 
              
         </div>         
                                   
@@ -129,5 +135,65 @@ export default {
     font-size: 12px;
     z-index: 10;
 }
- 
+.search-form{
+    width:268px;
+    height:32px;
+    padding:0;
+    margin:0;
+    background-color: hsla(0,0%,100%,.88);    
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+.search-form:hover{
+    background-color: #fff  ;
+    cursor: pointer;
+}
+.search-input{
+    float: left;
+    width: 200px;
+    color: #222;
+    font-size: 12px;
+    overflow: hidden;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 12px;
+    border: 0;
+    box-shadow: none;
+    background-color: transparent;
+} 
+.form-btn{
+    display: block;
+    position: absolute;
+    right: 0;
+    width: 48px;
+    min-width: 0;
+    cursor: pointer;
+    height: 32px;
+    background: url("../img/icons.png") -653px -720px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.link-ranking{
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    height: 32px;
+    line-height: 32px;
+    background-color: hsla(0,0%,100%,.88);
+    border-radius: 4px;
+    width: 68px;
+    transition: background-color 0.2s;
+    text-decoration: none;
+    cursor: pointer;
+}
+.link-ranking>span{
+    padding-left: 26px;
+    color: #f25d8e;
+    display: inline-block;
+    background: url("../img/icons.png") -659px -655px no-repeat;
+}
+.link-ranking:hover{
+    background-color: #fff;
+}
 </style>
