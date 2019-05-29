@@ -29,9 +29,13 @@ export default{
      data(){
           return {
                
-               activeName: '1'
-      
+               activeName: '1',
+           
           }
+     },
+     created() {
+         
+         this.show();
      },
      components:{
           top,
@@ -46,8 +50,9 @@ export default{
      },
      methods:{
           show(){
-               
-          }
+              
+          },
+       
      }
 
 }

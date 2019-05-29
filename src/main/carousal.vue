@@ -1,8 +1,8 @@
 <template>  
         <div class="block">            
             <el-carousel :interval="4000" type="card" height="200px">
-                <el-carousel-item v-for="item in 6" :key="item">
-                    <img src="../img/001.webp"> 
+                <el-carousel-item v-for="item in lunbo" :key="item.id">
+                    <img :src="item.picture"> 
                 </el-carousel-item>
             </el-carousel>           
         </div> 
@@ -10,7 +10,23 @@
 
 <script>
 export default {
-    
+    data(){
+        return{
+            lunbo:[]
+        }
+    },
+    created(){
+        this.getLunbo()
+    },
+    methods:{
+           getLunbo(){
+               this.$http.get('http://localhost:8000/getLunBo').then(result => {
+                    
+                    this.lunbo=result.body;
+               
+               })
+          }
+    }
 }
 </script>
 

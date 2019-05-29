@@ -3,7 +3,10 @@
 // import './css/index.css'
 //导入bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
- 
+
+//导入vue-resource
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
 //导入vue
 import Vue from 'vue'
 import App from './main/app.vue'
@@ -28,4 +31,4 @@ var vm=new Vue({
 })
 
 
-console.log('ok'); 
+  

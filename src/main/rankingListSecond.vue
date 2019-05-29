@@ -10,7 +10,7 @@
            <div class="media">                                              
                 <div class="media-left">
                     <a href="#">
-                    <img class="media-object" src="../img/024.webp" alt="...">
+                    <img class="media-object" src="https://i0.hdslb.com/bfs/archive/d63be4b3d45d7ce7ccebbe8f84c51792c80f4ed6.jpg@160w_100h.webp" alt="...">
                     </a>
                 </div>
                 <div class="media-body">

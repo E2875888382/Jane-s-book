@@ -15,7 +15,15 @@ module.exports={
         inline: true,//实时刷新
         open:true,
         port:3000,
-        hot: true//hot module replacement. Depends on HotModuleReplacementPlugin
+        hot: true,//hot module replacement. Depends on HotModuleReplacementPlugin
+        proxy:{
+            '/api':{
+                target:'http://loaclhost:8000',
+                pathRewrite: {'^/api' : ''},
+                changeOrigin:true,
+                secure:true
+            }
+        }
       },
     plugins:[
         new webpack.HotModuleReplacementPlugin(),

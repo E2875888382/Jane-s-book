@@ -1,40 +1,20 @@
 <template>
     <div class="video_box">
         <div class="page-header">
-             <h2><small>鬼畜</small></h2> 
+             <h2><small>推荐视频</small></h2> 
         </div>
          <el-divider></el-divider>
         <div class="row">
-            <div class="col-sm-4 col-md-3 video_item">
+              <div class="col-sm-4 col-md-3 video_item" v-for="item in recommendVideo" :key="item.id">
                 <div class="thumbnail">
-                <img src="../img/001.webp" alt="">
-                <div class="caption">
-                    <h3>Thumbnail label</h3>                 
-                </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3 video_item">
-                <div class="thumbnail">
-                <img src="../img/001.webp" alt="">
-                <div class="caption">
-                    <h3>Thumbnail label</h3>                   
-                </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3 video_item">
-                <div class="thumbnail">
-                <img src="../img/001.webp" alt="">
-                <div class="caption">
-                    <h3>Thumbnail label</h3>                 
-                </div>
-                </div>
-            </div>
-            <div class="col-sm-4 col-md-3 video_item">
-                <div class="thumbnail">
-                <img src="../img/001.webp" alt="">
-                <div class="caption">
-                    <h3>Thumbnail label</h3>               
-                </div>
+                    <a :href="item.link">
+                        <img :src="item.picture">
+                    </a>
+                    <div class="caption">
+                        <a :href="item.link" :title="item.title">
+                            {{ item.title }}
+                        </a>                 
+                    </div>
                 </div>
             </div>
          
@@ -45,7 +25,23 @@
 
 <script>
 export default {
-    
+    data(){
+        return{
+            recommendVideo:[]
+        }
+    },
+    created(){
+        this.getRecommendVideo()
+    },
+    methods:{
+           getRecommendVideo(){
+               this.$http.get('http://localhost:8000/getRecommendVideo').then(result => {
+                    
+                    this.recommendVideo=result.body;
+                 
+               })
+          }
+    }    
 }
 </script>
 
@@ -61,5 +57,20 @@ export default {
 img{
     width:160px;
     height:100px;
-}    
+    border-radius: 4px;    
+}
+.caption{
+    display: inline-block;
+    height: 40px;
+    width:138px;
+    line-height: 20px;
+    overflow: hidden;
+    color: #222;
+    font-size: 12px;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+}        
 </style>
