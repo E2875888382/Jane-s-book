@@ -1,8 +1,8 @@
-# webpack-vue-nodejs
+# webpack-vue-express
 - 技术栈：
   - vue.js
   - webpack
-  - node.js
+  - express
 - 运行方式
   - 1.安装依赖
     - ```npm i  ```
