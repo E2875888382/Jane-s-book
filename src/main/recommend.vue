@@ -1,7 +1,10 @@
 <template>
     <div class="video_box">
         <div class="page-header">
-             <h2><small>推荐视频</small></h2> 
+            <h2>
+                <i class="icon"></i>
+                <small>推荐视频</small>
+            </h2> 
         </div>
          <el-divider></el-divider>
         <div class="row">
@@ -72,5 +75,14 @@ img{
     text-decoration: none;
     cursor: pointer;
     overflow: hidden;
-}        
+}
+.icon{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;  
+    float: left; 
+    display: block;
+    background-image: url('../img/icons.png');
+    background-position: -141px -780px;
+}          
 </style>
