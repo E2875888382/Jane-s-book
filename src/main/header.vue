@@ -18,13 +18,28 @@
                 </el-dropdown>
                    
                 <div class="login">
-                    <el-link :underline="false">登录</el-link>
-                     
+                    <el-link :underline="false">登录</el-link>                    
                 </div>
                 
                 <div class="new">
-                    <el-link :underline="false">注册</el-link>   
+                    <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>   
                 </div>
+                <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
+                    <el-form :model="newForm" :rules="rules" ref="newForm">
+                        <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
+                            <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+                            <el-input v-model="newForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item>
+                        <el-form-item label="重复密码:" :label-width="formLabelWidth" prop="passwordAgain">
+                            <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item> 
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">                       
+                        <el-button type="primary" @click="newUser()">注 册</el-button>
+                    </div>
+                </el-dialog>
                 
        </div>
        <a href="//www.bilibili.com" class="head-logo"   ></a>
@@ -47,18 +62,71 @@
 <script>
 export default {
      data() {
+        let checkEmail = (rule, value, callback) => {
+            let reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            if (!reEmail.test(value)) {
+            callback(new Error('请输入正确的邮箱格式'))
+            } else {
+            callback()
+            }
+        }
+        let checkPassword= (rule, value, callback) => {
+            let rePassword = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,30}$/;
+            if (!rePassword.test(value)) {
+            callback(new Error('请输入8-10位的混合密码（数字，字母）'))
+            } else {
+            callback()
+            }
+        }
+        let checkPasswordAgain= (rule, value, callback) => {  
+            if (value !== this.newForm.password) {
+            callback(new Error('请再次确认密码'))
+            } else {
+            callback()
+            }
+        }                  
       return {
         activeIndex: '1',
-        activeIndex2: '1'
+        activeIndex2: '1',
+        dialogNewVisible: false,
+        newForm: {
+           email:'',
+           password:'',
+           passwordAgain:'',
+
+         
+        },
+        formLabelWidth: '100px',
+        rules: {        
+          email: [
+            { validator: checkEmail, trigger: 'blur' },
+            {'required': 'true', 'message': '请输入邮箱', 'trigger': 'blur'}
+          ],
+          password: [
+            { validator: checkPassword, trigger: 'blur' },
+            {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}
+          ],
+          passwordAgain:[
+            { validator: checkPasswordAgain, trigger: 'blur' },
+            {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}  
+          ]       
+       },
+        
+ 
       };
     },
+    
     methods: {
       
-      handleClick() {
-        alert('button click');
-      }
-    
-    }
+        handleClick() {
+            alert('button click');
+        },
+
+        newUser () {
+             console.log(this.newForm)
+            
+        }  
+    }      
 }
 </script>
 
