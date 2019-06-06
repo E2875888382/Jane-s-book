@@ -16,12 +16,27 @@
                     </el-dropdown-menu>
                      
                 </el-dropdown>
-                   
-                <div class="login">
-                    <el-link :underline="false">登录</el-link>                    
+                <div class="new" v-if="loginFlag">
+                    <i class="el-icon-user-solid"></i>
                 </div>
-                
-                <div class="new">
+
+                <div class="login" v-if="unLoginFlag">
+                    <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>                    
+                </div>
+                <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%" >
+                    <el-form :model="loginForm" :rules="rules" ref="loginForm">
+                        <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
+                            <el-input v-model="loginForm.email" autocomplete="off"  ></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+                            <el-input v-model="loginForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item>               
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">                       
+                        <el-button type="primary" @click="login()">登 录</el-button>
+                    </div>
+                </el-dialog>                
+                <div class="new"  v-if="unLoginFlag">
                     <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>   
                 </div>
                 <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
@@ -86,15 +101,20 @@ export default {
             }
         }                  
       return {
+        loginFlag:false,
+        unLoginFlag:true,  
         activeIndex: '1',
         activeIndex2: '1',
         dialogNewVisible: false,
+        dialogLoginVisible: false,
         newForm: {
            email:'',
            password:'',
-           passwordAgain:'',
-
-         
+           passwordAgain:'',    
+        },
+        loginForm:{
+           email:'',
+           password:'',            
         },
         formLabelWidth: '100px',
         rules: {        
@@ -122,10 +142,35 @@ export default {
             alert('button click');
         },
 
-        newUser () {
-             console.log(this.newForm)
-            
-        }  
+        newUser () { 
+            this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true}).then(function(result){
+                console.log(result.body);
+                this.dialogNewVisible = false;
+                this.unLoginFlag = false;
+                this.loginFlag = true;
+            },function(error){
+                console.log(error);
+            })
+           
+           
+        },
+        
+        login(){
+            this.$http.post('http://localhost:8000/login',this.loginForm,{emulateJSON:true}).then(function(result){
+               
+                if(result.body.code == 1){
+                    this.dialogLoginVisible = false;
+                    this.unLoginFlag = false;
+                    this.loginFlag = true;
+                }else{
+                    console.log(result.body);
+                }
+                
+            },function(error){
+                console.log(error);
+            })            
+        }
+
     }      
 }
 </script>

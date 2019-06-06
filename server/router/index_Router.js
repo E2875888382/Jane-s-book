@@ -79,6 +79,58 @@ router.get('/getRecommendVideo',function(request,response){
 }) 
  
 
+//注册接口
+router.post('/newUser',function(request,response){
+
+  connection.connect();
+  var sql='SELECT * FROM user WHERE email ='+ '"'+request.body.email+'"';
+  connection.query(sql, function (error, result) {
+      if (error) {
+          response.status(500).json({  message:"server error",code:500  });           
+      }             
+      if(result.length!==0){
+          response.status(200).json({  message:"该邮箱已经注册过了" ,code:0 }); 
+                  
+      }
+      else {
+          var sql1='INSERT INTO user (email,password) VALUES ('+'"'+request.body.email+'",'+'"'+request.body.password+'")';
+          connection.query(sql1,function(error,result){
+              if(error){
+                  response.status(500).json({  message:"server error",code:500  });
+              }else{
+                  //使用session记录登录状态
+                  //request.session.user=request.body;
+                  
+                  response.status(200).json({  message:"注册成功",code:1  }); 
+              }
+          });           
+      }      
+  });
+  handleDisconnect(connection);
+})
+
+//处理登录请求
+router.post('/login',function(request,response){
+  connection.connect();
+  //查找账号密码是否存在
+  var sql='SELECT * FROM user WHERE email ='+ '"'+request.body.email+'"AND password = "'+request.body.password +'"';
+  connection.query(sql, function (error, result) {
+      if (error) {
+          response.status(500).json({  message:"server error",code:500  });           
+      }             
+      if(result.length==0){
+          response.status(200).json({  message:"账号或密码错误" ,code:0 }); 
+                  
+      }
+      else {          
+          //使用session记录登录状态
+          //request.session.user=request.body;
+          response.status(200).json({  message:"登录成功",code:1  });                 
+      }      
+  });
+  handleDisconnect(connection);
+  
+}); 
 
 
 
