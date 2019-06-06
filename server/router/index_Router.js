@@ -9,6 +9,9 @@ var connection=mysql.createConnection({
     port: '3306', 
     database:'videos'
 });
+
+
+
 //https://blog.csdn.net/bipedal_bit/article/details/48246963
 //用于处理第二次连接数据库出现error的问题
 function handleDisconnect(connection) {
@@ -37,7 +40,7 @@ router.get('/getLunBo',function(request,response){
       if (error){
           response.status(500).send('server error');
       }                
-      response.send(  result    );
+      response.send(  result    );  
   });
   handleDisconnect(connection);
 })  
@@ -124,15 +127,24 @@ router.post('/login',function(request,response){
       else {          
           //使用session记录登录状态
           request.session.user=request.body;
-       
+          
           response.status(200).json({  message:"登录成功",code:1,user:request.session.user.email  });                 
+          
       }      
   });
   handleDisconnect(connection);
   
 }); 
 
+//返回登陆状态列表
+router.get('/getLoginUser',function(request,response){
+  if(request.session.user){  
+    response.status(200).json({user:request.session.user });
+  }else{
+    response.status(200).json({  message:"没有登录记录",code:600  });
+  }
 
+})
 
 
 

@@ -136,15 +136,27 @@ export default {
  
       };
     },
-    
+    created(){
+       this.getLoginUser();
+    },
     methods: {
-      
+        getLoginUser(){
+             //请求登录session，用于持久化登录状态
+            this.$http.get('http://localhost:8000/getLoginUser',{ credentials: true }).then(function(result){
+                if(result.body.user){
+                    this.currentUser = result.body.user.email;
+                    this.unLoginFlag = false;
+                    this.loginFlag = true;                 
+                }         
+        })
+        },
+
         handleClick() {
             alert('button click');
         },
 
         newUser () { 
-            this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true}).then(function(result){
+            this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
                 console.log(result.body);
                 this.dialogNewVisible = false;
                 this.unLoginFlag = false;
@@ -158,7 +170,7 @@ export default {
         },
         
         login(){
-            this.$http.post('http://localhost:8000/login',this.loginForm,{emulateJSON:true}).then(function(result){
+            this.$http.post('http://localhost:8000/login',this.loginForm,{emulateJSON:true,credentials: true}).then(function(result){
                
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
