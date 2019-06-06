@@ -1,6 +1,6 @@
 <template>  
-        <div class="block">            
-            <el-carousel :interval="4000" type="card" height="200px">
+        <div class="block">                      
+             <el-carousel indicator-position="outside" height="200px">
                 <el-carousel-item v-for="item in lunbo" :key="item.id">
                     <img :src="item.picture"> 
                 </el-carousel-item>
@@ -38,7 +38,7 @@ export default {
 }
  
 img{
-    width:600px;
+    width:1000px;
     height:200px;
     
 } 
