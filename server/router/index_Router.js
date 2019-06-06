@@ -147,6 +147,11 @@ router.get('/getLoginUser',function(request,response){
 })
 
 
+router.get('/logOut',function(request,response){
+    request.session.user=null;
+    response.status(200).json({  message:"退出成功",code:700  });
+})
+
 
 
 

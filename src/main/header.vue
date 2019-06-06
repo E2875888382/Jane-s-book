@@ -5,14 +5,12 @@
        <div class="right_box">
                     <el-dropdown class="select_list"  size="small">
                     <el-button type="primary">
-                        更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                        更多<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>黄金糕</el-dropdown-item>
-                        <el-dropdown-item>狮子头</el-dropdown-item>
-                        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                        <el-dropdown-item>双皮奶</el-dropdown-item>
-                        <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                        <el-dropdown-item>我的主页</el-dropdown-item>
+                        <el-dropdown-item>好友消息</el-dropdown-item>
+                        <el-dropdown-item><a  @click="logOut()" >退出登录</a></el-dropdown-item>
                     </el-dropdown-menu>
                      
                 </el-dropdown>
@@ -184,7 +182,24 @@ export default {
             },function(error){
                 console.log(error);
             })            
+        },
+
+        logOut(){
+            this.$http.get('http://localhost:8000/logOut',{credentials: true}).then(function(result){              
+                if(result.body.code == 700){
+                    this.currentUser = '';
+                    this.unLoginFlag = true;
+                    this.loginFlag = false; 
+                }else{
+                    console.log(result.body);
+                }
+                
+            },function(error){
+                console.log(error);
+            })            
         }
+
+
 
     }      
 }

@@ -62,7 +62,7 @@ export default{
  
 .content{
      width:1000px;
-     height:1300px;
+     height:1100px;
      margin:0 auto;
 }
  
