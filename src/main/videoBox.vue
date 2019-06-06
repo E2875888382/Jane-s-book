@@ -52,7 +52,7 @@ export default {
 <style scoped>
 .video_box{
     width: 740px;
-    height:490px;
+    height:420px;
     float: left;
 }
 .video_item{
