@@ -99,9 +99,8 @@ router.post('/newUser',function(request,response){
                   response.status(500).json({  message:"server error",code:500  });
               }else{
                   //使用session记录登录状态
-                  //request.session.user=request.body;
-                  
-                  response.status(200).json({  message:"注册成功",code:1  }); 
+                  request.session.user=request.body;                 
+                  response.status(200).json({  message:"注册成功",code:1 ,user:request.session.user.email  }); 
               }
           });           
       }      
@@ -124,8 +123,9 @@ router.post('/login',function(request,response){
       }
       else {          
           //使用session记录登录状态
-          //request.session.user=request.body;
-          response.status(200).json({  message:"登录成功",code:1  });                 
+          request.session.user=request.body;
+       
+          response.status(200).json({  message:"登录成功",code:1,user:request.session.user.email  });                 
       }      
   });
   handleDisconnect(connection);

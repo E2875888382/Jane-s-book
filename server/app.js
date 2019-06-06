@@ -2,7 +2,7 @@ var express=require('express');
 var bodyParser=require('body-parser');
 var fs=require('fs');
 var path=require('path');
-// var session=require('express-session');
+var session=require('express-session');
 
 var index_Router=require('./router/index_Router');
 
@@ -26,12 +26,12 @@ app.all('*', function(req, res, next) {
 });
  
  
-// //配置express-session
-// app.use(session({
-//     secret: 'keyboard cat',
-//     resave: false,
-//     saveUninitialized: true,
-// }));
+//配置express-session
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+ }));
 //挂载router
 app.use(index_Router);
 

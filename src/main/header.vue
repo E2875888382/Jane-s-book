@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <div class="head_content">
        <div class="right_box">
-                    <el-dropdown class="select_list">
+                    <el-dropdown class="select_list"  size="small">
                     <el-button type="primary">
                         更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
@@ -16,8 +16,8 @@
                     </el-dropdown-menu>
                      
                 </el-dropdown>
-                <div class="new" v-if="loginFlag">
-                    <i class="el-icon-user-solid"></i>
+                <div class="new" v-if="loginFlag">                 
+                    <i>{{ currentUser }}</i>
                 </div>
 
                 <div class="login" v-if="unLoginFlag">
@@ -107,6 +107,7 @@ export default {
         activeIndex2: '1',
         dialogNewVisible: false,
         dialogLoginVisible: false,
+        currentUser:'',
         newForm: {
            email:'',
            password:'',
@@ -148,6 +149,7 @@ export default {
                 this.dialogNewVisible = false;
                 this.unLoginFlag = false;
                 this.loginFlag = true;
+                this.currentUser = result.body.user;
             },function(error){
                 console.log(error);
             })
@@ -162,6 +164,7 @@ export default {
                     this.dialogLoginVisible = false;
                     this.unLoginFlag = false;
                     this.loginFlag = true;
+                    this.currentUser = result.body.user;
                 }else{
                     console.log(result.body);
                 }
@@ -202,6 +205,7 @@ export default {
 .select_list{
     float: right;
     height: 42px;
+   
 }
 .login{
     height: 42px;
