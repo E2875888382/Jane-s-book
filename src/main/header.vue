@@ -8,9 +8,10 @@
                         更多<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item><a  @click="toUserPage()" >我的主页</a></el-dropdown-item>
+                        <el-dropdown-item><a @click="toUserPage()" >我的主页</a></el-dropdown-item>
                         <el-dropdown-item>好友消息</el-dropdown-item>
-                        <el-dropdown-item><a  @click="logOut()" >退出登录</a></el-dropdown-item>
+                        <el-dropdown-item><a @click="logOut()" >退出登录</a></el-dropdown-item>
+                        <el-dropdown-item><a @click="returnIndex()">返回首页</a></el-dropdown-item>
                     </el-dropdown-menu>
                      
                 </el-dropdown>
@@ -139,9 +140,11 @@ export default {
     },
     methods: {
         toUserPage(){
-             this.$emit('childFn', this.componentName);
+            this.$emit('childFn', this.componentName);
         },
-
+        returnIndex(){
+            this.$emit('childFn', 'index');
+        },
 
         getLoginUser(){
              //请求登录session，用于持久化登录状态
