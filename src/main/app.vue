@@ -1,36 +1,24 @@
 <template>
 <div>
-     <top></top>
-     <topNav></topNav>
-     <carousal></carousal> 
-     <div class="content">
-          <videoBox></videoBox>     
-          <rankingList></rankingList>
-          <video-box-second></video-box-second>     
-          <ranking-list-second></ranking-list-second>
-          <recommend></recommend>
-     </div>
-     <bottom></bottom>		
+     <top  @childFn="parentFn"></top>
+    
+     <component v-bind:is="componentName"></component>       
+     <bottom></bottom>		 
 </div>
  
 </template>
 
 <script>
 import top from './header.vue'
-import carousal from './carousal.vue'
-import topNav from './nav.vue' 
-import rankingList from './rankingList.vue'
-import videoBox from './videoBox.vue'
-import rankingListSecond from './rankingListSecond.vue'
-import videoBoxSecond from './videoBoxSecond.vue'
-import recommend from './recommend.vue'
+import index from './index.vue'
 import bottom from './footer.vue'
+import userPage from './userPage.vue'
 export default{
      data(){
           return {
                
                activeName: '1',
-           
+               componentName:'index'
           }
      },
      created() {
@@ -39,20 +27,17 @@ export default{
      },
      components:{
           top,
-          carousal,
-          topNav,
-          rankingList,
-          rankingListSecond,
-          videoBox,
-          videoBoxSecond,
-          recommend,
+          index,     
           bottom,
+          userPage,
      },
      methods:{
           show(){
               
           },
-       
+          parentFn(payload) {
+               this.componentName = payload;
+          }
      }
 
 }
@@ -60,11 +45,7 @@ export default{
 
 <style scoped>
  
-.content{
-     width:1000px;
-     height:1100px;
-     margin:0 auto;
-}
+ 
  
 </style>
 

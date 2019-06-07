@@ -8,7 +8,7 @@
                         更多<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>我的主页</el-dropdown-item>
+                        <el-dropdown-item><a  @click="toUserPage()" >我的主页</a></el-dropdown-item>
                         <el-dropdown-item>好友消息</el-dropdown-item>
                         <el-dropdown-item><a  @click="logOut()" >退出登录</a></el-dropdown-item>
                     </el-dropdown-menu>
@@ -130,7 +130,7 @@ export default {
             {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}  
           ]       
        },
-        
+       componentName:'userPage', 
  
       };
     },
@@ -138,6 +138,11 @@ export default {
        this.getLoginUser();
     },
     methods: {
+        toUserPage(){
+             this.$emit('childFn', this.componentName);
+        },
+
+
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('http://localhost:8000/getLoginUser',{ credentials: true }).then(function(result){
