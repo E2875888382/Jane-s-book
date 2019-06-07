@@ -9,29 +9,32 @@
                     <div class="user_info_head">
                         <van-image width="64" height="64" class="user_img" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
                         <span class="user_name">{{ currentUser }}</span>
-                        <van-progress :percentage="50" :show-pivot="false" class="process_bar" color="#f2826a"/>
+                        <van-progress :percentage="level"  :pivot-text="'LV'+ level " class="process_bar" color="#f2826a"/>
                     </div>
 
                     <el-divider content-position="left">基本信息</el-divider>
 
                     <div class="user_info_footer">
                         <div class="user_info_item">
-                            <span class="font_label">用户ID：</span> 
+                            <span class="font_label">用户ID：</span><span class="msg">{{ userId }}</span> 
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">出生日期：</span>
+                            <span class="font_label">出生日期：</span><span class="msg">{{ birth }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的手机：</span>
+                            <span class="font_label">我的手机：</span><span class="msg">{{ telephone }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的邮箱：</span>
+                            <span class="font_label">我的邮箱：</span><span class="msg">{{ email }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">性别：</span>
+                            <span class="font_label">性别：</span><span class="msg">{{ gender }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的签名：</span>
+                            <span class="font_label">我的等级：</span><span class="msg">{{ level }}</span>
+                        </div>
+                        <div class="user_info_item">
+                            <span class="font_label">我的签名：</span><span class="msg">{{ sign }}</span>
                         </div>                                                                                                 
                     </div>
 
@@ -66,21 +69,41 @@ export default {
         return{
             currentUser:'',
             loginFlag:false,
+            birth:'',
+            email:'',
+            gender:'',
+            userId:'',
+            telephone:'',
+            level:'',
+            sign:'',
+
         }
     },
     created(){
        this.getLoginUser();
+        
+    },
+    mounted(){
+        
     },
     methods:{
-         getLoginUser(){
+        getLoginUser(){
              //请求登录session，用于持久化登录状态
-            this.$http.get('http://localhost:8000/getLoginUser',{ credentials: true }).then(function(result){
-                if(result.body.user){
-                   this.currentUser = result.body.user.email;
-                   this.loginFlag=true;           
+            this.$http.get('http://localhost:8000/getLoginUserInfo',{ credentials: true }).then(function(result){
+                if(result.body){                
+                    this.currentUser = result.body[0].nickName;
+                    this.birth = result.body[0].birthday;
+                    this.email = result.body[0].email;
+                    this.gender = result.body[0].gender;
+                    this.userId = result.body[0].id;
+                    this.telephone = result.body[0].telephone;
+                    this.level = result.body[0].level;
+                    this.sign = result.body[0].sign;
+                    this.loginFlag = true;           
                 }         
             })
         },
+      
 
     }
 }
@@ -135,6 +158,13 @@ export default {
     float: left;
     line-height: 30px;
     padding: 0;
+}
+.msg{
+    font-size: 14px;
+    color: #48576a;  
+    float: left;
+    line-height: 30px;
+    padding: 0;    
 }
 .user_img{
     width: 64px;

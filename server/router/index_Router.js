@@ -152,7 +152,24 @@ router.get('/logOut',function(request,response){
     response.status(200).json({  message:"退出成功",code:700  });
 })
 
+//获取用户信息接口
+router.get('/getLoginUserInfo',function(request,response){
+  if(request.session.user){    
+      connection.connect();
+      var sql='SELECT * FROM user WHERE email ='+ '"'+request.session.user.email+'"';
+      connection.query(sql, function (error, result) {
+          if (error){
+              response.status(500).send('server error');
+          }                
+          response.status(200).json(result); 
+      });
+      handleDisconnect(connection);  
+  }else{
+    response.status(200).json({  message:"没有登录记录",code:600  });
+  }
 
+  
+})
 
 
 
