@@ -6,6 +6,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 //导入vue-resource
 import VueResource from 'vue-resource'
+import Vant from 'vant';
+import 'vant/lib/index.css';
+
+Vue.use(Vant);
+
 Vue.use(VueResource)
 //导入vue
 import Vue from 'vue'
