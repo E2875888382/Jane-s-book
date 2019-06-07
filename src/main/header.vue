@@ -162,12 +162,12 @@ export default {
         },
 
         newUser () { 
-            this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
-                console.log(result.body);
+            this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
                 this.dialogNewVisible = false;
                 this.unLoginFlag = false;
                 this.loginFlag = true;
                 this.currentUser = result.body.user;
+                this.$emit('childFn', 'index');
             },function(error){
                 console.log(error);
             })
@@ -183,6 +183,7 @@ export default {
                     this.unLoginFlag = false;
                     this.loginFlag = true;
                     this.currentUser = result.body.user;
+                    this.$emit('childFn', 'index');
                 }else{
                     console.log(result.body);
                 }
@@ -197,7 +198,8 @@ export default {
                 if(result.body.code == 700){
                     this.currentUser = '';
                     this.unLoginFlag = true;
-                    this.loginFlag = false; 
+                    this.loginFlag = false;
+                    this.$emit('childFn', 'index'); 
                 }else{
                     console.log(result.body);
                 }

@@ -5,10 +5,10 @@
                 <span slot="label">
                     <i class="el-icon-s-home"></i> 个人主页
                 </span>
-                <div>
+                <div v-if="loginFlag">
                     <div class="user_info_head">
                         <van-image width="64" height="64" class="user_img" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
-                        <span class="user_name">B站小老虎</span>
+                        <span class="user_name">{{ currentUser }}</span>
                         <van-progress :percentage="50" :show-pivot="false" class="process_bar" color="#f2826a"/>
                     </div>
 
@@ -36,7 +36,9 @@
                     </div>
 
                 </div>
-
+                <div v-if="!loginFlag">
+                    <h1>请先登录</h1>
+                </div>
             </el-tab-pane>
             <el-tab-pane>
                 <span slot="label">
@@ -60,7 +62,27 @@
 
 <script>
 export default {
-    
+    data(){
+        return{
+            currentUser:'',
+            loginFlag:false,
+        }
+    },
+    created(){
+       this.getLoginUser();
+    },
+    methods:{
+         getLoginUser(){
+             //请求登录session，用于持久化登录状态
+            this.$http.get('http://localhost:8000/getLoginUser',{ credentials: true }).then(function(result){
+                if(result.body.user){
+                   this.currentUser = result.body.user.email;
+                   this.loginFlag=true;           
+                }         
+            })
+        },
+
+    }
 }
 </script>
 
