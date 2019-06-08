@@ -185,6 +185,19 @@ router.post('/updateUserInfo',function(request,response){
       handleDisconnect(connection);   
 })
 
+router.post('/uploadAvatar',function(request,response){
+  connection.connect();  
+  
+  var sql=' UPDATE USER SET avatar = "'+request.body.content+'" WHERE email = "'+request.session.user.email+'"';
+  connection.query(sql, function (error, result) {
+      if (error){
+          response.status(500).send('server error');
+      }                
+      response.status(200).json({message:"上传成功",code:200});
+  });
+  handleDisconnect(connection);   
+})
+
 
 
 

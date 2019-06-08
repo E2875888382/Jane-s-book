@@ -7,7 +7,7 @@
                 </span>
                 <div v-if="loginFlag">
                     <div class="user_info_head">
-                        <van-image width="64" height="64" class="user_img" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                        <van-image width="64" height="64" class="user_img" :src="avatar"/>
                         <span class="user_name">{{ currentUser }}</span>
                         <van-progress :percentage="level"  :pivot-text="'LV'+ level " class="process_bar" color="#f2826a"/>
                     </div>
@@ -86,6 +86,14 @@
                 <span slot="label">
                     <i class="el-icon-picture-outline-round"></i> 我的头像
                 </span>
+                
+                <div v-if="loginFlag">
+                    <avatar></avatar>
+                </div>
+
+                <div v-if="!loginFlag"  class="warn">
+                    <h1>请先登录</h1>
+                </div>
             </el-tab-pane>
             <el-tab-pane>
                 <span slot="label">
@@ -98,6 +106,8 @@
 
 
 <script>
+import avatar from './avatar.vue'
+
 export default {
     data(){
         return{
@@ -110,6 +120,7 @@ export default {
             telephone:'',
             level:'',
             sign:'',
+            avatar:'',
             result:{},
             ruleForm: {
                 nickName: '',
@@ -145,6 +156,9 @@ export default {
     },
     mounted(){
         this.getLoginUser();
+    },
+    components:{
+        avatar
     },
     methods:{
         submitForm(formName) {
@@ -187,6 +201,7 @@ export default {
                     this.telephone =this.result.telephone;
                     this.level = this.result.level;
                     this.sign = this.result.sign;
+                    this.avatar= this.result.avatar;               
                     this.loginFlag = true;           
                 }         
             })
