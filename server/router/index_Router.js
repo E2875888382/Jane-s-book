@@ -7,7 +7,8 @@ var connection=mysql.createConnection({
     user:'root',
     password:'12345',
     port: '3306', 
-    database:'videos'
+    database:'videos',
+    multipleStatements: true // 支持执行多条 sql 语句
 });
 
 
@@ -171,7 +172,18 @@ router.get('/getLoginUserInfo',function(request,response){
   
 })
 
-
+//刷新用户数据接口
+router.post('/updateUserInfo',function(request,response){
+  connection.connect();  
+      var sql= 'UPDATE `user` SET `nickName` ="'+request.body.update.nickName+'",`gender`="'+request.body.update.gender+'",`birthday`="'+request.body.update.birth+'",`sign`="'+request.body.update.sign+'",`telephone`="'+request.body.update.telephone+'" WHERE `email` ='+'"'+request.body.email +'"';
+      connection.query(sql, function (error, result) {
+          if (error){
+              response.status(500).send('server error');
+          }                
+          response.status(200).json({  message:"修改成功",code:200  });
+      });
+      handleDisconnect(connection);   
+})
 
 
 
