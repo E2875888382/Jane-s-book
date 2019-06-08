@@ -6,6 +6,10 @@ var session=require('express-session');
 
 var index_Router=require('./router/index_Router');
 
+//解决控制台的溢出提示
+// (node:3772) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 
+//11 error listeners added. Use emitter.setMaxListeners() to increase limit
+require('events').EventEmitter.defaultMaxListeners = 0;
 
 var app=express();
 //配置body-parser用于处理post请求
