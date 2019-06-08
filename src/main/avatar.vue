@@ -27,6 +27,7 @@ export default {
         useAvatar(){
             if(this.fileList.length!==0){
                 this.$message( '切换头像成功');
+                this.fileList.shift();
             }
             
         }
