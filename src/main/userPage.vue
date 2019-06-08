@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content" >
         <el-tabs tab-position="left" style="height: 1000px;"  type="border-card">
             <el-tab-pane>
                 <span slot="label">
@@ -76,29 +76,31 @@ export default {
             telephone:'',
             level:'',
             sign:'',
-
+            result:{},
+                 
         }
     },
     created(){
-       this.getLoginUser();
+       
         
     },
     mounted(){
-        
+        this.getLoginUser();
     },
     methods:{
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('http://localhost:8000/getLoginUserInfo',{ credentials: true }).then(function(result){
-                if(result.body){                
-                    this.currentUser = result.body[0].nickName;
-                    this.birth = result.body[0].birthday;
-                    this.email = result.body[0].email;
-                    this.gender = result.body[0].gender;
-                    this.userId = result.body[0].id;
-                    this.telephone = result.body[0].telephone;
-                    this.level = result.body[0].level;
-                    this.sign = result.body[0].sign;
+                if(result.body[0]){
+                    this.result= result.body[0];                                                                        
+                    this.currentUser = this.result.nickName;
+                    this.birth = this.result.birthday;
+                    this.email = this.result.email;
+                    this.gender = this.result.gender;
+                    this.userId = this.result.id;
+                    this.telephone =this.result.telephone;
+                    this.level = this.result.level;
+                    this.sign = this.result.sign;
                     this.loginFlag = true;           
                 }         
             })
