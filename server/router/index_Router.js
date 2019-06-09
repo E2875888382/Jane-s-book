@@ -2,6 +2,7 @@ var fs=require('fs');
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
+const nodemailer = require('nodemailer');
 var connection=mysql.createConnection({
     host:'localhost',
     user:'root',
@@ -209,6 +210,45 @@ router.post('/uploadAvatarT',function(request,response){
   });
   handleDisconnect(connection);   
 })
+
+router.post('/sendSms',function(request,response){
+      
+    let transporter = nodemailer.createTransport({
+      // host: 'smtp.ethereal.email',
+      service: 'qq', // 使用了内置传输发送邮件 查看支持列表：https://nodemailer.com/smtp/well-known/
+      port: 465, // SMTP 端口
+      secureConnection: true, // 使用了 SSL
+      auth: {
+        user: '2875888382@qq.com',
+        // 这里密码不是qq密码，是你设置的smtp授权码
+        pass: 'gzubotdktaesdfai',
+      }
+    });
+    var smsNum='';
+    for(var i=0;i<6;i++){
+      smsNum+=Math.floor(Math.random()*10);
+    }
+
+    var mailOptions = {
+      from: '2875888382@qq.com', // sender address
+      to: request.body.email, // list of receivers
+      subject: 'Hello', // Subject line
+      // 发送text或者html格式
+      // text: 'Hello world?', // plain text body
+      html: '<b>'+smsNum+'</b>' // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+      
+    });
+    response.status(200).json({message:"验证码已发送",code:200,sms:smsNum});
+})
+
 
 
 

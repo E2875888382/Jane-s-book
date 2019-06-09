@@ -47,6 +47,9 @@
                         </el-form-item>
                         <el-form-item label="重复密码:" :label-width="formLabelWidth" prop="passwordAgain">
                             <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item>
+                        <el-form-item label="输入邮箱验证码:" :label-width="formLabelWidth" prop="sms">
+                            <el-input v-model="newForm.sms" autocomplete="off"> <el-button slot="append" @click="sendSms">发送验证码</el-button> </el-input> 
                         </el-form-item> 
                     </el-form>
                     <div slot="footer" class="dialog-footer">                       
@@ -97,8 +100,17 @@ export default {
             } else {
             callback()
             }
+        }
+        let checkSms=(rule, value, callback) => {  
+            if (value !== this.sms) {
+            callback(new Error('请再次确认验证码'))
+            } else {
+            callback()
+            }
         }                  
       return {
+        //中间验证码
+        sms:'',  
         loginFlag:false,
         unLoginFlag:true,  
         activeIndex: '1',
@@ -109,7 +121,8 @@ export default {
         newForm: {
            email:'',
            password:'',
-           passwordAgain:'',    
+           passwordAgain:'',
+           sms:'',    
         },
         loginForm:{
            email:'',
@@ -128,6 +141,10 @@ export default {
           passwordAgain:[
             { validator: checkPasswordAgain, trigger: 'blur' },
             {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}  
+          ],
+          sms:[
+            { validator: checkSms, trigger: 'blur' },
+            {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}   
           ]       
        },
        componentName:'userPage', 
@@ -206,6 +223,13 @@ export default {
             },function(error){
                 console.log(error);
             })            
+        },
+        sendSms(){
+            this.$http.post('http://localhost:8000/sendSms',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
+                this.sms = result.body.sms;
+            },function(error){
+                console.log(error);
+            })
         }
 
 
