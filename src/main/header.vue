@@ -8,8 +8,7 @@
                         更多<i class="el-icon-arrow-down el-icon--right"></i>    
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item><i class="el-icon-user"></i><a @click="toUserPage()" >我的主页</a></el-dropdown-item>
-                        <el-dropdown-item><el-badge :value="12" class="item"><i class="el-icon-switch-button"></i> 好友消息</el-badge></el-dropdown-item>
+                        <el-dropdown-item><i class="el-icon-user"></i><a @click="toUserPage()" >我的主页</a></el-dropdown-item>        
                         <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" >退出登录</a></el-dropdown-item>
                         <el-dropdown-item><i class="el-icon-s-home"></i><a @click="returnIndex()">返回首页</a></el-dropdown-item>
                     </el-dropdown-menu>

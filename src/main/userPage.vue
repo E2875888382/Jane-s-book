@@ -99,6 +99,30 @@
                 <span slot="label">
                     <i class="el-icon-lock"></i> 账号安全
                 </span>
+
+                <div v-if="loginFlag">
+                    <safe></safe>
+                </div>
+
+                <div v-if="!loginFlag"  class="warn">
+                    <h1>请先登录</h1>
+                </div>
+            </el-tab-pane>
+
+            <el-tab-pane>
+                <span slot="label">
+                    <el-badge :value="12" class="item">
+                        <i class="el-icon-message"></i> 好友消息
+                    </el-badge>
+                </span>
+
+                <div v-if="loginFlag">
+                    <msg></msg>
+                </div>
+
+                <div v-if="!loginFlag"  class="warn">
+                    <h1>请先登录</h1>
+                </div>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -107,6 +131,8 @@
 
 <script>
 import avatar from './avatar.vue'
+import msg from './message.vue'
+import safe from './safe.vue'
 
 export default {
     data(){
@@ -158,7 +184,9 @@ export default {
         this.getLoginUser();
     },
     components:{
-        avatar
+        avatar,
+        msg,
+        safe
     },
     methods:{
         submitForm(formName) {
