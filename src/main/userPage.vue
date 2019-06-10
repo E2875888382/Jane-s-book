@@ -201,13 +201,16 @@
 
 
 <script>
+//导入头像组件
 import avatar from './avatar.vue'
+//导入好友信息组件
 import msg from './message.vue'
  
 
 export default {
     data(){
         return{
+            // 账户安全数据
             ifo:{
                 safeNum:'',
                 telephoneFlag:false,
@@ -215,17 +218,28 @@ export default {
                 qqFlag:false,
                 qqNumber:'',     
             },
+            //当前用户
             currentUser:'',
+            //是否登录标志
             loginFlag:false,
+            //出生日期
             birth:'',
+            //email
             email:'',
+            //性别
             gender:'',
+            //用户ID
             userId:'',
+            //绑定手机号
             telephone:'',
+            //用户等级
             level:'',
+            //个性签名
             sign:'',
+            //头像
             avatar:'',
             result:{},
+            //更改用户信息表单
             ruleForm: {
                 nickName: '',
                 telephone: '',
@@ -233,6 +247,7 @@ export default {
                 sign: '',
                 gender:'',
             },
+            //规则，用于校验更改用户信息
             rules: {
                 nickName: [
                     { required: true, message: '请输入昵称', trigger: 'blur' },
@@ -259,15 +274,18 @@ export default {
         
     },
     mounted(){
+        //数据加载时发送请求，得到当前用户的个人信息和安全信息
         this.getLoginUser();
         this.getSafeIfo();
     },
+    //在这里注册组件
     components:{
         avatar,
         msg,
        
     },
     methods:{
+        //修改用户信息方法
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -289,9 +307,11 @@ export default {
                 }
             });
         },
+        //重置用户信息表单
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
+        //获取当前用户信息
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('http://localhost:8000/getLoginUserInfo',{ credentials: true }).then(function(result){
@@ -310,6 +330,7 @@ export default {
                 }         
             })
         },
+        //获取当前用户的安全信息
         getSafeIfo(){
             this.$http.get("http://localhost:8000/getSafeIfo",{credentials: true}).then(function(result){
                 if(result.body[0]){

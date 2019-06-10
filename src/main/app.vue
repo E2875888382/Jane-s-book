@@ -1,11 +1,9 @@
 <template>
 <div>
-     <top  @childFn="parentFn"></top>
-    
+     <top  @childFn="parentFn"></top>    
      <component v-bind:is="componentName"></component>       
      <bottom></bottom>		 
 </div>
- 
 </template>
 
 <script>
@@ -15,14 +13,12 @@ import bottom from './footer.vue'
 import userPage from './userPage.vue'
 export default{
      data(){
-          return {
-               
+          return {              
                activeName: '1',
                componentName:'index'
           }
      },
-     created() {
-         
+     created() {        
          this.show();
      },
      components:{

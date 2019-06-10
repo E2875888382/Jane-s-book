@@ -12,8 +12,6 @@ var connection=mysql.createConnection({
     multipleStatements: true // 支持执行多条 sql 语句
 });
 
-
-
 //https://blog.csdn.net/bipedal_bit/article/details/48246963
 //用于处理第二次连接数据库出现error的问题
 function handleDisconnect(connection) {
@@ -32,9 +30,9 @@ function handleDisconnect(connection) {
       handleDisconnect(connection);
       connection.connect();
     });
-  };
+};
 
-
+//获取轮播图接口
 router.get('/getLunBo',function(request,response){
   connection.connect();
   var sql='SELECT  * FROM `shufflingfigure`limit 0,5';
@@ -45,8 +43,9 @@ router.get('/getLunBo',function(request,response){
       response.send(  result    );  
   });
   handleDisconnect(connection);
-})  
+}) 
 
+//获取娱乐视频接口
 router.get('/getEntertainmentVideo',function(request,response){
   connection.connect();
   var sql='SELECT  * FROM `entertainmentvideo`limit 0,8';
@@ -58,7 +57,7 @@ router.get('/getEntertainmentVideo',function(request,response){
   });
   handleDisconnect(connection);
 }) 
-
+//获取篮球视频接口
 router.get('/getBasketballVideo',function(request,response){
   connection.connect();
   var sql='SELECT  * FROM `basketballvideo`limit 0,8';
@@ -70,7 +69,7 @@ router.get('/getBasketballVideo',function(request,response){
   });
   handleDisconnect(connection);
 }) 
-
+//获取推荐视频接口
 router.get('/getRecommendVideo',function(request,response){
   connection.connect();
   var sql='SELECT  * FROM `recommendvideo`limit 0,4';
@@ -82,8 +81,6 @@ router.get('/getRecommendVideo',function(request,response){
   });
   handleDisconnect(connection);
 }) 
- 
-
 //注册接口
 router.post('/newUser',function(request,response){
 
@@ -113,7 +110,7 @@ router.post('/newUser',function(request,response){
   handleDisconnect(connection);
 })
 
-//处理登录请求
+//处理登录请求接口
 router.post('/login',function(request,response){
   connection.connect();
   //查找账号密码是否存在
@@ -138,7 +135,7 @@ router.post('/login',function(request,response){
   
 }); 
 
-//返回登陆状态列表
+//返回登陆状态列表接口
 router.get('/getLoginUser',function(request,response){
   if(request.session.user){  
     response.status(200).json({user:request.session.user });
@@ -185,6 +182,7 @@ router.post('/updateUserInfo',function(request,response){
       });
       handleDisconnect(connection);   
 })
+
 //上传头像接口
 router.post('/uploadAvatar',function(request,response){
   connection.connect();  
@@ -198,6 +196,7 @@ router.post('/uploadAvatar',function(request,response){
   });
   handleDisconnect(connection);   
 })
+
 //上传头像接口
 router.post('/uploadAvatarT',function(request,response){
   connection.connect(); 
@@ -210,6 +209,7 @@ router.post('/uploadAvatarT',function(request,response){
   });
   handleDisconnect(connection);   
 })
+
 //发送邮件验证码接口
 router.post('/sendSms',function(request,response){
       
@@ -248,6 +248,8 @@ router.post('/sendSms',function(request,response){
     });
     response.status(200).json({message:"验证码已发送",code:200,sms:smsNum});
 })
+
+//获取用户安全信息接口
 router.get('/getSafeIfo',function(request,response){
   if(request.session.user){     
     connection.connect();
@@ -262,6 +264,5 @@ router.get('/getSafeIfo',function(request,response){
   }   
 })
 
-
-  //导出router
+//导出router
 module.exports=router;
