@@ -235,7 +235,7 @@ router.post('/sendSms',function(request,response){
       subject: 'Hello', // Subject line
       // 发送text或者html格式
       // text: 'Hello world?', // plain text body
-      html: '<b>'+smsNum+'</b>' // html body
+      html: '<h3>你的验证码为：</h3><b>'+smsNum+'</b>' // html body
     };
 
     // send mail with defined transport object
