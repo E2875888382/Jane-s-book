@@ -1,6 +1,7 @@
 <template>
     <div class="content" >
         <el-tabs tab-position="left" style="height: 1000px;"  type="border-card">
+            <!-- 个人主页 -->
             <el-tab-pane>
                 <span slot="label" @click="getLoginUser()">
                     <i class="el-icon-s-home"></i> 个人主页
@@ -43,6 +44,7 @@
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
+            <!-- 我的信息 -->
             <el-tab-pane>
                  <span slot="label">
                     <i class="el-icon-user"></i> 我的信息
@@ -82,6 +84,7 @@
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
+            <!-- 我的头像 -->
             <el-tab-pane>
                 <span slot="label">
                     <i class="el-icon-picture-outline-round"></i> 我的头像
@@ -95,20 +98,88 @@
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
+            <!-- 账号安全 -->
             <el-tab-pane>
-                <span slot="label">
+                <span slot="label" @click="getSafeIfo">
                     <i class="el-icon-lock"></i> 账号安全
                 </span>
 
                 <div v-if="loginFlag">
-                    <safe></safe>
+                    <div>
+                        <div class="header">
+                            <div class="safe_num">{{ ifo.safeNum }}</div>
+                            <div class="tips">账号安全评分</div>
+                        </div>
+                        <p class="safe_p">您的账号安全状况还不错哟，完善剩余的安全项可进一步提高安全评分哟</p>
+                        <el-divider></el-divider>
+
+                        <div class="safe_item">
+                            <div class="safe_item_title">
+                                <div class="p">
+                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="!ifo.telephoneFlag" />
+                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="ifo.telephoneFlag"/>
+                                    <span>绑定手机号</span>
+                                </div>                                 
+                            </div>
+                            <div class="safe_item_warning" v-if="ifo.telephoneFlag">
+                                <span>{{ ifo.telephone }}</span>
+                            </div>
+                            <div class="safe_item_warning" v-if="!ifo.telephoneFlag">
+                                <span>未绑定手机号</span>
+                            </div>
+                            <div class="safe_item_link">
+                                <el-link type="primary" href="">更换手机</el-link> 
+                            </div>
+                           
+                        </div>
+                        
+                        <el-divider></el-divider>
+
+                        <div class="safe_item">
+                            <div class="safe_item_title">
+                                <div class="p">                   
+                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"/>
+                                    <span>设置密码</span>
+                                </div>
+                            </div>    
+                            <div class="safe_item_warning">
+                                <span>已设置密码</span>
+                            </div>
+                            <div class="safe_item_link">
+                                <el-link type="primary" href="">修改密码</el-link>                
+                            </div>
+                            
+                        </div>
+
+                        <el-divider></el-divider>
+
+                        <div class="safe_item">
+                            <div class="safe_item_title">
+                                <div class="p">
+                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="!ifo.qqFlag" />
+                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="ifo.qqFlag" />
+                                    <span>绑定QQ号</span>
+                                </div>
+                            </div>
+                            <div class="safe_item_warning" v-if="ifo.qqFlag">
+                                <span>{{ ifo.qqNumber }}</span>
+                            </div>
+                            <div class="safe_item_warning" v-if="!ifo.qqFlag">
+                                <span>未绑定QQ号</span>
+                            </div>
+                            <div class="safe_item_link">
+                                <el-link type="primary" href="">绑定QQ</el-link>                  
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
 
                 <div v-if="!loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
-
+            <!-- 好友消息 -->
             <el-tab-pane>
                 <span slot="label">
                     <el-badge :value="12" class="item">
@@ -132,11 +203,18 @@
 <script>
 import avatar from './avatar.vue'
 import msg from './message.vue'
-import safe from './safe.vue'
+ 
 
 export default {
     data(){
         return{
+            ifo:{
+                safeNum:'',
+                telephoneFlag:false,
+                telephone:'',              
+                qqFlag:false,
+                qqNumber:'',     
+            },
             currentUser:'',
             loginFlag:false,
             birth:'',
@@ -182,11 +260,12 @@ export default {
     },
     mounted(){
         this.getLoginUser();
+        this.getSafeIfo();
     },
     components:{
         avatar,
         msg,
-        safe
+       
     },
     methods:{
         submitForm(formName) {
@@ -213,9 +292,6 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-
-
-
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('http://localhost:8000/getLoginUserInfo',{ credentials: true }).then(function(result){
@@ -234,7 +310,21 @@ export default {
                 }         
             })
         },
-      
+        getSafeIfo(){
+            this.$http.get("http://localhost:8000/getSafeIfo",{credentials: true}).then(function(result){
+                if(result.body[0]){
+                    this.ifo.safeNum=result.body[0].safenum;
+                    if(result.body[0].qq !== ''){
+                         this.ifo.qqFlag=true;                   
+                        this.ifo.qqNumber=result.body[0].qq;
+                    }                 
+                    if(result.body[0].telephone !== ''){
+                        this.ifo.telephoneFlag=true;
+                        this.ifo.telephone=result.body[0].telephone;
+                    }
+                }   
+            })             
+        }      
 
     }
 }
@@ -313,4 +403,77 @@ export default {
     height:100px;
     text-align: center;
 }
+.header{
+    width: 400px;
+    height: 220px;
+    margin: 0 auto;
+    background: url('https://s1.hdslb.com/bfs/static/security/static/img/logo_normal.79d580e.png') no-repeat;
+    position: relative;
+}
+.safe_item{
+    height: 40px;
+    width: 840px;
+}
+.safe_item_title{
+    width: 30%;
+    padding:10px 10px 2px 20px;
+    margin: 0;
+    font-family: MicrosoftYaHei;
+    float: left;
+}
+.safe_item_warning{
+    width: 50%;
+    padding:10px 10px 2px 20px;
+    margin: 0;
+    font-family: MicrosoftYaHei;
+    float: left;
+}
+.safe_item_link{
+    width: 20%;
+    padding:10px 10px 2px 20px;
+    margin: 0;
+    font-family: MicrosoftYaHei;
+    float: left;    
+}
+ 
+.safe_p{
+    text-align: center;
+}
+.safe_item span{
+    line-height: 20px;
+    font-size: 14px;   
+    color: #222;
+}
+.safe_item_title span{   
+    line-height: 20px;
+    font-size: 14px;   
+    color: #222;
+    position:absolute;
+    top: 3px;
+    left:35px;
+}
+.icon{
+    position:absolute;
+    top: 3px;
+}
+.p{
+    height: 20px;
+    position: relative;
+}
+.tips{
+    position: absolute;
+    font-size: 12px;
+    color: #fff;
+    left: 165px;
+    top: 125px;
+}
+.safe_num{
+    position: relative;
+    margin: 0 auto;
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    top: 60px;
+}  
 </style>
