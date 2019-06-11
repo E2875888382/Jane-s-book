@@ -264,5 +264,35 @@ router.get('/getSafeIfo',function(request,response){
   }   
 })
 
+//删除好友接口
+router.post('/deleteFriend',function(request,response){
+  if(request.session.user){    
+    connection.connect();  
+    var sql = 'DELETE FROM friend WHERE userEmail = "'+request.session.user.email +'" AND friendEmail = "'+request.body.delete+'"';
+    connection.query(sql, function (error, result) {
+        if (error){
+            response.status(500).send('server error');
+        }                
+        response.status(200).json({message:'删除成功'});
+    });
+    handleDisconnect(connection);
+  }   
+})
+
+//获取好友列表接口
+router.get('/getFriends',function(request,response){
+  if(request.session.user){    
+    connection.connect();  
+    var sql = 'SELECT * FROM friend  WHERE userEmail = "'+  request.session.user.email +'"'; 
+    connection.query(sql, function (error, result) {
+        if (error){
+            response.status(500).send('server error');
+        }                
+        response.status(200).json(result);
+    });
+    handleDisconnect(connection);
+  }   
+})
+
 //导出router
 module.exports=router;

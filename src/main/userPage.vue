@@ -181,20 +181,56 @@
             </el-tab-pane>
             <!-- 好友消息 -->
             <el-tab-pane>
-                <span slot="label">
+                <span slot="label"  @click="getFriendsList">
                     <el-badge :value="12" class="item">
                         <i class="el-icon-message"></i> 好友消息
                     </el-badge>
                 </span>
 
                 <div v-if="loginFlag">
-                    <msg></msg>
+                    <msg ref="msg"></msg>
                 </div>
 
                 <div v-if="!loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
+            <!-- 管理好友 -->
+            <el-tab-pane>
+                <span slot="label"  @click="getFriends">
+                    <van-icon name="friends-o" /> 好友管理
+                </span>
+
+                <div v-if="loginFlag">
+                    <div>
+                        <span>我的好友</span>
+                        <el-divider></el-divider>               
+                    </div>
+                    <div>
+                        <div v-for="item in friendsList" :key="item.friendEmail">
+                            <div class="friendList">
+                                <span>{{ item.friendNickName }}</span>
+                                <p>{{ item.friendEmail }}</p>
+                            </div>                           
+                            <el-dropdown>
+                                <el-button type="primary">
+                                    已关注<i class="el-icon-arrow-down el-icon--right"></i>
+                                </el-button>
+                                <el-dropdown-menu slot="dropdown">             
+                                    <el-dropdown-item><a @click="deleteFriend(item.friendEmail)">取消关注</a></el-dropdown-item>                                   
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                            <el-divider></el-divider>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div v-if="!loginFlag"  class="warn">
+                    <h1>请先登录</h1>
+                </div>
+            </el-tab-pane>            
+
         </el-tabs>
     </div>
 </template>
@@ -218,6 +254,8 @@ export default {
                 qqFlag:false,
                 qqNumber:'',     
             },
+            //好友列表
+            friendsList:[],
             //当前用户
             currentUser:'',
             //是否登录标志
@@ -277,6 +315,7 @@ export default {
         //数据加载时发送请求，得到当前用户的个人信息和安全信息
         this.getLoginUser();
         this.getSafeIfo();
+      
     },
     //在这里注册组件
     components:{
@@ -345,7 +384,23 @@ export default {
                     }
                 }   
             })             
-        }      
+        },      
+        //调用message组件中的方法获取好友列表
+        getFriendsList(){
+            console.log(this.$refs.msg)
+        },
+        //删除好友
+        deleteFriend(email){                   
+            this.$http.post("http://localhost:8000/deleteFriend",{delete:email},{ credentials: true}).then(function(result){    
+                this.getFriends();               
+            })              
+        },
+        //获取好友列表
+        getFriends(){
+            this.$http.get("http://localhost:8000/getFriends" ,{ credentials: true}).then(function(result){                   
+                this.friendsList = result.body;
+            })            
+        }
 
     }
 }
@@ -496,5 +551,18 @@ export default {
     color: #fff;
     text-align: center;
     top: 60px;
+}
+.friendList{
+    width: 700px;
+    float: left;
+    padding-left: 30px;
+}
+.friendList p{
+    line-height: 14px;
+    font-size: 12px;
+    color: #6d757a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }  
 </style>
