@@ -350,16 +350,12 @@ export default {
         
     },
     mounted(){
-        //数据加载时发送请求，得到当前用户的个人信息和安全信息
-        this.getLoginUser();
-        this.getSafeIfo();
-      
+        //数据加载时发送请求，得到当前用户的个人信息
+        this.getLoginUser();     
     },
     //在这里注册组件
     components:{
-        avatar,
-      
-       
+        avatar,           
     },
     methods:{
         //修改用户信息方法
@@ -409,31 +405,37 @@ export default {
         },
         //获取当前用户的安全信息
         getSafeIfo(){
-            this.$http.get("http://localhost:8000/getSafeIfo",{credentials: true}).then(function(result){
-                if(result.body[0]){
-                    this.ifo.safeNum=result.body[0].safenum;
-                    if(result.body[0].qq !== ''){
-                         this.ifo.qqFlag=true;                   
-                        this.ifo.qqNumber=result.body[0].qq;
-                    }                 
-                    if(result.body[0].telephone !== ''){
-                        this.ifo.telephoneFlag=true;
-                        this.ifo.telephone=result.body[0].telephone;
-                    }
-                }   
-            })             
+            if(this.email !== ''){
+                this.$http.get("http://localhost:8000/getSafeIfo",{credentials: true}).then(function(result){
+                    if(result.body[0]){
+                        this.ifo.safeNum=result.body[0].safenum;
+                        if(result.body[0].qq !== ''){
+                            this.ifo.qqFlag=true;                   
+                            this.ifo.qqNumber=result.body[0].qq;
+                        }                 
+                        if(result.body[0].telephone !== ''){
+                            this.ifo.telephoneFlag=true;
+                            this.ifo.telephone=result.body[0].telephone;
+                        }
+                    }   
+                })
+            }
+             
         },      
         //调用message组件中的方法获取好友消息
         getFriendsMessage(){
-            this.$http.get("http://localhost:8000/getFriendsMessage" ,{ credentials: true}).then(function(result){                                 
-                this.friendsMessage = result.body;
-                if(result.body.length>0){
-                    this.messageCount = result.body.length;
-                }else{
-                    this.messageCount = '';
-                }
-                 
-            })
+            if(this.email !==''){
+                this.$http.get("http://localhost:8000/getFriendsMessage" ,{ credentials: true}).then(function(result){                                 
+                    this.friendsMessage = result.body;
+                    if(result.body.length>0){
+                        this.messageCount = result.body.length;
+                    }else{
+                        this.messageCount = '';
+                    }
+                    
+                })
+            }
+
         },
         //将消息设置为已读
         isRead(id){
@@ -451,9 +453,11 @@ export default {
         },
         //获取好友列表
         getFriends(){
-            this.$http.get("http://localhost:8000/getFriends" ,{ credentials: true}).then(function(result){                   
-                this.friendsList = result.body;
-            })            
+            if(this.email !==''){
+                this.$http.get("http://localhost:8000/getFriends" ,{ credentials: true}).then(function(result){                   
+                    this.friendsList = result.body;
+                }) 
+            }         
         },
         //搜索好友
         searchFriend(){
@@ -461,6 +465,7 @@ export default {
                 this.searchFriendResult = result.body;
             })
         },
+        //添加好友
         addFriend(email,nickName){
             this.$http.post("http://localhost:8000/addFriend" ,{addEmail:email,addNickName:nickName},{ credentials: true}).then(function(result){                                 
                 if(result.body.code==200){
