@@ -675,4 +675,7 @@ export default {
     font-size: 12px;
     line-height: 22px;
 }
+.box-card{
+    margin-bottom: 10px;
+}
 </style>
