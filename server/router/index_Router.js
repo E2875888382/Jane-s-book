@@ -294,5 +294,33 @@ router.get('/getFriends',function(request,response){
   }   
 })
 
+//搜索好友接口
+router.post('/searchFriend',function(request,response){      
+    connection.connect();
+    var sql = 'SELECT email , nickName FROM user  WHERE email = "'+  request.body.search  +'"'; 
+    connection.query(sql, function (error, result) {
+        if (error){
+            response.status(500).send('server error');
+        }                
+        response.status(200).json(result);
+    });
+    handleDisconnect(connection);      
+})
+
+router.post('/addFriend',function(request,response){
+  if(request.session.user){ 
+    connection.connect();
+    var sql= 'INSERT  INTO friend(userEmail,friendEmail,friendNickName) VALUES ("'+ request.session.user.email+'","'+request.body.addEmail+'","'+request.body.addNickName+'")';
+      request.body.addEmail 
+    connection.query(sql, function (error, result) {
+        if (error){
+            response.status(500).send('server error');
+        }                
+        response.status(200).json({message:'删除成功',code:200 });
+    });
+    handleDisconnect(connection);
+  }  
+})
+
 //导出router
 module.exports=router;

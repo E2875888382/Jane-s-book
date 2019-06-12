@@ -202,11 +202,28 @@
                 </span>
 
                 <div v-if="loginFlag">
-                    <div>
-                        <span>我的好友</span>
-                        <el-divider></el-divider>               
+                    <div class="searchFriendBox">
+                        <div>                      
+                            <el-divider content-position="left">添加好友</el-divider>               
+                        </div>
+                        <div>
+                            <div style="margin-bottom:20px;text-align:center" >
+                                <el-input placeholder="请输入email"  class="input-with-select" style="width:300px" v-model="searchFriendInput"></el-input>    
+                                <el-button slot="append" icon="el-icon-search"  @click="searchFriend"></el-button>
+                            </div>
+                            <div  v-for="item in searchFriendResult" :key="item.email">
+                                <div class="searchFriendList">
+                                <span>{{ item.nickName }}</span>
+                                <p>{{ item.email }}</p>
+                                </div>
+                                <el-button type="primary" plain @click="addFriend(item.email,item.nickName)">添加关注</el-button>
+                            </div>                         
+                        </div>
                     </div>
-                    <div>
+                    <div>                      
+                        <el-divider content-position="left">我的好友</el-divider>               
+                    </div>
+                    <div class="friendListBox">
                         <div v-for="item in friendsList" :key="item.friendEmail">
                             <div class="friendList">
                                 <span>{{ item.friendNickName }}</span>
@@ -246,6 +263,10 @@ import msg from './message.vue'
 export default {
     data(){
         return{
+            //添加好友搜索框
+            searchFriendInput:'',
+            //添加好友搜索结果
+            searchFriendResult:[],
             // 账户安全数据
             ifo:{
                 safeNum:'',
@@ -400,7 +421,27 @@ export default {
             this.$http.get("http://localhost:8000/getFriends" ,{ credentials: true}).then(function(result){                   
                 this.friendsList = result.body;
             })            
+        },
+        //搜索好友
+        searchFriend(){
+            this.$http.post("http://localhost:8000/searchFriend" ,{search:this.searchFriendInput},{ credentials: true}).then(function(result){                   
+                this.searchFriendResult = result.body;
+            })
+        },
+        addFriend(email,nickName){
+            this.$http.post("http://localhost:8000/addFriend" ,{addEmail:email,addNickName:nickName},{ credentials: true}).then(function(result){                                 
+                if(result.body.code==200){
+                    this.$message({
+                        message: '添加好友成功',
+                        type: 'success'
+                    });
+                    this.searchFriendResult = [];
+                    this.searchFriendInput = '';
+                    this.getFriends();                         
+                }     
+            })
         }
+
 
     }
 }
@@ -558,6 +599,28 @@ export default {
     padding-left: 30px;
 }
 .friendList p{
+    line-height: 14px;
+    font-size: 12px;
+    color: #6d757a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.friendListBox{
+    height: 730px;
+    width: 840px;
+    overflow:auto;
+}
+.searchFriendBox{
+    widows: 840px;
+    height: 170px;
+}
+.searchFriendList{
+    width: 700px;
+    float: left;
+    padding-left: 30px;
+}
+.searchFriendList p{
     line-height: 14px;
     font-size: 12px;
     color: #6d757a;
