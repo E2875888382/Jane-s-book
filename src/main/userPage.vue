@@ -181,14 +181,28 @@
             </el-tab-pane>
             <!-- 好友消息 -->
             <el-tab-pane>
-                <span slot="label"  @click="getFriendsList">
-                    <el-badge :value="12" class="item">
+                <span slot="label"  @click="getFriendsMessage">
+                    <el-badge :value="messageCount" class="item">
                         <i class="el-icon-message"></i> 好友消息
                     </el-badge>
                 </span>
 
                 <div v-if="loginFlag">
-                    <msg ref="msg"></msg>
+                    <div>
+                        <span>好友消息</span>
+                        <el-divider></el-divider>                        
+                    </div>
+                    <div class="messageBox">
+                        <el-card class="box-card" v-for="item in friendsMessage" :key="item.index">
+                            <div slot="header" class="clearfix">
+                                <span class="sendTime">{{ item.sendTime }}</span>
+                                <span>{{ item.sender }}：</span>
+                                <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.id)">已读</el-button>                      
+                            </div>
+                            <div class="text item">{{ item.content }}</div> 
+                        </el-card>
+                    </div>
+
                 </div>
 
                 <div v-if="!loginFlag"  class="warn">
@@ -256,13 +270,16 @@
 <script>
 //导入头像组件
 import avatar from './avatar.vue'
-//导入好友信息组件
-import msg from './message.vue'
+ 
  
 
 export default {
     data(){
         return{
+            //好友消息
+            friendsMessage:[],
+            //消息数量
+            messageCount:'',
             //添加好友搜索框
             searchFriendInput:'',
             //添加好友搜索结果
@@ -341,7 +358,7 @@ export default {
     //在这里注册组件
     components:{
         avatar,
-        msg,
+      
        
     },
     methods:{
@@ -406,9 +423,25 @@ export default {
                 }   
             })             
         },      
-        //调用message组件中的方法获取好友列表
-        getFriendsList(){
-            console.log(this.$refs.msg)
+        //调用message组件中的方法获取好友消息
+        getFriendsMessage(){
+            this.$http.get("http://localhost:8000/getFriendsMessage" ,{ credentials: true}).then(function(result){                                 
+                this.friendsMessage = result.body;
+                if(result.body.length>0){
+                    this.messageCount = result.body.length;
+                }else{
+                    this.messageCount = '';
+                }
+                 
+            })
+        },
+        //将消息设置为已读
+        isRead(id){
+            this.$http.post("http://localhost:8000/isRead" ,{id:id},{ credentials: true}).then(function(result){                   
+                if(result.body.code == 200){
+                    this.getFriendsMessage();
+                }
+            })            
         },
         //删除好友
         deleteFriend(email){                   
@@ -627,5 +660,14 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}  
+} 
+.messageBox{
+    height: 850px;
+    overflow:auto;
+} 
+.sendTime{
+    color: #999;
+    font-size: 12px;
+    line-height: 22px;
+}
 </style>

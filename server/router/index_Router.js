@@ -307,11 +307,11 @@ router.post('/searchFriend',function(request,response){
     handleDisconnect(connection);      
 })
 
+//添加好友接口
 router.post('/addFriend',function(request,response){
   if(request.session.user){ 
     connection.connect();
-    var sql= 'INSERT  INTO friend(userEmail,friendEmail,friendNickName) VALUES ("'+ request.session.user.email+'","'+request.body.addEmail+'","'+request.body.addNickName+'")';
-      request.body.addEmail 
+    var sql= 'INSERT  INTO friend(userEmail,friendEmail,friendNickName) VALUES ("'+ request.session.user.email+'","'+request.body.addEmail+'","'+request.body.addNickName+'")'; 
     connection.query(sql, function (error, result) {
         if (error){
             response.status(500).send('server error');
@@ -322,5 +322,32 @@ router.post('/addFriend',function(request,response){
   }  
 })
 
+//获取好友消息接口
+router.get('/getFriendsMessage',function(request,response){
+  if(request.session.user){ 
+    connection.connect();
+    var sql=  'SELECT * FROM message WHERE receiver = "'+request.session.user.email+'" AND isRead = 0';  
+    connection.query(sql, function (error, result) {
+        if (error){
+            response.status(500).send('server error');
+        }                
+        response.status(200).json(result);
+    });
+    handleDisconnect(connection);
+  }     
+})
+
+//设置已读状态
+router.post('/isRead',function(request,response){   
+    connection.connect();
+    var sql=' UPDATE message SET isRead = 1 WHERE id = "'+request.body.id+'"';  
+    connection.query(sql, function (error, result) {
+        if (error){
+            response.status(500).send('server error');
+        }                
+        response.status(200).json({message:'已经设置为已读',code:200});
+    });
+    handleDisconnect(connection);  
+})
 //导出router
 module.exports=router;
