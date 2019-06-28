@@ -217,8 +217,9 @@
 
                 <div v-if="loginFlag">
                     <div class="searchFriendBox">
-                        <div>                      
-                            <el-divider content-position="left">添加好友</el-divider>               
+                        <div>
+                            <span>添加好友</span>                      
+                            <el-divider></el-divider>               
                         </div>
                         <div>
                             <div style="margin-bottom:20px;text-align:center" >
@@ -261,7 +262,39 @@
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>            
+            <!-- 发送私信 -->
+            <el-tab-pane>
+                <span slot="label"  @click="getFriends">
+                    <van-icon name="friends-o" /> 发送私信
+                </span>
 
+                <div v-if="loginFlag">
+                    <div class="sendMsgBox">
+                        <div>
+                            <span>发送私信</span>                      
+                            <el-divider content-position="right">我的好友</el-divider>               
+                        </div>
+                        <div class="left_friend_list">                    
+                            <div v-for="item in friendsList" :key="item.friendEmail" @click="sendMsgReceiver( item.friendNickName,item.friendEmail )">
+                                <div class="friendList_sendMsg">
+                                    <span>{{ item.friendNickName }}</span>
+                                    <p>{{ item.friendEmail }}</p>
+                                    <el-divider></el-divider>
+                                </div>                                                                
+                            </div>
+                        </div>
+                        <div class="rigth_send_msg">
+                            <p>发送给：{{ msgReceiverNickname }} {{ msgReceiverEmail }}</p>
+                        </div>  
+                    </div>
+                    
+                     
+                </div>
+
+                <div v-if="!loginFlag"  class="warn">
+                    <h1>请先登录</h1>
+                </div>
+            </el-tab-pane>             
         </el-tabs>
     </div>
 </template>
@@ -276,6 +309,9 @@ import avatar from './avatar.vue'
 export default {
     data(){
         return{
+            //发送消息给好友
+            msgReceiverNickname:'',
+            msgReceiverEmail:'',
             //好友消息
             friendsMessage:[],
             //消息数量
@@ -478,8 +514,12 @@ export default {
                     this.getFriends();                         
                 }     
             })
+        },
+        //获取要发送消息给的好友
+        sendMsgReceiver(nickName,email){
+            this.msgReceiverNickname = nickName;
+            this.msgReceiverEmail = email;
         }
-
 
     }
 }
@@ -650,7 +690,7 @@ export default {
     overflow:auto;
 }
 .searchFriendBox{
-    widows: 840px;
+    width: 840px;
     height: 170px;
 }
 .searchFriendList{
@@ -677,5 +717,45 @@ export default {
 }
 .box-card{
     margin-bottom: 10px;
+}
+.left_friend_list{
+    width: 240px;
+    height: 700px;
+    overflow: auto;
+    cursor: pointer;
+    float: right;
+}
+.rigth_send_msg{
+    width: 600px;
+    height: 700px;
+    border-right:1px solid #DCDFE6;
+    position:absolute;
+    left: 0;
+    top:70px;
+}
+.rigth_send_msg p{
+    text-indent: 2em;
+}
+.sendMsgBox{
+    width: 840px;
+    height: 800px;
+    position: relative;
+}
+.friendList_sendMsg{
+    width: 210px;
+    height: 80px;
+    float: left;
+    padding-left: 30px;    
+}
+.friendList_sendMsg:hover{
+    color: greenyellow;
+}
+.friendList_sendMsg p{
+    line-height: 14px;
+    font-size: 12px;
+    color: #6d757a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
