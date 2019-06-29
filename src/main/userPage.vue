@@ -529,9 +529,15 @@ export default {
         },
         //发送私信
         sendMsg(){
-            if(this.textarea!==''&& this.msgReceiverEmail!==''){
-                console.log(this.textarea);
-                console.log(this.msgReceiverEmail);
+            if(this.textarea!==''&& this.msgReceiverEmail!==''){            
+                this.$http.post("http://localhost:8000/sendMsg" ,{receiver:this.msgReceiverEmail,content:this.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then(function(result){                                 
+                    if(result.body.code==200){
+                        this.$message({
+                            message: '发送私信成功',
+                            type: 'success'
+                        });                                         
+                    }     
+                })
             }else{
                 this.$message({
                     message: '请选择收件人以及填写消息！',

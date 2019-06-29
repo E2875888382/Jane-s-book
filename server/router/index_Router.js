@@ -349,5 +349,21 @@ router.post('/isRead',function(request,response){
     });
     handleDisconnect(connection);  
 })
+
+//存储私信
+router.post('/sendMsg',function(request,response){
+  if(request.session.user){    
+    connection.connect();
+    var sql=  'INSERT INTO message (sender,receiver,content,sendTime) VALUES ("'+request.session.user.email+'","'+request.body.receiver+'","'+request.body.content+'","'+request.body.sendTime+'")' ;  
+    connection.query(sql, function (error, result) {
+        if (error){
+            response.status(500).send('server error');
+        }                
+        response.status(200).json({ message:'ok', code:200 });
+    });
+    handleDisconnect(connection);
+  }       
+})
+
 //导出router
 module.exports=router;
