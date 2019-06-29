@@ -285,6 +285,11 @@
                         </div>
                         <div class="rigth_send_msg">
                             <p>发送给：{{ msgReceiverNickname }} {{ msgReceiverEmail }}</p>
+                            <el-input type="textarea" placeholder="请输入内容" v-model="textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea">
+                            </el-input>
+                            <div class="send_box">
+                                <el-button type="primary" round @click="sendMsg">发送</el-button>
+                            </div>
                         </div>  
                     </div>
                     
@@ -309,6 +314,8 @@ import avatar from './avatar.vue'
 export default {
     data(){
         return{
+            //私信内容
+            textarea:'',
             //发送消息给好友
             msgReceiverNickname:'',
             msgReceiverEmail:'',
@@ -519,6 +526,19 @@ export default {
         sendMsgReceiver(nickName,email){
             this.msgReceiverNickname = nickName;
             this.msgReceiverEmail = email;
+        },
+        //发送私信
+        sendMsg(){
+            if(this.textarea!==''&& this.msgReceiverEmail!==''){
+                console.log(this.textarea);
+                console.log(this.msgReceiverEmail);
+            }else{
+                this.$message({
+                    message: '请选择收件人以及填写消息！',
+                    type: 'warning'
+                });  
+            }
+
         }
 
     }
@@ -757,5 +777,14 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.textarea{
+  width: 550px;
+  margin-left:20px;
+}
+.send_box{
+    margin:20px 10px 0px 20px;
+    width: 540px;
+    text-align: right;
 }
 </style>
