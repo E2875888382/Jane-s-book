@@ -4,8 +4,9 @@ var fs=require('fs');
 var path=require('path');
 var session=require('express-session');
 
+var login_Router=require('./router/login_Router');
 var index_Router=require('./router/index_Router');
-
+var userPage_Router=require('./router/userPage_Router');
 //解决控制台的溢出提示
 // (node:3772) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 
 //11 error listeners added. Use emitter.setMaxListeners() to increase limit
@@ -38,8 +39,9 @@ app.use(session({
     saveUninitialized: true,
  }));
 //挂载router
+app.use(login_Router);
 app.use(index_Router);
-
+app.use(userPage_Router);
 //设置服务器端口
 app.listen(8000,function(){
     console.log('on');
