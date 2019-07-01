@@ -12,6 +12,7 @@
   - vue.js
   - webpack
   - express
+  - vuex
 - 运行方式
   - 1.安装依赖
     - ```npm i  ```
