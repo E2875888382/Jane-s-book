@@ -6,41 +6,41 @@
                 <span slot="label" @click="getLoginUser()">
                     <i class="el-icon-s-home"></i> 个人主页
                 </span>
-                <div v-if="loginFlag">
+                <div v-if="$store.state.loginFlag">
                     <div class="user_info_head">
-                        <van-image width="64" height="64" class="user_img" :src="avatar"/>
-                        <span class="user_name">{{ currentUser }}</span>
-                        <van-progress :percentage="level"  :pivot-text="'LV'+ level " class="process_bar" color="#f2826a"/>
+                        <van-image width="64" height="64" class="user_img" :src="userIfo.avatar"/>
+                        <span class="user_name">{{ userIfo.currentUser }}</span>
+                        <van-progress :percentage="userIfo.level"  :pivot-text="'LV'+ userIfo.level " class="process_bar" color="#f2826a"/>
                     </div>
 
                     <el-divider content-position="left">基本信息</el-divider>
 
                     <div class="user_info_footer">
                         <div class="user_info_item">
-                            <span class="font_label">用户ID：</span><span class="msg">{{ userId }}</span> 
+                            <span class="font_label">用户ID：</span><span class="msg">{{ userIfo.userId }}</span> 
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">出生日期：</span><span class="msg">{{ birth }}</span>
+                            <span class="font_label">出生日期：</span><span class="msg">{{ userIfo.birth }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的手机：</span><span class="msg">{{ telephone }}</span>
+                            <span class="font_label">我的手机：</span><span class="msg">{{ userIfo.telephone }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的邮箱：</span><span class="msg">{{ email }}</span>
+                            <span class="font_label">我的邮箱：</span><span class="msg">{{ userIfo.email }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">性别：</span><span class="msg">{{ gender }}</span>
+                            <span class="font_label">性别：</span><span class="msg">{{ userIfo.gender }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的等级：</span><span class="msg">{{ level }}</span>
+                            <span class="font_label">我的等级：</span><span class="msg">{{ userIfo.level }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的签名：</span><span class="msg">{{ sign }}</span>
+                            <span class="font_label">我的签名：</span><span class="msg">{{ userIfo.sign }}</span>
                         </div>                                                                                                 
                     </div>
 
                 </div>
-                <div v-if="!loginFlag" class="warn">
+                <div v-if="!$store.state.loginFlag" class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
@@ -49,7 +49,7 @@
                  <span slot="label">
                     <i class="el-icon-user"></i> 我的信息
                 </span>
-                <div v-if="loginFlag">
+                <div v-if="$store.state.loginFlag">
                
                 
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -80,7 +80,7 @@
                 </el-form>     
                 </div>
 
-                <div v-if="!loginFlag"  class="warn">
+                <div v-if="!$store.state.loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
@@ -90,11 +90,11 @@
                     <i class="el-icon-picture-outline-round"></i> 我的头像
                 </span>
                 
-                <div v-if="loginFlag">
+                <div v-if="$store.state.loginFlag">
                     <avatar></avatar>
                 </div>
 
-                <div v-if="!loginFlag"  class="warn">
+                <div v-if="!$store.state.loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
@@ -104,7 +104,7 @@
                     <i class="el-icon-lock"></i> 账号安全
                 </span>
 
-                <div v-if="loginFlag">
+                <div v-if="$store.state.loginFlag">
                     <div>
                         <div class="header">
                             <div class="safe_num">{{ ifo.safeNum }}</div>
@@ -175,7 +175,7 @@
                     </div>
                 </div>
 
-                <div v-if="!loginFlag"  class="warn">
+                <div v-if="!$store.state.loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
@@ -187,7 +187,7 @@
                     </el-badge>
                 </span>
 
-                <div v-if="loginFlag">
+                <div v-if="$store.state.loginFlag">
                     <div>
                         <span>好友消息</span>
                         <el-divider></el-divider>                        
@@ -205,7 +205,7 @@
 
                 </div>
 
-                <div v-if="!loginFlag"  class="warn">
+                <div v-if="!$store.state.loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>
@@ -215,7 +215,7 @@
                     <van-icon name="friends-o" /> 好友管理
                 </span>
 
-                <div v-if="loginFlag">
+                <div v-if="$store.state.loginFlag">
                     <div class="searchFriendBox">
                         <div>
                             <span>添加好友</span>                      
@@ -258,7 +258,7 @@
                     </div>
                 </div>
 
-                <div v-if="!loginFlag"  class="warn">
+                <div v-if="!$store.state.loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>            
@@ -268,7 +268,7 @@
                     <van-icon name="friends-o" /> 发送私信
                 </span>
 
-                <div v-if="loginFlag">
+                <div v-if="$store.state.loginFlag">
                     <div class="sendMsgBox">
                         <div>
                             <span>发送私信</span>                      
@@ -296,7 +296,7 @@
                      
                 </div>
 
-                <div v-if="!loginFlag"  class="warn">
+                <div v-if="!$store.state.loginFlag"  class="warn">
                     <h1>请先登录</h1>
                 </div>
             </el-tab-pane>             
@@ -309,11 +309,21 @@
 //导入头像组件
 import avatar from './avatar.vue'
  
- 
-
 export default {
     data(){
         return{
+            //当前用户信息
+            userIfo:{
+                avatar:'',//头像               
+                birth:'',//出生日期               
+                email:'',//email               
+                gender:'',//性别             
+                userId:'', //用户ID                            
+                currentUser:'',//当前用户                         
+                telephone:'',//绑定手机号                            
+                level:0,//用户等级                           
+                sign:'',//个性签名
+            },
             //私信内容
             textarea:'',
             //发送消息给好友
@@ -336,27 +346,7 @@ export default {
                 qqNumber:'',     
             },
             //好友列表
-            friendsList:[],
-            //当前用户
-            currentUser:'',
-            //是否登录标志
-            loginFlag:false,
-            //出生日期
-            birth:'',
-            //email
-            email:'',
-            //性别
-            gender:'',
-            //用户ID
-            userId:'',
-            //绑定手机号
-            telephone:'',
-            //用户等级
-            level:'',
-            //个性签名
-            sign:'',
-            //头像
-            avatar:'',
+            friendsList:[],                  
             result:{},
             //更改用户信息表单
             ruleForm: {
@@ -387,10 +377,6 @@ export default {
                 ]
             }     
         }
-    },
-    created(){
-       
-        
     },
     mounted(){
         //数据加载时发送请求，得到当前用户的个人信息
@@ -433,16 +419,16 @@ export default {
             this.$http.get('http://localhost:8000/getLoginUserInfo',{ credentials: true }).then(function(result){
                 if(result.body[0]){
                     this.result= result.body[0];                                                                        
-                    this.currentUser = this.result.nickName;
-                    this.birth = this.result.birthday;
-                    this.email = this.result.email;
-                    this.gender = this.result.gender;
-                    this.userId = this.result.id;
-                    this.telephone =this.result.telephone;
-                    this.level = this.result.level;
-                    this.sign = this.result.sign;
-                    this.avatar= this.result.avatar;               
-                    this.loginFlag = true;           
+                    this.userIfo.currentUser = this.result.nickName;
+                    this.userIfo.birth = this.result.birthday;
+                    this.userIfo.email = this.result.email;
+                    this.userIfo.gender = this.result.gender;
+                    this.userIfo.userId = this.result.id;
+                    this.userIfo.telephone =this.result.telephone;
+                    this.userIfo.level = this.result.level;
+                    this.userIfo.sign = this.result.sign;
+                    this.userIfo.avatar= this.result.avatar;               
+                             
                 }         
             })
         },

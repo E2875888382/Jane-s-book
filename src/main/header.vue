@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <div class="head_content">
        <div class="right_box">
-                    <el-dropdown class="select_list"  size="small">
+                <el-dropdown class="select_list"  size="small">
                     <el-button type="primary">
                         更多<i class="el-icon-arrow-down el-icon--right"></i>    
                     </el-button>
@@ -11,14 +11,12 @@
                         <el-dropdown-item><i class="el-icon-user"></i><a @click="toUserPage()" >我的主页</a></el-dropdown-item>        
                         <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" >退出登录</a></el-dropdown-item>
                         <el-dropdown-item><i class="el-icon-s-home"></i><a @click="returnIndex()">返回首页</a></el-dropdown-item>
-                    </el-dropdown-menu>
-                     
+                    </el-dropdown-menu>                    
                 </el-dropdown>
-                <div class="new" v-if="loginFlag">                 
-                    <i>{{ currentUser }}</i>
+                <div class="new" v-if="$store.state.loginFlag">                 
+                    <i>{{ $store.state.currentUser }}</i>
                 </div>
-
-                <div class="login" v-if="unLoginFlag">
+                <div class="login" v-if="$store.state.unLoginFlag">
                     <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>                    
                 </div>
                 <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%" >
@@ -34,7 +32,7 @@
                         <el-button type="primary" @click="login()">登 录</el-button>
                     </div>
                 </el-dialog>                
-                <div class="new"  v-if="unLoginFlag">
+                <div class="new"  v-if="$store.state.unLoginFlag">
                     <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>   
                 </div>
                 <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
@@ -55,8 +53,7 @@
                     <div slot="footer" class="dialog-footer">                       
                         <el-button type="primary" @click="newUser()">注 册</el-button>
                     </div>
-                </el-dialog>
-                
+                </el-dialog>                
        </div>
        <a href="//www.bilibili.com" class="head-logo"   ></a>
         <div class="search_box">
@@ -66,11 +63,8 @@
                     <input type="text" class="form-control search-input" placeholder="Search for...">
                     <button class="form-btn"></button> 
                 </div> 
-            </div> 
-             
-        </div>         
-                                  
-        
+            </div>              
+        </div>                                                  
     </div>
 </div>   
 </template>
@@ -110,14 +104,14 @@ export default {
         }                  
       return {
         //中间验证码
-        sms:'',  
-        loginFlag:false,
-        unLoginFlag:true,  
-        activeIndex: '1',
-        activeIndex2: '1',
+        sms:'', 
+        user:{
+            currentUser:'',
+            loginFlag:false,
+            unLoginFlag:true,
+        },         
         dialogNewVisible: false,
         dialogLoginVisible: false,
-        currentUser:'',
         newForm: {
            email:'',
            password:'',
@@ -146,8 +140,8 @@ export default {
             { validator: checkSms, trigger: 'blur' },
             {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}   
           ]       
-       },
-       componentName:'userPage', 
+        },
+         
  
       };
     },
@@ -155,72 +149,63 @@ export default {
        this.getLoginUser();
     },
     methods: {
-        toUserPage(){
-            this.$emit('childFn', this.componentName);
+        toUserPage(){          
+            this.$store.commit('changeComponent','userPage');
         },
-        returnIndex(){
-            this.$emit('childFn', 'index');
+        returnIndex(){        
+            this.$store.commit('changeComponent','index');
         },
-
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('http://localhost:8000/getLoginUser',{ credentials: true }).then(function(result){
                 if(result.body.user){
-                    this.currentUser = result.body.user.email;
-                    this.unLoginFlag = false;
-                    this.loginFlag = true;                 
+                    this.user.currentUser = result.body.user.email;
+                    this.user.unLoginFlag = false;
+                    this.user.loginFlag = true;                 
                 }         
-        })
-        },
-
-        handleClick() {
-            alert('button click');
-        },
-
+            })
+            this.$store.commit('getLoginUser',this.user);
+        },    
         newUser () { 
             this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
                 this.dialogNewVisible = false;
-                this.unLoginFlag = false;
-                this.loginFlag = true;
-                this.currentUser = result.body.user;
+                this.user.unLoginFlag = false;
+                this.user.loginFlag = true;
+                this.user.currentUser = result.body.user;
+                this.$store.commit('newUser',this.user);
                 this.$emit('childFn', 'index');
             },function(error){
                 console.log(error);
-            })
-           
-           
-        },
-        
+            })                    
+        },        
         login(){
-            this.$http.post('http://localhost:8000/login',this.loginForm,{emulateJSON:true,credentials: true}).then(function(result){
-               
+            this.$http.post('http://localhost:8000/login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{              
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
-                    this.unLoginFlag = false;
-                    this.loginFlag = true;
-                    this.currentUser = result.body.user;
-                    this.$emit('childFn', 'index');
+                    this.user.unLoginFlag = false;
+                    this.user.loginFlag = true;
+                    this.user.currentUser = result.body.user;
+                    this.$store.commit('login',this.user);
+                    this.returnIndex();
                 }else{
                     console.log(result.body);
-                }
-                
-            },function(error){
+                }                
+            },(error) => {
                 console.log(error);
             })            
         },
-
         logOut(){
-            this.$http.get('http://localhost:8000/logOut',{credentials: true}).then(function(result){              
+            this.$http.get('http://localhost:8000/logOut',{credentials: true}).then((result) => {              
                 if(result.body.code == 700){
-                    this.currentUser = '';
-                    this.unLoginFlag = true;
-                    this.loginFlag = false;
-                    this.$emit('childFn', 'index'); 
+                    this.user.currentUser = '';
+                    this.user.unLoginFlag = true;
+                    this.user.loginFlag = false;
+                    this.$store.commit('logOut',this.user);
+                    this.returnIndex(); 
                 }else{
                     console.log(result.body);
-                }
-                
-            },function(error){
+                }               
+            },(error) => {
                 console.log(error);
             })            
         },
@@ -231,9 +216,6 @@ export default {
                 console.log(error);
             })
         }
-
-
-
     }      
 }
 </script>
