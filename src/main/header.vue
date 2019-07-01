@@ -8,9 +8,9 @@
                         更多<i class="el-icon-arrow-down el-icon--right"></i>    
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item><i class="el-icon-user"></i><a @click="toUserPage()" >我的主页</a></el-dropdown-item>        
-                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" >退出登录</a></el-dropdown-item>
-                        <el-dropdown-item><i class="el-icon-s-home"></i><a @click="returnIndex()">返回首页</a></el-dropdown-item>
+                        <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
+                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/" >退出登录</a></el-dropdown-item>
+                        <el-dropdown-item><i class="el-icon-s-home"></i><a href="#/">返回首页</a></el-dropdown-item>
                     </el-dropdown-menu>                    
                 </el-dropdown>
                 <div class="new" v-if="$store.state.loginFlag">                 
@@ -148,13 +148,7 @@ export default {
     created(){
        this.getLoginUser();
     },
-    methods: {
-        toUserPage(){          
-            this.$store.commit('changeComponent','userPage');
-        },
-        returnIndex(){        
-            this.$store.commit('changeComponent','index');
-        },
+    methods: {       
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('http://localhost:8000/getLoginUser',{ credentials: true }).then(function(result){
@@ -164,7 +158,7 @@ export default {
                     this.user.loginFlag = true;                 
                 }         
             })
-            this.$store.commit('getLoginUser',this.user);
+            this.$store.commit('userStatus',this.user);
         },    
         newUser () { 
             this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
@@ -172,8 +166,8 @@ export default {
                 this.user.unLoginFlag = false;
                 this.user.loginFlag = true;
                 this.user.currentUser = result.body.user;
-                this.$store.commit('newUser',this.user);
-                this.$emit('childFn', 'index');
+                this.$store.commit('userStatus',this.user);
+                location.href="#/";
             },function(error){
                 console.log(error);
             })                    
@@ -185,8 +179,8 @@ export default {
                     this.user.unLoginFlag = false;
                     this.user.loginFlag = true;
                     this.user.currentUser = result.body.user;
-                    this.$store.commit('login',this.user);
-                    this.returnIndex();
+                    this.$store.commit('userStatus',this.user);
+                    location.href="#/";
                 }else{
                     console.log(result.body);
                 }                
@@ -200,8 +194,7 @@ export default {
                     this.user.currentUser = '';
                     this.user.unLoginFlag = true;
                     this.user.loginFlag = false;
-                    this.$store.commit('logOut',this.user);
-                    this.returnIndex(); 
+                    this.$store.commit('userStatus',this.user);                  
                 }else{
                     console.log(result.body);
                 }               

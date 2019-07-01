@@ -27,32 +27,14 @@ var store = new Vuex.Store({
         currentUser:'',
         loginFlag:false,
         unLoginFlag:true,
-        componentName:'userPage',
     },
     mutations:{
-        getLoginUser(state,user){
+        userStatus(state,user){
             state.currentUser = user.currentUser;
             state.loginFlag = user.loginFlag;
             state.unLoginFlag = user.unLoginFlag;
         },
-        login(state,user){
-            state.currentUser = user.currentUser;
-            state.loginFlag = user.loginFlag;
-            state.unLoginFlag = user.unLoginFlag;
-        },
-        newUser(state,user){
-            state.currentUser = user.currentUser;
-            state.loginFlag = user.loginFlag;
-            state.unLoginFlag = user.unLoginFlag;
-        },
-        logOut(state,user){
-            state.currentUser = user.currentUser;
-            state.loginFlag = user.loginFlag;
-            state.unLoginFlag = user.unLoginFlag;            
-        },
-        changeComponent(state,componentName){
-            state.componentName = componentName;
-        }
+        
     }
 })
 

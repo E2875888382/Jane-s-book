@@ -1,7 +1,7 @@
 <template>
 <div>
      <top></top>    
-     <component v-bind:is="$store.state.componentName"></component>       
+     <router-view></router-view>      
      <bottom></bottom>		 
 </div>
 </template>
