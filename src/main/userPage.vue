@@ -392,7 +392,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     //发送数据到后台
-                    this.$http.post('http://localhost:8000/updateUserInfo',{email:this.email,update:this.ruleForm, credentials: true }).then(function(result){
+                    this.$http.post('http://localhost:8000/updateUserInfo',{email:this.userIfo.email,update:this.ruleForm, credentials: true }).then(function(result){
                         if(result.body.code==200){
                             this.$message({
                                 message: '修改信息成功',
@@ -453,7 +453,7 @@ export default {
         },      
         //调用message组件中的方法获取好友消息
         getFriendsMessage(){
-            if(this.email !==''){
+            if(this.userIfo.email !==''){
                 this.$http.get("http://localhost:8000/getFriendsMessage" ,{ credentials: true}).then(function(result){                                 
                     this.friendsMessage = result.body;
                     if(result.body.length>0){
@@ -482,7 +482,7 @@ export default {
         },
         //获取好友列表
         getFriends(){
-            if(this.email !==''){
+            if(this.userIfo.email !==''){
                 this.$http.get("http://localhost:8000/getFriends" ,{ credentials: true}).then(function(result){                   
                     this.friendsList = result.body;
                 }) 
