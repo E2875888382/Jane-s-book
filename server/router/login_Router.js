@@ -60,7 +60,7 @@ router.post('/newUser',(request,response) =>{
 router.post('/login', (request,response) =>{
   connection.connect();
   //查找账号密码是否存在
-  var sql='SELECT * FROM user WHERE email ='+ '"'+request.body.email+'"AND password = "'+request.body.password +'"';
+  var sql=`SELECT * FROM user WHERE email ="${request.body.email}"AND password = "${request.body.password }"`;
   connection.query(sql, (error, result) =>{
       if (error) {
         response.status(500).json({  message:"server error",code:500  });           
