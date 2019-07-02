@@ -10,11 +10,11 @@
     - 管理好友（添加好友，删除好友）
     - 发送好友私信
 - 技术栈：
-  - vue.js（前端用到的主要框架）
+  - vue.js（前端主要框架）
   - webpack (资源打包)
   - express （node.js后端框架）
-  - vuex （vue状态管理）
-  - vue-router （vue路由）
+  - vuex （vue状态管理工具）
+  - vue-router （vue的路由插件）
   - vue-resource （vue的ajax插件）
   - element UI （UI）
   - vant （UI）
