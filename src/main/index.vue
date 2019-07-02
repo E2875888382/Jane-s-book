@@ -1,6 +1,5 @@
 <template>
 <div>   
-     <topNav></topNav>
      <carousal></carousal> 
      <div class="content">
           <videoBox></videoBox>     
@@ -15,8 +14,7 @@
 
 <script>
 
-import carousal from '../main/index/carousal.vue'
-import topNav from '../main/index/nav.vue' 
+import carousal from '../main/index/carousal.vue' 
 import rankingList from '../main/index/rankingList.vue'
 import videoBox from '../main/index/videoBox.vue'
 import rankingListSecond from '../main/index/rankingListSecond.vue'
@@ -35,16 +33,13 @@ export default{
          
          this.show();
      },
-     components:{
-      
+     components:{     
           carousal,
-          topNav,
           rankingList,
           rankingListSecond,
           videoBox,
           videoBoxSecond,
-          recommend,
-         
+          recommend,        
      },
      methods:{
           show(){

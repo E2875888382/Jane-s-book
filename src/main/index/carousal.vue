@@ -34,7 +34,8 @@ export default {
 .block{
     width:1000px;
     height:230px;
-    margin:0 auto;   
+    margin:0 auto;
+    margin-top:40px;   
 }
  
 img{
