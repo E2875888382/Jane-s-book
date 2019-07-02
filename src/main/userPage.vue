@@ -392,7 +392,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     //发送数据到后台
-                    this.$http.post('http://localhost:8000/updateUserInfo',{email:this.userIfo.email,update:this.ruleForm, credentials: true }).then(function(result){
+                    this.$http.post('http://localhost:8000/updateUserInfo',{email:this.userIfo.email,update:this.ruleForm, credentials: true }).then((result) =>{
                         if(result.body.code==200){
                             this.$message({
                                 message: '修改信息成功',
@@ -416,7 +416,7 @@ export default {
         //获取当前用户信息
         getLoginUser(){
              //请求登录session，用于持久化登录状态
-            this.$http.get('http://localhost:8000/getLoginUserInfo',{ credentials: true }).then(function(result){
+            this.$http.get('http://localhost:8000/getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.result= result.body[0];                                                                        
                     this.userIfo.currentUser = this.result.nickName;
@@ -435,7 +435,7 @@ export default {
         //获取当前用户的安全信息
         getSafeIfo(){
             if(this.email !== ''){
-                this.$http.get("http://localhost:8000/getSafeIfo",{credentials: true}).then(function(result){
+                this.$http.get("http://localhost:8000/getSafeIfo",{credentials: true}).then( (result) =>{
                     if(result.body[0]){
                         this.ifo.safeNum=result.body[0].safenum;
                         if(result.body[0].qq !== ''){
@@ -454,7 +454,7 @@ export default {
         //调用message组件中的方法获取好友消息
         getFriendsMessage(){
             if(this.userIfo.email !==''){
-                this.$http.get("http://localhost:8000/getFriendsMessage" ,{ credentials: true}).then(function(result){                                 
+                this.$http.get("http://localhost:8000/getFriendsMessage" ,{ credentials: true}).then( (result) =>{                                 
                     this.friendsMessage = result.body;
                     if(result.body.length>0){
                         this.messageCount = result.body.length;
@@ -468,7 +468,7 @@ export default {
         },
         //将消息设置为已读
         isRead(id){
-            this.$http.post("http://localhost:8000/isRead" ,{id:id},{ credentials: true}).then(function(result){                   
+            this.$http.post("http://localhost:8000/isRead" ,{id:id},{ credentials: true}).then( (result) =>{                   
                 if(result.body.code == 200){
                     this.getFriendsMessage();
                 }
@@ -476,27 +476,27 @@ export default {
         },
         //删除好友
         deleteFriend(email){                   
-            this.$http.post("http://localhost:8000/deleteFriend",{delete:email},{ credentials: true}).then(function(result){    
+            this.$http.post("http://localhost:8000/deleteFriend",{delete:email},{ credentials: true}).then( (result) =>{    
                 this.getFriends();               
             })              
         },
         //获取好友列表
         getFriends(){
             if(this.userIfo.email !==''){
-                this.$http.get("http://localhost:8000/getFriends" ,{ credentials: true}).then(function(result){                   
+                this.$http.get("http://localhost:8000/getFriends" ,{ credentials: true}).then( (result) =>{                   
                     this.friendsList = result.body;
                 }) 
             }         
         },
         //搜索好友
         searchFriend(){
-            this.$http.post("http://localhost:8000/searchFriend" ,{search:this.searchFriendInput},{ credentials: true}).then(function(result){                   
+            this.$http.post("http://localhost:8000/searchFriend" ,{search:this.searchFriendInput},{ credentials: true}).then( (result) =>{                   
                 this.searchFriendResult = result.body;
             })
         },
         //添加好友
         addFriend(email,nickName){
-            this.$http.post("http://localhost:8000/addFriend" ,{addEmail:email,addNickName:nickName},{ credentials: true}).then(function(result){                                 
+            this.$http.post("http://localhost:8000/addFriend" ,{addEmail:email,addNickName:nickName},{ credentials: true}).then( (result) =>{                                 
                 if(result.body.code==200){
                     this.$message({
                         message: '添加好友成功',
@@ -516,7 +516,7 @@ export default {
         //发送私信
         sendMsg(){
             if(this.textarea!==''&& this.msgReceiverEmail!==''){            
-                this.$http.post("http://localhost:8000/sendMsg" ,{receiver:this.msgReceiverEmail,content:this.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then(function(result){                                 
+                this.$http.post("http://localhost:8000/sendMsg" ,{receiver:this.msgReceiverEmail,content:this.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then( (result) =>{                                 
                     if(result.body.code==200){
                         this.$message({
                             message: '发送私信成功',
