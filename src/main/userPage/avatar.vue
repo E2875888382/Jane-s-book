@@ -47,7 +47,7 @@ export default {
     methods: {
         afterRead(file) {          
         // 此时可以自行将文件上传至服务器
-            this.$http.post("http://localhost:8000/uploadAvatar",file,{credentials: true}).then(function(result){
+            this.$http.post("uploadAvatar",file,{credentials: true}).then(function(result){
                 //console.log(result.body)
             })
             
@@ -64,7 +64,7 @@ export default {
         },
         useAvatarT(){
             if(this.imgPreview.length!==0){
-                this.$http.post("http://localhost:8000/uploadAvatarT",{src:this.imgPreview},{credentials: true}).then(function(result){
+                this.$http.post("uploadAvatarT",{src:this.imgPreview},{credentials: true}).then(function(result){
                     //console.log(result.body)
                 })
                 this.$message( '切换头像成功');

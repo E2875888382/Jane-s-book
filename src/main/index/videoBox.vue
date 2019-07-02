@@ -39,7 +39,7 @@ export default {
     },
     methods:{
            getEntertainmentVideo(){
-               this.$http.get('http://localhost:8000/getEntertainmentVideo').then(result => {
+               this.$http.get('getEntertainmentVideo').then(result => {
                     
                     this.entertainmentVideo=result.body;
            

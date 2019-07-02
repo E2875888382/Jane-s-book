@@ -151,7 +151,7 @@ export default {
     methods: {       
         getLoginUser(){
              //请求登录session，用于持久化登录状态
-            this.$http.get('http://localhost:8000/getLoginUser',{ credentials: true }).then(function(result){
+            this.$http.get('getLoginUser',{ credentials: true }).then(function(result){
                 if(result.body.user){
                     this.user.currentUser = result.body.user.email;
                     this.user.unLoginFlag = false;
@@ -161,7 +161,7 @@ export default {
             this.$store.commit('userStatus',this.user);
         },    
         newUser () { 
-            this.$http.post('http://localhost:8000/newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
+            this.$http.post('newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
                 this.dialogNewVisible = false;
                 this.user.unLoginFlag = false;
                 this.user.loginFlag = true;
@@ -173,7 +173,7 @@ export default {
             })                    
         },        
         login(){
-            this.$http.post('http://localhost:8000/login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{              
+            this.$http.post('login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{              
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
                     this.user.unLoginFlag = false;
@@ -189,7 +189,7 @@ export default {
             })            
         },
         logOut(){
-            this.$http.get('http://localhost:8000/logOut',{credentials: true}).then((result) => {              
+            this.$http.get('logOut',{credentials: true}).then((result) => {              
                 if(result.body.code == 700){
                     this.user.currentUser = '';
                     this.user.unLoginFlag = true;
@@ -203,7 +203,7 @@ export default {
             })            
         },
         sendSms(){
-            this.$http.post('http://localhost:8000/sendSms',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
+            this.$http.post('sendSms',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
                 this.sms = result.body.sms;
             },function(error){
                 console.log(error);

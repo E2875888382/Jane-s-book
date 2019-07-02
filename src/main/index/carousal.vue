@@ -20,7 +20,7 @@ export default {
     },
     methods:{
            getLunbo(){
-               this.$http.get('http://localhost:8000/getLunBo').then(result => {
+               this.$http.get('getLunBo').then(result => {
                     
                     this.lunbo=result.body;
                

@@ -38,7 +38,7 @@ export default {
     },
     methods:{
            getRecommendVideo(){
-               this.$http.get('http://localhost:8000/getRecommendVideo').then(result => {
+               this.$http.get('getRecommendVideo').then(result => {
                     
                     this.recommendVideo=result.body;
                  

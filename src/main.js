@@ -7,7 +7,9 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 //配置vant，vue-resource
 Vue.use(Vant);
-Vue.use(VueResource)
+Vue.use(VueResource);
+Vue.http.options.root = 'http://localhost:8000';
+
 //导入vue
 import Vue from 'vue'
 import App from './main/app.vue'

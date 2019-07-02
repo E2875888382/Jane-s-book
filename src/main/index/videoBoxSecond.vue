@@ -38,7 +38,7 @@ export default {
     },
     methods:{
            getBasketballVideo(){
-               this.$http.get('http://localhost:8000/getBasketballVideo').then(result => {
+               this.$http.get('getBasketballVideo').then(result => {
                     
                     this.basketballVideo=result.body;
            
