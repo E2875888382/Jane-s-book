@@ -10,12 +10,15 @@
     - 管理好友（添加好友，删除好友）
     - 发送好友私信
 - 技术栈：
-  - vue.js
-  - webpack
-  - express
-  - vuex
-  - vue-router
-  - vue-resource
+  - vue.js（前端主要框架）
+  - webpack (资源打包)
+  - express （node.js后端框架）
+  - vuex （vue状态管理工具）
+  - vue-router （vue的路由插件）
+  - vue-resource （vue的ajax插件）
+  - element UI （UI）
+  - vant （UI）
+  - bootstrap （UI）
 - 运行方式
   - 1.安装依赖
     - ```npm i  ```
