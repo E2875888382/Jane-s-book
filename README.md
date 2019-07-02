@@ -14,6 +14,8 @@
   - webpack
   - express
   - vuex
+  - vue-router
+  - vue-resource
 - 运行方式
   - 1.安装依赖
     - ```npm i  ```
