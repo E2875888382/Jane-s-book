@@ -1,8 +1,6 @@
-var fs=require('fs');
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
-const nodemailer = require('nodemailer');
 var connection=mysql.createConnection({
     host:'localhost',
     user:'root',
@@ -18,14 +16,11 @@ function handleDisconnect(connection) {
     connection.on('error', function(err) {
       if (!err.fatal) {
         return;
-      }
-   
+      } 
       if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
         throw err;
-      }
-   
-      console.log('Re-connecting lost connection: ' + err.stack);
-   
+      }   
+      console.log('Re-connecting lost connection: ' + err.stack);   
       connection = mysql.createConnection(connection.config);
       handleDisconnect(connection);
       connection.connect();
@@ -33,51 +28,51 @@ function handleDisconnect(connection) {
 };
 
 //获取轮播图接口
-router.get('/getLunBo',function(request,response){
+router.get('/getLunBo',(request,response) => {
   connection.connect();
   var sql='SELECT  * FROM `shufflingfigure`limit 0,5';
-  connection.query(sql, function (error, result) {
+  connection.query(sql, (error, result) => {
       if (error){
           response.status(500).send('server error');
       }                
-      response.send(  result    );  
+      response.send( result );  
   });
   handleDisconnect(connection);
 }) 
 
 //获取娱乐视频接口
-router.get('/getEntertainmentVideo',function(request,response){
+router.get('/getEntertainmentVideo', (request,response) =>{
   connection.connect();
   var sql='SELECT  * FROM `entertainmentvideo`limit 0,8';
-  connection.query(sql, function (error, result) {
+  connection.query(sql, (error, result) => {
       if (error){
           response.status(500).send('server error');
       }                
-      response.send(  result    );
+      response.send( result );
   });
   handleDisconnect(connection);
 }) 
 //获取篮球视频接口
-router.get('/getBasketballVideo',function(request,response){
+router.get('/getBasketballVideo', (request,response) => {
   connection.connect();
   var sql='SELECT  * FROM `basketballvideo`limit 0,8';
-  connection.query(sql, function (error, result) {
+  connection.query(sql, (error, result) => {
       if (error){
           response.status(500).send('server error');
       }                
-      response.send(  result    );
+      response.send( result );
   });
   handleDisconnect(connection);
 }) 
 //获取推荐视频接口
-router.get('/getRecommendVideo',function(request,response){
+router.get('/getRecommendVideo', (request,response) => {
   connection.connect();
   var sql='SELECT  * FROM `recommendvideo`limit 0,4';
-  connection.query(sql, function (error, result) {
+  connection.query(sql, (error, result) =>  {
       if (error){
           response.status(500).send('server error');
       }                
-      response.send(  result    );
+      response.send( result );
   });
   handleDisconnect(connection);
 }) 

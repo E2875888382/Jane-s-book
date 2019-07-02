@@ -1,8 +1,6 @@
-var fs=require('fs');
 var express=require('express');
 var router=express.Router();
 var mysql=require('mysql');
-const nodemailer = require('nodemailer');
 var connection=mysql.createConnection({
     host:'localhost',
     user:'root',
@@ -18,25 +16,22 @@ function handleDisconnect(connection) {
     connection.on('error', function(err) {
       if (!err.fatal) {
         return;
-      }
-   
+      }  
       if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
         throw err;
-      }
-   
-      console.log('Re-connecting lost connection: ' + err.stack);
-   
+      }   
+      console.log('Re-connecting lost connection: ' + err.stack); 
       connection = mysql.createConnection(connection.config);
       handleDisconnect(connection);
       connection.connect();
     });
 };
 //获取好友列表接口
-router.get('/getFriends',function(request,response){
+router.get('/getFriends',(request,response) =>{
     if(request.session.user){    
-      connection.connect();  
-      var sql = 'SELECT * FROM friend  WHERE userEmail = "'+  request.session.user.email +'"'; 
-      connection.query(sql, function (error, result) {
+      connection.connect();     
+      var sql = `SELECT * FROM friend  WHERE userEmail = "${ request.session.user.email} "`; 
+      connection.query(sql,  (error, result) => {
           if (error){
               response.status(500).send('server error');
           }                
@@ -47,11 +42,11 @@ router.get('/getFriends',function(request,response){
   })
 
 //获取用户信息接口
-router.get('/getLoginUserInfo',function(request,response){
+router.get('/getLoginUserInfo', (request,response) =>{
     if(request.session.user){    
-        connection.connect();
-        var sql='SELECT * FROM user WHERE email ='+ '"'+request.session.user.email+'"';
-        connection.query(sql, function (error, result) {
+        connection.connect();     
+        var sql=`SELECT * FROM user WHERE email = "${request.session.user.email}"`;
+        connection.query(sql, (error, result) =>{
             if (error){
                 response.status(500).send('server error');
             }                
@@ -66,10 +61,10 @@ router.get('/getLoginUserInfo',function(request,response){
   })  
 
 //搜索好友接口
-router.post('/searchFriend',function(request,response){      
+router.post('/searchFriend', (request,response) =>{      
     connection.connect();
-    var sql = 'SELECT email , nickName FROM user  WHERE email = "'+  request.body.search  +'"'; 
-    connection.query(sql, function (error, result) {
+    var sql = `SELECT email , nickName FROM user  WHERE email = "${ request.body.search }"`; 
+    connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');
         }                
@@ -79,11 +74,11 @@ router.post('/searchFriend',function(request,response){
 })
 
 //添加好友接口
-router.post('/addFriend',function(request,response){
+router.post('/addFriend', (request,response) =>{
     if(request.session.user){ 
-      connection.connect();
-      var sql= 'INSERT  INTO friend(userEmail,friendEmail,friendNickName) VALUES ("'+ request.session.user.email+'","'+request.body.addEmail+'","'+request.body.addNickName+'")'; 
-      connection.query(sql, function (error, result) {
+      connection.connect();     
+      var sql= `INSERT  INTO friend(userEmail,friendEmail,friendNickName) VALUES ("${ request.session.user.email } ","${ request.body.addEmail }","${request.body.addNickName}")`; 
+      connection.query(sql,  (error, result) => {
           if (error){
               response.status(500).send('server error');
           }                
@@ -94,11 +89,11 @@ router.post('/addFriend',function(request,response){
   })
 
 //获取好友消息接口
-router.get('/getFriendsMessage',function(request,response){
+router.get('/getFriendsMessage', (request,response) =>{
     if(request.session.user){ 
-      connection.connect();
-      var sql=  'SELECT * FROM message WHERE receiver = "'+request.session.user.email+'" AND isRead = 0';  
-      connection.query(sql, function (error, result) {
+      connection.connect();  
+      var sql=`SELECT * FROM message WHERE receiver = "${ request.session.user.email }" AND isRead = 0`;  
+      connection.query(sql, (error, result) =>{
           if (error){
               response.status(500).send('server error');
           }                
@@ -109,10 +104,10 @@ router.get('/getFriendsMessage',function(request,response){
   })
 
 //设置已读状态
-router.post('/isRead',function(request,response){   
+router.post('/isRead', (request,response) =>{   
     connection.connect();
-    var sql=' UPDATE message SET isRead = 1 WHERE id = "'+request.body.id+'"';  
-    connection.query(sql, function (error, result) {
+    var sql= `UPDATE message SET isRead = 1 WHERE id = "${ request.body.id }"`;  
+    connection.query(sql, (error, result) =>{
         if (error){
             response.status(500).send('server error');
         }                
@@ -122,11 +117,11 @@ router.post('/isRead',function(request,response){
 })
 
 //存储私信
-router.post('/sendMsg',function(request,response){
+router.post('/sendMsg', (request,response) =>{
     if(request.session.user){    
       connection.connect();
-      var sql=  'INSERT INTO message (sender,receiver,content,sendTime) VALUES ("'+request.session.user.email+'","'+request.body.receiver+'","'+request.body.content+'","'+request.body.sendTime+'")' ;  
-      connection.query(sql, function (error, result) {
+      var sql=  `INSERT INTO message (sender,receiver,content,sendTime) VALUES ("${ request.session.user.email }","${ request.body.receiver }","${ request.body.content}","${request.body.sendTime}")`;  
+      connection.query(sql, (error, result) =>{
           if (error){
               response.status(500).send('server error');
           }                
@@ -138,11 +133,11 @@ router.post('/sendMsg',function(request,response){
 
 
 //删除好友接口
-router.post('/deleteFriend',function(request,response){
+router.post('/deleteFriend', (request,response) =>{
     if(request.session.user){    
       connection.connect();  
-      var sql = 'DELETE FROM friend WHERE userEmail = "'+request.session.user.email +'" AND friendEmail = "'+request.body.delete+'"';
-      connection.query(sql, function (error, result) {
+      var sql = `DELETE FROM friend WHERE userEmail = "${request.session.user.email}" AND friendEmail = "${request.body.delete}"`;
+      connection.query(sql, (error, result) =>{
           if (error){
               response.status(500).send('server error');
           }                
@@ -153,23 +148,23 @@ router.post('/deleteFriend',function(request,response){
   })  
 
 //更新用户信息接口
-router.post('/updateUserInfo',function(request,response){
+router.post('/updateUserInfo', (request,response) =>{
     connection.connect();  
-        var sql= 'UPDATE `user` SET `nickName` ="'+request.body.update.nickName+'",`gender`="'+request.body.update.gender+'",`birthday`="'+request.body.update.birth+'",`sign`="'+request.body.update.sign+'",`telephone`="'+request.body.update.telephone+'" WHERE `email` ='+'"'+request.body.email +'"';
-        connection.query(sql, function (error, result) {
-            if (error){
-                response.status(500).send('server error');
-            }                
-            response.status(200).json({  message:"修改成功",code:200  });
-        });
-        handleDisconnect(connection);   
+    var sql= `UPDATE user SET nickName ="${request.body.update.nickName}",gender ="${request.body.update.gender}",birthday ="${request.body.update.birth}",sign ="${request.body.update.sign}",telephone ="${request.body.update.telephone}" WHERE email ="${request.body.email}"`;
+    connection.query(sql,  (error, result) => {
+      if (error){
+          response.status(500).send('server error');
+      }                
+          response.status(200).json({  message:"修改成功",code:200  });
+      });
+    handleDisconnect(connection);   
   })  
 
 //获取用户安全信息接口
-router.get('/getSafeIfo',function(request,response){
+router.get('/getSafeIfo', (request,response) =>{
     if(request.session.user){     
       connection.connect();
-      var sql='SELECT qq,telephone,safenum FROM USER WHERE email = "'+request.session.user.email+'"';
+      var sql=`SELECT qq,telephone,safenum FROM USER WHERE email = "${request.session.user.email}"`;
       connection.query(sql, function (error, result) {
           if (error){
               response.status(500).send('server error');
@@ -181,11 +176,10 @@ router.get('/getSafeIfo',function(request,response){
   })
   
 //上传头像接口
-router.post('/uploadAvatar',function(request,response){
-    connection.connect();  
-    
-    var sql=' UPDATE USER SET avatar = "'+request.body.content+'" WHERE email = "'+request.session.user.email+'"';
-    connection.query(sql, function (error, result) {
+router.post('/uploadAvatar', (request,response) =>{
+    connection.connect();     
+    var sql=`UPDATE USER SET avatar = "${request.body.content}" WHERE email = "${request.session.user.email}"`;
+    connection.query(sql, (error, result) =>{
         if (error){
             response.status(500).send('server error');
         }                
@@ -196,16 +190,17 @@ router.post('/uploadAvatar',function(request,response){
   
   
 //上传头像接口
-router.post('/uploadAvatarT',function(request,response){
+router.post('/uploadAvatarT', (request,response) =>{
     connection.connect(); 
-    var sql=' UPDATE USER SET avatar = "'+request.body.src+'" WHERE email = "'+request.session.user.email+'"';
-    connection.query(sql, function (error, result) {
+    var sql=`UPDATE USER SET avatar = "${request.body.src}" WHERE email = "${request.session.user.email}"`;
+    connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');
         }                
         response.status(200).json({message:"上传成功",code:200});
     });
     handleDisconnect(connection);   
-  })  
+}) 
+
 //导出router
 module.exports=router;  
