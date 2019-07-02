@@ -15,13 +15,13 @@
 
 <script>
 
-import carousal from './carousal.vue'
-import topNav from './nav.vue' 
-import rankingList from './rankingList.vue'
-import videoBox from './videoBox.vue'
-import rankingListSecond from './rankingListSecond.vue'
-import videoBoxSecond from './videoBoxSecond.vue'
-import recommend from './recommend.vue'
+import carousal from '../main/index/carousal.vue'
+import topNav from '../main/index/nav.vue' 
+import rankingList from '../main/index/rankingList.vue'
+import videoBox from '../main/index/videoBox.vue'
+import rankingListSecond from '../main/index/rankingListSecond.vue'
+import videoBoxSecond from '../main/index/videoBoxSecond.vue'
+import recommend from '../main/index/recommend.vue'
 
 export default{
      data(){

@@ -83,7 +83,7 @@ img{
     margin-right: 10px;  
     float: left; 
     display: block;
-    background-image: url('../img/icons.png');
+    background-image: url('../../img/icons.png');
     background-position: -141px -1032px;
 }    
 </style>
