@@ -5,7 +5,7 @@
         <div class="top_box">
             <div class="left_box">
                 <ul>
-                    <li><router-link to="/index" class="top_link">首页</router-link></li>
+                    <li><router-link to="/index" class="top_link"><i class="header_icon"></i>首页</router-link></li>
                     <li><router-link to="/news" class="top_link">新闻中心</router-link></li>
                     <li><router-link to="/index" class="top_link">NBA周边</router-link></li>
                     <li><router-link to="/index" class="top_link">NBA论坛</router-link></li>
@@ -392,5 +392,15 @@ export default {
     text-decoration: none;
     font-size: 12px;
     font-weight: 600;
+}
+.header_icon{
+    background: url('https://www.bilibili.com/favicon.ico') no-repeat;
+    width:20px;
+    height: 21px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    left:2px;
+    background-size: 100%;
 }
 </style>
