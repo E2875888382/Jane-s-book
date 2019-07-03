@@ -10,8 +10,8 @@
             <h5 class="media-heading">{{ item.title }}</h5>
             <p>{{ item.abstract }}</p>
             <div class="time_read_box">
-                <div>发布时间：{{ item.time }}</div>
-                <div>阅读：{{ item.read }}</div>
+                <span>来源：{{ item.source }} 发布时间：{{ item.time }} </span>
+                <span>阅读：{{ item.read }}</span>
             </div>
             <el-divider></el-divider>
         </div>      
@@ -72,6 +72,10 @@ export default {
 .time_read_box{
     display: flex;
     justify-content: space-between;
+}
+.time_read_box span{
+    font-size: 12px;
+    color: #989da2;
 }
 .block{
     margin-left: 300px;
