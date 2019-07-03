@@ -33,15 +33,25 @@ export default {
         }
     },
     created(){
-        this.getNewsDetails();
+        this.addNewsRead();
+        this.getNewsDetails();       
     },
     methods:{
+        //获取新闻详情
         getNewsDetails(){
             this.$http.post("getNewsDetails",{ id:this.id }).then((result) =>{
                 if(result.body.code == 200){
                     this.newsDetails = result.body.newsList[0];                                                                
                 }
             })
+        },
+        //增加文章阅读量
+        addNewsRead(){
+            this.$http.post("addNewsRead",{ id:this.id }).then((result) =>{
+              
+            },(error) =>{
+                console.log(error);
+            })            
         }
     }
 }

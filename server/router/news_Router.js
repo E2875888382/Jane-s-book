@@ -66,5 +66,18 @@ router.post('/getNewsDetails',(request,response) =>{
     })
     handleDisconnect(connection);
 })
+
+//增加新闻阅读量
+router.post('/addNewsRead',(request,response) =>{
+    connection.connect();   
+    var sql = ' UPDATE news SET `read` = `read` + 1  WHERE id = '+request.body.id;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'阅读量增加' });
+    })
+    handleDisconnect(connection);   
+})
 //导出router
 module.exports=router;  
