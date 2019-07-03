@@ -9,7 +9,7 @@
         <div class="news_content">
             <van-image width="600" height="400" :src="newsDetails.img"/>
             <div class="right_box">
-                <span>{{ newsDetails.details | cut }}</span>                       
+                <p>{{ newsDetails.details | cut }}</p>                       
             </div>
         </div>
 
@@ -68,9 +68,10 @@ export default {
 .right_box{
     width: 380px;
 }
-.right_box span{
+.right_box p{
     font-size: 14px;
     line-height: 24px;
     white-space:pre-wrap;
+    text-indent: 2em;
 }
 </style>
