@@ -390,5 +390,7 @@ export default {
     height: 42px;
     widows: 80px;
     text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
 }
 </style>
