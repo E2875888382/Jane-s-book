@@ -54,5 +54,17 @@ router.get('/getNewsCount',(request,response) => {
     handleDisconnect(connection);
 })
 
+//查询新闻详情
+router.post('/getNewsDetails',(request,response) =>{
+    connection.connect();   
+    var sql = `SELECT * FROM news WHERE id = "${ request.body.id }"`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,newsList:result });
+    })
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;  

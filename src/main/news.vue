@@ -7,7 +7,7 @@
             <van-image width="100" height="100" class="user_img" :src="item.img"/>
         </div>
         <div class="media-body">
-            <h5 class="media-heading">{{ item.title }}</h5>
+            <h5 class="media-heading"><router-link :to="'/newsDetails/'+item.id">{{ item.title }}</router-link></h5>
             <p>{{ item.abstract }}</p>
             <div class="time_read_box">
                 <span>来源：{{ item.source }} 发布时间：{{ item.time }} </span>
@@ -58,8 +58,7 @@ export default {
                     this.newsCount = result.body.newsCount[0]["COUNT(*)"];                
                 }
             })
-        }
-
+        },        
     }
 }
 </script>

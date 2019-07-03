@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import Index from './main/index.vue'
 import UserPage from './main/userPage.vue'
 import News from './main/news.vue'
+import NewsDetails from './main/news/newDetails.vue'
 
 //手动安装vue-router
 Vue.use(VueRouter)
@@ -16,7 +17,8 @@ var router=new VueRouter({
         { path:'/',redirect:'/index' },
         { path:'/index',component:Index },
         { path:'/userPage',component:UserPage },
-        { path:'/news',component:News }
+        { path:'/news',component:News },
+        { path:'/newsDetails/:id',component:NewsDetails },
     ]
 })
 
