@@ -9,7 +9,7 @@
         <div class="news_content">
             <van-image width="600" height="400" :src="newsDetails.img"/>
             <div class="right_box">
-                <p>{{ newsDetails.details }}</p>
+                <span>{{ newsDetails.details | cut }}</span>                       
             </div>
         </div>
 
@@ -24,6 +24,14 @@ export default {
             newsDetails:{},
         }
     },
+    filters:{
+        cut:function(s){
+            if(s){
+                s = s.replace(/。/g,"。\n");
+            }
+            return  s; 
+        }
+    },
     created(){
         this.getNewsDetails();
     },
@@ -31,7 +39,7 @@ export default {
         getNewsDetails(){
             this.$http.post("getNewsDetails",{ id:this.id }).then((result) =>{
                 if(result.body.code == 200){
-                    this.newsDetails = result.body.newsList[0];                                        
+                    this.newsDetails = result.body.newsList[0];                                                                
                 }
             })
         }
@@ -59,5 +67,10 @@ export default {
 }
 .right_box{
     width: 380px;
+}
+.right_box span{
+    font-size: 14px;
+    line-height: 24px;
+    white-space:pre-wrap;
 }
 </style>
