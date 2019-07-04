@@ -3,39 +3,39 @@
         <el-tabs tab-position="left" style="height: 1000px;"  type="border-card">
             <!-- 个人主页 -->
             <el-tab-pane>
-                <span slot="label" @click="getLoginUser()">
+                <span slot="label" @click="getLoginUserIfo()">
                     <i class="el-icon-s-home"></i> 个人主页
                 </span>
                 <div v-if="$store.state.loginFlag">
                     <div class="user_info_head">
-                        <van-image width="64" height="64" class="user_img" :src="userIfo.avatar"/>
-                        <span class="user_name">{{ userIfo.currentUser }}</span>
-                        <van-progress :percentage="userIfo.level"  :pivot-text="'LV'+ userIfo.level " class="process_bar" color="#f2826a"/>
+                        <van-image width="64" height="64" class="user_img" :src="$store.state.userIfo.avatar"/>
+                        <span class="user_name">{{ $store.state.userIfo.nickName }}</span>
+                        <van-progress :percentage="$store.state.userIfo.level"  :pivot-text="'LV'+ $store.state.userIfo.level " class="process_bar" color="#f2826a"/>
                     </div>
 
                     <el-divider content-position="left">基本信息</el-divider>
 
                     <div class="user_info_footer">
                         <div class="user_info_item">
-                            <span class="font_label">用户ID：</span><span class="msg">{{ userIfo.userId }}</span> 
+                            <span class="font_label">用户ID：</span><span class="msg">{{ $store.state.userIfo.id }}</span> 
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">出生日期：</span><span class="msg">{{ userIfo.birth }}</span>
+                            <span class="font_label">出生日期：</span><span class="msg">{{ $store.state.userIfo.birthday }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的手机：</span><span class="msg">{{ userIfo.telephone }}</span>
+                            <span class="font_label">我的手机：</span><span class="msg">{{ $store.state.userIfo.telephone }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的邮箱：</span><span class="msg">{{ userIfo.email }}</span>
+                            <span class="font_label">我的邮箱：</span><span class="msg">{{ $store.state.userIfo.email }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">性别：</span><span class="msg">{{ userIfo.gender }}</span>
+                            <span class="font_label">性别：</span><span class="msg">{{ $store.state.userIfo.gender }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的等级：</span><span class="msg">{{ userIfo.level }}</span>
+                            <span class="font_label">我的等级：</span><span class="msg">{{ $store.state.userIfo.level }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的签名：</span><span class="msg">{{ userIfo.sign }}</span>
+                            <span class="font_label">我的签名：</span><span class="msg">{{ $store.state.userIfo.sign }}</span>
                         </div>                                                                                                 
                     </div>
 
@@ -182,7 +182,7 @@
             <!-- 好友消息 -->
             <el-tab-pane>
                 <span slot="label"  @click="getFriendsMessage">
-                    <el-badge :value="messageCount" class="item">
+                    <el-badge :value="$store.state.messageCount" class="item">
                         <i class="el-icon-message"></i> 好友消息
                     </el-badge>
                 </span>
@@ -312,18 +312,6 @@ import avatar from '../main/userPage/avatar.vue'
 export default {
     data(){
         return{
-            //当前用户信息
-            userIfo:{
-                avatar:'',//头像               
-                birth:'',//出生日期               
-                email:'',//email               
-                gender:'',//性别             
-                userId:'', //用户ID                            
-                currentUser:'',//当前用户                         
-                telephone:'',//绑定手机号                            
-                level:0,//用户等级                           
-                sign:'',//个性签名
-            },
             //私信内容
             textarea:'',
             //发送消息给好友
@@ -331,8 +319,6 @@ export default {
             msgReceiverEmail:'',
             //好友消息
             friendsMessage:[],
-            //消息数量
-            messageCount:'',
             //添加好友搜索框
             searchFriendInput:'',
             //添加好友搜索结果
@@ -378,9 +364,7 @@ export default {
             }     
         }
     },
-    mounted(){
-        //数据加载时发送请求，得到当前用户的个人信息
-        this.getLoginUser();     
+    mounted(){    
     },
     //在这里注册组件
     components:{
@@ -392,7 +376,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     //发送数据到后台
-                    this.$http.post('updateUserInfo',{email:this.userIfo.email,update:this.ruleForm, credentials: true }).then((result) =>{
+                    this.$http.post('updateUserInfo',{email:this.$store.state.userIfo.email,update:this.ruleForm, credentials: true }).then((result) =>{
                         if(result.body.code==200){
                             this.$message({
                                 message: '修改信息成功',
@@ -413,28 +397,18 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-        //获取当前用户信息
-        getLoginUser(){
+        //获取用户信息并保存到vuex
+        getLoginUserIfo(){
              //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
-                if(result.body[0]){
-                    this.result= result.body[0];                                                                        
-                    this.userIfo.currentUser = this.result.nickName;
-                    this.userIfo.birth = this.result.birthday;
-                    this.userIfo.email = this.result.email;
-                    this.userIfo.gender = this.result.gender;
-                    this.userIfo.userId = this.result.id;
-                    this.userIfo.telephone =this.result.telephone;
-                    this.userIfo.level = this.result.level;
-                    this.userIfo.sign = this.result.sign;
-                    this.userIfo.avatar= this.result.avatar;               
-                             
+                if(result.body[0]){                             
+                    this.$store.commit('userIfo',result.body[0]);         
                 }         
             })
         },
         //获取当前用户的安全信息
         getSafeIfo(){
-            if(this.email !== ''){
+            if(this.$store.state.userIfo.email!== ''){
                 this.$http.get("getSafeIfo",{credentials: true}).then( (result) =>{
                     if(result.body[0]){
                         this.ifo.safeNum=result.body[0].safenum;
@@ -453,13 +427,13 @@ export default {
         },      
         //调用message组件中的方法获取好友消息
         getFriendsMessage(){
-            if(this.userIfo.email !==''){
+            if(this.$store.state.userIfo.email !==''){
                 this.$http.get("getFriendsMessage" ,{ credentials: true}).then( (result) =>{                                 
                     this.friendsMessage = result.body;
-                    if(result.body.length>0){
-                        this.messageCount = result.body.length;
-                    }else{
-                        this.messageCount = '';
+                    if(result.body.length>0){                        
+                        this.$store.commit('getMessageCount',result.body.length); 
+                    }else{                   
+                        this.$store.commit('getMessageCount','');
                     }
                     
                 })
@@ -482,7 +456,7 @@ export default {
         },
         //获取好友列表
         getFriends(){
-            if(this.userIfo.email !==''){
+            if(this.$store.state.userIfo.email !==''){
                 this.$http.get("getFriends" ,{ credentials: true}).then( (result) =>{                   
                     this.friendsList = result.body;
                 }) 

@@ -29,6 +29,18 @@ var store = new Vuex.Store({
         currentUser:'',
         loginFlag:false,
         unLoginFlag:true,
+        messageCount:'10',
+        userIfo:{
+            avatar:'',//头像               
+            birth:'',//出生日期               
+            email:'',//email               
+            gender:'',//性别             
+            userId:'', //用户ID                            
+            currentUser:'',//当前用户                         
+            telephone:'',//绑定手机号                            
+            level:0,//用户等级                           
+            sign:'',//个性签名            
+        }
     },
     mutations:{
         userStatus(state,user){
@@ -36,6 +48,12 @@ var store = new Vuex.Store({
             state.loginFlag = user.loginFlag;
             state.unLoginFlag = user.unLoginFlag;
         },
+        userIfo(state,userIfo){
+            state.userIfo = userIfo;      
+        },
+        getMessageCount(state,count){
+            state.messageCount = count;
+        }
         
     }
 })

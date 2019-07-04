@@ -23,10 +23,22 @@
                             <el-dropdown-item><i class="el-icon-s-home"></i><a href="#/index">返回首页</a></el-dropdown-item>
                         </el-dropdown-menu>                    
                     </el-dropdown>
-                    <div class="new" v-if="$store.state.loginFlag">                 
-                        <i>{{ $store.state.currentUser }}</i>
+                    <div class="new" v-if="$store.state.loginFlag">
+                        <ul>
+                            <li>
+                                <van-image width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
+                            </li>
+                            <li>
+                                <span>{{ $store.state.userIfo.nickName }}</span>
+                            </li>
+                            <li>
+                                <el-badge :value="$store.state.messageCount" class="item">
+                                    <i class="el-icon-message"></i> 好友消息
+                                </el-badge>
+                            </li>
+                        </ul>                                                                                                                                     
                     </div>
-                    <div class="login" v-if="$store.state.unLoginFlag">
+                    <div class="login_btn" v-if="$store.state.unLoginFlag">
                         <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>                    
                     </div>
                     <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%" >
@@ -42,7 +54,7 @@
                             <el-button type="primary" @click="login()">登 录</el-button>
                         </div>
                     </el-dialog>                
-                    <div class="new"  v-if="$store.state.unLoginFlag">
+                    <div class="new_btn"  v-if="$store.state.unLoginFlag">
                         <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>   
                     </div>
                     <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
@@ -158,6 +170,7 @@ export default {
     },
     created(){
        this.getLoginUser();
+       this.getLoginUserIfo();
     },
     methods: {       
         getLoginUser(){
@@ -170,6 +183,14 @@ export default {
                 }         
             })
             this.$store.commit('userStatus',this.user);
+        },
+        getLoginUserIfo(){
+             //请求登录session，用于持久化登录状态
+            this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
+                if(result.body[0]){                             
+                    this.$store.commit('userIfo',result.body[0]);         
+                }         
+            })
         },    
         newUser () { 
             this.$http.post('newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
@@ -253,7 +274,7 @@ export default {
     height: 42px;
    
 }
-.login{
+.login_btn,.new_btn{
     height: 42px;
     line-height: 42px;
     text-align: center;
@@ -266,14 +287,25 @@ export default {
     line-height: 42px;
     text-align: center;
     float: left;
-    width: 60px;
-    
-    
+    width: 300px;     
 }
- 
+
+.new ul{
+    display: flex;
+    justify-content: space-between;
+}
+.new ul li{
+    width: 100px;
+    height: 42px;
+    position: relative;
+}
+.new ul li:before,
+.new ul li:after{
+    content: "";
+}
 .right_box{
     float: right;
-    width:250px;
+    width: 400px;
     height: 42px;
 }
 .head-logo{
@@ -402,5 +434,15 @@ export default {
     top: 10px;
     left:2px;
     background-size: 100%;
+}
+.user_img{
+    position: absolute;
+    top: 5px;
+    left: 30px;   
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 </style>
