@@ -19,8 +19,8 @@
                         更多<i class="el-icon-arrow-down el-icon--right"></i>    
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
-                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>            
+                        <el-dropdown-item v-if="$store.state.loginFlag"><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
+                        <el-dropdown-item v-if="$store.state.loginFlag"><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>            
                     </el-dropdown-menu>                    
                 </el-dropdown>
                 <!-- 登录后状态框 -->
@@ -34,7 +34,7 @@
                         </li>
                         <li>
                             <el-badge :value="$store.state.messageCount" class="item">
-                                <i class="el-icon-message"></i> 好友消息
+                                <i class="el-icon-message"></i><a href="#/userPage" >消息</a>
                             </el-badge>
                         </li>
                     </ul>                                                                                                                                     
@@ -305,6 +305,11 @@ export default {
     height: 42px;
     position: relative;
 }
+.new ul li a,.new ul li span{
+    text-decoration: none;
+    color: #222;
+    font-size: 14px;
+}
 .new ul li:before,
 .new ul li:after{
     content: "";
@@ -444,7 +449,7 @@ export default {
 .user_img{
     position: absolute;
     top: 5px;
-    left: 30px;   
+    left: 60px;   
     display: flex;
     border-radius: 50%;
     align-items: center;

@@ -38,72 +38,59 @@
                             <span class="font_label">我的签名：</span><span class="msg">{{ $store.state.userIfo.sign }}</span>
                         </div>                                                                                                 
                     </div>
-
-                </div>
-                <div v-if="!$store.state.loginFlag" class="warn">
-                    <h1>请先登录</h1>
-                </div>
+                </div> 
             </el-tab-pane>
+
             <!-- 我的信息 -->
             <el-tab-pane>
                  <span slot="label">
                     <i class="el-icon-user"></i> 我的信息
                 </span>
-                <div v-if="$store.state.loginFlag">
-               
-                
-                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                    <el-form-item label="昵称" prop="nickName">
-                        <el-input v-model="ruleForm.nickName"></el-input>
-                    </el-form-item>
-                    <el-form-item label="手机" prop="telephone">
-                        <el-input v-model="ruleForm.telephone"></el-input>
-                    </el-form-item>                       
-                    <el-form-item label="出生日期" required>                        
-                        <el-form-item prop="birth">
-                            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birth" style="width: 100%;"></el-date-picker>
-                        </el-form-item>                                                
-                    </el-form-item>                                        
-                    <el-form-item label="性别" prop="gender">
-                        <el-radio-group v-model="ruleForm.gender">
-                            <el-radio label="男"></el-radio>
-                            <el-radio label="女"></el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item label="个性签名" prop="sign">
-                        <el-input type="textarea" v-model="ruleForm.sign"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="submitForm('ruleForm')">确定修改</el-button>
-                        <el-button @click="resetForm('ruleForm')">重置</el-button>
-                    </el-form-item>
-                </el-form>     
-                </div>
-
-                <div v-if="!$store.state.loginFlag"  class="warn">
-                    <h1>请先登录</h1>
-                </div>
+                <div v-if="$store.state.loginFlag">                             
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                        <el-form-item label="昵称" prop="nickName">
+                            <el-input v-model="ruleForm.nickName"></el-input>
+                        </el-form-item>
+                        <el-form-item label="手机" prop="telephone">
+                            <el-input v-model="ruleForm.telephone"></el-input>
+                        </el-form-item>                       
+                        <el-form-item label="出生日期" required>                        
+                            <el-form-item prop="birth">
+                                <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birth" style="width: 100%;"></el-date-picker>
+                            </el-form-item>                                                
+                        </el-form-item>                                        
+                        <el-form-item label="性别" prop="gender">
+                            <el-radio-group v-model="ruleForm.gender">
+                                <el-radio label="男"></el-radio>
+                                <el-radio label="女"></el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item label="个性签名" prop="sign">
+                            <el-input type="textarea" v-model="ruleForm.sign"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm')">确定修改</el-button>
+                            <el-button @click="resetForm('ruleForm')">重置</el-button>
+                        </el-form-item>
+                    </el-form>     
+                </div>          
             </el-tab-pane>
+
             <!-- 我的头像 -->
             <el-tab-pane>
                 <span slot="label">
                     <i class="el-icon-picture-outline-round"></i> 我的头像
-                </span>
-                
+                </span>                
                 <div v-if="$store.state.loginFlag">
                     <avatar></avatar>
                 </div>
-
-                <div v-if="!$store.state.loginFlag"  class="warn">
-                    <h1>请先登录</h1>
-                </div>
             </el-tab-pane>
+
             <!-- 账号安全 -->
             <el-tab-pane>
                 <span slot="label" @click="getSafeIfo">
                     <i class="el-icon-lock"></i> 账号安全
                 </span>
-
                 <div v-if="$store.state.loginFlag">
                     <div>
                         <div class="header">
@@ -112,7 +99,6 @@
                         </div>
                         <p class="safe_p">您的账号安全状况还不错哟，完善剩余的安全项可进一步提高安全评分哟</p>
                         <el-divider></el-divider>
-
                         <div class="safe_item">
                             <div class="safe_item_title">
                                 <div class="p">
@@ -129,12 +115,9 @@
                             </div>
                             <div class="safe_item_link">
                                 <el-link type="primary" href="">更换手机</el-link> 
-                            </div>
-                           
-                        </div>
-                        
+                            </div>                          
+                        </div>                       
                         <el-divider></el-divider>
-
                         <div class="safe_item">
                             <div class="safe_item_title">
                                 <div class="p">                   
@@ -147,12 +130,9 @@
                             </div>
                             <div class="safe_item_link">
                                 <el-link type="primary" href="">修改密码</el-link>                
-                            </div>
-                            
+                            </div>                            
                         </div>
-
                         <el-divider></el-divider>
-
                         <div class="safe_item">
                             <div class="safe_item_title">
                                 <div class="p">
@@ -169,16 +149,12 @@
                             </div>
                             <div class="safe_item_link">
                                 <el-link type="primary" href="">绑定QQ</el-link>                  
-                            </div>
-                            
+                            </div>                           
                         </div>
                     </div>
-                </div>
-
-                <div v-if="!$store.state.loginFlag"  class="warn">
-                    <h1>请先登录</h1>
-                </div>
+                </div>            
             </el-tab-pane>
+
             <!-- 好友消息 -->
             <el-tab-pane>
                 <span slot="label"  @click="getFriendsMessage">
@@ -186,7 +162,6 @@
                         <i class="el-icon-message"></i> 好友消息
                     </el-badge>
                 </span>
-
                 <div v-if="$store.state.loginFlag">
                     <div>
                         <span>好友消息</span>
@@ -202,19 +177,14 @@
                             <div class="text item">{{ item.content }}</div> 
                         </el-card>
                     </div>
-
-                </div>
-
-                <div v-if="!$store.state.loginFlag"  class="warn">
-                    <h1>请先登录</h1>
-                </div>
+                </div>         
             </el-tab-pane>
+
             <!-- 管理好友 -->
             <el-tab-pane>
                 <span slot="label"  @click="getFriends">
                     <van-icon name="friends-o" /> 好友管理
                 </span>
-
                 <div v-if="$store.state.loginFlag">
                     <div class="searchFriendBox">
                         <div>
@@ -253,21 +223,16 @@
                                 </el-dropdown-menu>
                             </el-dropdown>
                             <el-divider></el-divider>
-                        </div>
-                        
+                        </div>                      
                     </div>
-                </div>
+                </div> 
+            </el-tab-pane>  
 
-                <div v-if="!$store.state.loginFlag"  class="warn">
-                    <h1>请先登录</h1>
-                </div>
-            </el-tab-pane>            
             <!-- 发送私信 -->
             <el-tab-pane>
                 <span slot="label"  @click="getFriends">
                     <van-icon name="friends-o" /> 发送私信
                 </span>
-
                 <div v-if="$store.state.loginFlag">
                     <div class="sendMsgBox">
                         <div>
@@ -291,15 +256,10 @@
                                 <el-button type="primary" round @click="sendMsg">发送</el-button>
                             </div>
                         </div>  
-                    </div>
-                    
-                     
-                </div>
+                    </div>                                        
+                </div>      
+            </el-tab-pane>
 
-                <div v-if="!$store.state.loginFlag"  class="warn">
-                    <h1>请先登录</h1>
-                </div>
-            </el-tab-pane>             
         </el-tabs>
     </div>
 </template>
@@ -363,8 +323,6 @@ export default {
                 ]
             }     
         }
-    },
-    mounted(){    
     },
     //在这里注册组件
     components:{
@@ -506,7 +464,6 @@ export default {
             }
 
         }
-
     }
 }
 </script>
@@ -576,13 +533,6 @@ export default {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-}
-.warn{
-    margin: 0 auto;
-    display: block;
-    width: 300px;
-    height:100px;
-    text-align: center;
 }
 .header{
     width: 400px;

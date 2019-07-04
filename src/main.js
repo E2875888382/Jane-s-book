@@ -27,9 +27,9 @@ Vue.use(Vuex);
 var store = new Vuex.Store({
     state:{
         currentUser:'',
-        loginFlag:false,
-        unLoginFlag:true,
-        messageCount:'10',
+        loginFlag:false,//登录状态标记
+        unLoginFlag:true,//登录状态标记
+        messageCount:'10',//消息数目
         userIfo:{
             avatar:'',//头像               
             birth:'',//出生日期               
