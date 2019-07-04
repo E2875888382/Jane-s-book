@@ -18,9 +18,9 @@
                     <el-button type="primary">
                         更多<i class="el-icon-arrow-down el-icon--right"></i>    
                     </el-button>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item v-if="$store.state.loginFlag"><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
-                        <el-dropdown-item v-if="$store.state.loginFlag"><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>            
+                    <el-dropdown-menu slot="dropdown"  v-if="$store.state.loginFlag">
+                        <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
+                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>            
                     </el-dropdown-menu>                    
                 </el-dropdown>
                 <!-- 登录后状态框 -->
