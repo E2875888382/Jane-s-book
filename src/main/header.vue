@@ -13,72 +13,78 @@
                 </ul>
             </div>      
             <div class="right_box">
-                    <el-dropdown class="select_list"  size="small">
-                        <el-button type="primary">
-                            更多<i class="el-icon-arrow-down el-icon--right"></i>    
-                        </el-button>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
-                            <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>
-                            <el-dropdown-item><i class="el-icon-s-home"></i><a href="#/index">返回首页</a></el-dropdown-item>
-                        </el-dropdown-menu>                    
-                    </el-dropdown>
-                    <div class="new" v-if="$store.state.loginFlag">
-                        <ul>
-                            <li>
-                                <van-image width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
-                            </li>
-                            <li>
-                                <span>{{ $store.state.userIfo.nickName }}</span>
-                            </li>
-                            <li>
-                                <el-badge :value="$store.state.messageCount" class="item">
-                                    <i class="el-icon-message"></i> 好友消息
-                                </el-badge>
-                            </li>
-                        </ul>                                                                                                                                     
+                <!-- 更多 -->
+                <el-dropdown class="select_list"  size="small">
+                    <el-button type="primary">
+                        更多<i class="el-icon-arrow-down el-icon--right"></i>    
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
+                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>            
+                    </el-dropdown-menu>                    
+                </el-dropdown>
+                <!-- 登录后状态框 -->
+                <div class="new" v-if="$store.state.loginFlag">
+                    <ul>
+                        <li>
+                            <van-image width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
+                        </li>
+                        <li>
+                            <span>{{ $store.state.userIfo.nickName }}</span>
+                        </li>
+                        <li>
+                            <el-badge :value="$store.state.messageCount" class="item">
+                                <i class="el-icon-message"></i> 好友消息
+                            </el-badge>
+                        </li>
+                    </ul>                                                                                                                                     
+                </div>
+                <!-- 登录按钮 -->
+                <div class="login_btn" v-if="$store.state.unLoginFlag">
+                    <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>                    
+                </div>
+                <!-- 登录模态框 -->
+                <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%" >
+                    <el-form :model="loginForm" :rules="rules" ref="loginForm">
+                        <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
+                            <el-input v-model="loginForm.email" autocomplete="off"  ></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+                            <el-input v-model="loginForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item>               
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">                       
+                        <el-button type="primary" @click="login()">登 录</el-button>
                     </div>
-                    <div class="login_btn" v-if="$store.state.unLoginFlag">
-                        <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>                    
+                </el-dialog>
+                <!-- 注册按钮  -->
+                <div class="new_btn"  v-if="$store.state.unLoginFlag">
+                    <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>   
+                </div>
+                <!-- 注册模态框 -->
+                <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
+                    <el-form :model="newForm" :rules="rules" ref="newForm">
+                        <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
+                            <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+                            <el-input v-model="newForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item>
+                        <el-form-item label="重复密码:" :label-width="formLabelWidth" prop="passwordAgain">
+                            <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item>
+                        <el-form-item label="输入邮箱验证码:" :label-width="formLabelWidth" prop="sms">
+                            <el-input v-model="newForm.sms" autocomplete="off"> <el-button slot="append" @click="sendSms">发送验证码</el-button> </el-input> 
+                        </el-form-item> 
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">                       
+                        <el-button type="primary" @click="newUser()">注 册</el-button>
                     </div>
-                    <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%" >
-                        <el-form :model="loginForm" :rules="rules" ref="loginForm">
-                            <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
-                                <el-input v-model="loginForm.email" autocomplete="off"  ></el-input>
-                            </el-form-item>
-                            <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
-                                <el-input v-model="loginForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
-                            </el-form-item>               
-                        </el-form>
-                        <div slot="footer" class="dialog-footer">                       
-                            <el-button type="primary" @click="login()">登 录</el-button>
-                        </div>
-                    </el-dialog>                
-                    <div class="new_btn"  v-if="$store.state.unLoginFlag">
-                        <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>   
-                    </div>
-                    <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
-                        <el-form :model="newForm" :rules="rules" ref="newForm">
-                            <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
-                                <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
-                            </el-form-item>
-                            <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
-                                <el-input v-model="newForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
-                            </el-form-item>
-                            <el-form-item label="重复密码:" :label-width="formLabelWidth" prop="passwordAgain">
-                                <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
-                            </el-form-item>
-                            <el-form-item label="输入邮箱验证码:" :label-width="formLabelWidth" prop="sms">
-                                <el-input v-model="newForm.sms" autocomplete="off"> <el-button slot="append" @click="sendSms">发送验证码</el-button> </el-input> 
-                            </el-form-item> 
-                        </el-form>
-                        <div slot="footer" class="dialog-footer">                       
-                            <el-button type="primary" @click="newUser()">注 册</el-button>
-                        </div>
-                    </el-dialog>                
+                </el-dialog>                
             </div>
         </div>      
         <a href="//www.bilibili.com" class="head-logo"></a>
+        <!-- 头部搜索框 -->
         <div class="search_box">
             <a href="//www.bilibili.com/ranking" target="_blank" class="link-ranking"><span>排行榜</span></a> 
             <div class="search-form" >
@@ -277,8 +283,8 @@ export default {
 .login_btn,.new_btn{
     height: 42px;
     line-height: 42px;
-    text-align: center;
-    float: left;
+    text-align: left;
+    float: right;
     width: 60px;
     
 }
