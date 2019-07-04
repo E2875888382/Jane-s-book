@@ -169,17 +169,12 @@ export default {
             { validator: checkSms, trigger: 'blur' },
             {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}   
           ]       
-        },
-         
- 
+        },         
       };
     },
     created(){
        this.getLoginUser();
        this.getLoginUserIfo();
-    },
-    watch:{
-         
     },
     methods: {       
         getLoginUser(){
