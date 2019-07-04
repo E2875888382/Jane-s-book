@@ -133,12 +133,7 @@ export default {
         }                  
       return {
         //中间验证码
-        sms:'', 
-        user:{
-            currentUser:'',
-            loginFlag:false,
-            unLoginFlag:true,
-        },         
+        sms:'',        
         dialogNewVisible: false,
         dialogLoginVisible: false,
         newForm: {
@@ -176,17 +171,16 @@ export default {
        this.getLoginUser();
        this.getLoginUserIfo();
     },
+    
     methods: {       
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUser',{ credentials: true }).then(function(result){
                 if(result.body.user){
-                    this.user.currentUser = result.body.user.email;
-                    this.user.unLoginFlag = false;
-                    this.user.loginFlag = true;                 
+                   this.$store.commit('userStatus',{currentUser:result.body.user.email,loginFlag:false,unLoginFlag:true});                
                 }         
             })
-            this.$store.commit('userStatus',this.user);
+            
         },
         getLoginUserIfo(){
              //请求登录session，用于持久化登录状态
@@ -211,11 +205,8 @@ export default {
         login(){
             this.$http.post('login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{              
                 if(result.body.code == 1){
-                    this.dialogLoginVisible = false;
-                    this.user.unLoginFlag = false;
-                    this.user.loginFlag = true;
-                    this.user.currentUser = result.body.user;
-                    this.$store.commit('userStatus',this.user);
+                    this.dialogLoginVisible = false;                    
+                    this.$store.commit('userStatus',{currentUser:result.body.user,unLoginFlag:false,loginFlag:true});
                     location.href="#/";
                 }else{
                     console.log(result.body);
@@ -227,10 +218,7 @@ export default {
         logOut(){
             this.$http.get('logOut',{credentials: true}).then((result) => {              
                 if(result.body.code == 700){
-                    this.user.currentUser = '';
-                    this.user.unLoginFlag = true;
-                    this.user.loginFlag = false;
-                    this.$store.commit('userStatus',this.user);                  
+                    this.$store.commit('userStatus',{currentUser:'',unLoginFlag:true,loginFlag:false});                  
                 }else{
                     console.log(result.body);
                 }               

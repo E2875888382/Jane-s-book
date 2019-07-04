@@ -39,7 +39,8 @@ var store = new Vuex.Store({
             currentUser:'',//当前用户                         
             telephone:'',//绑定手机号                            
             level:0,//用户等级                           
-            sign:'',//个性签名            
+            sign:'',//个性签名
+            nickName:'',            
         }
     },
     mutations:{
@@ -53,8 +54,7 @@ var store = new Vuex.Store({
         },
         getMessageCount(state,count){
             state.messageCount = count;
-        }
-        
+        }             
     }
 })
 
