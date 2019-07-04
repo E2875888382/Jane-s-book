@@ -1,20 +1,19 @@
 <template>
-<div>   
+<div>
      <carousal></carousal> 
      <div class="content">
-          <videoBox></videoBox>     
+          <videoBox></videoBox>
           <rankingList></rankingList>
-          <video-box-second></video-box-second>     
+          <video-box-second></video-box-second>
           <ranking-list-second></ranking-list-second>
           <recommend></recommend>
-     </div>		
+     </div>	
 </div>
- 
 </template>
 
 <script>
 
-import carousal from '../main/index/carousal.vue' 
+import carousal from '../main/index/carousal.vue'
 import rankingList from '../main/index/rankingList.vue'
 import videoBox from '../main/index/videoBox.vue'
 import rankingListSecond from '../main/index/rankingListSecond.vue'
@@ -24,41 +23,28 @@ import recommend from '../main/index/recommend.vue'
 export default{
      data(){
           return {
-               
                activeName: '1',
-           
           }
      },
      created() {
-         
-         this.show();
      },
-     components:{     
+     components:{
           carousal,
           rankingList,
           rankingListSecond,
           videoBox,
           videoBoxSecond,
-          recommend,        
+          recommend,
      },
-     methods:{
-          show(){
-              
-          },
-       
-     }
+     methods:{ }
 
 }
 </script>
 
 <style scoped>
- 
 .content{
      width:1000px;
      height:1100px;
      margin:0 auto;
 }
- 
 </style>
-
- 

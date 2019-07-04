@@ -9,10 +9,9 @@
         <div class="news_content">
             <van-image width="600" height="400" :src="newsDetails.img"/>
             <div class="right_box">
-                <p>{{ newsDetails.details | cut }}</p>                       
+                <p>{{ newsDetails.details | cut }}</p>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -34,24 +33,24 @@ export default {
     },
     created(){
         this.addNewsRead();
-        this.getNewsDetails();       
+        this.getNewsDetails();
     },
     methods:{
         //获取新闻详情
         getNewsDetails(){
             this.$http.post("getNewsDetails",{ id:this.id }).then((result) =>{
                 if(result.body.code == 200){
-                    this.newsDetails = result.body.newsList[0];                                                                
+                    this.newsDetails = result.body.newsList[0];
                 }
             })
         },
         //增加文章阅读量
         addNewsRead(){
             this.$http.post("addNewsRead",{ id:this.id }).then((result) =>{
-              
+
             },(error) =>{
                 console.log(error);
-            })            
+            })
         }
     }
 }

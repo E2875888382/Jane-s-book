@@ -11,7 +11,7 @@
                     <li><router-link to="/index" class="top_link">NBA论坛</router-link></li>
                     <li><router-link to="/index" class="top_link">步行街</router-link></li>
                 </ul>
-            </div>      
+            </div>
             <div class="right_box">
                 <!-- 更多 -->
                 <el-dropdown class="select_list"  size="small"  v-if="$store.state.loginFlag">
@@ -37,50 +37,50 @@
                                 <i class="el-icon-message"></i><a href="#/userPage" >消息</a>
                             </el-badge>
                         </li>
-                    </ul>                                                                                                                                     
+                    </ul>
                 </div>
                 <!-- 登录按钮 -->
                 <div class="login_btn" v-if="$store.state.unLoginFlag">
-                    <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>                    
+                    <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>
                 </div>
                 <!-- 登录模态框 -->
                 <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%" >
                     <el-form :model="loginForm" :rules="rules" ref="loginForm">
-                        <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
+                        <el-form-item label="邮箱:" label-width="100px" prop="email" >
                             <el-input v-model="loginForm.email" autocomplete="off"  ></el-input>
                         </el-form-item>
-                        <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+                        <el-form-item label="密码:" label-width="100px" prop="password">
                             <el-input v-model="loginForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
-                        </el-form-item>               
+                        </el-form-item>
                     </el-form>
-                    <div slot="footer" class="dialog-footer">                       
+                    <div slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="login()">登 录</el-button>
                     </div>
                 </el-dialog>
                 <!-- 注册按钮  -->
                 <div class="new_btn"  v-if="$store.state.unLoginFlag">
-                    <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>   
+                    <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>
                 </div>
                 <!-- 注册模态框 -->
                 <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
                     <el-form :model="newForm" :rules="rules" ref="newForm">
-                        <el-form-item label="邮箱:" :label-width="formLabelWidth" prop="email" >
+                        <el-form-item label="邮箱:" label-width="100px" prop="email" >
                             <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
                         </el-form-item>
-                        <el-form-item label="密码:" :label-width="formLabelWidth" prop="password">
+                        <el-form-item label="密码:" label-width="100px" prop="password">
                             <el-input v-model="newForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
                         </el-form-item>
-                        <el-form-item label="重复密码:" :label-width="formLabelWidth" prop="passwordAgain">
+                        <el-form-item label="重复密码:" label-width="100px" prop="passwordAgain">
                             <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
                         </el-form-item>
-                        <el-form-item label="输入邮箱验证码:" :label-width="formLabelWidth" prop="sms">
+                        <el-form-item label="输入邮箱验证码:" label-width="100px" prop="sms">
                             <el-input v-model="newForm.sms" autocomplete="off"> <el-button slot="append" @click="sendSms">发送验证码</el-button> </el-input> 
-                        </el-form-item> 
+                        </el-form-item>
                     </el-form>
-                    <div slot="footer" class="dialog-footer">                       
+                    <div slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="newUser()">注 册</el-button>
                     </div>
-                </el-dialog>                
+                </el-dialog>
             </div>
         </div>      
         <a href="//www.bilibili.com" class="head-logo"></a>
@@ -90,10 +90,10 @@
             <div class="search-form" >
                 <div class="input-group">
                     <input type="text" class="form-control search-input" placeholder="Search for...">
-                    <button class="form-btn"></button> 
+                    <button class="form-btn"></button>
                 </div> 
-            </div>              
-        </div>                                                  
+            </div>
+        </div>
     </div>
 </div>   
 </template>
@@ -130,49 +130,47 @@ export default {
             } else {
             callback()
             }
-        }                  
-      return {
-        //中间验证码
-        sms:'',        
-        dialogNewVisible: false,
-        dialogLoginVisible: false,
-        newForm: {
-           email:'',
-           password:'',
-           passwordAgain:'',
-           sms:'',    
-        },
-        loginForm:{
-           email:'',
-           password:'',            
-        },
-        formLabelWidth: '100px',
-        rules: {        
-          email: [
-            { validator: checkEmail, trigger: 'blur' },
-            {'required': 'true', 'message': '请输入邮箱', 'trigger': 'blur'}
-          ],
-          password: [
-            { validator: checkPassword, trigger: 'blur' },
-            {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}
-          ],
-          passwordAgain:[
-            { validator: checkPasswordAgain, trigger: 'blur' },
-            {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}  
-          ],
-          sms:[
-            { validator: checkSms, trigger: 'blur' },
-            {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}   
-          ]       
-        },         
-      };
+        }
+        return {
+            //中间验证码
+            sms:'',        
+            dialogNewVisible: false,
+            dialogLoginVisible: false,
+            newForm: {
+            email:'',
+            password:'',
+            passwordAgain:'',
+            sms:'',    
+            },
+            loginForm:{
+            email:'',
+            password:'',            
+            },       
+            rules: {
+            email: [
+                { validator: checkEmail, trigger: 'blur' },
+                {'required': 'true', 'message': '请输入邮箱', 'trigger': 'blur'}
+            ],
+            password: [
+                { validator: checkPassword, trigger: 'blur' },
+                {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}
+            ],
+            passwordAgain:[
+                { validator: checkPasswordAgain, trigger: 'blur' },
+                {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}  
+            ],
+            sms:[
+                { validator: checkSms, trigger: 'blur' },
+                {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}   
+            ]       
+            },         
+        };
     },
     created(){
-       this.getLoginUser();
-       this.getLoginUserIfo();
+        this.getLoginUser();
+        this.getLoginUserIfo();
     },
-    
-    methods: {       
+    methods:{
         getLoginUser(){
              //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUser',{ credentials: true }).then(function(result){
@@ -189,8 +187,8 @@ export default {
                     this.$store.commit('userIfo',result.body[0]);         
                 }         
             })
-        },    
-        newUser () { 
+        },
+        newUser(){
             this.$http.post('newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){            
                 this.dialogNewVisible = false;
                 this.user.unLoginFlag = false;
@@ -201,7 +199,7 @@ export default {
             },function(error){
                 console.log(error);
             })                    
-        },        
+        },
         login(){
             this.$http.post('login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{              
                 if(result.body.code == 1){
@@ -233,7 +231,7 @@ export default {
                 console.log(error);
             })
         }
-    }      
+    }
 }
 </script>
 
@@ -272,16 +270,14 @@ export default {
     text-align: left;
     float: right;
     width: 60px;
-    
 }
 .new{
     height: 42px;
     line-height: 42px;
     text-align: center;
     float: left;
-    width: 300px;     
+    width: 300px;
 }
-
 .new ul{
     display: flex;
     justify-content: space-between;
@@ -332,12 +328,12 @@ export default {
     height:32px;
     padding:0;
     margin:0;
-    background-color: hsla(0,0%,100%,.88);    
+    background-color: hsla(0,0%,100%,.88);
     border-radius: 4px;
     transition: background-color 0.2s;
 }
 .search-form:hover{
-    background-color: #fff  ;
+    background-color: #fff;
     cursor: pointer;
 }
 .search-input{
@@ -393,7 +389,7 @@ export default {
     position: absolute;
     top: 0;
     width: 1000px;
-    justify-content: space-between;    
+    justify-content: space-between;
 }
 .left_box{
     width:400px;
@@ -408,7 +404,7 @@ export default {
     height: 42px;
     line-height: 42px;
     font-size: 12px;
-    text-align: center;   
+    text-align: center;
 }
 .left_box>ul li:hover{
     background-color:hsla(0,0%,100%,.4);
@@ -435,7 +431,7 @@ export default {
 .user_img{
     position: absolute;
     top: 5px;
-    left: 60px;   
+    left: 60px;
     display: flex;
     border-radius: 50%;
     align-items: center;

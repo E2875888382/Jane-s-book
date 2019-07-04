@@ -14,12 +14,12 @@
                 <span>阅读：{{ item.read }}</span>
             </div>
             <el-divider></el-divider>
-        </div>      
+        </div>
     </div>
-    <div class="block">          
+    <div class="block">
         <el-pagination
         background
-        @current-change="handleCurrentChange"       
+        @current-change="handleCurrentChange"
         :page-size="10"
         layout="total, prev, pager, next"
         :total="newsCount">
@@ -41,24 +41,24 @@ export default {
         this.getNews(1);
         this.getNewsCount();
     },
-    methods:{         
+    methods:{
         handleCurrentChange(val) {
             this.getNews(val);
         },
         getNews(num){
             this.$http.post("getNews",{ page:num }).then((result) =>{
                 if(result.body.code == 200){
-                    this.newsList = result.body.newsList;                    
+                    this.newsList = result.body.newsList;
                 }
             })
         },
         getNewsCount(){
             this.$http.get("getNewsCount").then((result) =>{
                 if(result.body.code == 200){
-                    this.newsCount = result.body.newsCount[0]["COUNT(*)"];                
+                    this.newsCount = result.body.newsCount[0]["COUNT(*)"];
                 }
             })
-        },        
+        },
     }
 }
 </script>
@@ -66,7 +66,7 @@ export default {
 <style scoped>
 .content{
     width:1000px;
-    margin: 40px auto; 
+    margin: 40px auto;
 }
 .time_read_box{
     display: flex;

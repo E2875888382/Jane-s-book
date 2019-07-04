@@ -31,16 +31,16 @@ var store = new Vuex.Store({
         unLoginFlag:true,//登录状态标记
         messageCount:'10',//消息数目
         userIfo:{
-            avatar:'',//头像               
-            birth:'',//出生日期               
-            email:'',//email               
-            gender:'',//性别             
-            userId:'', //用户ID                            
-            currentUser:'',//当前用户                         
-            telephone:'',//绑定手机号                            
-            level:0,//用户等级                           
+            avatar:'',//头像
+            birth:'',//出生日期
+            email:'',//email
+            gender:'',//性别
+            userId:'', //用户ID
+            currentUser:'',//当前用户
+            telephone:'',//绑定手机号
+            level:0,//用户等级
             sign:'',//个性签名
-            nickName:'',            
+            nickName:'',//昵称
         }
     },
     mutations:{
@@ -50,24 +50,18 @@ var store = new Vuex.Store({
             state.unLoginFlag = user.unLoginFlag;
         },
         userIfo(state,userIfo){
-            state.userIfo = userIfo;      
+            state.userIfo = userIfo;
         },
         getMessageCount(state,count){
             state.messageCount = count;
-        }             
+        }
     }
 })
 
-
 var vm=new Vue({
     el:'#app',
-    data:{
-         
-    },
+    data:{ },
     store,
     render:c => c(App),
     router
 })
-
-
-  

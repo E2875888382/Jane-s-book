@@ -4,7 +4,7 @@
             <h2>
                 <i class="icon"></i>
                 <small>推荐视频</small>
-            </h2> 
+            </h2>
         </div>
          <el-divider></el-divider>
         <div class="row">
@@ -16,7 +16,7 @@
                     <div class="caption">
                         <a :href="item.link" :title="item.title">
                             {{ item.title }}
-                        </a>                 
+                        </a>
                     </div>
                 </div>
             </div>
@@ -39,12 +39,10 @@ export default {
     methods:{
            getRecommendVideo(){
                this.$http.get('getRecommendVideo').then(result => {
-                    
                     this.recommendVideo=result.body;
-                 
                })
           }
-    }    
+    }
 }
 </script>
 
@@ -60,7 +58,7 @@ export default {
 img{
     width:160px;
     height:100px;
-    border-radius: 4px;    
+    border-radius: 4px;
 }
 .caption{
     display: inline-block;
@@ -79,10 +77,10 @@ img{
 .icon{
     width: 40px;
     height: 40px;
-    margin-right: 10px;  
+    margin-right: 10px;
     float: left; 
     display: block;
     background-image: url('../../img/icons.png');
     background-position: -141px -780px;
-}          
+}
 </style>

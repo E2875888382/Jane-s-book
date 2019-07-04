@@ -10,9 +10,6 @@
                 {{'列表内容 ' + o }}
             </div>
         </el-card>
-         
- 
-         
     </div>
 </template>
 

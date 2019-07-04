@@ -1,27 +1,24 @@
 <template>
     <div>
         <div style="position:relative">
-            <van-uploader :after-read="afterRead" @oversize="oversize"  v-model="fileList" multiple  :max-count="1" :max-size="100000" />            
-            <el-button type="primary" @click="useAvatar" class="using" >使用自定义头像</el-button>                
-            <van-image width="64" height="64" class="preview"  :src="imgPreview"  /> 
+            <van-uploader :after-read="afterRead" @oversize="oversize"  v-model="fileList" multiple  :max-count="1" :max-size="100000" />
+            <el-button type="primary" @click="useAvatar" class="using" >使用自定义头像</el-button>
+            <van-image width="64" height="64" class="preview"  :src="imgPreview"  />
             <el-button type="primary" @click="useAvatarT" class="using-o" >使用推荐头像</el-button>
         </div>
-                        
-        <el-divider content-position="center">推荐头像</el-divider>        
+        <el-divider content-position="center">推荐头像</el-divider>
         <div>
             <el-card class="box-card" v-for="v in imgList" :key="v.id">
                 <van-image width="64" height="64" class="user_img" :src="v.src"  @click="addImg(v.src)"/>
-            </el-card>           
+            </el-card>
         </div>
-
     </div>
-    
 </template>
 
 <script>
 export default {
     data() {
-        return {
+        return{
             fileList: [],
             imgPreview:'',
             imgList:[
@@ -40,12 +37,12 @@ export default {
                 { id:12,src:'https://i2.hdslb.com/bfs/face/8b6d024e50a61c6442ca076a622fb6d005332926.jpg@96w_96h_100Q_1c.webp'},
                 { id:13,src:'https://i1.hdslb.com/bfs/face/f2fb25676db69bf9b75c4c853633bc6f0f800278.jpg@96w_96h_100Q_1c.webp'},
                 { id:14,src:'https://i1.hdslb.com/bfs/face/0010f77cf72e7c54d4adbcdee73e2ef6611d83e2.jpg@96w_96h_100Q_1c.webp'},
-                { id:15,src:'https://i2.hdslb.com/bfs/face/09aa9e3a45ee7e7544a1ca7fb51d51b9e309c33e.jpg@96w_96h_100Q_1c.webp'},    
+                { id:15,src:'https://i2.hdslb.com/bfs/face/09aa9e3a45ee7e7544a1ca7fb51d51b9e309c33e.jpg@96w_96h_100Q_1c.webp'},
             ]
         }
     },
     methods: {
-        afterRead(file) {          
+        afterRead(file){
         // 此时可以自行将文件上传至服务器
             this.$http.post("uploadAvatar",file,{credentials: true}).then(function(result){
                 //console.log(result.body)
@@ -60,7 +57,6 @@ export default {
                 this.$message( '切换头像成功');
                 this.fileList.shift();
             }
-            
         },
         useAvatarT(){
             if(this.imgPreview.length!==0){
@@ -70,12 +66,9 @@ export default {
                 this.$message( '切换头像成功');
                 this.imgPreview='';
             }
-            
-        },        
+        },
         addImg(src){
             this.imgPreview=src;
-             
-          
         }
     }
 }
@@ -129,6 +122,6 @@ export default {
     overflow: hidden;
     position: absolute;
     top: 20px;
-    left: 300px;  
+    left: 300px;
 }
 </style>

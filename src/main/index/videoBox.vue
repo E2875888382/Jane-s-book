@@ -1,6 +1,6 @@
 <template>
     <div class="video_box">
-        <div class="page-header">            
+        <div class="page-header">
              <h2>
                  <i class="icon"></i>
                  <small>娱乐</small>
@@ -16,14 +16,11 @@
                     <div class="caption">
                         <a :href="item.link" :title="item.title">
                             {{ item.title }}
-                        </a>                 
+                        </a>
                     </div>
                 </div>
             </div>
-             
-            
         </div>
-         
     </div>
 </template>
 
@@ -40,9 +37,7 @@ export default {
     methods:{
            getEntertainmentVideo(){
                this.$http.get('getEntertainmentVideo').then(result => {
-                    
                     this.entertainmentVideo=result.body;
-           
                })
           }
     }
@@ -85,5 +80,5 @@ img{
     display: block;
     background-image: url('../../img/icons.png');
     background-position: -141px -1032px;
-}    
+}
 </style>

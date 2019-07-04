@@ -1,7 +1,7 @@
 <template>
     <div class="list_box">
         <div class="page-header">
-             <h2><small>排行</small></h2> 
+             <h2><small>排行</small></h2>
         </div>
          <el-divider></el-divider>
         <el-card class="box-card">
@@ -10,8 +10,6 @@
                 {{'列表内容 ' + o }}
             </div>
         </el-card>
- 
-         
     </div>
 </template>
 

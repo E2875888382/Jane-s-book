@@ -1,10 +1,10 @@
 <template>
 <div>
      <top></top>
-     <transition mode="out-in">    
+     <transition mode="out-in">
           <router-view></router-view>
-     </transition>            
-     <bottom></bottom>		 
+     </transition>
+     <bottom></bottom>
 </div>
 </template>
 
@@ -15,23 +15,18 @@ import bottom from './footer.vue'
 import userPage from './userPage.vue'
 export default{
      data(){
-          return {              
+          return{
                activeName: '1',
                 
           }
      },
-     created() {        
-      
-     },
      components:{
           top,
-          index,     
+          index,
           bottom,
           userPage,
      },
-     methods:{
- 
-     }
+     methods:{ }
 
 }
 </script>
@@ -44,7 +39,4 @@ export default{
 .v-enter-active,.v-leave-active{
      transition: all 0.2s;
 } 
- 
 </style>
-
- 

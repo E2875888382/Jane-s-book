@@ -1,10 +1,10 @@
 <template>  
-        <div class="block">                      
+        <div class="block">
              <el-carousel indicator-position="outside" height="200px">
                 <el-carousel-item v-for="item in lunbo" :key="item.id">
-                    <img :src="item.picture"> 
+                    <img :src="item.picture">
                 </el-carousel-item>
-            </el-carousel>           
+            </el-carousel>
         </div> 
 </template>
 
@@ -21,9 +21,7 @@ export default {
     methods:{
            getLunbo(){
                this.$http.get('getLunBo').then(result => {
-                    
                     this.lunbo=result.body;
-               
                })
           }
     }
@@ -35,14 +33,11 @@ export default {
     width:1000px;
     height:230px;
     margin:0 auto;
-    margin-top:40px;   
+    margin-top:40px;
 }
- 
 img{
     width:1000px;
     height:200px;
     
-} 
+}
 </style>
-
- 

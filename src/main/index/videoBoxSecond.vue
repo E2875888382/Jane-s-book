@@ -16,13 +16,11 @@
                     <div class="caption">
                         <a :href="item.link" :title="item.title">
                             {{ item.title }}
-                        </a>                 
+                        </a>
                     </div>
                 </div>
             </div>
-            
         </div>
-       
     </div>
 </template>
 
@@ -39,12 +37,10 @@ export default {
     methods:{
            getBasketballVideo(){
                this.$http.get('getBasketballVideo').then(result => {
-                    
                     this.basketballVideo=result.body;
-           
                })
           }
-    }    
+    }
 }
 </script>
 
@@ -79,10 +75,10 @@ img{
 .icon{
     width: 40px;
     height: 40px;
-    margin-right: 10px;  
+    margin-right: 10px;
     float: left; 
     display: block;
     background-image: url('../../img/icons.png');
     background-position: -141px -1356px;
-}      
+}
 </style>

@@ -6,55 +6,55 @@
                 <small>bilibili</small>
             </div>
             <div class="cards">
-                <em>关于我们</em>        
+                <em>关于我们</em>
             </div>
             <div class="cards">
-                <em>联系我们</em>        
+                <em>联系我们</em>
             </div>
             <div class="cards">
-                <em>加入我们</em>        
+                <em>加入我们</em>
             </div>
             <div class="cards">
-                <em>友情链接</em>        
+                <em>友情链接</em>
             </div>
             <div class="cards">
-                <em>bilibili认证</em>        
+                <em>bilibili认证</em>
             </div>
             <div class="cards">
-                <em>Investor Relations</em>        
-            </div>            
-        </div>  
+                <em>Investor Relations</em>
+            </div>
+        </div>
         <div class="second_div">
             <div class="page-header">
                 <small>传送门</small>
             </div>
             <div class="cards">
-                <em>帮助中心</em>        
+                <em>帮助中心</em>
             </div>
             <div class="cards">
-                <em>高级弹幕</em>        
+                <em>高级弹幕</em>
             </div>
             <div class="cards">
-                <em>活动专题页</em>        
+                <em>活动专题页</em>
             </div>
             <div class="cards">
-                <em>侵权申诉</em>        
+                <em>侵权申诉</em>
             </div>
             <div class="cards">
-                <em>活动中心</em>        
+                <em>活动中心</em>
             </div>
             <div class="cards">
-                <em>用户反馈论坛</em>        
+                <em>用户反馈论坛</em>
             </div>
             <div class="cards">
-                <em>壁纸站</em>        
+                <em>壁纸站</em>
             </div>
             <div class="cards">
-                <em>名人堂</em>        
+                <em>名人堂</em>
             </div>
             <div class="cards">
-                <em>专车号服务中心</em>        
-            </div>                                    
+                <em>专车号服务中心</em>
+            </div> 
         </div>
         <div class="third_div">
             <el-tooltip placement="top" effect="light">
@@ -87,12 +87,12 @@
         </div>
     </div>
 </div>
- 
+
 </template>
 
 <script>
 export default {
-    
+
 }
 </script>
 
@@ -101,7 +101,6 @@ export default {
     background: #f6f9fa;
     width: 100%;
     height: 175px;
-   
 }
 .footer{
     width: 1000px;
@@ -148,9 +147,9 @@ export default {
     background:url(../img/icons.png) no-repeat -1024px -322px;
     margin-left: 11px;
     width: 60px;
-    height: 60px;    
+    height: 60px;
 }
-.wechat_logo{    
+.wechat_logo{
     display: block;
     background:url(../img/icons.png) no-repeat -1024px -66px;
     margin-left: 11px;
@@ -181,6 +180,6 @@ em:hover{
     width:110px;
     height: 14px;
     margin-bottom: 16px;
-    float: left;    
+    float: left;
 } 
 </style>

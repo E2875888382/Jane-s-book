@@ -12,9 +12,7 @@
                         <span class="user_name">{{ $store.state.userIfo.nickName }}</span>
                         <van-progress :percentage="$store.state.userIfo.level"  :pivot-text="'LV'+ $store.state.userIfo.level " class="process_bar" color="#f2826a"/>
                     </div>
-
                     <el-divider content-position="left">基本信息</el-divider>
-
                     <div class="user_info_footer">
                         <div class="user_info_item">
                             <span class="font_label">用户ID：</span><span class="msg">{{ $store.state.userIfo.id }}</span> 
@@ -36,7 +34,7 @@
                         </div>
                         <div class="user_info_item">
                             <span class="font_label">我的签名：</span><span class="msg">{{ $store.state.userIfo.sign }}</span>
-                        </div>                                                                                                 
+                        </div>
                     </div>
                 </div> 
             </el-tab-pane>
@@ -46,19 +44,19 @@
                  <span slot="label">
                     <i class="el-icon-user"></i> 我的信息
                 </span>
-                <div v-if="$store.state.loginFlag">                             
+                <div v-if="$store.state.loginFlag">
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                         <el-form-item label="昵称" prop="nickName">
                             <el-input v-model="ruleForm.nickName"></el-input>
                         </el-form-item>
                         <el-form-item label="手机" prop="telephone">
                             <el-input v-model="ruleForm.telephone"></el-input>
-                        </el-form-item>                       
-                        <el-form-item label="出生日期" required>                        
+                        </el-form-item>
+                        <el-form-item label="出生日期" required>
                             <el-form-item prop="birth">
                                 <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birth" style="width: 100%;"></el-date-picker>
-                            </el-form-item>                                                
-                        </el-form-item>                                        
+                            </el-form-item>
+                        </el-form-item>
                         <el-form-item label="性别" prop="gender">
                             <el-radio-group v-model="ruleForm.gender">
                                 <el-radio label="男"></el-radio>
@@ -72,15 +70,15 @@
                             <el-button type="primary" @click="submitForm('ruleForm')">确定修改</el-button>
                             <el-button @click="resetForm('ruleForm')">重置</el-button>
                         </el-form-item>
-                    </el-form>     
-                </div>          
+                    </el-form>
+                </div>
             </el-tab-pane>
 
             <!-- 我的头像 -->
             <el-tab-pane>
                 <span slot="label">
                     <i class="el-icon-picture-outline-round"></i> 我的头像
-                </span>                
+                </span>
                 <div v-if="$store.state.loginFlag">
                     <avatar></avatar>
                 </div>
@@ -105,7 +103,7 @@
                                     <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="!ifo.telephoneFlag" />
                                     <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="ifo.telephoneFlag"/>
                                     <span>绑定手机号</span>
-                                </div>                                 
+                                </div>
                             </div>
                             <div class="safe_item_warning" v-if="ifo.telephoneFlag">
                                 <span>{{ ifo.telephone }}</span>
@@ -115,22 +113,22 @@
                             </div>
                             <div class="safe_item_link">
                                 <el-link type="primary" href="">更换手机</el-link> 
-                            </div>                          
-                        </div>                       
+                            </div>
+                        </div>
                         <el-divider></el-divider>
                         <div class="safe_item">
                             <div class="safe_item_title">
-                                <div class="p">                   
+                                <div class="p">
                                     <van-icon name="checked" size="20" color="#42cb6c" class="icon"/>
                                     <span>设置密码</span>
                                 </div>
-                            </div>    
+                            </div>
                             <div class="safe_item_warning">
                                 <span>已设置密码</span>
                             </div>
                             <div class="safe_item_link">
-                                <el-link type="primary" href="">修改密码</el-link>                
-                            </div>                            
+                                <el-link type="primary" href="">修改密码</el-link>
+                            </div>
                         </div>
                         <el-divider></el-divider>
                         <div class="safe_item">
@@ -148,11 +146,11 @@
                                 <span>未绑定QQ号</span>
                             </div>
                             <div class="safe_item_link">
-                                <el-link type="primary" href="">绑定QQ</el-link>                  
-                            </div>                           
+                                <el-link type="primary" href="">绑定QQ</el-link>
+                            </div>
                         </div>
                     </div>
-                </div>            
+                </div>
             </el-tab-pane>
 
             <!-- 好友消息 -->
@@ -165,19 +163,19 @@
                 <div v-if="$store.state.loginFlag">
                     <div>
                         <span>好友消息</span>
-                        <el-divider></el-divider>                        
+                        <el-divider></el-divider>
                     </div>
                     <div class="messageBox">
                         <el-card class="box-card" v-for="item in friendsMessage" :key="item.index">
                             <div slot="header" class="clearfix">
                                 <span class="sendTime">{{ item.sendTime }}</span>
                                 <span>{{ item.sender }}：</span>
-                                <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.id)">已读</el-button>                      
+                                <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.id)">已读</el-button>
                             </div>
-                            <div class="text item">{{ item.content }}</div> 
+                            <div class="text item">{{ item.content }}</div>
                         </el-card>
                     </div>
-                </div>         
+                </div>
             </el-tab-pane>
 
             <!-- 管理好友 -->
@@ -188,45 +186,45 @@
                 <div v-if="$store.state.loginFlag">
                     <div class="searchFriendBox">
                         <div>
-                            <span>添加好友</span>                      
-                            <el-divider></el-divider>               
+                            <span>添加好友</span>
+                            <el-divider></el-divider>
                         </div>
                         <div>
                             <div style="margin-bottom:20px;text-align:center" >
-                                <el-input placeholder="请输入email"  class="input-with-select" style="width:300px" v-model="searchFriendInput"></el-input>    
+                                <el-input placeholder="请输入email"  class="input-with-select" style="width:300px" v-model="searchFriendInput"></el-input>
                                 <el-button slot="append" icon="el-icon-search"  @click="searchFriend"></el-button>
                             </div>
-                            <div  v-for="item in searchFriendResult" :key="item.email">
+                            <div v-for="item in searchFriendResult" :key="item.email">
                                 <div class="searchFriendList">
                                 <span>{{ item.nickName }}</span>
                                 <p>{{ item.email }}</p>
                                 </div>
                                 <el-button type="primary" plain @click="addFriend(item.email,item.nickName)">添加关注</el-button>
-                            </div>                         
+                            </div>
                         </div>
                     </div>
-                    <div>                      
-                        <el-divider content-position="left">我的好友</el-divider>               
+                    <div>
+                        <el-divider content-position="left">我的好友</el-divider>
                     </div>
                     <div class="friendListBox">
                         <div v-for="item in friendsList" :key="item.friendEmail">
                             <div class="friendList">
                                 <span>{{ item.friendNickName }}</span>
                                 <p>{{ item.friendEmail }}</p>
-                            </div>                           
+                            </div>
                             <el-dropdown>
                                 <el-button type="primary">
                                     已关注<i class="el-icon-arrow-down el-icon--right"></i>
                                 </el-button>
-                                <el-dropdown-menu slot="dropdown">             
-                                    <el-dropdown-item><a @click="deleteFriend(item.friendEmail)">取消关注</a></el-dropdown-item>                                   
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item><a @click="deleteFriend(item.friendEmail)">取消关注</a></el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                             <el-divider></el-divider>
-                        </div>                      
+                        </div>
                     </div>
                 </div> 
-            </el-tab-pane>  
+            </el-tab-pane>
 
             <!-- 发送私信 -->
             <el-tab-pane>
@@ -236,16 +234,16 @@
                 <div v-if="$store.state.loginFlag">
                     <div class="sendMsgBox">
                         <div>
-                            <span>发送私信</span>                      
-                            <el-divider content-position="right">我的好友</el-divider>               
+                            <span>发送私信</span>
+                            <el-divider content-position="right">我的好友</el-divider>
                         </div>
-                        <div class="left_friend_list">                    
+                        <div class="left_friend_list">
                             <div v-for="item in friendsList" :key="item.friendEmail" @click="sendMsgReceiver( item.friendNickName,item.friendEmail )">
                                 <div class="friendList_sendMsg">
                                     <span>{{ item.friendNickName }}</span>
                                     <p>{{ item.friendEmail }}</p>
                                     <el-divider></el-divider>
-                                </div>                                                                
+                                </div>
                             </div>
                         </div>
                         <div class="rigth_send_msg">
@@ -255,9 +253,9 @@
                             <div class="send_box">
                                 <el-button type="primary" round @click="sendMsg">发送</el-button>
                             </div>
-                        </div>  
-                    </div>                                        
-                </div>      
+                        </div>
+                    </div>
+                </div>
             </el-tab-pane>
 
         </el-tabs>
@@ -287,18 +285,18 @@ export default {
             ifo:{
                 safeNum:'',
                 telephoneFlag:false,
-                telephone:'',              
+                telephone:'',
                 qqFlag:false,
-                qqNumber:'',     
+                qqNumber:'',
             },
             //好友列表
-            friendsList:[],                  
+            friendsList:[],
             result:{},
             //更改用户信息表单
             ruleForm: {
                 nickName: '',
                 telephone: '',
-                birth: '',                                                             
+                birth: '',
                 sign: '',
                 gender:'',
             },
@@ -317,16 +315,16 @@ export default {
                 ],
                 birth: [
                     { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                ],                                      
+                ],
                 sign: [
                     { required: true, message: '请填写个性签名', trigger: 'blur' }
                 ]
-            }     
+            }
         }
     },
     //在这里注册组件
     components:{
-        avatar,           
+        avatar,
     },
     methods:{
         //修改用户信息方法
@@ -340,9 +338,9 @@ export default {
                                 message: '修改信息成功',
                                 type: 'success'
                             });
-                            this.$refs[formName].resetFields();                         
-                        }       
-                    })                    
+                            this.$refs[formName].resetFields();
+                        }
+                    })
                     
                     
                 } else {
@@ -359,9 +357,9 @@ export default {
         getLoginUserIfo(){
              //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
-                if(result.body[0]){                             
-                    this.$store.commit('userIfo',result.body[0]);         
-                }         
+                if(result.body[0]){
+                    this.$store.commit('userIfo',result.body[0]);
+                }
             })
         },
         //获取当前用户的安全信息
@@ -371,9 +369,9 @@ export default {
                     if(result.body[0]){
                         this.ifo.safeNum=result.body[0].safenum;
                         if(result.body[0].qq !== ''){
-                            this.ifo.qqFlag=true;                   
+                            this.ifo.qqFlag=true;
                             this.ifo.qqNumber=result.body[0].qq;
-                        }                 
+                        }
                         if(result.body[0].telephone !== ''){
                             this.ifo.telephoneFlag=true;
                             this.ifo.telephone=result.body[0].telephone;
@@ -381,16 +379,15 @@ export default {
                     }   
                 })
             }
-             
-        },      
+        },
         //调用message组件中的方法获取好友消息
         getFriendsMessage(){
             if(this.$store.state.userIfo.email !==''){
-                this.$http.get("getFriendsMessage" ,{ credentials: true}).then( (result) =>{                                 
+                this.$http.get("getFriendsMessage" ,{ credentials: true}).then( (result) =>{
                     this.friendsMessage = result.body;
-                    if(result.body.length>0){                        
-                        this.$store.commit('getMessageCount',result.body.length); 
-                    }else{                   
+                    if(result.body.length>0){
+                        this.$store.commit('getMessageCount',result.body.length);
+                    }else{
                         this.$store.commit('getMessageCount','');
                     }
                     
@@ -400,35 +397,35 @@ export default {
         },
         //将消息设置为已读
         isRead(id){
-            this.$http.post("isRead" ,{id:id},{ credentials: true}).then( (result) =>{                   
+            this.$http.post("isRead" ,{id:id},{ credentials: true}).then( (result) =>{
                 if(result.body.code == 200){
                     this.getFriendsMessage();
                 }
-            })            
+            })
         },
         //删除好友
-        deleteFriend(email){                   
-            this.$http.post("deleteFriend",{delete:email},{ credentials: true}).then( (result) =>{    
-                this.getFriends();               
-            })              
+        deleteFriend(email){
+            this.$http.post("deleteFriend",{delete:email},{ credentials: true}).then( (result) =>{
+                this.getFriends();
+            })
         },
         //获取好友列表
         getFriends(){
             if(this.$store.state.userIfo.email !==''){
-                this.$http.get("getFriends" ,{ credentials: true}).then( (result) =>{                   
+                this.$http.get("getFriends" ,{ credentials: true}).then( (result) =>{
                     this.friendsList = result.body;
                 }) 
-            }         
+            }
         },
         //搜索好友
         searchFriend(){
-            this.$http.post("searchFriend" ,{search:this.searchFriendInput},{ credentials: true}).then( (result) =>{                   
+            this.$http.post("searchFriend" ,{search:this.searchFriendInput},{ credentials: true}).then( (result) =>{
                 this.searchFriendResult = result.body;
             })
         },
         //添加好友
         addFriend(email,nickName){
-            this.$http.post("addFriend" ,{addEmail:email,addNickName:nickName},{ credentials: true}).then( (result) =>{                                 
+            this.$http.post("addFriend" ,{addEmail:email,addNickName:nickName},{ credentials: true}).then( (result) =>{
                 if(result.body.code==200){
                     this.$message({
                         message: '添加好友成功',
@@ -436,7 +433,7 @@ export default {
                     });
                     this.searchFriendResult = [];
                     this.searchFriendInput = '';
-                    this.getFriends();                         
+                    this.getFriends();
                 }     
             })
         },
@@ -447,22 +444,21 @@ export default {
         },
         //发送私信
         sendMsg(){
-            if(this.textarea!==''&& this.msgReceiverEmail!==''){            
-                this.$http.post("sendMsg" ,{receiver:this.msgReceiverEmail,content:this.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then( (result) =>{                                 
+            if(this.textarea!==''&& this.msgReceiverEmail!==''){
+                this.$http.post("sendMsg" ,{receiver:this.msgReceiverEmail,content:this.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then( (result) =>{
                     if(result.body.code==200){
                         this.$message({
                             message: '发送私信成功',
                             type: 'success'
-                        });                                         
-                    }     
+                        });
+                    }
                 })
             }else{
                 this.$message({
                     message: '请选择收件人以及填写消息！',
                     type: 'warning'
-                });  
+                });
             }
-
         }
     }
 }
@@ -520,10 +516,10 @@ export default {
 }
 .msg{
     font-size: 14px;
-    color: #48576a;  
+    color: #48576a;
     float: left;
     line-height: 30px;
-    padding: 0;    
+    padding: 0;
 }
 .user_img{
     width: 64px;
@@ -564,7 +560,7 @@ export default {
     padding:10px 10px 2px 20px;
     margin: 0;
     font-family: MicrosoftYaHei;
-    float: left;    
+    float: left;
 }
  
 .safe_p{
@@ -572,12 +568,12 @@ export default {
 }
 .safe_item span{
     line-height: 20px;
-    font-size: 14px;   
+    font-size: 14px;
     color: #222;
 }
-.safe_item_title span{   
+.safe_item_title span{
     line-height: 20px;
-    font-size: 14px;   
+    font-size: 14px;
     color: #222;
     position:absolute;
     top: 3px;
@@ -681,7 +677,7 @@ export default {
     width: 210px;
     height: 80px;
     float: left;
-    padding-left: 30px;    
+    padding-left: 30px;
 }
 .friendList_sendMsg:hover{
     color: greenyellow;
@@ -696,7 +692,7 @@ export default {
 }
 .textarea{
   width: 550px;
-  margin-left:20px;
+  margin-left: 20px;
 }
 .send_box{
     margin:20px 10px 0px 20px;
