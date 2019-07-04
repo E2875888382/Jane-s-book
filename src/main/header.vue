@@ -14,11 +14,11 @@
             </div>      
             <div class="right_box">
                 <!-- 更多 -->
-                <el-dropdown class="select_list"  size="small">
+                <el-dropdown class="select_list"  size="small"  v-if="$store.state.loginFlag">
                     <el-button type="primary">
                         更多<i class="el-icon-arrow-down el-icon--right"></i>    
                     </el-button>
-                    <el-dropdown-menu slot="dropdown"  v-if="$store.state.loginFlag">
+                    <el-dropdown-menu slot="dropdown"   >
                         <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>        
                         <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>            
                     </el-dropdown-menu>                    
@@ -177,6 +177,9 @@ export default {
     created(){
        this.getLoginUser();
        this.getLoginUserIfo();
+    },
+    watch:{
+         
     },
     methods: {       
         getLoginUser(){
