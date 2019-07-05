@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "82fed5a37446986ab74c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8c7d74411bf758d8ef17"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -23542,12 +23542,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
     data: function data() {
         return {
-            //私信内容
-            textarea: '',
-            //发送消息给好友
-            msgReceiverNickname: '',
-            msgReceiverEmail: '',
-            //好友消息
+            //发送私信
+            receiver: {
+                msgReceiverNickname: '',
+                msgReceiverEmail: '',
+                textarea: '' //私信内容
+            },
+            //好友消息列表
             friendsMessage: [],
             //添加好友搜索框
             searchFriendInput: '',
@@ -23563,7 +23564,6 @@ exports.default = {
             },
             //好友列表
             friendsList: [],
-            result: {},
             //更改用户信息表单
             ruleForm: {
                 nickName: '',
@@ -23724,16 +23724,16 @@ exports.default = {
 
         //获取要发送消息给的好友
         sendMsgReceiver: function sendMsgReceiver(nickName, email) {
-            this.msgReceiverNickname = nickName;
-            this.msgReceiverEmail = email;
+            this.receiver.msgReceiverNickname = nickName;
+            this.receiver.msgReceiverEmail = email;
         },
 
         //发送私信
         sendMsg: function sendMsg() {
             var _this10 = this;
 
-            if (this.textarea !== '' && this.msgReceiverEmail !== '') {
-                this.$http.post("sendMsg", { receiver: this.msgReceiverEmail, content: this.textarea, sendTime: new Date().toLocaleString() }, { credentials: true }).then(function (result) {
+            if (this.receiver.textarea !== '' && this.receiver.msgReceiverEmail !== '') {
+                this.$http.post("sendMsg", { receiver: this.receiver.msgReceiverEmail, content: this.receiver.textarea, sendTime: new Date().toLocaleString() }, { credentials: true }).then(function (result) {
                     if (result.body.code == 200) {
                         _this10.$message({
                             message: '发送私信成功',
@@ -39221,9 +39221,9 @@ var render = function() {
                         _c("p", [
                           _vm._v(
                             "发送给：" +
-                              _vm._s(_vm.msgReceiverNickname) +
+                              _vm._s(_vm.receiver.msgReceiverNickname) +
                               " " +
-                              _vm._s(_vm.msgReceiverEmail)
+                              _vm._s(_vm.receiver.msgReceiverEmail)
                           )
                         ]),
                         _vm._v(" "),
@@ -39239,11 +39239,11 @@ var render = function() {
                             rows: "10"
                           },
                           model: {
-                            value: _vm.textarea,
+                            value: _vm.receiver.textarea,
                             callback: function($$v) {
-                              _vm.textarea = $$v
+                              _vm.$set(_vm.receiver, "textarea", $$v)
                             },
-                            expression: "textarea"
+                            expression: "receiver.textarea"
                           }
                         }),
                         _vm._v(" "),
