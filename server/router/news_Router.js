@@ -15,11 +15,11 @@ function handleDisconnect(connection) {
     connection.on('error', function(err) {
       if (!err.fatal) {
         return;
-      }  
+      }
       if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
         throw err;
-      }   
-      console.log('Re-connecting lost connection: ' + err.stack); 
+      }
+      console.log('Re-connecting lost connection: ' + err.stack);
       connection = mysql.createConnection(connection.config);
       handleDisconnect(connection);
       connection.connect();
@@ -69,7 +69,7 @@ router.post('/getNewsDetails',(request,response) =>{
 
 //增加新闻阅读量
 router.post('/addNewsRead',(request,response) =>{
-    connection.connect();   
+    connection.connect();
     var sql = ' UPDATE news SET `read` = `read` + 1  WHERE id = '+request.body.id;
     connection.query(sql,(error,result) =>{
         if(error){
@@ -77,7 +77,8 @@ router.post('/addNewsRead',(request,response) =>{
         }
         response.status(200).json({ code:200,message:'阅读量增加' });
     })
-    handleDisconnect(connection);   
+    handleDisconnect(connection);
 })
+
 //导出router
-module.exports=router;  
+module.exports=router;

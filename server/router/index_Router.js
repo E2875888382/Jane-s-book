@@ -20,7 +20,7 @@ function handleDisconnect(connection) {
       if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
         throw err;
       }   
-      console.log('Re-connecting lost connection: ' + err.stack);   
+      console.log('Re-connecting lost connection: ' + err.stack);
       connection = mysql.createConnection(connection.config);
       handleDisconnect(connection);
       connection.connect();
@@ -34,8 +34,8 @@ router.get('/getLunBo',(request,response) => {
   connection.query(sql, (error, result) => {
       if (error){
           response.status(500).send('server error');
-      }                
-      response.send( result );  
+      }
+      response.send( result );
   });
   handleDisconnect(connection);
 }) 
@@ -47,7 +47,7 @@ router.get('/getEntertainmentVideo', (request,response) =>{
   connection.query(sql, (error, result) => {
       if (error){
           response.status(500).send('server error');
-      }                
+      }
       response.send( result );
   });
   handleDisconnect(connection);
@@ -59,7 +59,7 @@ router.get('/getBasketballVideo', (request,response) => {
   connection.query(sql, (error, result) => {
       if (error){
           response.status(500).send('server error');
-      }                
+      }
       response.send( result );
   });
   handleDisconnect(connection);
@@ -71,11 +71,11 @@ router.get('/getRecommendVideo', (request,response) => {
   connection.query(sql, (error, result) =>  {
       if (error){
           response.status(500).send('server error');
-      }                
+      }
       response.send( result );
   });
   handleDisconnect(connection);
 }) 
- 
+
 //导出router
 module.exports=router;

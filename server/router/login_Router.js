@@ -21,13 +21,12 @@ function handleDisconnect(connection) {
       if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
         throw err;
       }  
-      console.log('Re-connecting lost connection: ' + err.stack);   
+      console.log('Re-connecting lost connection: ' + err.stack);
       connection = mysql.createConnection(connection.config);
       handleDisconnect(connection);
       connection.connect();
     });
 };
-
 
 //注册接口
 router.post('/newUser',(request,response) =>{
@@ -35,10 +34,10 @@ router.post('/newUser',(request,response) =>{
     var sql='SELECT * FROM user WHERE email ='+ '"'+request.body.email+'"';
     connection.query(sql, (error, result) =>{
         if (error) {
-            response.status(500).json({  message:"server error",code:500  });           
+            response.status(500).json({  message:"server error",code:500  });
         }             
         if(result.length!==0){
-            response.status(200).json({  message:"该邮箱已经注册过了" ,code:0 });                    
+            response.status(200).json({  message:"该邮箱已经注册过了" ,code:0 });
         }
         else {
             var sql1='INSERT INTO user (email,password) VALUES ('+'"'+request.body.email+'",'+'"'+request.body.password+'")';
@@ -47,15 +46,15 @@ router.post('/newUser',(request,response) =>{
                     response.status(500).json({  message:"server error",code:500  });
                 }else{
                     //使用session记录登录状态
-                    request.session.user=request.body;                 
-                    response.status(200).json({  message:"注册成功",code:1 ,user:request.session.user.email  }); 
+                    request.session.user=request.body;
+                    response.status(200).json({  message:"注册成功",code:1 ,user:request.session.user.email  });
                 }
-            });           
-        }      
+            });
+        }
     });
     handleDisconnect(connection);
   })
-  
+
 //处理登录请求接口
 router.post('/login', (request,response) =>{
   connection.connect();
@@ -63,38 +62,37 @@ router.post('/login', (request,response) =>{
   var sql=`SELECT * FROM user WHERE email ="${request.body.email}"AND password = "${request.body.password }"`;
   connection.query(sql, (error, result) =>{
       if (error) {
-        response.status(500).json({  message:"server error",code:500  });           
-      }             
-      if(result.length==0){
-        response.status(200).json({  message:"账号或密码错误" ,code:0 });                    
+        response.status(500).json({  message:"server error",code:500  });
       }
-      else {          
+      if(result.length==0){
+        response.status(200).json({  message:"账号或密码错误" ,code:0 });
+      }
+      else {
           //使用session记录登录状态
-          request.session.user=request.body;           
-          response.status(200).json({  message:"登录成功",code:1,user:request.session.user.email  });                            
-      }      
+          request.session.user=request.body;
+          response.status(200).json({  message:"登录成功",code:1,user:request.session.user.email  });
+      }
   });
-  handleDisconnect(connection);    
-}); 
-  
+  handleDisconnect(connection);
+});
+
 //返回登陆状态列表接口
 router.get('/getLoginUser', (request,response) =>{
   if(request.session.user){  
       response.status(200).json({user:request.session.user });
   }else{
       response.status(200).json({  message:"没有登录记录",code:600  });
-  }  
+  }
 })
-  
+
 //退出登录接口
 router.get('/logOut', (request,response) =>{
     request.session.user=null;
     response.status(200).json({  message:"退出成功",code:700  });
 })
-  
+
 //发送邮件验证码接口
 router.post('/sendSms', (request,response) =>{
-      
     let transporter = nodemailer.createTransport({
       // host: 'smtp.ethereal.email',
       service: 'qq', // 使用了内置传输发送邮件 查看支持列表：https://nodemailer.com/smtp/well-known/
@@ -126,7 +124,6 @@ router.post('/sendSms', (request,response) =>{
         return console.log(error);
       }
       console.log('Message sent: %s', info.messageId);
-      
     });
     response.status(200).json({message:"验证码已发送",code:200,sms:smsNum});
 })

@@ -331,18 +331,16 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    //发送数据到后台
+                    //发送更改后的用户信息到后台
                     this.$http.post('updateUserInfo',{email:this.$store.state.userIfo.email,update:this.ruleForm, credentials: true }).then((result) =>{
                         if(result.body.code==200){
                             this.$message({
                                 message: '修改信息成功',
                                 type: 'success'
                             });
-                            this.$refs[formName].resetFields();
+                            this.$refs[formName].resetFields();//成功后重置输入表单
                         }
                     })
-                    
-                    
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -376,11 +374,11 @@ export default {
                             this.ifo.telephoneFlag=true;
                             this.ifo.telephone=result.body[0].telephone;
                         }
-                    }   
+                    }
                 })
             }
         },
-        //调用message组件中的方法获取好友消息
+        //获取好友消息
         getFriendsMessage(){
             if(this.$store.state.userIfo.email !==''){
                 this.$http.get("getFriendsMessage" ,{ credentials: true}).then( (result) =>{
@@ -399,14 +397,14 @@ export default {
         isRead(id){
             this.$http.post("isRead" ,{id:id},{ credentials: true}).then( (result) =>{
                 if(result.body.code == 200){
-                    this.getFriendsMessage();
+                    this.getFriendsMessage();//设置为已读后刷新信息列表
                 }
             })
         },
         //删除好友
         deleteFriend(email){
             this.$http.post("deleteFriend",{delete:email},{ credentials: true}).then( (result) =>{
-                this.getFriends();
+                this.getFriends();//删除好友成功刷新好友列表
             })
         },
         //获取好友列表
@@ -433,8 +431,8 @@ export default {
                     });
                     this.searchFriendResult = [];
                     this.searchFriendInput = '';
-                    this.getFriends();
-                }     
+                    this.getFriends();//添加好友成功后刷新好友列表
+                }
             })
         },
         //获取要发送消息给的好友
@@ -465,7 +463,6 @@ export default {
 </script>
 
 <style scoped>
- 
 .content{
      width:1000px;
      height:1000px;

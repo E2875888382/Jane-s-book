@@ -24,11 +24,12 @@ export default {
         }
     },
     filters:{
+        //过滤器，用于把句号换为换行符
         cut:function(s){
             if(s){
                 s = s.replace(/。/g,"。\n");
             }
-            return  s; 
+            return  s;
         }
     },
     created(){
