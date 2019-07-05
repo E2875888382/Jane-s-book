@@ -247,8 +247,8 @@
                             </div>
                         </div>
                         <div class="rigth_send_msg">
-                            <p>发送给：{{ msgReceiverNickname }} {{ msgReceiverEmail }}</p>
-                            <el-input type="textarea" placeholder="请输入内容" v-model="textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea">
+                            <p>发送给：{{ receiver.msgReceiverNickname }} {{ receiver.msgReceiverEmail }}</p>
+                            <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea">
                             </el-input>
                             <div class="send_box">
                                 <el-button type="primary" round @click="sendMsg">发送</el-button>
@@ -266,16 +266,16 @@
 <script>
 //导入头像组件
 import avatar from '../main/userPage/avatar.vue'
- 
 export default {
     data(){
         return{
-            //私信内容
-            textarea:'',
-            //发送消息给好友
-            msgReceiverNickname:'',
-            msgReceiverEmail:'',
-            //好友消息
+            //发送私信
+            receiver:{
+                msgReceiverNickname:'',
+                msgReceiverEmail:'',
+                textarea:'',//私信内容
+            },
+            //好友消息列表
             friendsMessage:[],
             //添加好友搜索框
             searchFriendInput:'',
@@ -291,7 +291,6 @@ export default {
             },
             //好友列表
             friendsList:[],
-            result:{},
             //更改用户信息表单
             ruleForm: {
                 nickName: '',
@@ -388,10 +387,8 @@ export default {
                     }else{
                         this.$store.commit('getMessageCount','');
                     }
-                    
                 })
             }
-
         },
         //将消息设置为已读
         isRead(id){
@@ -437,13 +434,13 @@ export default {
         },
         //获取要发送消息给的好友
         sendMsgReceiver(nickName,email){
-            this.msgReceiverNickname = nickName;
-            this.msgReceiverEmail = email;
+            this.receiver.msgReceiverNickname = nickName;
+            this.receiver.msgReceiverEmail = email;
         },
         //发送私信
         sendMsg(){
-            if(this.textarea!==''&& this.msgReceiverEmail!==''){
-                this.$http.post("sendMsg" ,{receiver:this.msgReceiverEmail,content:this.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then( (result) =>{
+            if(this.receiver.textarea!==''&& this.receiver.msgReceiverEmail!==''){
+                this.$http.post("sendMsg" ,{receiver:this.receiver.msgReceiverEmail,content:this.receiver.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then( (result) =>{
                     if(result.body.code==200){
                         this.$message({
                             message: '发送私信成功',
