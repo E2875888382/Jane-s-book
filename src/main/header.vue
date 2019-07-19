@@ -7,7 +7,7 @@
                 <ul>
                     <li><router-link to="/index" class="top_link"><i class="header_icon"></i>首页</router-link></li>
                     <li><router-link to="/news" class="top_link">新闻中心</router-link></li>
-                    <li><router-link to="/index" class="top_link">NBA周边</router-link></li>
+                    <li><router-link to="/comic" class="top_link">漫画</router-link></li>
                     <li><router-link to="/index" class="top_link">NBA论坛</router-link></li>
                     <li><router-link to="/index" class="top_link">步行街</router-link></li>
                 </ul>

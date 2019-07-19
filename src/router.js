@@ -8,6 +8,7 @@ import Index from './main/index.vue'
 import UserPage from './main/userPage.vue'
 import News from './main/news.vue'
 import NewsDetails from './main/news/newDetails.vue'
+import Comic from './main/comic/comic_index.vue'
 
 //手动安装vue-router
 Vue.use(VueRouter)
@@ -19,6 +20,7 @@ var router=new VueRouter({
         { path:'/userPage',component:UserPage },
         { path:'/news',component:News },
         { path:'/newsDetails/:id',component:NewsDetails },
+        { path:'/comic',component:Comic },
     ]
 })
 
