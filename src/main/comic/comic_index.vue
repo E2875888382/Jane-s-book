@@ -29,37 +29,35 @@
             <div class="head_title">
                 <h2>热门分类</h2>
             </div>
-            <div class="classification" v-for="item in 6" :key="item">
-                <h3>恐怖</h3>
+            <div class="classification" v-for="item in comic" :key="item.index">
+                <h3>{{ item.className }}</h3>
                 <div class="first_item">
-                    <el-image class="img" src="https://manhua-163.hdslb.com/pic20190319684dc7495bf04296a4667a3b325369a5.jpg" fit="fill"></el-image>
+                    <el-image class="img" :src="item.firstItem.img" fit="fill"></el-image>
                     <div class="first_item_details">
-                        <a href="#" class="comic_title">致命冲动</a>
-                        <p>一个致命的微信红包</p>
+                        <a href="#" class="comic_title">{{ item.firstItem.title }}</a>
+                        <p>{{ item.firstItem.summary }}</p>
                         <div class="new">
                             <span>最新</span>
-                            <a href="#">第59话 新的任务</a>
+                            <a href="#">{{ item.firstItem.new }}</a>
                         </div>
                         <div class="author">
                             <div class="icon_1"></div>
-                            <span>万画筒漫画</span>
+                            <span>{{ item.firstItem.author }}</span>
                         </div>
                         <div class="hot">
                             <div class="icon_2"></div>
-                            <span>2430万</span>
+                            <span>{{ item.firstItem.hot }}</span>
                         </div>
                         <div class="tags">
-                            <van-tag round plain>恐怖</van-tag>
-                            <van-tag round plain>校园</van-tag>
-                            <van-tag round plain>悬疑</van-tag>
+                            <van-tag class="tag" round plain v-for="i in item.firstItem.tag" :key="i">{{ i }}</van-tag>
                         </div>
                     </div>
                 </div>
                 <div class="other_item">
-                    <div class="item" v-for="item in 5" :key="item">
-                        <span class="item_order">{{ item + 1}}</span>
-                        <a class="item_title" href="#">染色体47号</a>
-                        <a class="item_new" href="#">最新：227 第227话</a>
+                    <div class="item" v-for="(i,index) in item.otherItem" :key="index">
+                        <span class="item_order">{{ index+2 }}</span>
+                        <a class="item_title" href="#">{{ i.title }}</a>
+                        <a class="item_new" href="#">{{ i.new }}</a>
                     </div>
                 </div>
             </div>
@@ -73,7 +71,18 @@ export default {
         return {
             carousel:['https://online-public-manhua.nos-eastchina1.126.net/pic2019070193dd892e8a964d98adc0d662d0c3b870.jpg?imageView&thumbnail=416y362',
                     'https://online-public-manhua.nos-eastchina1.126.net/pic2019070161acf373a6004a1b87cb39c28ee6d156.jpg?imageView&thumbnail=416y362'
-                    ]
+                    ],
+            comic:[],
+        }
+    },
+    mounted(){
+        this.getComic();
+    },
+    methods:{
+        getComic(){
+            this.$http.get("getComic").then((result) =>{
+                this.comic = result.body;
+            })
         }
     }
 }
@@ -258,6 +267,9 @@ export default {
     position: absolute;
     bottom:0;
     left: 0;
+}
+.tags .tag{
+    margin-right: 4px;
 }
 .author span,.hot span{
     display: inline-block;
