@@ -58,7 +58,7 @@
                 <div class="other_item">
                     <div class="item" v-for="item in 5" :key="item">
                         <span class="item_order">{{ item + 1}}</span>
-                        <span class="item_title">染色体47号</span>
+                        <a class="item_title" href="#">染色体47号</a>
                         <a class="item_new" href="#">最新：227 第227话</a>
                     </div>
                 </div>
@@ -226,6 +226,10 @@ export default {
     display:block;
     float: left;
     line-height: 33px;
+    text-decoration-line: none;
+}
+.item .item_title:hover{
+    color:#ff175d;
 }
 .item .item_new{
     font-size: 12px;
