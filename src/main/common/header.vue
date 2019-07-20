@@ -203,7 +203,6 @@ export default {
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
                     this.$store.commit('userStatus',{currentUser:result.body.user,unLoginFlag:false,loginFlag:true});
-                    location.href="#/";//登录完成，重定向到首页
                 }else{
                     console.log(result.body);
                 }

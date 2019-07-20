@@ -85,39 +85,56 @@
             </div>
         </div>
         <div class="comic_list">
-            <div class="comic_item" v-for="item in 72" :key="item">
+            <div class="comic_item" v-for="(item,index) in comic" :key="index">
                 <div class="cover">
-                    <a href="#">
-                        <img src="https://manhua-163.hdslb.com/pic/2015/07/02/2466e4a4393f4e7abc2b0824264fa060.jpg">
+                    <a :href="item.link">
+                        <img :src="item.img">
                     </a>
                 </div>
                 <div class="comic_ifo">
-                    <a href="#">
+                    <a :href="item.link">
                         <div class="title">
-                            我才不会被女孩子欺负呢
+                           {{ item.title }}
                         </div>
                     </a>
                     <div class="new">
                         <span>最新</span>
-                        <a href="#">1495 兽人</a>
+                        <a href="#" class="newOne">{{ item.new }}</a>
                     </div>
-                    <p>点击：25.38亿</p>
+                    <p>点击：{{ item.click }}</p>
                 </div>
             </div>
+        </div>
+        <div class="page">
+            <el-pagination :page-size="20" :pager-count="11" layout="prev, pager, next" :total="1000"></el-pagination>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    
+    data(){
+        return{
+            comic:[],
+        }
+    },
+    mounted(){
+        this.getComic();
+    },
+    methods:{
+        getComic(){
+            this.$http.get("getComicClass").then((result) =>{
+                this.comic = result.body;
+            })
+        }
+    }
 }
 </script>
 
 <style scoped>
 .container{
     width:1200px;
-    height:4400px;
+    height:4550px;
     margin: 30px auto;
 }
 .top_container_classes{
@@ -208,14 +225,14 @@ export default {
 }
 .comic_list{
     width:1110;
-    height: 4000px;
+    height: 4150px;
     margin-top:20px;
 }
 .comic_item{
     width: 160px;
     float: left;
-    margin-left: 12px;
-    margin-right: 13px;
+    margin-left: 10px;
+    margin-right: 15px;
     height: 345px;
 }
 .comic_item>.cover{
@@ -246,6 +263,9 @@ export default {
     word-wrap: normal;
     white-space: nowrap;
 }
+.comic_item>.comic_ifo .title:hover{
+    color:#ff2853;
+}
 .comic_item>.comic_ifo .new{
     max-height: 2.6em;
     overflow: hidden;
@@ -262,5 +282,11 @@ export default {
 }
 .comic_item>.comic_ifo a{
     text-decoration-line: none;
+}
+.newOne{
+    color:#ff2853;
+}
+.page{
+    padding: 0 300px;
 }
 </style>
