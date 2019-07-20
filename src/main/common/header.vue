@@ -237,7 +237,7 @@ export default {
 
 <style scoped>
 .header{
-    background-image: url('../img/header.png');
+    background-image: url('../../img/header.png');
     display: block;
     height:170px;
     width: 100%;
@@ -309,7 +309,7 @@ export default {
     top: 55px;
     background: transparent no-repeat 0;
     z-index: 10;
-    background-image:url('../img/head-logo.png'); 
+    background-image:url('../../img/head-logo.png'); 
 }
 .search_box{
     position: absolute;
@@ -357,7 +357,7 @@ export default {
     min-width: 0;
     cursor: pointer;
     height: 32px;
-    background: url("../img/icons.png") -653px -720px;
+    background: url("../../img/icons.png") -653px -720px;
     margin: 0;
     padding: 0;
     border: 0;
@@ -379,7 +379,7 @@ export default {
     padding-left: 26px;
     color: #f25d8e;
     display: inline-block;
-    background: url("../img/icons.png") -659px -655px no-repeat;
+    background: url("../../img/icons.png") -659px -655px no-repeat;
 }
 .link-ranking:hover{
     background-color: #fff;

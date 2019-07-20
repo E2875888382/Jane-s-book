@@ -265,7 +265,7 @@
 
 <script>
 //导入头像组件
-import avatar from '../main/userPage/avatar.vue'
+import avatar from './avatar.vue'
 export default {
     data(){
         return{

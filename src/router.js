@@ -5,8 +5,8 @@ import VueRouter from 'vue-router'
 
 //导入自定义的vue组件
 import Index from './main/index.vue'
-import UserPage from './main/userPage.vue'
-import News from './main/news.vue'
+import UserPage from './main/userPage/userPage.vue'
+import News from './main/news/news.vue'
 import NewsDetails from './main/news/newDetails.vue'
 import Comic_menu from './main/comic/comic_menu.vue'
 import Comic_index from './main/comic/comic_index.vue'

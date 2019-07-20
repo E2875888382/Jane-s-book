@@ -59,7 +59,7 @@
         <div class="third_div">
             <el-tooltip placement="top" effect="light">
                 <div slot="content">
-                    <img src="../img/wechat.png" alt="" class="img-logo">
+                    <img src="../../img/wechat.png" alt="" class="img-logo">
                 </div>
                 <el-button class="download">
                     <div class="download_logo"></div>
@@ -68,7 +68,7 @@
             </el-tooltip>
             <el-tooltip placement="top" effect="light">
                 <div slot="content">
-                    <img src="../img/wechat.png" alt="" class="img-logo">
+                    <img src="../../img/wechat.png" alt="" class="img-logo">
                 </div>
                 <el-button class="qq">
                     <div class="qq_logo"></div>
@@ -77,7 +77,7 @@
             </el-tooltip>
             <el-tooltip placement="top" effect="light">
                 <div slot="content">
-                    <img src="../img/wechat.png" alt="" class="img-logo">
+                    <img src="../../img/wechat.png" alt="" class="img-logo">
                 </div>
                 <el-button class="wechat">
                     <div class="wechat_logo"></div>
@@ -137,21 +137,21 @@ export default {
 }
 .download_logo{
     display: block;
-    background:url(../img/icons.png) no-repeat -1024px -194px;
+    background:url(../../img/icons.png) no-repeat -1024px -194px;
     margin-left: 11px;
     width: 60px;
     height: 60px;
 }
 .qq_logo{
     display: block;
-    background:url(../img/icons.png) no-repeat -1024px -322px;
+    background:url(../../img/icons.png) no-repeat -1024px -322px;
     margin-left: 11px;
     width: 60px;
     height: 60px;
 }
 .wechat_logo{
     display: block;
-    background:url(../img/icons.png) no-repeat -1024px -66px;
+    background:url(../../img/icons.png) no-repeat -1024px -66px;
     margin-left: 11px;
     width: 60px;
     height: 60px;

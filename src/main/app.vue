@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import top from './header.vue'
+import top from './common/header.vue'
 import index from './index.vue'
-import bottom from './footer.vue'
-import userPage from './userPage.vue'
+import bottom from './common/footer.vue'
+import userPage from './userPage/userPage.vue'
 export default{
      data(){
           return{
