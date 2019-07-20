@@ -70,7 +70,9 @@ export default {
     data(){
         return {
             carousel:['https://online-public-manhua.nos-eastchina1.126.net/pic2019070193dd892e8a964d98adc0d662d0c3b870.jpg?imageView&thumbnail=416y362',
-                    'https://online-public-manhua.nos-eastchina1.126.net/pic2019070161acf373a6004a1b87cb39c28ee6d156.jpg?imageView&thumbnail=416y362'
+                    'https://online-public-manhua.nos-eastchina1.126.net/pic2019070161acf373a6004a1b87cb39c28ee6d156.jpg?imageView&thumbnail=416y362',
+                    'https://online-public-manhua.nos-eastchina1.126.net/pic201907011d1c50d95bd842d29740cf90b6d34760.jpg?imageView&thumbnail=416y362',
+                    'https://online-public-manhua.nos-eastchina1.126.net/pic201907011053928ed56543a38fe731a92cc84d0d.jpg?imageView&thumbnail=416y362'
                     ],
             comic:[],
         }

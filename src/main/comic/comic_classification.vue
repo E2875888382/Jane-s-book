@@ -134,11 +134,11 @@ export default {
 <style scoped>
 .container{
     width:1200px;
-    height:4550px;
+    min-height:4550px;
     margin: 30px auto;
 }
 .top_container_classes{
-    width: 1110px;
+    width: 100%;
     height:200px;
     margin: 20px auto 0 auto;
     padding:24px;
@@ -224,8 +224,8 @@ export default {
     background-image: url('https://163.bilibili.com/images/sprites/icon.png?acc9c4274adc16d47e7033a34b17c167')
 }
 .comic_list{
-    width:1110;
-    height: 4150px;
+    width:1110px;
+    min-height: 4150px;
     margin-top:20px;
 }
 .comic_item{
@@ -287,6 +287,13 @@ export default {
     color:#ff2853;
 }
 .page{
+    width: 1110px;
+    height:32px;
     padding: 0 300px;
+}
+.el-pagination{
+    width: 600px;
+    height:32px;
+    margin: 0 auto;
 }
 </style>
