@@ -25,5 +25,7 @@ export default {
 .el-menu-item{
     width:100px;
     text-align: center;
+    font-size: 16px;
+    font-weight: bold;
 }
 </style>
