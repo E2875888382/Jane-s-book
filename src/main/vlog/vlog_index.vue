@@ -1,32 +1,32 @@
 <template>
 <div class="bg">
     <div class="container">
-        <ul class="infinite-list" v-infinite-scroll="load">
-            <li v-for="i in count" :key="i" class="infinite-list-item">
+        <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
+            <li v-for="(item,index) in vlog" :key="index" class="infinite-list-item">
                 <div class="item_feed">
                     <div class="avator">
-                        <van-image width="50" height="50" class="user_img" src="https://i2.hdslb.com/bfs/face/156d5d3b3f4b66d940365b3b0e3a809e1fcc0d97.jpg@96w_96h_100Q_1c.webp"/>
+                        <van-image width="50" height="50" class="user_img" :src="item.avator"/>
                     </div>
                     <div class="log_box">
                         <div class="ifo">
                             <div>
-                                <a href="#">新浪体育</a>
+                                <a href="#">{{ item.user }}</a>
                                 <span>V</span>
                             </div>
                             <div>举报</div>
                         </div>
                         <div class="msg">
-                            <p>【律师：孙杨要求国际体育仲裁法庭听证会公开受理】#孙杨要求9月听证会公开审理# 新华网消息中国游泳奥运冠军孙杨的律师团队19日发表声明说，孙杨要求国际体育仲裁法庭（CAS）举行听证会的时候，向公众开放，以求公开透明，证明自己的清白。</p>
+                            <p>{{ item.summary }}</p>
                         </div>
                         <div class="video">
                             <video width="500" height="281" controls>
-                                <source src="http://v.hoopchina.com.cn/hupuapp/bbs/0/0/thread__0_20190721065050_28492.mp4?auth_key=1563719923-0-0-b36ad1a304a0e157aeef93d584deb179" type="video/mp4">
-                                <source src="http://v.hoopchina.com.cn/hupuapp/bbs/0/0/thread__0_20190721065050_28492.mp4?auth_key=1563719923-0-0-b36ad1a304a0e157aeef93d584deb179" type="video/ogg">
-                                <source src="http://v.hoopchina.com.cn/hupuapp/bbs/0/0/thread__0_20190721065050_28492.mp4?auth_key=1563719923-0-0-b36ad1a304a0e157aeef93d584deb179" type="video/webm">
+                                <source :src="item.video" type="video/mp4">
+                                <source :src="item.video" type="video/ogg">
+                                <source :src="item.video" type="video/webm">
                             </video>
                         </div>
                         <div class="from">
-                            <p>07月20日 19:35 来自 微博 weibo.com</p>
+                            <p>{{ item.time }} 来自 {{ item.from }}</p>
                         </div>
                     </div>
                 </div>
@@ -34,15 +34,17 @@
                     <ul>
                         <li>收藏</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li>转发12489</li>
+                        <li>转发 {{ item.forwarding }}</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li>评论394</li>
+                        <li>评论 {{ item.comments }}</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li>赞23948</li>
+                        <li>赞 {{ item.praise }}</li>
                     </ul>
                 </div>
             </li>
         </ul>
+        <p v-if="loading" class="tips">加载中...</p>
+        <p v-if="noMore" class="tips">没有更多了</p>
     </div>
 </div>
 </template>
@@ -52,17 +54,38 @@ export default {
     data(){
         return {
             count:0,
+            loading: false,
+            vlog:[],
         }
     },
     methods:{
         load(){
-            this.count += 2;
+            this.loading = true;
+            setTimeout(()=>{
+                this.$http.get("getVlog").then((result) =>{
+                    this.vlog.push(result.body[0]);
+                    this.loading = false;
+                    this.count ++;
+                })
+            },500)
         }
-    }
+    },
+    computed: {
+      noMore () {
+        return this.count >= 10
+      },
+      disabled () {
+        return this.loading || this.noMore
+      }
+    },
 }
 </script>
 
 <style scoped>
+.tips{
+    text-align:center;
+    margin:0;
+}
 .bg{
     background: #f7f7f7;
     padding-top:40px;
