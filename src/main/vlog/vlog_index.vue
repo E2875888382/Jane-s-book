@@ -38,7 +38,7 @@
                         <el-divider direction="vertical"></el-divider>
                         <li>评论 {{ item.comments }}</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li>赞 {{ item.praise }}</li>
+                        <li @click="praise(item.id)">赞 {{ item.praise }}</li>
                     </ul>
                 </div>
             </li>
@@ -63,6 +63,13 @@ export default {
         this.getVlogCount();
     },
     methods:{
+        praise(id){
+            this.$http.post("praise",{ id: id }).then((result) =>{
+                if(result.body.code == 200){
+                    this.vlog[id-1].praise++;
+                }
+            })
+        },
         getVlogCount(){
             this.$http.get("getVlogCount").then((result) =>{
                 this.max = result.body[0]['COUNT(*)'];

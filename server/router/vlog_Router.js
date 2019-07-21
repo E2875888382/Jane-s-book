@@ -25,6 +25,7 @@ function handleDisconnect(connection) {
       connection.connect();
     });
 };
+// 获取vlog的数量
 router.get('/getVlogCount',(request,response)=>{
     connection.connect();
     var sql = `SELECT COUNT(*) FROM vlog `;
@@ -36,6 +37,7 @@ router.get('/getVlogCount',(request,response)=>{
     })
     handleDisconnect(connection);
 })
+// 获取一条vlog数据
 router.post('/getVlog',(request,response)=>{
     connection.connect();
     var sql = `SELECT * FROM vlog where id = `+request.body.count;
@@ -44,6 +46,18 @@ router.post('/getVlog',(request,response)=>{
             response.status(500).send('server error');
         }
         response.status(200).json(result);
+    })
+    handleDisconnect(connection);
+})
+// 点赞+1
+router.post('/praise',(request,response)=>{
+    connection.connect();
+    var sql = `UPDATE vlog SET praise = praise + 1 WHERE id = `+request.body.id;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'success'});
     })
     handleDisconnect(connection);
 })
