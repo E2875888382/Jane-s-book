@@ -25,10 +25,20 @@ function handleDisconnect(connection) {
       connection.connect();
     });
 };
-
-router.get('/getVlog',(request,response)=>{
+router.get('/getVlogCount',(request,response)=>{
     connection.connect();
-    var sql = `SELECT * FROM vlog limit 1,1`;
+    var sql = `SELECT COUNT(*) FROM vlog `;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json(result);
+    })
+    handleDisconnect(connection);
+})
+router.post('/getVlog',(request,response)=>{
+    connection.connect();
+    var sql = `SELECT * FROM vlog where id = `+request.body.count;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');

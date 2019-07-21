@@ -53,16 +53,25 @@
 export default {
     data(){
         return {
-            count:0,
+            count:1,
             loading: false,
             vlog:[],
+            max:10,
         }
     },
+    mounted(){
+        this.getVlogCount();
+    },
     methods:{
+        getVlogCount(){
+            this.$http.get("getVlogCount").then((result) =>{
+                this.max = result.body[0]['COUNT(*)'];
+            })
+        },
         load(){
             this.loading = true;
             setTimeout(()=>{
-                this.$http.get("getVlog").then((result) =>{
+                this.$http.post("getVlog",{ count: this.count }).then((result) =>{
                     this.vlog.push(result.body[0]);
                     this.loading = false;
                     this.count ++;
@@ -72,7 +81,7 @@ export default {
     },
     computed: {
       noMore () {
-        return this.count >= 10
+        return this.count >= this.max+1;
       },
       disabled () {
         return this.loading || this.noMore
@@ -138,6 +147,14 @@ export default {
     font-size: 14px;
     line-height: 25px;
     word-break: break-word;
+    padding-right: 100px;
+}
+.log_box>.msg>p{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .log_box>.video{
     width:840px;
