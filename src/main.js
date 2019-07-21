@@ -10,6 +10,9 @@ Vue.use(Vant);
 Vue.use(VueResource);
 Vue.http.options.root = 'http://localhost:8000';
 
+// 导入滚动条插件，用于无限滚动加载数据
+import infiniteScroll from 'vue-infinite-scroll';
+
 //导入vue
 import Vue from 'vue'
 import App from './main/app.vue'
@@ -23,6 +26,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 //配置elementUI，vuex
 Vue.use(ElementUI)
 Vue.use(Vuex);
+Vue.use(infiniteScroll);
 
 var store = new Vuex.Store({
     state:{
