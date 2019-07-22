@@ -205,11 +205,7 @@ export default {
     font-size: 14px;
     line-height: 25px;
     word-break: break-word;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
     text-overflow: ellipsis;
-    overflow: hidden;
 }
 .video{
     width:840px;
