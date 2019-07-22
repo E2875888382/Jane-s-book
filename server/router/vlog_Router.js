@@ -61,5 +61,17 @@ router.post('/praise',(request,response)=>{
     })
     handleDisconnect(connection);
 })
+// 点赞-1
+router.post('/cancelPraise',(request,response)=>{
+    connection.connect();
+    var sql = `UPDATE vlog SET praise = praise - 1 WHERE id = `+request.body.id;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'success'});
+    })
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;

@@ -13,7 +13,18 @@
                                 <a href="#">{{ item.user }}</a>
                                 <span>V</span>
                             </div>
-                            <div>举报</div>
+                            <div> 
+                                <el-dropdown trigger="click">
+                                    <span class="el-dropdown-link">
+                                        <i class="el-icon-arrow-down el-icon--right"></i>
+                                    </span>
+                                    <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item icon="el-icon-plus">关注</el-dropdown-item>
+                                        <el-dropdown-item icon="el-icon-thumb">帮上头条</el-dropdown-item>
+                                        <el-dropdown-item icon="el-icon-warning-outline">投诉</el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </el-dropdown>
+                            </div>
                         </div>
                         <div class="msg">
                             <p>{{ item.summary }}</p>
@@ -32,13 +43,13 @@
                 </div>
                 <div class="item_act">
                     <ul>
-                        <li>收藏</li>
+                        <li><i class="el-icon-star-off"></i>收藏</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li>转发 {{ item.forwarding }}</li>
+                        <li><van-icon name="share" />转发 {{ item.forwarding }}</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li>评论 {{ item.comments }}</li>
+                        <li><i class="el-icon-chat-dot-square"></i>评论 {{ item.comments }}</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li @click="praise(item.id)">赞 {{ item.praise }}</li>
+                        <li @click="praise(item.id),cancelPraise(item.id)"><van-icon name="thumb-circle-o" :class="{'praise':isActive}"/>赞 {{ item.praise }}</li>
                     </ul>
                 </div>
             </li>
@@ -57,6 +68,7 @@ export default {
             loading: false,
             vlog:[],
             max:10,
+            isActive:false,
         }
     },
     mounted(){
@@ -64,11 +76,23 @@ export default {
     },
     methods:{
         praise(id){
-            this.$http.post("praise",{ id: id }).then((result) =>{
-                if(result.body.code == 200){
-                    this.vlog[id-1].praise++;
-                }
-            })
+            if(!this.isActive){
+                this.$http.post("praise",{ id: id }).then((result) =>{
+                    if(result.body.code == 200){
+                        this.vlog[id-1].praise++;
+                    }
+                })
+            }
+            this.isActive=!this.isActive;
+        },
+        cancelPraise(id){
+            if(this.isActive == false){
+                this.$http.post("cancelPraise",{ id: id }).then((result) =>{
+                    if(result.body.code == 200){
+                        this.vlog[id-1].praise--;
+                    }
+                })
+            }
         },
         getVlogCount(){
             this.$http.get("getVlogCount").then((result) =>{
@@ -203,8 +227,22 @@ export default {
     width:230px;
     line-height: 40px;
     font-size:14px;
+    cursor: pointer;
+}
+.item_act>ul li i{
+    width:15px;
+    height:15px;
+    margin-right:5px;
+    vertical-align: middle;
+    display:inline-block;
+}
+.item_act>ul li i:hover{
+    color:red;
 }
 .el-divider{
     margin-top: 12px;
+}
+.praise{
+    color:red;
 }
 </style>
