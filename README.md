@@ -27,6 +27,7 @@
   - vuex （vue状态管理工具）
   - vue-router （vue的路由插件）
   - vue-resource （vue的ajax插件）
+  - vue-infinite-scroll（vue的无限加载插件）
   - element UI （UI）
   - vant （UI）
   - bootstrap （UI）
