@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="msg">
-                            <p>{{ item.summary }}</p>
+                            <p v-html='highLight(item.summary)'></p>
                         </div>
                         <div class="video">
                             <video width="500" height="281" controls>
@@ -76,6 +76,18 @@ export default {
         this.getVlogCount();
     },
     methods:{
+        //过滤器，用于把两个#之间的文字高亮
+        highLight:function(s){
+            if(s){
+                s = s.trim();
+                var start = s.indexOf('#');
+                var end = s.lastIndexOf('#');
+                var key =  s.slice(start+1,end);
+                var s1 = s.slice(0,start);
+                var s2 = s.slice(end+1,s.length-1);
+            }
+            return  s1 +'<span style="color:blue">'+s[start]+'</span>'+'<span style="color:red">'+key+'</span>'+'<span style="color:blue">'+s[end]+'</span>'+ s2;
+        },
         praise(id,event){
             if(!event.target.classList.contains("praise")){
                 this.$http.post("praise",{ id: id }).then((result) =>{
