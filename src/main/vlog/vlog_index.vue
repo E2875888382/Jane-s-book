@@ -49,7 +49,7 @@
                         <el-divider direction="vertical"></el-divider>
                         <li><i class="el-icon-chat-dot-square"></i>评论 {{ item.comments }}</li>
                         <el-divider direction="vertical"></el-divider>
-                        <li @click="praise(item.id),cancelPraise(item.id)"><van-icon name="thumb-circle-o" :class="{'praise':isActive}"/>赞 {{ item.praise }}</li>
+                        <li @click="praise(item.id,$event),cancelPraise(item.id,$event)"><van-icon name="thumb-circle-o" />赞 {{ item.praise }}</li>
                     </ul>
                 </div>
             </li>
@@ -68,28 +68,28 @@ export default {
             loading: false,
             vlog:[],
             max:10,
-            isActive:false,
         }
     },
     mounted(){
         this.getVlogCount();
     },
     methods:{
-        praise(id){
-            if(!this.isActive){
+        praise(id,event){
+            if(!event.target.classList.contains("praise")){
                 this.$http.post("praise",{ id: id }).then((result) =>{
                     if(result.body.code == 200){
                         this.vlog[id-1].praise++;
+                        event.target.classList.add('praise');
                     }
                 })
             }
-            this.isActive=!this.isActive;
         },
-        cancelPraise(id){
-            if(this.isActive == false){
+        cancelPraise(id,event){
+            if(event.target.classList.contains("praise")){
                 this.$http.post("cancelPraise",{ id: id }).then((result) =>{
                     if(result.body.code == 200){
                         this.vlog[id-1].praise--;
+                        event.target.classList.remove('praise');
                     }
                 })
             }
