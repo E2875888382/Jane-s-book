@@ -186,6 +186,17 @@ export default {
     display: flex;
     justify-content: space-between;
 }
+.log_box>.ifo a{
+    color:#333;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+.log_box>.ifo a:hover{
+    color:#ef4d58;
+}
 .log_box>.msg{
     width:840px;
     height: 105px;
@@ -251,13 +262,13 @@ export default {
     display:inline-block;
 }
 .item_act>ul li:hover{
-    color:red;
+    color:#ef4d58;
 }
 .el-divider{
     margin-top: 12px;
 }
 .praise{
-    color:red;
+    color:#ef4d58;
 }
 .vip1{
     width: 14px;
