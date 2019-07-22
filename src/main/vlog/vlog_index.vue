@@ -2,7 +2,7 @@
 <div class="bg">
     <div class="container">
         <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
-            <li v-for="(item,index) in vlog" :key="index" class="infinite-list-item">
+            <li v-for="(item,index) in morePraise" :key="index" class="infinite-list-item">
                 <div class="item_feed">
                     <div class="avator">
                         <van-image width="50" height="50" class="user_img" :src="item.avator"/>
@@ -92,7 +92,11 @@ export default {
             if(!event.target.classList.contains("praise")){
                 this.$http.post("praise",{ id: id }).then((result) =>{
                     if(result.body.code == 200){
-                        this.vlog[id-1].praise++;
+                        for(var i = 0;i<this.vlog.length;i++){
+                            if(this.vlog[i].id == id){
+                                this.vlog[i].praise++;
+                            }
+                        }
                         event.target.classList.add('praise');
                     }
                 })
@@ -102,7 +106,11 @@ export default {
             if(event.target.classList.contains("praise")){
                 this.$http.post("cancelPraise",{ id: id }).then((result) =>{
                     if(result.body.code == 200){
-                        this.vlog[id-1].praise--;
+                        for(var i = 0;i<this.vlog.length;i++){
+                            if(this.vlog[i].id == id){
+                                this.vlog[i].praise--;
+                            }
+                        }
                         event.target.classList.remove('praise');
                     }
                 })
@@ -125,12 +133,17 @@ export default {
         }
     },
     computed: {
-      noMore () {
-        return this.count >= this.max+1;
-      },
-      disabled () {
-        return this.loading || this.noMore
-      }
+        noMore () {
+            return this.count >= this.max+1;
+        },
+        disabled () {
+            return this.loading || this.noMore
+        },
+        morePraise:function(){
+            return this.vlog.sort(function(a,b){
+                return b.praise - a.praise;
+            })
+        }
     },
 }
 </script>
