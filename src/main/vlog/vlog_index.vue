@@ -11,7 +11,9 @@
                         <div class="ifo">
                             <div>
                                 <a href="#">{{ item.user }}</a>
-                                <span>V</span>
+                                <span class="vip1" v-if="item.isVip == 1"></span>
+                                <span class="vip2" v-if="item.isVip == 2"></span>
+                                <span class="vip3" v-if="item.isVip == 3"></span>
                             </div>
                             <div> 
                                 <el-dropdown trigger="click">
@@ -236,7 +238,7 @@ export default {
     vertical-align: middle;
     display:inline-block;
 }
-.item_act>ul li i:hover{
+.item_act>ul li:hover{
     color:red;
 }
 .el-divider{
@@ -244,5 +246,26 @@ export default {
 }
 .praise{
     color:red;
+}
+.vip1{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url('../../img/log.png') no-repeat ;
+    background-position: 0 -75px;
+}
+.vip2{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url('../../img/log.png') no-repeat ;
+    background-position: 0 -50px;
+}
+.vip3{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url('../../img/log.png') no-repeat ;
+    background-position: 0 -300px;
 }
 </style>
