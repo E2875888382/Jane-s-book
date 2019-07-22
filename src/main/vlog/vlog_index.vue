@@ -28,10 +28,10 @@
                                 </el-dropdown>
                             </div>
                         </div>
-                        <div class="msg">
+                        <div class="msg" v-if="item.summary">
                             <p v-html='highLight(item.summary)'></p>
                         </div>
-                        <div class="video">
+                        <div class="video" v-if="item.video">
                             <video width="500" height="281" controls>
                                 <source :src="item.video" type="video/mp4">
                                 <source :src="item.video" type="video/ogg">
@@ -193,13 +193,13 @@ export default {
     height:466px;
     padding-left: 20px;
 }
-.log_box>.ifo{
+.ifo{
     width: 840px;
     height:25px;
     display: flex;
     justify-content: space-between;
 }
-.log_box>.ifo a{
+.ifo a{
     color:#333;
     cursor: pointer;
     outline: none;
@@ -207,10 +207,10 @@ export default {
     font-size: 14px;
     font-weight: 700;
 }
-.log_box>.ifo a:hover{
+.ifo a:hover{
     color:#ef4d58;
 }
-.log_box>.msg{
+.msg{
     width:840px;
     height: 105px;
     font-size: 14px;
@@ -218,19 +218,19 @@ export default {
     word-break: break-word;
     padding-right: 100px;
 }
-.log_box>.msg>p{
+.msg>p{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.log_box>.video{
+.video{
     width:840px;
     height:281px;
     margin:5px 0;
 }
-.log_box>.from{
+.from{
     width:840px;
     height:25px;
     font-size: 12px;
