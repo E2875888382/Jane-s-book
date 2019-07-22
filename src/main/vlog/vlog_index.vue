@@ -28,9 +28,7 @@
                                 </el-dropdown>
                             </div>
                         </div>
-                        <div class="msg" v-if="item.summary">
-                            <p v-html='highLight(item.summary)'></p>
-                        </div>
+                        <p v-html='highLight(item.summary)' class="msg" v-if="item.summary"></p>
                         <div class="video" v-if="item.video">
                             <video width="500" height="281" controls>
                                 <source :src="item.video" type="video/mp4">
@@ -185,7 +183,7 @@ export default {
     height:466px;
     position: relative;
 }
-.item_feed .log_box{
+.log_box{
     position: absolute;
     left:70px;
     top:0;
@@ -212,13 +210,9 @@ export default {
 }
 .msg{
     width:840px;
-    height: 105px;
     font-size: 14px;
     line-height: 25px;
     word-break: break-word;
-    padding-right: 100px;
-}
-.msg>p{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
