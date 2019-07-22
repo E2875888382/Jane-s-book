@@ -2,55 +2,53 @@
 <div class="bg">
     <div class="container">
         <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
-            <li v-for="(item,index) in morePraise" :key="index" class="infinite-list-item">
-                <div class="item_feed">
-                    <div class="avator">
-                        <van-image width="50" height="50" class="user_img" :src="item.avator"/>
-                    </div>
+            <li v-for="(item,index) in morePraise" :key="index">
+                <div class="infinite-list-item">
+                    <van-image width="50" height="50" class="avator" :src="item.avator"/>
                     <div class="log_box">
-                        <div class="ifo">
-                            <div>
-                                <a href="#">{{ item.user }}</a>
-                                <span class="vip1" v-if="item.isVip == 1"></span>
-                                <span class="vip2" v-if="item.isVip == 2"></span>
-                                <span class="vip3" v-if="item.isVip == 3"></span>
+                            <div class="ifo">
+                                <div>
+                                    <a href="#">{{ item.user }}</a>
+                                    <span class="vip1" v-if="item.isVip == 1"></span>
+                                    <span class="vip2" v-if="item.isVip == 2"></span>
+                                    <span class="vip3" v-if="item.isVip == 3"></span>
+                                </div>
+                                <div> 
+                                    <el-dropdown trigger="click">
+                                        <span class="el-dropdown-link">
+                                            <i class="el-icon-arrow-down el-icon--right"></i>
+                                        </span>
+                                        <el-dropdown-menu slot="dropdown">
+                                            <el-dropdown-item icon="el-icon-plus">关注</el-dropdown-item>
+                                            <el-dropdown-item icon="el-icon-thumb">帮上头条</el-dropdown-item>
+                                            <el-dropdown-item icon="el-icon-warning-outline">投诉</el-dropdown-item>
+                                        </el-dropdown-menu>
+                                    </el-dropdown>
+                                </div>
                             </div>
-                            <div> 
-                                <el-dropdown trigger="click">
-                                    <span class="el-dropdown-link">
-                                        <i class="el-icon-arrow-down el-icon--right"></i>
-                                    </span>
-                                    <el-dropdown-menu slot="dropdown">
-                                        <el-dropdown-item icon="el-icon-plus">关注</el-dropdown-item>
-                                        <el-dropdown-item icon="el-icon-thumb">帮上头条</el-dropdown-item>
-                                        <el-dropdown-item icon="el-icon-warning-outline">投诉</el-dropdown-item>
-                                    </el-dropdown-menu>
-                                </el-dropdown>
+                            <p v-html='highLight(item.summary)' class="msg" v-if="item.summary"></p>
+                            <div class="video" v-if="item.video">
+                                <video width="500" height="281" controls>
+                                    <source :src="item.video" type="video/mp4">
+                                    <source :src="item.video" type="video/ogg">
+                                    <source :src="item.video" type="video/webm">
+                                </video>
+                            </div>
+                            <div class="from">
+                                <p>{{ item.time }} 来自 {{ item.from }}</p>
                             </div>
                         </div>
-                        <p v-html='highLight(item.summary)' class="msg" v-if="item.summary"></p>
-                        <div class="video" v-if="item.video">
-                            <video width="500" height="281" controls>
-                                <source :src="item.video" type="video/mp4">
-                                <source :src="item.video" type="video/ogg">
-                                <source :src="item.video" type="video/webm">
-                            </video>
-                        </div>
-                        <div class="from">
-                            <p>{{ item.time }} 来自 {{ item.from }}</p>
-                        </div>
+                    <div class="item_act">
+                        <ul>
+                            <li><i class="el-icon-star-off"></i>收藏</li>
+                            <el-divider direction="vertical"></el-divider>
+                            <li><van-icon name="share" />转发 {{ item.forwarding }}</li>
+                            <el-divider direction="vertical"></el-divider>
+                            <li><i class="el-icon-chat-dot-square"></i>评论 {{ item.comments }}</li>
+                            <el-divider direction="vertical"></el-divider>
+                            <li @click="praise(item.id,$event),cancelPraise(item.id,$event)"><van-icon name="thumb-circle-o" />赞 {{ item.praise }}</li>
+                        </ul>
                     </div>
-                </div>
-                <div class="item_act">
-                    <ul>
-                        <li><i class="el-icon-star-off"></i>收藏</li>
-                        <el-divider direction="vertical"></el-divider>
-                        <li><van-icon name="share" />转发 {{ item.forwarding }}</li>
-                        <el-divider direction="vertical"></el-divider>
-                        <li><i class="el-icon-chat-dot-square"></i>评论 {{ item.comments }}</li>
-                        <el-divider direction="vertical"></el-divider>
-                        <li @click="praise(item.id,$event),cancelPraise(item.id,$event)"><van-icon name="thumb-circle-o" />赞 {{ item.praise }}</li>
-                    </ul>
                 </div>
             </li>
         </ul>
@@ -166,30 +164,24 @@ export default {
 .infinite-list-item{
     display: block;
     width:970px;
-    height:540px;
     margin-bottom: 20px;
     padding:16px;
     background-color: #fff;
     border-radius: 2px;
     border: 1px solid #eee;
+    float:left;
 }
 .item_act{
     width:100%;
     height:40px;
     border-top: 1px solid #eee;
-}
-.item_feed{
-    width:100%;
-    height:466px;
-    position: relative;
+    float:right;
+    margin-top:40px;
 }
 .log_box{
-    position: absolute;
-    left:70px;
-    top:0;
     width:868px;
-    height:466px;
     padding-left: 20px;
+    float: right;
 }
 .ifo{
     width: 840px;
@@ -232,19 +224,13 @@ export default {
     color: #808080;
 }
 .avator{
-    width:70px;
-    height:70px;
-    position:relative;
-}
-.user_img{
-    position: absolute;
-    top: 5px;
-    left: 20px;
     display: flex;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    float: left;
+    margin-left: 15px;
 }
 .item_act>ul{
     list-style: none;
