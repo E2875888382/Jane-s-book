@@ -13,6 +13,7 @@ import Comic_index from './main/comic/comic_index.vue'
 import Comic_ranking from './main/comic/comic_ranking.vue'
 import Comic_classification from './main/comic/comic_classification.vue'
 import Vlog from './main/vlog/vlog_index.vue'
+import Developer from './main/developer/developer_index.vue'
 
 //手动安装vue-router
 Vue.use(VueRouter)
@@ -32,7 +33,8 @@ var router=new VueRouter({
                 { path:'classification',component:Comic_classification }
             ]
         },
-        { path:'/vlog',component:Vlog }
+        { path:'/vlog',component:Vlog },
+        { path:'/developer',component:Developer },
     ]
 })
 

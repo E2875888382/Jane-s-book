@@ -9,7 +9,7 @@
                     <li><router-link to="/news" class="top_link">新闻中心</router-link></li>
                     <li><router-link to="/comic/index" class="top_link">漫画</router-link></li>
                     <li><router-link to="/vlog" class="top_link">vlog</router-link></li>
-                    <li><router-link to="/index" class="top_link">步行街</router-link></li>
+                    <li><router-link to="/developer" class="top_link">102农家乐</router-link></li>
                 </ul>
             </div>
             <div class="right_box">
