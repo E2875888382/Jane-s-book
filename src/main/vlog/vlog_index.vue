@@ -27,6 +27,7 @@
                                 </div>
                             </div>
                             <p v-html='highLight(item.summary)' class="msg" v-if="item.summary"></p>
+                            <el-image v-if="item.img" style="width: 500px; height: 300px" :src="item.img" fit="fill"></el-image>
                             <div class="video" v-if="item.video">
                                 <video width="500" height="281" controls>
                                     <source :src="item.video" type="video/mp4">

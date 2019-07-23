@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <van-grid>
+    <van-grid :gutter="30">
         <van-grid-item v-for="value in 4" :key="value">
              <el-avatar size="medium" src="https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rym9o7k43ObjHQzIiaDUnMw5pfSia5hVNoykpxRuUsjTqn1zbljyGr7Hg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1"></el-avatar>
         </van-grid-item>
