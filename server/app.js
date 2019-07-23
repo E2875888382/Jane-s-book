@@ -11,6 +11,7 @@ var userPage_Router=require('./router/userPage_Router');
 var news_Router=require('./router/news_Router');
 var comic_Router=require('./router/comic_Router');
 var vlog_Router=require('./router/vlog_Router');
+var developer_Router=require('./router/developer_Router');
 
 //解决控制台的溢出提示
 // (node:3772) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 
@@ -50,7 +51,7 @@ app.use(userPage_Router);
 app.use(news_Router);
 app.use(comic_Router);
 app.use(vlog_Router);
-
+app.use(developer_Router);
 //设置服务器端口
 app.listen(8000,function(){
     console.log('----- Data server is on -----');
