@@ -21,6 +21,8 @@
       - 无限滚动加载
       - 点赞
       - 加载新博客时按照点赞数对博客进行重排序
+    - 5.开发者模块
+      - 开发者的主页展示
 - 技术栈：
   - vue.js（前端主要框架）
   - webpack (资源打包)
@@ -29,6 +31,7 @@
   - vue-router （vue的路由插件）
   - vue-resource （vue的ajax插件）
   - vue-infinite-scroll（vue的无限加载插件）
+  - vue-waterfall-easy（vue的一个瀑布流布局插件，带有无限加载的功能）
   - element UI （UI）
   - vant （UI）
   - bootstrap （UI）
