@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="top_container">
+        <div class="top_container m-auto col-10">
             <div class="left_carousel">
                 <el-carousel height="420px">
                     <el-carousel-item v-for="item in carousel" :key="item">
@@ -9,12 +9,8 @@
                 </el-carousel>
             </div>
             <div class="img_box_first">
-                <div class="img_box_first_img1">
-                    <img src="https://online-public-manhua.nos-eastchina1.126.net/pic201907019f49777c794c47b69b7791f5c3939d82.jpg?imageView&thumbnail=420y180">
-                </div>
-                <div class="img_box_first_img2">
-                    <img src="https://online-public-manhua.nos-eastchina1.126.net/pic201907103e0c3f7cd6444e0abdb9627bf14a222b.jpg?imageView&thumbnail=320y180">
-                </div>
+                <img class="img_box_first_img1" src="https://online-public-manhua.nos-eastchina1.126.net/pic201907019f49777c794c47b69b7791f5c3939d82.jpg?imageView&thumbnail=420y180">
+                <img class="img_box_first_img2" src="https://online-public-manhua.nos-eastchina1.126.net/pic201907103e0c3f7cd6444e0abdb9627bf14a222b.jpg?imageView&thumbnail=320y180">
             </div>
             <div class="img_box_second">
                 <div class="img_box_second_img1">
@@ -25,11 +21,11 @@
                 </div>
             </div>
         </div>
-        <div class="content_container">
+        <div class="content_container m-auto col-11">
             <div class="head_title">
                 <h2>热门分类</h2>
             </div>
-            <div class="classification" v-for="item in comic" :key="item.index">
+            <div class="classification col-4" v-for="item in comic" :key="item.index">
                 <h3>{{ item.className }}</h3>
                 <div class="first_item">
                     <el-image class="img" :src="item.firstItem.img" fit="fill"></el-image>
@@ -55,7 +51,7 @@
                 </div>
                 <div class="other_item">
                     <div class="item" v-for="(i,index) in item.otherItem" :key="index">
-                        <span class="item_order">{{ index+2 }}</span>
+                        <span class="item_order ">{{ index+2 }}</span>
                         <a class="item_title" href="#">{{ i.title }}</a>
                         <a class="item_new" href="#">{{ i.new }}</a>
                     </div>
@@ -92,16 +88,11 @@ export default {
 
 <style scoped>
 .top_container{
-    width:1160px;
     height:362px;
-    margin: 40px auto;
     position:relative;
 }
 .content_container{
-    width:1200px;
     height:1000px;
-    margin:0 auto;
-    padding:0 20px;
     position: relative;
 }
 .head_title>h2{
@@ -111,26 +102,25 @@ export default {
     font-weight: bold;
 }
 .left_carousel{
-    width:416px;
+    width:400px;
     height:362px;
 }
 .img_box_first{
-    width: 742px;
+    width: 700px;
     height:180px;
     position:absolute;
     top:0;
     right:0;
 }
 .img_box_first .img_box_first_img1{
-    width:420px;
+    width:400px;
     height:180px;
     float: left;
 }
 .img_box_first .img_box_first_img2{
-    width: 320px;
+    width: 300px;
     height:180px;
     float: left;
-    margin-left:1px;
 }
 .img_box_second{
     width: 742px;
@@ -152,7 +142,6 @@ export default {
     margin-left:1px;
 }
 .classification{
-    width: 33.3%;
     height: 481px;
     position: relative;
     float: left;
@@ -176,7 +165,6 @@ export default {
     border-radius: 4px;
 }
 .classification>.first_item .first_item_details{
-    width: 186px;
     height: 223px;
     padding-top:15px;
     position: absolute;
@@ -218,7 +206,7 @@ export default {
 }
 .item .item_order{
     display: block;
-    width: 16px;
+    width:16px;
     height:16px;
     margin-top:8.5px;
     float:left;
@@ -233,7 +221,6 @@ export default {
     margin-left: 10px;
     font-size: 14px;
     color: #333333;
-    width: 148px;
     display:block;
     float: left;
     line-height: 33px;
@@ -244,13 +231,12 @@ export default {
 }
 .item .item_new{
     font-size: 12px;
-    width: 180px;
     color: #999;
     padding-left: 6px;
-    display: inline-block;
-    vertical-align: middle;
+    display:block;
     line-height: 33px;
     cursor: pointer;
+    float:right;
 }
 .author {
     height: 17px;

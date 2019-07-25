@@ -1,7 +1,6 @@
 <template>
-<div class="footer_box">
-    <div class="footer">
-        <div class="first_div">
+    <div class="footer col-12">
+        <div class="first_div col-4">
             <div class="page-header">
                 <small>bilibili</small>
             </div>
@@ -24,7 +23,7 @@
                 <em>Investor Relations</em>
             </div>
         </div>
-        <div class="second_div">
+        <div class="second_div col-4">
             <div class="page-header">
                 <small>传送门</small>
             </div>
@@ -52,11 +51,8 @@
             <div class="cards">
                 <em>名人堂</em>
             </div>
-            <div class="cards">
-                <em>专车号服务</em>
-            </div> 
         </div>
-        <div class="third_div">
+        <div class="third_div col-4">
             <el-tooltip placement="top" effect="light">
                 <div slot="content">
                     <img src="../../img/wechat.png" alt="" class="img-logo">
@@ -86,7 +82,7 @@
             </el-tooltip>
         </div>
     </div>
-</div>
+
 
 </template>
 
@@ -97,35 +93,20 @@ export default {
 </script>
 
 <style scoped>
-.footer_box{
-    background: #f6f9fa;
-    width: 100%;
-    height: 140px;
-    position: relative;
-}
 .footer{
-    position:absolute;
-    top: 10px;
-    width: 100%;
-    height:130px;
+    background: #f6f9fa;
+    height:140px;
     display: flex;
     justify-content: center;
+    align-content: center;
 }
-.first_div{
-    width: 240px;
-    height: 112px;
+.first_div,.second_div,.third_div{
+    height: 140px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-.second_div{
-    width: 310px;
-    height: 112px;
+.second_div,.third_div{
     border-left: solid 1px #e5e9ef;
-    padding: 0 15px;
-}
-.third_div{
-    width:305px;
-    height: 112px;
-    border-left: solid 1px #e5e9ef;
-    padding-left: 24px;
 }
 .download,.qq,.wechat{
     width: 82px;
