@@ -53,7 +53,7 @@
                 <em>名人堂</em>
             </div>
             <div class="cards">
-                <em>专车号服务中心</em>
+                <em>专车号服务</em>
             </div> 
         </div>
         <div class="third_div">
@@ -100,30 +100,30 @@ export default {
 .footer_box{
     background: #f6f9fa;
     width: 100%;
-    height: 175px;
+    height: 140px;
+    position: relative;
 }
 .footer{
-    width: 1000px;
-    height:175px;
-    margin:0 auto;
-    padding-top: 25px; 
+    position:absolute;
+    top: 10px;
+    width: 100%;
+    height:130px;
+    display: flex;
+    justify-content: center;
 }
 .first_div{
-    width: 325px;
+    width: 240px;
     height: 112px;
-    float:left;
 }
 .second_div{
-    width: 350px;
+    width: 310px;
     height: 112px;
-    float:left;
     border-left: solid 1px #e5e9ef;
-    padding: 0 25px;
+    padding: 0 15px;
 }
 .third_div{
     width:305px;
     height: 112px;
-    float:left;
     border-left: solid 1px #e5e9ef;
     padding-left: 24px;
 }

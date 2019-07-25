@@ -421,14 +421,16 @@ export default {
     font-size: 12px;
     font-weight: 600;
 }
+.top_link:first-child{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .header_icon{
     background: url('https://www.bilibili.com/favicon.ico') no-repeat;
     width:20px;
     height: 21px;
     display: block;
-    position: absolute;
-    top: 10px;
-    left:2px;
     background-size: 100%;
 }
 .user_img{
