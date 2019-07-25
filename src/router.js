@@ -10,7 +10,6 @@ import News from './main/news/news.vue'
 import NewsDetails from './main/news/newDetails.vue'
 import Comic_menu from './main/comic/comic_menu.vue'
 import Comic_index from './main/comic/comic_index.vue'
-import Comic_ranking from './main/comic/comic_ranking.vue'
 import Comic_classification from './main/comic/comic_classification.vue'
 import Vlog from './main/vlog/vlog_index.vue'
 import Developer from './main/developer/developer_index.vue'
@@ -28,7 +27,6 @@ var router=new VueRouter({
         { path:'/comic',component:Comic_menu,
             children:
             [
-                { path:'ranking',component:Comic_ranking },
                 { path:'index',component:Comic_index },
                 { path:'classification',component:Comic_classification }
             ]

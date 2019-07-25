@@ -2,7 +2,6 @@
     <div>
         <el-menu  class="el-menu-demo" mode="horizontal" >
             <el-menu-item><router-link to="/comic/index">首页</router-link></el-menu-item>
-            <el-menu-item><router-link to="/comic/ranking">排行榜</router-link></el-menu-item>
             <el-menu-item><router-link to="/comic/classification">分类</router-link></el-menu-item>
         </el-menu>
         <transition mode="out-in">

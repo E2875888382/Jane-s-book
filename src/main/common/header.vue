@@ -19,6 +19,9 @@
                         更多<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
+                        <el-badge :value="$store.state.messageCount" class="item">
+                            <el-dropdown-item><i class="el-icon-message"></i><a href="#/userPage" >我的消息</a></el-dropdown-item>
+                        </el-badge>
                         <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>
                         <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>
                     </el-dropdown-menu>
@@ -31,11 +34,6 @@
                         </li>
                         <li>
                             <span>{{ $store.state.userIfo.nickName }}</span>
-                        </li>
-                        <li>
-                            <el-badge :value="$store.state.messageCount" class="item">
-                                <i class="el-icon-message"></i><a href="#/userPage" >消息</a>
-                            </el-badge>
                         </li>
                     </ul>
                 </div>
@@ -275,16 +273,21 @@ export default {
     line-height: 42px;
     text-align: center;
     float: left;
-    width: 300px;
 }
 .new ul{
     display: flex;
-    justify-content: space-between;
+    justify-content:space-evenly;
 }
 .new ul li{
     width: 100px;
     height: 42px;
     position: relative;
+}
+.new ul li:first-child{
+    width:32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .new ul li a,.new ul li span{
     text-decoration: none;
@@ -297,7 +300,7 @@ export default {
 }
 .right_box{
     float: right;
-    width: 400px;
+    width: 250px;
     height: 42px;
 }
 .head-logo{
@@ -428,9 +431,6 @@ export default {
     background-size: 100%;
 }
 .user_img{
-    position: absolute;
-    top: 5px;
-    left: 60px;
     display: flex;
     border-radius: 50%;
     align-items: center;
