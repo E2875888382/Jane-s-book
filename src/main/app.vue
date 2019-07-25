@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="body">
      <top></top>
      <transition mode="out-in">
           <router-view></router-view>
@@ -10,7 +10,7 @@
 
 <script>
 import top from './common/header.vue'
-import index from './index.vue'
+import index from './index/index.vue'
 import bottom from './common/footer.vue'
 import userPage from './userPage/userPage.vue'
 export default{
@@ -38,5 +38,8 @@ export default{
 } 
 .v-enter-active,.v-leave-active{
      transition: all 0.2s;
-} 
+}
+.body{
+     width: 100%
+}
 </style>

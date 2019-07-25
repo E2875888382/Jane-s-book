@@ -4,7 +4,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 //导入自定义的vue组件
-import Index from './main/index.vue'
+import Index from './main/index/index.vue'
 import UserPage from './main/userPage/userPage.vue'
 import News from './main/news/news.vue'
 import NewsDetails from './main/news/newDetails.vue'

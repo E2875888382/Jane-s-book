@@ -81,15 +81,15 @@
                 </el-dialog>
             </div>
         </div>
-        <a href="//www.bilibili.com" class="head-logo"></a>
-        <!-- 头部搜索框 -->
-        <div class="search_box">
-            <a href="//www.bilibili.com/ranking" target="_blank" class="link-ranking"><span>排行榜</span></a>
-            <div class="search-form" >
-                <div class="input-group">
+        <div class="bottom_box">
+            <a href="//www.bilibili.com" class="head-logo"></a>
+            <!-- 头部搜索框 -->
+            <div class="search_box">
+                <a href="//www.bilibili.com/ranking" target="_blank" class="link-ranking"><span>排行榜</span></a>
+                <div class="search-form" >
                     <input type="text" class="form-control search-input" placeholder="Search for...">
                     <button class="form-btn"></button>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -235,7 +235,6 @@ export default {
 <style scoped>
 .header{
     background-image: url('../../img/header.png');
-    display: block;
     height:170px;
     width: 100%;
     background-position: center -10px;
@@ -251,10 +250,12 @@ export default {
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
 }
 .head_content{
-    width:1000px;
+    width:100%;
     height: 170px;
     margin: 0 auto;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 .select_list{
     float: right;
@@ -304,35 +305,32 @@ export default {
     height: 42px;
 }
 .head-logo{
-    position: absolute;
     width: 220px;
     height: 105px;
-    left: 24px;
-    top: 55px;
     background: transparent no-repeat 0;
     z-index: 10;
     background-image:url('../../img/head-logo.png'); 
 }
 .search_box{
-    position: absolute;
-    bottom: 20px;
-    right: 0;
-    width: 342px;
+    width: 282px;
     height: 32px;
-    padding: 2px 2px 2px 72px;
+    padding: 0 2px;
     background-color: rgba(0,0,0,.12);
     border-radius: 6px;
     font-size: 12px;
     z-index: 10;
+    display: flex;
+    align-self: center;
 }
 .search-form{
-    width:268px;
+    width:200px;
     height:32px;
     padding:0;
     margin:0;
     background-color: hsla(0,0%,100%,.88);
     border-radius: 4px;
     transition: background-color 0.2s;
+    display: flex;
 }
 .search-form:hover{
     background-color: #fff;
@@ -340,7 +338,7 @@ export default {
 }
 .search-input{
     float: left;
-    width: 200px;
+    width: 162px;
     color: #222;
     font-size: 12px;
     overflow: hidden;
@@ -353,8 +351,6 @@ export default {
 } 
 .form-btn{
     display: block;
-    position: absolute;
-    right: 0;
     width: 48px;
     min-width: 0;
     cursor: pointer;
@@ -365,19 +361,20 @@ export default {
     border: 0;
 }
 .link-ranking{
-    position: absolute;
-    left: 2px;
-    top: 2px;
+    display: inline-block;
     height: 32px;
     line-height: 32px;
     background-color: hsla(0,0%,100%,.88);
     border-radius: 4px;
-    width: 68px;
     transition: background-color 0.2s;
     text-decoration: none;
     cursor: pointer;
 }
 .link-ranking>span{
+    width:80px;
+    height: 32px;
+    display: inline-block;
+    line-height: 32px;
     padding-left: 26px;
     color: #f25d8e;
     display: inline-block;
@@ -388,10 +385,8 @@ export default {
 }
 .top_box{
     display: flex;
-    position: absolute;
-    top: 0;
-    width: 1000px;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: space-around;
 }
 .left_box{
     width:400px;
@@ -399,6 +394,12 @@ export default {
 }
 .left_box>ul{
     list-style: none;
+}
+.bottom_box{
+    width:100%;
+    height:128px;
+    display: flex;
+    justify-content: space-around;
 }
 .left_box>ul li{
     float: left;
