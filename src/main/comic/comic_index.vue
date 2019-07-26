@@ -21,7 +21,7 @@
                 <img src="https://online-public-manhua.nos-eastchina1.126.net/pic201907103e0c3f7cd6444e0abdb9627bf14a222b.jpg?imageView&thumbnail=320y180">
             </div>
         </div>
-        <div class="content_container m-auto col-11">
+        <div class="content_container m-auto col-10">
             <div class="head_title">
                 <h2>热门分类</h2>
             </div>
