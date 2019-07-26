@@ -25,7 +25,8 @@
         :total="newsCount">
         </el-pagination>
     </div>
-</div>    
+    <el-backtop></el-backtop>
+</div>
 </template>
 
 <script>

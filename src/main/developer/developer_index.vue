@@ -24,6 +24,7 @@
     <vue-waterfall-easy :imgsArr="imgs" @scrollReachBottom="load" ref="waterfall" height="400px" :maxCols="maxcol">
         <div slot="waterfall-over">没有更多了</div>
     </vue-waterfall-easy>
+    <el-backtop></el-backtop>
 </div>
 
 </template>

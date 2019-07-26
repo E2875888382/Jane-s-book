@@ -9,6 +9,7 @@
                     <li><router-link to="/comic/index" class="top_link">漫画</router-link></li>
                     <li><router-link to="/vlog" class="top_link">vlog</router-link></li>
                     <li><router-link to="/developer" class="top_link">102农家乐</router-link></li>
+                    <li><router-link to="/street" class="top_link">步行街</router-link></li>
                 </ul>
             </div>
             <div class="right_box">
@@ -22,7 +23,7 @@
                             <el-dropdown-item><i class="el-icon-message"></i><a href="#/userPage" >我的消息</a></el-dropdown-item>
                         </el-badge>
                         <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>
-                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()" href="#/index" >退出登录</a></el-dropdown-item>
+                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()">退出登录</a></el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
                 <!-- 登录后状态框 -->

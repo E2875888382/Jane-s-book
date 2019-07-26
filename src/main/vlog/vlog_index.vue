@@ -56,6 +56,7 @@
         <p v-if="loading" class="tips">加载中...</p>
         <p v-if="noMore" class="tips">没有更多了</p>
     </div>
+    <el-backtop></el-backtop>
 </div>
 </template>
 
