@@ -8,13 +8,13 @@
                 <div class="col-2"><p>回复/浏览</p></div>
                 <div class="col-2"><p>最后回复</p></div>
             </div>
-            <div class="item row col-12 m-auto" v-for="(item,index) in 20" :key="index">
-                <div class="col-6 title"><a>为什么南方帅哥美女那么多，中国的明星都是南方人 </a></div>
+            <div class="item row col-12 m-auto" v-for="(item,index) in streetList" :key="index">
+                <div class="col-6 title"><router-link :to="'/streetDetails/'+item.id">{{ item.topic }}</router-link></div>
                 <div class="col-2 author">
-                    <a>圆形的方块</a>
-                    <p>2019-07-25</p>
+                    <a>{{ item.author }}</a>
+                    <p>{{ item.time }}</p>
                 </div>
-                <div class="col-2 watch">15/668</div>
+                <div class="col-2 watch">{{ item.view }}/{{ item.replyCount }}</div>
                 <div class="col-2 last-reply">
                     <p>2019-07-25</p>
                     <a>圆形的方块</a>
@@ -27,7 +27,7 @@
             :current-page.sync="currentPage"
             :page-size="20"
             layout="prev, pager, next, jumper"
-            :total="200">
+            :total="streetCount">
             </el-pagination>
         </div>
         <el-backtop></el-backtop>
@@ -39,15 +39,34 @@ export default {
     data(){
         return {
             currentPage:0,
+            streetList:[],
+            streetCount:0,
         }
+    },
+    mounted(){
+        this.getStreetList(1);
+        this.getStreetCount();
     },
     methods:{
         back(){
 
         },
         handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
+            this.getStreetList(val);
+        },
+        getStreetList(n){
+            this.$http.post('getStreet',{ page:n }).then((result)=>{
+                if(result.body.code == 200){
+                    this.streetList = result.body.streetList;
+                }
+            })
+        },
+        getStreetCount(){
+            this.$http.get('getStreetCount').then((result)=>{
+                this.streetCount = result.body.streetCount[0]['COUNT(*)'];
+            })
         }
+
     }
 }
 </script>
@@ -80,6 +99,9 @@ export default {
 .item{
     border-bottom: 1px solid #ccc;
     height:48px;
+}
+.item:hover{
+    background-color: #ccc;
 }
 .title,.author,.last-reply,.watch{
     height:48px;

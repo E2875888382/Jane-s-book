@@ -13,6 +13,7 @@ import Comic_classification from './main/comic/comic_classification.vue'
 import Vlog from './main/vlog/vlog_index.vue'
 import Developer from './main/developer/developer_index.vue'
 import Street_index from './main/street/street_index.vue'
+import Street_details from './main/street/street_details.vue'
 //手动安装vue-router
 Vue.use(VueRouter)
 //创建vue-router对象
@@ -32,6 +33,7 @@ var router=new VueRouter({
         { path:'/vlog',component:Vlog },
         { path:'/developer',component:Developer },
         { path:'/street',component:Street_index },
+        { path:'/streetDetails/:id',component:Street_details }
     ]
 })
 
