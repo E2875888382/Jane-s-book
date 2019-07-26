@@ -8,17 +8,17 @@
                     </el-carousel-item>
                 </el-carousel>
             </div>
-            <div class="img_box_first">
-                <img class="img_box_first_img1" src="https://online-public-manhua.nos-eastchina1.126.net/pic201907019f49777c794c47b69b7791f5c3939d82.jpg?imageView&thumbnail=420y180">
-                <img class="img_box_first_img2" src="https://online-public-manhua.nos-eastchina1.126.net/pic201907103e0c3f7cd6444e0abdb9627bf14a222b.jpg?imageView&thumbnail=320y180">
+            <div class="img_item-1">
+                <img src="https://online-public-manhua.nos-eastchina1.126.net/pic20190701a46e572e8bff4d46a498e6b55e8a99f6.jpg?imageView&thumbnail=320y180">
             </div>
-            <div class="img_box_second">
-                <div class="img_box_second_img1">
-                    <img src="https://online-public-manhua.nos-eastchina1.126.net/pic20190701a46e572e8bff4d46a498e6b55e8a99f6.jpg?imageView&thumbnail=320y180">
-                </div>
-                <div class="img_box_second_img2">
-                    <img src="https://online-public-manhua.nos-eastchina1.126.net/pic20190701b1d0e1152cdd4eb3b2498d0ffb6d85ad.jpg?imageView&thumbnail=420y180">
-                </div>
+            <div class="img_item-2">
+                <img src="https://online-public-manhua.nos-eastchina1.126.net/pic20190701b1d0e1152cdd4eb3b2498d0ffb6d85ad.jpg?imageView&thumbnail=420y180">
+            </div>
+            <div class="img_item-3">
+                <img src="https://online-public-manhua.nos-eastchina1.126.net/pic201907019f49777c794c47b69b7791f5c3939d82.jpg?imageView&thumbnail=420y180">
+            </div>
+            <div class="img_item-4">
+                <img src="https://online-public-manhua.nos-eastchina1.126.net/pic201907103e0c3f7cd6444e0abdb9627bf14a222b.jpg?imageView&thumbnail=320y180">
             </div>
         </div>
         <div class="content_container m-auto col-11">
@@ -88,8 +88,24 @@ export default {
 
 <style scoped>
 .top_container{
-    height:362px;
-    position:relative;
+    display: grid;
+    grid-template-columns: 400px 320px 100px 320px;
+    grid-template-rows: 180px 180px;
+    grid-template-areas: 'a b b c'
+                        'a d e e';
+
+}
+.img_item-1{
+    grid-area: d;
+}
+.img_item-2{
+    grid-area: e;
+}
+.img_item-3{
+    grid-area: b;
+}
+.img_item-4{
+    grid-area: c;
 }
 .content_container{
     height:1000px;
@@ -104,42 +120,7 @@ export default {
 .left_carousel{
     width:400px;
     height:362px;
-}
-.img_box_first{
-    width: 700px;
-    height:180px;
-    position:absolute;
-    top:0;
-    right:0;
-}
-.img_box_first .img_box_first_img1{
-    width:400px;
-    height:180px;
-    float: left;
-}
-.img_box_first .img_box_first_img2{
-    width: 300px;
-    height:180px;
-    float: left;
-}
-.img_box_second{
-    width: 742px;
-    height:180px;
-    margin-top:2px;
-    position:absolute;
-    top:180px;
-    right:0;
-}
-.img_box_second .img_box_second_img1{
-    width:320px;
-    height:180px;
-    float: left;
-}
-.img_box_second .img_box_second_img2{
-    width: 420px;
-    height:180px;
-    float: left;
-    margin-left:1px;
+    grid-area: a;
 }
 .classification{
     height: 481px;
