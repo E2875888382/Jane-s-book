@@ -10,19 +10,16 @@
 
 <script>
 import top from './common/header.vue'
-import index from './index/index.vue'
 import bottom from './common/footer.vue'
 import userPage from './userPage/userPage.vue'
 export default{
      data(){
-          return{
-               activeName: '1',
-                
+          return {
+               
           }
      },
      components:{
           top,
-          index,
           bottom,
           userPage,
      },

@@ -5,7 +5,6 @@
         <div class="top_box">
             <div class="left_box">
                 <ul>
-                    <li><router-link to="/index" class="top_link"><i class="header_icon"></i>首页</router-link></li>
                     <li><router-link to="/news" class="top_link">新闻中心</router-link></li>
                     <li><router-link to="/comic/index" class="top_link">漫画</router-link></li>
                     <li><router-link to="/vlog" class="top_link">vlog</router-link></li>
