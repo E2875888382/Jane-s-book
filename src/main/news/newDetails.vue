@@ -1,12 +1,12 @@
 <template>
-    <div class="content">
+    <div class="content col-11">
         <h3>{{ newsDetails.title }}</h3>
         <div class="time_read_box">
             <span>来源：{{ newsDetails.source }} 发布时间：{{ newsDetails.time }}</span>
             <span>阅读：{{ newsDetails.read }}</span>
         </div>
         <el-divider></el-divider>
-        <div class="news_content">
+        <div class="news_content col-12">
             <van-image width="600" height="400" :src="newsDetails.img"/>
             <div class="right_box">
                 <p>{{ newsDetails.details | cut }}</p>
@@ -59,7 +59,6 @@ export default {
 
 <style scoped>
 .content{
-    width: 1000px;
     margin: 40px auto;
 }
 .time_read_box{
@@ -71,12 +70,10 @@ export default {
     color: #989da2;
 }
 .news_content{
-    width: 1000px;
     display: flex;
-    justify-content: space-between;
 }
 .right_box{
-    width: 380px;
+    margin-left: 20px;
 }
 .right_box p{
     font-size: 14px;

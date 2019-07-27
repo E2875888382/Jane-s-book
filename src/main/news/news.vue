@@ -1,5 +1,5 @@
 <template>
-<div class="content">
+<div class="content col-11">
     <h3>NBA新闻</h3> 
     <el-divider></el-divider>
     <div class="media" v-for="item in newsList" :key="item.id">
@@ -66,7 +66,6 @@ export default {
 
 <style scoped>
 .content{
-    width:1000px;
     margin: 40px auto;
 }
 .time_read_box{

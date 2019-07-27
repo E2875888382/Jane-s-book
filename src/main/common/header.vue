@@ -1,5 +1,5 @@
 <template>
-<div class="header">
+<div class="header col-12">
     <div class="mask"></div>
     <div class="head_content">
         <div class="top_box">
@@ -175,7 +175,6 @@ export default {
                    this.$store.commit('userStatus',{currentUser:result.body.user.email,loginFlag:false,unLoginFlag:true});
                 }
             })
-            
         },
         getLoginUserIfo(){
             //请求登录者的基本信息，并保存到vuex
@@ -236,7 +235,6 @@ export default {
 .header{
     background-image: url('../../img/header.png');
     height:170px;
-    width: 100%;
     background-position: center -10px;
     background-repeat: no-repeat;
 }

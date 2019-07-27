@@ -1,11 +1,11 @@
 <template>
 <div class="bg">
     <div class="container">
-        <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
+        <ul v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
             <li v-for="(item,index) in morePraise" :key="index">
-                <div class="infinite-list-item">
+                <div class="infinite-list-item col-12">
                     <van-image width="50" height="50" class="avator" :src="item.avator"/>
-                    <div class="log_box">
+                    <div class="log_box col-11">
                             <div class="ifo">
                                 <div>
                                     <a href="#">{{ item.user }}</a>
@@ -39,15 +39,12 @@
                                 <p>{{ item.time }} 来自 {{ item.from }}</p>
                             </div>
                         </div>
-                    <div class="item_act">
-                        <ul>
-                            <li><i class="el-icon-star-off"></i>收藏</li>
-                            <el-divider direction="vertical"></el-divider>
-                            <li><van-icon name="share" />转发 {{ item.forwarding }}</li>
-                            <el-divider direction="vertical"></el-divider>
-                            <li><i class="el-icon-chat-dot-square"></i>评论 {{ item.comments }}</li>
-                            <el-divider direction="vertical"></el-divider>
-                            <li @click="praise(item.id,$event),cancelPraise(item.id,$event)"><van-icon name="thumb-circle-o" />赞 {{ item.praise }}</li>
+                    <div class="item_act col-12">
+                        <ul >
+                            <li class="col-3"><i class="el-icon-star-off"></i>收藏</li>
+                            <li class="col-3"><van-icon name="share" />转发 {{ item.forwarding }}</li>
+                            <li class="col-3"><i class="el-icon-chat-dot-square"></i>评论 {{ item.comments }}</li>
+                            <li class="col-3" @click="praise(item.id,$event),cancelPraise(item.id,$event)"><van-icon name="thumb-circle-o" />赞 {{ item.praise }}</li>
                         </ul>
                     </div>
                 </div>
@@ -160,12 +157,8 @@ export default {
     margin:0 auto;
     min-height:2000px;
 }
-.infinite-list{
-    width: 970px;
-}
 .infinite-list-item{
     display: block;
-    width:970px;
     margin-bottom: 20px;
     padding:16px;
     background-color: #fff;
@@ -174,19 +167,16 @@ export default {
     float:left;
 }
 .item_act{
-    width:100%;
     height:40px;
     border-top: 1px solid #eee;
     float:right;
     margin-top:40px;
 }
 .log_box{
-    width:868px;
     padding-left: 20px;
     float: right;
 }
 .ifo{
-    width: 840px;
     height:25px;
     display: flex;
     justify-content: space-between;
@@ -203,19 +193,16 @@ export default {
     color:#ef4d58;
 }
 .msg{
-    width:840px;
     font-size: 14px;
     line-height: 25px;
     word-break: break-word;
     text-overflow: ellipsis;
 }
 .video{
-    width:840px;
     height:281px;
     margin:5px 0;
 }
 .from{
-    width:840px;
     height:25px;
     font-size: 12px;
     line-height: 25px;
@@ -228,22 +215,21 @@ export default {
     justify-content: center;
     overflow: hidden;
     float: left;
-    margin-left: 15px;
 }
 .item_act>ul{
     list-style: none;
-    width:936px;
     height:40px;
     display: flex;
-    justify-content:space-between; 
 }
 .item_act>ul li{
     text-align: center;
     display:inline-block;
-    width:230px;
     line-height: 40px;
     font-size:14px;
     cursor: pointer;
+}
+.item_act>ul li:nth-child(1),.item_act>ul li:nth-child(2),.item_act>ul li:nth-child(3){
+    border-right:1px solid #eee;
 }
 .item_act>ul li i{
     width:15px;

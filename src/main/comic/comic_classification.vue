@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="top_container">
+        <div class="col-12">
             <div class="top_container_selected">
                 <span>已选</span>
                 <el-divider direction="vertical"></el-divider>
@@ -84,7 +84,7 @@
                 <i></i>
             </div>
         </div>
-        <div class="comic_list">
+        <div class="comic_list col-12">
             <div class="comic_item" v-for="(item,index) in comic" :key="index">
                 <div class="cover">
                     <a :href="item.link">
@@ -105,7 +105,7 @@
                 </div>
             </div>
         </div>
-        <div class="page">
+        <div class="page col-12">
             <el-pagination :page-size="20" :pager-count="11" layout="prev, pager, next" :total="1000"></el-pagination>
         </div>
         <el-backtop></el-backtop>
@@ -171,7 +171,6 @@ export default {
     font-size: 14px;
 }
 .right_box{
-    width:1018px;
     padding-left:6px;
     position: absolute;
     left:42px;
@@ -225,9 +224,9 @@ export default {
     background-image: url('https://163.bilibili.com/images/sprites/icon.png?acc9c4274adc16d47e7033a34b17c167')
 }
 .comic_list{
-    width:1110px;
     min-height: 4150px;
     margin-top:20px;
+    overflow: hidden;
 }
 .comic_item{
     width: 160px;
@@ -288,9 +287,7 @@ export default {
     color:#ff2853;
 }
 .page{
-    width: 1110px;
     height:32px;
-    padding: 0 300px;
 }
 .el-pagination{
     width: 600px;
