@@ -54,6 +54,18 @@ router.get('/getStreetCount',(request,response) => {
   handleDisconnect(connection);
 })
 
+// 查询帖子正文
+router.post('/getStreetDetails',(request,response) => {
+  connection.connect();
+  var sql = `SELECT * FROM street WHERE id = ${ request.body.id }`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,streetDetails:result });
+  })
+  handleDisconnect(connection);
+})
 
 
 //导出router
