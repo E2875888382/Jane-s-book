@@ -24,6 +24,7 @@
                 </div>
                 <p class="subtopic">{{ streetDetails.topic }}<span> 由 {{ streetDetails.author }} 发表在虎扑步行街·步行街主干道</span></p>
                 <p class="text">{{ streetDetails.text }}</p>
+                <el-image v-if="streetDetails.img" style="width: 500px; height: 300px" :src="streetDetails.img" fit="fill"></el-image>
                 <p class="from">发自虎扑iPhone客户端</p>
             </div>
         </div>
@@ -38,6 +39,7 @@
                     <span class="floor">{{ index + 1 }}楼</span>
                 </div>
                 <p class="text">{{ item.text }}</p>
+                <el-image v-if="item.img" style="width: 400px; height: 300px" :src="item.img" fit="fill"></el-image>
                 <p class="from">{{ item.from }}</p>
             </div>
         </div>
