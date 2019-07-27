@@ -43,6 +43,18 @@
                 <p class="from">{{ item.from }}</p>
             </div>
         </div>
+        <div class="col-12 add-reply" v-if="$store.state.loginFlag">
+            <van-image width="50" height="50" class="avatar" :src="$store.state.userIfo.avatar"/>
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm col-11">
+                <el-form-item prop="reply_content">
+                    <el-input type="textarea" v-model="ruleForm.reply_content" :rows="5"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm('ruleForm')">回复</el-button>
+                    <el-button @click="resetForm('ruleForm')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
         <el-backtop></el-backtop>
     </div>
 </template>
@@ -54,6 +66,14 @@ export default {
             id:this.$route.params.id,
             streetDetails:[],
             streetReply:[],
+            ruleForm:{
+                reply_content:''
+            },
+            rules:{
+                reply_content: [
+                    { required: true, message: '请填写回复内容', trigger: 'blur' }
+                ]
+            }
         }
     },
     mounted(){
@@ -61,6 +81,38 @@ export default {
         this.getStreetReply();
     },
     methods:{
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    var newReply = {
+                        avatar:this.$store.state.userIfo.avatar,
+                        from:'发自虎扑PC客户端',
+                        img:'',
+                        level:this.$store.state.userIfo.level,
+                        light:0,
+                        streetId:parseInt(this.id),
+                        text:this.ruleForm.reply_content,
+                        time:new Date().toLocaleString(),
+                        user:this.$store.state.userIfo.nickName
+                    }
+                    this.$http.post('addReply',{ newReply:newReply }).then((result)=>{
+                        if(result.body.code == 200){
+                            this.streetReply.push(newReply);
+                            this.$message({
+                                message: '回复成功',
+                                type: 'success'
+                            });
+                        }
+                    })
+                } else {
+                    this.$message.error('服务器错误，请稍后再试');
+                    return false;
+                }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
         getStreetDetails(){
             this.$http.post('getStreetDetails',{ id:this.id }).then((result)=>{
                 if(result.body.code == 200){
@@ -165,5 +217,9 @@ export default {
 }
 .avatar{
     margin: 10px 0 0 10px;
+}
+.add-reply{
+    height:200px;
+    display:flex;
 }
 </style>

@@ -79,5 +79,22 @@ router.post('/getStreetReply',(request,response) => {
   })
   handleDisconnect(connection);
 })
+
+// 添加回复
+router.post('/addReply',(request,response) => {
+    connection.connect();
+    var sql = 'INSERT INTO reply(streetId,USER,TIME,light,TEXT,\`from\`,avatar,LEVEL,img) VALUES ('+ `${request.body.newReply.streetId},
+    '${request.body.newReply.user}','${request.body.newReply.time}',${request.body.newReply.light},
+    '${request.body.newReply.text}','${request.body.newReply.from}','${request.body.newReply.avatar}',
+    ${request.body.newReply.level},'${request.body.newReply.img}')`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200 });
+    })
+    handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;
