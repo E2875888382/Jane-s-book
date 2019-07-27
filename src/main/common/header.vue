@@ -5,12 +5,18 @@
         <div class="top_box">
             <div class="left_box">
                 <ul>
-                    <li><router-link to="/news" class="top_link">新闻中心</router-link></li>
-                    <li><router-link to="/comic/index" class="top_link">漫画</router-link></li>
-                    <li><router-link to="/vlog" class="top_link">vlog</router-link></li>
-                    <li><router-link to="/developer" class="top_link">102农家乐</router-link></li>
                     <li><router-link to="/street" class="top_link">步行街</router-link></li>
+                    <li><router-link to="/news" class="top_link">新闻</router-link></li>
+                    <li><router-link to="/vlog" class="top_link">微博</router-link></li>
+                    <li><router-link to="/comic" class="top_link">漫画</router-link></li>
+                    <li><router-link to="/developer" class="top_link">开发者</router-link></li>
                 </ul>
+            </div>
+            <div class="search_box">
+                <div class="search-form" >
+                    <input type="text" class="form-control search-input" placeholder="Search for...">
+                    <button class="form-btn"></button>
+                </div>
             </div>
             <div class="right_box">
                 <!-- 更多 -->
@@ -83,14 +89,6 @@
         </div>
         <div class="bottom_box">
             <a href="//www.bilibili.com" class="head-logo"></a>
-            <!-- 头部搜索框 -->
-            <div class="search_box">
-                <a href="//www.bilibili.com/ranking" target="_blank" class="link-ranking"><span>排行榜</span></a>
-                <div class="search-form" >
-                    <input type="text" class="form-control search-input" placeholder="Search for...">
-                    <button class="form-btn"></button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -310,7 +308,7 @@ export default {
     background-image:url('../../img/head-logo.png'); 
 }
 .search_box{
-    width: 282px;
+    width: 200px;
     height: 32px;
     padding: 0 2px;
     background-color: rgba(0,0,0,.12);
@@ -358,29 +356,6 @@ export default {
     padding: 0;
     border: 0;
 }
-.link-ranking{
-    display: inline-block;
-    height: 32px;
-    line-height: 32px;
-    background-color: hsla(0,0%,100%,.88);
-    border-radius: 4px;
-    transition: background-color 0.2s;
-    text-decoration: none;
-    cursor: pointer;
-}
-.link-ranking>span{
-    width:80px;
-    height: 32px;
-    display: inline-block;
-    line-height: 32px;
-    padding-left: 26px;
-    color: #f25d8e;
-    display: inline-block;
-    background: url("../../img/icons.png") -659px -655px no-repeat;
-}
-.link-ranking:hover{
-    background-color: #fff;
-}
 .top_box{
     display: flex;
     width: 100%;
@@ -397,7 +372,6 @@ export default {
     width:100%;
     height:128px;
     display: flex;
-    justify-content: space-around;
 }
 .left_box>ul li{
     float: left;

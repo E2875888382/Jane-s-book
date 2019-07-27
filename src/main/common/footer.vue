@@ -1,52 +1,11 @@
 <template>
-    <div class="footer col-12">
-        <div class="first_div col-4">
-            <div class="cards col-4">
-                <em>关于我们</em>
-            </div>
-            <div class="cards col-4">
-                <em>联系我们</em>
-            </div>
-            <div class="cards col-4">
-                <em>加入我们</em>
-            </div>
-            <div class="cards col-4">
-                <em>友情链接</em>
-            </div>
-            <div class="cards col-4">
-                <em>bilibili认证</em>
-            </div>
-            <div class="cards col-4">
-                <em>Investor Relations</em>
-            </div>
+<div class="bg col-12">
+    <div class="footer col-10 m-auto">
+        <div class="left_div col-7">
+            <p>Copyright by 虎扑JRs Elric Tang</p>
+            <p>GitHub:https://github.com/E2875888382</p>
         </div>
-        <div class="second_div col-4">
-            <div class="cards col-4">
-                <em>帮助中心</em>
-            </div>
-            <div class="cards col-4">
-                <em>高级弹幕</em>
-            </div>
-            <div class="cards col-4">
-                <em>活动专题页</em>
-            </div>
-            <div class="cards col-4">
-                <em>侵权申诉</em>
-            </div>
-            <div class="cards col-4">
-                <em>活动中心</em>
-            </div>
-            <div class="cards col-4">
-                <em>用户反馈论坛</em>
-            </div>
-            <div class="cards col-4">
-                <em>壁纸站</em>
-            </div>
-            <div class="cards col-4">
-                <em>名人堂</em>
-            </div>
-        </div>
-        <div class="third_div col-4">
+        <div class="right_div col-5">
             <el-tooltip placement="top" effect="light" class="col-3">
                 <div slot="content">
                     <img src="../../img/wechat.png" alt="" class="img-logo">
@@ -76,7 +35,7 @@
             </el-tooltip>
         </div>
     </div>
-
+</div>
 
 </template>
 
@@ -87,20 +46,17 @@ export default {
 </script>
 
 <style scoped>
-.footer{
+.bg{
     background: #f6f9fa;
     height:120px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
 }
-.first_div,.second_div,.third_div{
+.footer{
+    display: flex;
+}
+.left_div,.right_div{
     height: 120px;
     padding-top: 10px;
     padding-bottom: 10px;
-}
-.second_div,.third_div{
-    border-left: solid 1px #e5e9ef;
 }
 .download,.qq,.wechat{
     height:80px;
@@ -129,19 +85,13 @@ export default {
     width: 130px;
     height: 130px;
 }
+p{
+    font-size:12px;
+    color:#999;
+    line-height:24px;
+    margin:0;
+}
 em{
     font-style: normal;
-    font-size: 12px;
-    line-height: 14px;
-    color: #222;
-}
-em:hover{
-    color:deepskyblue;
-    cursor: pointer;
-}
-.cards{
-    height: 14px;
-    margin-bottom: 16px;
-    float: left;
 }
 </style>

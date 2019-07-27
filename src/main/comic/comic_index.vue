@@ -23,7 +23,8 @@
         </div>
         <div class="content_container m-auto col-10">
             <div class="head_title">
-                <h2>热门分类</h2>
+                <span>热门分类</span>
+                <router-link to="/comic/classification">查看全部分类<i class="link_icon"></i></router-link>
             </div>
             <div class="classification col-4" v-for="item in comic" :key="item.index">
                 <h3>{{ item.className }}</h3>
@@ -89,6 +90,8 @@ export default {
 
 <style scoped>
 .top_container{
+    height:400px;
+    padding-top: 20px;
     display: grid;
     grid-template-columns: 400px 320px 100px 320px;
     grid-template-rows: 180px 180px;
@@ -112,11 +115,19 @@ export default {
     height:1000px;
     position: relative;
 }
-.head_title>h2{
+.head_title{
+    display: flex;
+    justify-content: space-between;
+}
+.head_title>span:first-child{
     font-size: 24px;
     line-height: 31px;
     color: #333333;
     font-weight: bold;
+}
+.head_title a{
+    font-size:12px;
+    line-height:31px;
 }
 .left_carousel{
     width:400px;
@@ -263,5 +274,15 @@ export default {
     display: inline-block;
     background-position: -66px -64px;
     background-image: url('https://163.bilibili.com/images/sprites/icon.png?acc9c4274adc16d47e7033a34b17c167');
+}
+.link_icon{
+    vertical-align: top;
+    margin-left: 6px;
+    background-image: url(https://163.bilibili.com/images/sprites/icon.png?acc9c4274adc16d47e7033a34b17c167);
+    background-position: 0 -36px;
+    width: 28px;
+    height: 28px;
+    background-repeat: no-repeat;
+    display: inline-block;
 }
 </style>
