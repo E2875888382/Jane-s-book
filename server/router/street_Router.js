@@ -67,6 +67,17 @@ router.post('/getStreetDetails',(request,response) => {
   handleDisconnect(connection);
 })
 
-
+// 根据id查询所有回复
+router.post('/getStreetReply',(request,response) => {
+  connection.connect();
+  var sql = `SELECT * FROM reply WHERE streetId = ${ request.body.id }`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,streetReply:result });
+  })
+  handleDisconnect(connection);
+})
 //导出router
 module.exports=router;

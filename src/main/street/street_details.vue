@@ -19,7 +19,7 @@
                     <a href="#">{{ streetDetails.author }}</a>
                     <span class="level">（{{ streetDetails.level }}级）</span>
                     <el-tag type="info" effect="dark" size="mini">楼主</el-tag>
-                    <span class="time">2019-07-26 16:38</span>
+                    <span class="time">{{ streetDetails.time }}</span>
                     <span class="floor">楼主</span>
                 </div>
                 <p class="subtopic">{{ streetDetails.topic }}<span> 由 {{ streetDetails.author }} 发表在虎扑步行街·步行街主干道</span></p>
@@ -27,18 +27,18 @@
                 <p class="from">发自虎扑iPhone客户端</p>
             </div>
         </div>
-        <div class="reply col-12" v-for="(item,index) in 5" :key="index">
-            <van-image width="50" height="50" class="avatar" src=" "/>
+        <div class="reply col-12" v-for="(item,index) in streetReply" :key="index">
+            <van-image width="50" height="50" class="avatar" :src="item.avatar"/>
             <div>
                 <div class="top_box">
-                    <a href="#">虎扑用户180085</a>
-                    <span class="level">（1级）</span>
-                    <span class="time">2019-07-26 16:38</span>
-                    <span class="light">亮了(10)</span>
+                    <a href="#">{{ item.user }}</a>
+                    <span class="level">（{{ item.level }}级）</span>
+                    <span class="time">{{ item.time }}</span>
+                    <span class="light">亮了({{ item.light }})</span>
                     <span class="floor">{{ index + 1 }}楼</span>
                 </div>
-                <p class="text"> 南方人好时尚啊，到处帅哥美女，南方人眼睛大，皮肤白，又有钱，都是绅士淑女</p>
-                <p class="from">发自虎扑iPhone客户端</p>
+                <p class="text">{{ item.text }}</p>
+                <p class="from">{{ item.from }}</p>
             </div>
         </div>
         <el-backtop></el-backtop>
@@ -51,16 +51,25 @@ export default {
         return {
             id:this.$route.params.id,
             streetDetails:[],
+            streetReply:[],
         }
     },
     mounted(){
         this.getStreetDetails();
+        this.getStreetReply();
     },
     methods:{
         getStreetDetails(){
             this.$http.post('getStreetDetails',{ id:this.id }).then((result)=>{
                 if(result.body.code == 200){
                     this.streetDetails = result.body.streetDetails[0];
+                }
+            })
+        },
+        getStreetReply(){
+            this.$http.post('getStreetReply',{ id:this.id }).then((result)=>{
+                if(result.body.code == 200){
+                    this.streetReply = result.body.streetReply;
                 }
             })
         }
@@ -150,6 +159,7 @@ export default {
 .text{
     font-size:14px;
     line-height:1.6;
+    margin: 10px 0;
 }
 .avatar{
     margin: 10px 0 0 10px;
