@@ -1,6 +1,11 @@
 <template>
     <div class="container col-10">
-        <el-page-header content="步行街主干道" class="top col-12" @back="back"></el-page-header>
+        <div class="row">
+            <el-page-header content="步行街主干道" class="top col-10" @back="back"></el-page-header>
+            <div class="col-2 link-box" v-if="$store.state.loginFlag">
+                <router-link to="/street/new">发新帖<i class="link_icon"></i></router-link>
+            </div>
+        </div>
         <div class="content">
             <div class="top_title row col-12 m-auto ">
                 <div class="col-6"><p>主题</p></div>
@@ -124,5 +129,26 @@ export default {
     justify-content: space-around;
     align-items: center;
     height:80px;
+}
+.link_icon{
+    vertical-align: top;
+    margin-left: 6px;
+    background-image: url(https://163.bilibili.com/images/sprites/icon.png?acc9c4274adc16d47e7033a34b17c167);
+    background-position: 0 -36px;
+    width: 28px;
+    height: 28px;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+.link-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.link-box a{
+    height:28px;
+    display: inline-block;
+    line-height:28px;
+    font-size:12px;
 }
 </style>
