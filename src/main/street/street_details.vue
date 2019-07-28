@@ -77,10 +77,27 @@ export default {
         }
     },
     mounted(){
+        this.addStreetView();
         this.getStreetDetails();
         this.getStreetReply();
     },
     methods:{
+        //增加帖子浏览量
+        addStreetView(){
+            this.$http.post("addStreetView",{ id:this.id }).then((result) =>{
+
+            },(error) =>{
+                console.log(error);
+            })
+        },
+        // 增加回复量
+        addStreetReply(){
+            this.$http.post("addStreetReply",{ id:this.id }).then((result) =>{
+
+            },(error) =>{
+                console.log(error);
+            })
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -98,6 +115,7 @@ export default {
                     this.$http.post('addReply',{ newReply:newReply }).then((result)=>{
                         if(result.body.code == 200){
                             this.streetReply.push(newReply);
+                            this.addStreetReply();
                             this.$message({
                                 message: '回复成功',
                                 type: 'success'

@@ -115,5 +115,31 @@ router.post('/uploadNewStreet', (request,response) =>{
     });
     handleDisconnect(connection);
 })
+
+//增加帖子浏览量
+router.post('/addStreetView',(request,response) =>{
+    connection.connect();
+    var sql = ` UPDATE street SET view = view + 1  WHERE id = ${request.body.id}`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'阅读量增加' });
+    })
+    handleDisconnect(connection);
+})
+
+//增加帖子回复量
+router.post('/addStreetReply',(request,response) =>{
+    connection.connect();
+    var sql = ` UPDATE street SET replyCount = replyCount + 1  WHERE id = ${request.body.id}`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'回复量增加' });
+    })
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;
