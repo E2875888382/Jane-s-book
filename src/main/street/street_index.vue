@@ -19,10 +19,10 @@
                     <a>{{ item.author }}</a>
                     <p>{{ item.time }}</p>
                 </div>
-                <div class="col-2 watch">{{ item.view }}/{{ item.replyCount }}</div>
+                <div class="col-2 watch">{{ item.replyCount }}/{{ item.view }}</div>
                 <div class="col-2 last-reply">
-                    <p>2019-07-25</p>
-                    <a>圆形的方块</a>
+                    <p>{{ item.lastReplyTime }}</p>
+                    <a>{{ item.lastReplyAuthor }}</a>
                 </div>
             </div>
         </div>
@@ -46,6 +46,7 @@ export default {
             currentPage:0,
             streetList:[],
             streetCount:0,
+            lastReply:[],
         }
     },
     mounted(){
@@ -54,7 +55,7 @@ export default {
     },
     methods:{
         back(){
-
+            this.$router.push({ path:'/'});
         },
         handleCurrentChange(val) {
             this.getStreetList(val);
@@ -62,6 +63,11 @@ export default {
         getStreetList(n){
             this.$http.post('getStreet',{ page:n }).then((result)=>{
                 if(result.body.code == 200){
+                    result.body.streetList.forEach(e => {
+                        e.lastReplyTime = '';
+                        e.lastReplyAuthor = '';
+                    });
+                    this.getLastReply();
                     this.streetList = result.body.streetList;
                 }
             })
@@ -70,8 +76,20 @@ export default {
             this.$http.get('getStreetCount').then((result)=>{
                 this.streetCount = result.body.streetCount[0]['COUNT(*)'];
             })
-        }
-
+        },
+        getLastReply(){
+            this.$http.get('getLastReply').then((result)=>{
+                this.lastReply = result.body.lastReply;
+                for(var i = 0;i<this.lastReply.length;i++){
+                    for(var j = 0;j<this.streetList.length;j++){
+                        if(this.lastReply[i].streetId == this.streetList[j].id){
+                            this.streetList[j].lastReplyTime = this.lastReply[i].TIME;
+                            this.streetList[j].lastReplyAuthor = this.lastReply[i].USER;
+                        }
+                    }
+                }
+            })
+        },
     }
 }
 </script>
@@ -112,6 +130,9 @@ export default {
     height:48px;
     line-height: 48px;
     margin:0;
+}
+.watch{
+    font-size:12px;
 }
 .title a{
     font-size: 12px;

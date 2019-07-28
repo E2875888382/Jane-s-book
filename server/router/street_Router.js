@@ -141,5 +141,20 @@ router.post('/addStreetReply',(request,response) =>{
     })
     handleDisconnect(connection);
 })
+
+// 查询所有最后回复
+router.get('/getLastReply',(request,response) =>{
+    connection.connect();
+    var sql = `SELECT USER,TIME,streetId
+    FROM reply RIGHT JOIN (SELECT MAX(TIME) AS ti ,streetId AS id FROM reply GROUP BY streetId) A ON reply.streetId =A.id AND reply.time=A.ti`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,lastReply:result });
+    })
+    handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;
