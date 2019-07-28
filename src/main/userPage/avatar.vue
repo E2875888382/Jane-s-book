@@ -94,10 +94,9 @@ export default {
     border: 1px solid #e5e9ef;
     border-radius: 50%;
     float: left;
-    margin-right: 52px;
-    margin-bottom: 30px;
     cursor: pointer;
     position: relative;
+    margin:5px;
 }
 .box-card:hover{
     border-color:deepskyblue;

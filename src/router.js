@@ -18,7 +18,7 @@ Vue.use(VueRouter)
 //创建vue-router对象
 var router=new VueRouter({
     routes:[
-        { path:'/',redirect:'/comic/index' },
+        { path:'/',redirect:'/comic' },
         { path:'/userPage',component:UserPage },
         { path:'/news',component:News_index },
         { path:'/newsDetails/:id',component:News_details },

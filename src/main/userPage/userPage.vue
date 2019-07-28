@@ -1,5 +1,5 @@
 <template>
-    <div class="content" >
+    <div class="content col-11" >
         <el-tabs tab-position="left" style="height: 1000px;"  type="border-card">
             <!-- 个人主页 -->
             <el-tab-pane>
@@ -206,9 +206,9 @@
                     <div>
                         <el-divider content-position="left">我的好友</el-divider>
                     </div>
-                    <div class="friendListBox">
+                    <div class="friendListBox col-12">
                         <div v-for="item in friendsList" :key="item.friendEmail">
-                            <div class="friendList">
+                            <div class="friendList col-10">
                                 <span>{{ item.friendNickName }}</span>
                                 <p>{{ item.friendEmail }}</p>
                             </div>
@@ -231,24 +231,24 @@
                 <span slot="label"  @click="getFriends">
                     <van-icon name="friends-o" /> 发送私信
                 </span>
-                <div v-if="$store.state.loginFlag">
-                    <div class="sendMsgBox">
+                <div v-if="$store.state.loginFlag" class="col-12">
+                    <div class="sendMsgBox col-12">
                         <div>
                             <span>发送私信</span>
                             <el-divider content-position="right">我的好友</el-divider>
                         </div>
-                        <div class="left_friend_list">
+                        <div class="left_friend_list col-4">
                             <div v-for="item in friendsList" :key="item.friendEmail" @click="sendMsgReceiver( item.friendNickName,item.friendEmail )">
-                                <div class="friendList_sendMsg">
+                                <div class="friendList_sendMsg col-12">
                                     <span>{{ item.friendNickName }}</span>
                                     <p>{{ item.friendEmail }}</p>
                                     <el-divider></el-divider>
                                 </div>
                             </div>
                         </div>
-                        <div class="rigth_send_msg">
+                        <div class="rigth_send_msg col-8">
                             <p>发送给：{{ receiver.msgReceiverNickname }} {{ receiver.msgReceiverEmail }}</p>
-                            <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea">
+                            <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea col-12">
                             </el-input>
                             <div class="send_box">
                                 <el-button type="primary" round @click="sendMsg">发送</el-button>
@@ -461,7 +461,6 @@ export default {
 
 <style scoped>
 .content{
-     width:1000px;
      height:1000px;
      margin:100px auto;
 }
@@ -533,7 +532,6 @@ export default {
 }
 .safe_item{
     height: 40px;
-    width: 840px;
 }
 .safe_item_title{
     width: 30%;
@@ -598,7 +596,6 @@ export default {
     top: 60px;
 }
 .friendList{
-    width: 700px;
     float: left;
     padding-left: 30px;
 }
@@ -612,11 +609,9 @@ export default {
 }
 .friendListBox{
     height: 730px;
-    width: 840px;
     overflow:auto;
 }
 .searchFriendBox{
-    width: 840px;
     height: 170px;
 }
 .searchFriendList{
@@ -645,14 +640,12 @@ export default {
     margin-bottom: 10px;
 }
 .left_friend_list{
-    width: 240px;
     height: 700px;
     overflow: auto;
     cursor: pointer;
     float: right;
 }
 .rigth_send_msg{
-    width: 600px;
     height: 700px;
     border-right:1px solid #DCDFE6;
     position:absolute;
@@ -663,15 +656,12 @@ export default {
     text-indent: 2em;
 }
 .sendMsgBox{
-    width: 840px;
     height: 800px;
     position: relative;
 }
 .friendList_sendMsg{
-    width: 210px;
     height: 80px;
     float: left;
-    padding-left: 30px;
 }
 .friendList_sendMsg:hover{
     color: greenyellow;
@@ -685,12 +675,10 @@ export default {
     white-space: nowrap;
 }
 .textarea{
-  width: 550px;
   margin-left: 20px;
 }
 .send_box{
     margin:20px 10px 0px 20px;
-    width: 540px;
     text-align: right;
 }
 </style>
