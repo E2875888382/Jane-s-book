@@ -197,6 +197,7 @@ export default {
             this.$http.post('login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
+                    this.getLoginUserIfo();
                     this.$store.commit('userStatus',{currentUser:result.body.user,unLoginFlag:false,loginFlag:true});
                 }else{
                     console.log(result.body);
