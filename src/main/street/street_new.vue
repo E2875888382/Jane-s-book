@@ -4,17 +4,73 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path:'/street' }">步行街</el-breadcrumb-item>
-                <el-breadcrumb-item>发新帖</el-breadcrumb-item>
+                <el-breadcrumb-item>发新帖（仅限图文）</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
- 
+        <el-form :model="Form" :rules="rules" ref="Form"  class="demo-ruleForm col-12">
+            <el-form-item prop="topic" label="主题">
+                <el-input v-model="Form.topic" ></el-input>
+            </el-form-item>
+            <el-form-item prop="text" label="文字描述">
+                <el-input type="textarea" v-model="Form.text" :rows="5"></el-input>
+            </el-form-item>
+            <van-uploader @oversize="oversize" v-model="Form.img" multiple  :max-count="1" :max-size="1000000" preview-size="200"/>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('Form')">发帖</el-button>
+                <el-button @click="resetForm('Form')">重置</el-button>
+            </el-form-item>
+        </el-form>
         <el-backtop></el-backtop>
     </div>
 </template>
 
 <script>
 export default {
-
+    data() {
+      return {
+        Form:{
+            topic:'',
+            text:'',
+            img:[],
+        },
+        rules:{
+            topic: [
+                { required: true, message: '请填写主题', trigger: 'blur' }
+            ]
+        }
+      };
+    },
+    methods: {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    var newStreet = {
+                        topic:this.Form.topic,
+                        text:this.Form.text,
+                        img:this.Form.img,
+                        author:this.$store.state.userIfo.nickName,
+                        avatar:this.$store.state.userIfo.avatar,
+                        level:this.$store.state.userIfo.level,
+                        time:new Date().toLocaleString(),
+                    }
+                    this.$http.post('uploadNewStreet',{ new:newStreet }).then((result)=>{
+                        if(result.body.code == 200){
+                            this.$message.success('发帖成功，快去步行街看看吧');
+                        }
+                    })
+                } else {
+                    this.$message.error('服务器错误，请稍后再试');
+                    return false;
+                }
+            });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+        oversize(){
+            this.$message( '请上传小于1M的图片');
+        },
+    }
 }
 </script>
 

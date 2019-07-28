@@ -96,5 +96,24 @@ router.post('/addReply',(request,response) => {
     handleDisconnect(connection);
 })
 
+// 发新帖
+router.post('/uploadNewStreet', (request,response) =>{
+    var newStreet = request.body.new;
+    if(request.body.new.img[0]){
+        newStreet.img = request.body.new.img[0].content;
+    }else{
+        newStreet.img = '';
+    }
+    connection.connect();
+    var sql=`INSERT INTO street(topic,author,TIME,avatar,TEXT,LEVEL,img)
+    VALUES('${newStreet.topic}','${newStreet.author}','${newStreet.time}','${newStreet.avatar}','${newStreet.text}',${newStreet.level},'${newStreet.img}')`;
+    connection.query(sql,  (error, result) => {
+        if (error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({message:"上传成功",code:200});
+    });
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;
