@@ -333,6 +333,7 @@ export default {
                     //发送更改后的用户信息到后台
                     this.$http.post('updateUserInfo',{email:this.$store.state.userIfo.email,update:this.ruleForm, credentials: true }).then((result) =>{
                         if(result.body.code==200){
+                            this.getLoginUserIfo();
                             this.$message({
                                 message: '修改信息成功',
                                 type: 'success'

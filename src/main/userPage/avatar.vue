@@ -45,7 +45,7 @@ export default {
         afterRead(file){
         // 此时可以自行将文件上传至服务器
             this.$http.post("uploadAvatar",file,{credentials: true}).then(function(result){
-                //console.log(result.body)
+
             })
             
         },
@@ -55,16 +55,28 @@ export default {
         useAvatar(){
             if(this.fileList.length!==0){
                 this.$message( '切换头像成功');
+                this.getLoginUserIfo();
                 this.fileList.shift();
             }
+        },
+        //获取用户信息并保存到vuex
+        getLoginUserIfo(){
+             //请求登录session，用于持久化登录状态
+            this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
+                if(result.body[0]){
+                    this.$store.commit('userIfo',result.body[0]);
+                }
+            })
         },
         useAvatarT(){
             if(this.imgPreview.length!==0){
                 this.$http.post("uploadAvatarT",{src:this.imgPreview},{credentials: true}).then(function(result){
-                    //console.log(result.body)
+                    if(result.code == 200){
+                        this.getLoginUserIfo();
+                        this.$message( '切换头像成功');
+                        this.imgPreview='';
+                    }
                 })
-                this.$message( '切换头像成功');
-                this.imgPreview='';
             }
         },
         addImg(src){
