@@ -91,7 +91,7 @@
                 </span>
                 <div v-if="$store.state.loginFlag">
                     <div>
-                        <div :class="{'header_medium':safeNum==70,'header_safe':safeNum==100}">
+                        <div :class="{'header_medium':safeNum==70,'header_safe':safeNum==100,'header_low':safeNum==30}">
                             <div class="safe_num">{{ sumSafeNum() }}</div>
                             <div class="tips">账号安全评分</div>
                         </div>
@@ -534,6 +534,13 @@ export default {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+}
+.header_low{
+    width: 400px;
+    height: 220px;
+    margin: 0 auto;
+    background: url('https://s1.hdslb.com/bfs/static/security/static/img/logo_normal.79d580e.png') no-repeat;
+    position: relative;
 }
 .header_medium{
     width: 400px;
