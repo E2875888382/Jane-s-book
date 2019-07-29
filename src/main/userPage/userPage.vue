@@ -112,7 +112,7 @@
                                 <span>未绑定手机号</span>
                             </div>
                             <div class="safe_item_link">
-                                <el-link type="primary" href="">更换手机</el-link> 
+                                <el-button type="primary" size="small" @click="changePasswordFlag=!changePasswordFlag">更换手机</el-button>
                             </div>
                         </div>
                         <el-divider></el-divider>
@@ -127,9 +127,10 @@
                                 <span>已设置密码</span>
                             </div>
                             <div class="safe_item_link">
-                                <el-link type="primary" href="">修改密码</el-link>
+                                <el-button type="primary" size="small" @click="changePasswordFlag=!changePasswordFlag">修改密码</el-button>
                             </div>
                         </div>
+                        <changePassword v-if="changePasswordFlag"></changePassword>
                         <el-divider></el-divider>
                         <div class="safe_item">
                             <div class="safe_item_title">
@@ -146,7 +147,7 @@
                                 <span>未绑定QQ号</span>
                             </div>
                             <div class="safe_item_link">
-                                <el-link type="primary" href="">绑定QQ</el-link>
+                                <el-button type="primary" size="small" @click="changePasswordFlag=!changePasswordFlag">绑定QQ</el-button>
                             </div>
                         </div>
                     </div>
@@ -266,9 +267,12 @@
 <script>
 //导入头像组件
 import avatar from './avatar.vue'
+import changePassword from './changePassword.vue'
 export default {
     data(){
         return{
+            // flag:用于控制修改密码的组件出现
+            changePasswordFlag:false,
             //发送私信
             receiver:{
                 msgReceiverNickname:'',
@@ -324,6 +328,7 @@ export default {
     //在这里注册组件
     components:{
         avatar,
+        changePassword,
     },
     methods:{
         //修改用户信息方法
@@ -544,7 +549,6 @@ export default {
 }
 .safe_item_link{
     width: 20%;
-    padding:10px 10px 2px 20px;
     margin: 0;
     font-family: MicrosoftYaHei;
     float: left;

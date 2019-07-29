@@ -188,5 +188,18 @@ router.post('/uploadAvatarT', (request,response) =>{
     handleDisconnect(connection);
 })
 
+// 更改密码
+router.post('/changePassword',(request,response) =>{
+    connection.connect();
+    var sql=`UPDATE USER SET PASSWORD = '${request.body.new }' WHERE email = '${request.body.user }'`;
+    connection.query(sql,  (error, result) => {
+        if (error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({message:"修改成功",code:200});
+    });
+    handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;
