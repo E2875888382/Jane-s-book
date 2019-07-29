@@ -19,29 +19,24 @@
                 </div>
             </div>
             <div class="right_box">
-                <!-- 更多 -->
-                <el-dropdown class="select_list"  size="small"  v-if="$store.state.loginFlag">
-                    <el-button type="primary">
-                        更多<i class="el-icon-arrow-down el-icon--right"></i>
-                    </el-button>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-badge :value="$store.state.messageCount" class="item">
-                            <el-dropdown-item><i class="el-icon-message"></i><a href="#/userPage" >我的消息</a></el-dropdown-item>
-                        </el-badge>
-                        <el-dropdown-item><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></el-dropdown-item>
-                        <el-dropdown-item><i class="el-icon-switch-button"></i><a @click="logOut()">退出登录</a></el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
                 <!-- 登录后状态框 -->
                 <div class="new" v-if="$store.state.loginFlag">
-                    <ul>
-                        <li>
-                            <van-image width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
-                        </li>
-                        <li>
-                            <span>{{ $store.state.userIfo.nickName }}</span>
-                        </li>
-                    </ul>
+                    <el-popover
+                        placement="bottom"
+                        width="150"
+                        trigger="hover">
+                        <div class="user_box">
+                            <p>{{ $store.state.userIfo.nickName }}</p>
+                            <p>
+                                <el-badge :value="$store.state.messageCount" class="item">
+                                    <i class="el-icon-message"></i><a href="#/userPage" >我的消息</a>
+                                </el-badge>
+                            </p>
+                            <p><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></p>
+                            <p><i class="el-icon-switch-button"></i><em @click="logOut()">退出登录</em></p>
+                        </div>
+                        <van-image slot="reference" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
+                    </el-popover>
                 </div>
                 <!-- 登录按钮 -->
                 <div class="login_btn" v-if="$store.state.unLoginFlag">
@@ -254,11 +249,6 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.select_list{
-    float: right;
-    height: 42px;
-   
-}
 .login_btn,.new_btn{
     height: 42px;
     line-height: 42px;
@@ -266,40 +256,24 @@ export default {
     float: right;
     width: 60px;
 }
+.user_box{
+    height:150px;
+    text-align: center;
+}
 .new{
     height: 42px;
     line-height: 42px;
     text-align: center;
-    float: left;
-}
-.new ul{
     display: flex;
-    justify-content:space-evenly;
-}
-.new ul li{
-    width: 100px;
-    height: 42px;
-    position: relative;
-}
-.new ul li:first-child{
-    width:32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.new ul li a,.new ul li span{
-    text-decoration: none;
-    color: #222;
-    font-size: 14px;
-}
-.new ul li:before,
-.new ul li:after{
-    content: "";
+    justify-content:center;
+    align-items:center; 
 }
 .right_box{
     float: right;
-    width: 250px;
+    width: 150px;
     height: 42px;
+    display: flex;
+    flex-direction: row-reverse;
 }
 .head-logo{
     width: 220px;
