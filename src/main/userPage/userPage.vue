@@ -91,7 +91,7 @@
                 </span>
                 <div v-if="$store.state.loginFlag">
                     <div>
-                        <div class="header">
+                        <div :class="{'header_medium':safeNum==70,'header_safe':safeNum==100}">
                             <div class="safe_num">{{ sumSafeNum() }}</div>
                             <div class="tips">账号安全评分</div>
                         </div>
@@ -350,7 +350,7 @@ export default {
         // 计算安全信息
         safeTips(){
             if(this.$store.state.userIfo.telephone.length!==0&&this.$store.state.userIfo.qq.length!==0){
-                this.tips = '你的账号安全状况真棒，请继续保持哦'
+                this.tips = '你的账号安全状况真棒，请继续保持哦';
             }
             else if(this.$store.state.userIfo.telephone.length==0&&this.$store.state.userIfo.qq.length==0){
                 this.tips = '你的账号安全状况有点糟糕，请完善信息鸭';
@@ -535,11 +535,18 @@ export default {
     justify-content: center;
     overflow: hidden;
 }
-.header{
+.header_medium{
     width: 400px;
     height: 220px;
     margin: 0 auto;
     background: url('https://s1.hdslb.com/bfs/static/security/static/img/logo_normal.79d580e.png') no-repeat;
+    position: relative;
+}
+.header_safe{
+    width: 400px;
+    height: 220px;
+    margin: 0 auto;
+    background: url('https://s1.hdslb.com/bfs/static/security/static/img/logo_safe.792b6bf.png') no-repeat;
     position: relative;
 }
 .safe_item{
