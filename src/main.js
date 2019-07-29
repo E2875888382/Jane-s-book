@@ -45,6 +45,7 @@ var store = new Vuex.Store({
             level:0,//用户等级
             sign:'',//个性签名
             nickName:'',//昵称
+            qq:'',//QQ
         }
     },
     mutations:{

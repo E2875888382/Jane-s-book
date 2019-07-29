@@ -149,19 +149,6 @@ router.post('/updateUserInfo', (request,response) =>{
     handleDisconnect(connection);
 })
 
-//获取用户安全信息接口
-router.post('/getSafeIfo', (request,response) =>{
-      connection.connect();
-      var sql=`SELECT qq,telephone,safenum FROM USER WHERE email = "${request.body.user}"`;
-      connection.query(sql, function (error, result) {
-          if (error){
-              response.status(500).send('server error');
-          }
-          response.status(200).json(result);
-      });
-      handleDisconnect(connection);
-})
-
 //上传头像接口
 router.post('/uploadAvatar', (request,response) =>{
     connection.connect();

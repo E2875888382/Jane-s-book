@@ -86,13 +86,13 @@
 
             <!-- 账号安全 -->
             <el-tab-pane>
-                <span slot="label" @click="getSafeIfo">
+                <span slot="label">
                     <i class="el-icon-lock"></i> 账号安全
                 </span>
                 <div v-if="$store.state.loginFlag">
                     <div>
                         <div class="header">
-                            <div class="safe_num">{{ ifo.safeNum }}</div>
+                            <div class="safe_num">{{ sumSafeNum() }}</div>
                             <div class="tips">账号安全评分</div>
                         </div>
                         <p class="safe_p">您的账号安全状况还不错哟，完善剩余的安全项可进一步提高安全评分哟</p>
@@ -100,15 +100,15 @@
                         <div class="safe_item">
                             <div class="safe_item_title">
                                 <div class="p">
-                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="!ifo.telephoneFlag" />
-                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="ifo.telephoneFlag"/>
+                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="$store.state.userIfo.telephone.length ==0" />
+                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon" v-if="$store.state.userIfo.telephone.length !==0"/>
                                     <span>绑定手机号</span>
                                 </div>
                             </div>
-                            <div class="safe_item_warning" v-if="ifo.telephoneFlag">
-                                <span>{{ ifo.telephone }}</span>
+                            <div class="safe_item_warning" v-if="$store.state.userIfo.telephone!==''">
+                                <span>{{ $store.state.userIfo.telephone }}</span>
                             </div>
-                            <div class="safe_item_warning" v-if="!ifo.telephoneFlag">
+                            <div class="safe_item_warning" v-if="$store.state.userIfo.telephone ==''">
                                 <span>未绑定手机号</span>
                             </div>
                             <div class="safe_item_link">
@@ -136,15 +136,15 @@
                         <div class="safe_item">
                             <div class="safe_item_title">
                                 <div class="p">
-                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="!ifo.qqFlag" />
-                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="ifo.qqFlag" />
+                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="$store.state.userIfo.qq.length ==0" />
+                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="$store.state.userIfo.qq.length !==0" />
                                     <span>绑定QQ号</span>
                                 </div>
                             </div>
-                            <div class="safe_item_warning" v-if="ifo.qqFlag">
-                                <span>{{ ifo.qqNumber }}</span>
+                            <div class="safe_item_warning" v-if="$store.state.userIfo.qq!==''">
+                                <span>{{ $store.state.userIfo.qq }}</span>
                             </div>
-                            <div class="safe_item_warning" v-if="!ifo.qqFlag">
+                            <div class="safe_item_warning" v-if="$store.state.userIfo.qq == ''">
                                 <span>未绑定QQ号</span>
                             </div>
                             <div class="safe_item_link">
@@ -275,6 +275,7 @@ import changeQQ from './changeQQ.vue'
 export default {
     data(){
         return{
+            safeNum:0,//安全系数
             // flag:用于控制修改密码的组件出现
             changePasswordFlag:false,
             // flag:用于控制修改密码的组件出现
@@ -293,14 +294,6 @@ export default {
             searchFriendInput:'',
             //添加好友搜索结果
             searchFriendResult:[],
-            // 账户安全数据
-            ifo:{
-                safeNum:'',
-                telephoneFlag:false,
-                telephone:'',
-                qqFlag:false,
-                qqNumber:'',
-            },
             //好友列表
             friendsList:[],
             //更改用户信息表单
@@ -341,6 +334,18 @@ export default {
         changeQQ,
     },
     methods:{
+        // 计算安全信息
+        sumSafeNum:function(){
+            if(this.$store.state.userIfo.telephone.length!==0&&this.$store.state.userIfo.qq.length!==0){
+                this.safeNum = 100;
+            }
+            else if(this.$store.state.userIfo.telephone.length==0&&this.$store.state.userIfo.qq.length==0){
+                this.safeNum = 30;
+            }else{
+                this.safeNum = 70;
+            }
+            return this.safeNum;
+        },
         //修改用户信息方法
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
@@ -374,22 +379,6 @@ export default {
                     this.$store.commit('userIfo',result.body[0]);
                 }
             })
-        },
-        //获取当前用户的安全信息
-        getSafeIfo(){
-                this.$http.post("getSafeIfo",{user:this.$store.state.userIfo.email}).then( (result) =>{
-                    if(result.body[0]){
-                        this.ifo.safeNum=result.body[0].safenum;
-                        if(result.body[0].qq !== ''){
-                            this.ifo.qqFlag=true;
-                            this.ifo.qqNumber=result.body[0].qq;
-                        }
-                        if(result.body[0].telephone !== ''){
-                            this.ifo.telephoneFlag=true;
-                            this.ifo.telephone=result.body[0].telephone;
-                        }
-                    }
-                })
         },
         //获取好友消息
         getFriendsMessage(){
