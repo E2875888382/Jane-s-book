@@ -362,8 +362,7 @@ export default {
         },
         //获取当前用户的安全信息
         getSafeIfo(){
-            if(this.$store.state.userIfo.email!== ''){
-                this.$http.get("getSafeIfo",{credentials: true}).then( (result) =>{
+                this.$http.post("getSafeIfo",{user:this.$store.state.userIfo.email}).then( (result) =>{
                     if(result.body[0]){
                         this.ifo.safeNum=result.body[0].safenum;
                         if(result.body[0].qq !== ''){
@@ -376,12 +375,10 @@ export default {
                         }
                     }
                 })
-            }
         },
         //获取好友消息
         getFriendsMessage(){
-            if(this.$store.state.userIfo.email !==''){
-                this.$http.get("getFriendsMessage" ,{ credentials: true}).then( (result) =>{
+                this.$http.post("getFriendsMessage" ,{user:this.$store.state.userIfo.email}).then( (result) =>{
                     this.friendsMessage = result.body;
                     if(result.body.length>0){
                         this.$store.commit('getMessageCount',result.body.length);
@@ -389,7 +386,6 @@ export default {
                         this.$store.commit('getMessageCount','');
                     }
                 })
-            }
         },
         //将消息设置为已读
         isRead(id){
@@ -401,27 +397,25 @@ export default {
         },
         //删除好友
         deleteFriend(email){
-            this.$http.post("deleteFriend",{delete:email},{ credentials: true}).then( (result) =>{
+            this.$http.post("deleteFriend",{delete:email,user:this.$store.state.userIfo.email}).then( (result) =>{
                 this.getFriends();//删除好友成功刷新好友列表
             })
         },
         //获取好友列表
         getFriends(){
-            if(this.$store.state.userIfo.email !==''){
-                this.$http.get("getFriends" ,{ credentials: true}).then( (result) =>{
+                this.$http.post("getFriends" ,{user:this.$store.state.userIfo.email}).then( (result) =>{
                     this.friendsList = result.body;
                 }) 
-            }
         },
         //搜索好友
         searchFriend(){
-            this.$http.post("searchFriend" ,{search:this.searchFriendInput},{ credentials: true}).then( (result) =>{
+            this.$http.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
                 this.searchFriendResult = result.body;
             })
         },
         //添加好友
         addFriend(email,nickName){
-            this.$http.post("addFriend" ,{addEmail:email,addNickName:nickName},{ credentials: true}).then( (result) =>{
+            this.$http.post("addFriend" ,{addEmail:email,addNickName:nickName,user:this.$store.state.userIfo.email}).then( (result) =>{
                 if(result.body.code==200){
                     this.$message({
                         message: '添加好友成功',

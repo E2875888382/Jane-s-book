@@ -27,10 +27,9 @@ function handleDisconnect(connection) {
     });
 };
 //获取好友列表接口
-router.get('/getFriends',(request,response) =>{
-    if(request.session.user){
+router.post('/getFriends',(request,response) =>{
       connection.connect();
-      var sql = `SELECT * FROM friend  WHERE userEmail = "${ request.session.user.email} "`;
+      var sql = `SELECT * FROM friend  WHERE userEmail = "${ request.body.user} "`;
       connection.query(sql,  (error, result) => {
           if (error){
               response.status(500).send('server error');
@@ -38,7 +37,6 @@ router.get('/getFriends',(request,response) =>{
           response.status(200).json(result);
       });
       handleDisconnect(connection);
-    }   
   })
 
 //获取用户信息接口
@@ -73,9 +71,8 @@ router.post('/searchFriend', (request,response) =>{
 
 //添加好友接口
 router.post('/addFriend', (request,response) =>{
-    if(request.session.user){
       connection.connect();
-      var sql= `INSERT  INTO friend(userEmail,friendEmail,friendNickName) VALUES ("${ request.session.user.email } ","${ request.body.addEmail }","${request.body.addNickName}")`;
+      var sql= `INSERT  INTO friend(userEmail,friendEmail,friendNickName) VALUES ("${ request.body.user } ","${ request.body.addEmail }","${request.body.addNickName}")`;
       connection.query(sql,  (error, result) => {
           if (error){
               response.status(500).send('server error');
@@ -83,14 +80,12 @@ router.post('/addFriend', (request,response) =>{
           response.status(200).json({message:'删除成功',code:200 });
       });
       handleDisconnect(connection);
-    }
 })
 
 //获取好友消息接口
-router.get('/getFriendsMessage', (request,response) =>{
-    if(request.session.user){ 
+router.post('/getFriendsMessage', (request,response) =>{
       connection.connect();  
-      var sql=`SELECT * FROM message WHERE receiver = "${ request.session.user.email }" AND isRead = 0`;
+      var sql=`SELECT * FROM message WHERE receiver = "${ request.body.user }" AND isRead = 0`;
       connection.query(sql, (error, result) =>{
           if (error){
               response.status(500).send('server error');
@@ -98,7 +93,6 @@ router.get('/getFriendsMessage', (request,response) =>{
           response.status(200).json(result);
       });
       handleDisconnect(connection);
-    }
 })
 
 //设置已读状态
@@ -131,9 +125,8 @@ router.post('/sendMsg', (request,response) =>{
 
 //删除好友接口
 router.post('/deleteFriend', (request,response) =>{
-    if(request.session.user){
       connection.connect();
-      var sql = `DELETE FROM friend WHERE userEmail = "${request.session.user.email}" AND friendEmail = "${request.body.delete}"`;
+      var sql = `DELETE FROM friend WHERE userEmail = "${request.body.user}" AND friendEmail = "${request.body.delete}"`;
       connection.query(sql, (error, result) =>{
           if (error){
               response.status(500).send('server error');
@@ -141,7 +134,6 @@ router.post('/deleteFriend', (request,response) =>{
           response.status(200).json({message:'删除成功'});
       });
       handleDisconnect(connection);
-    }
 })
 
 //更新用户信息接口
@@ -158,10 +150,9 @@ router.post('/updateUserInfo', (request,response) =>{
 })
 
 //获取用户安全信息接口
-router.get('/getSafeIfo', (request,response) =>{
-    if(request.session.user){
+router.post('/getSafeIfo', (request,response) =>{
       connection.connect();
-      var sql=`SELECT qq,telephone,safenum FROM USER WHERE email = "${request.session.user.email}"`;
+      var sql=`SELECT qq,telephone,safenum FROM USER WHERE email = "${request.body.user}"`;
       connection.query(sql, function (error, result) {
           if (error){
               response.status(500).send('server error');
@@ -169,7 +160,6 @@ router.get('/getSafeIfo', (request,response) =>{
           response.status(200).json(result);
       });
       handleDisconnect(connection);
-    }
 })
 
 //上传头像接口
