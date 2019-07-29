@@ -95,7 +95,7 @@
                             <div class="safe_num">{{ sumSafeNum() }}</div>
                             <div class="tips">账号安全评分</div>
                         </div>
-                        <p class="safe_p">您的账号安全状况还不错哟，完善剩余的安全项可进一步提高安全评分哟</p>
+                        <p class="safe_p">{{ safeTips() }}</p>
                         <el-divider></el-divider>
                         <div class="safe_item">
                             <div class="safe_item_title">
@@ -275,6 +275,7 @@ import changeQQ from './changeQQ.vue'
 export default {
     data(){
         return{
+            tips:'',//安全系数提示
             safeNum:0,//安全系数
             // flag:用于控制修改密码的组件出现
             changePasswordFlag:false,
@@ -345,6 +346,18 @@ export default {
                 this.safeNum = 70;
             }
             return this.safeNum;
+        },
+        // 计算安全信息
+        safeTips(){
+            if(this.$store.state.userIfo.telephone.length!==0&&this.$store.state.userIfo.qq.length!==0){
+                this.tips = '你的账号安全状况真棒，请继续保持哦'
+            }
+            else if(this.$store.state.userIfo.telephone.length==0&&this.$store.state.userIfo.qq.length==0){
+                this.tips = '你的账号安全状况有点糟糕，请完善信息鸭';
+            }else{
+                this.tips = '您的账号安全状况还不错哟，完善剩余的安全项可进一步提高安全评分哟';
+            }
+            return this.tips;
         },
         //修改用户信息方法
         submitForm(formName) {

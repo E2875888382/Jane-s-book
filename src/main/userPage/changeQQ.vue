@@ -36,6 +36,7 @@ export default {
                           message:'绑定QQ成功',
                           type:'success'
                       });
+                      this.getLoginUserIfo();
                   }
               })
           } else {
@@ -46,7 +47,16 @@ export default {
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      }
+      },
+        //获取用户信息并保存到vuex
+        getLoginUserIfo(){
+             //请求登录session，用于持久化登录状态
+            this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
+                if(result.body[0]){
+                    this.$store.commit('userIfo',result.body[0]);
+                }
+            })
+        },
     }
 }
 </script>
