@@ -213,5 +213,18 @@ router.post('/changeTelephone',(request,response) =>{
     });
     handleDisconnect(connection);
 })
+
+// 更改QQ号
+router.post('/changeQQ',(request,response) =>{
+    connection.connect();
+    var sql=`UPDATE USER SET qq = '${request.body.new }' WHERE email = '${request.body.user }'`;
+    connection.query(sql,  (error, result) => {
+        if (error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({message:"修改成功",code:200});
+    });
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;

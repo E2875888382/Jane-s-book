@@ -148,9 +148,10 @@
                                 <span>未绑定QQ号</span>
                             </div>
                             <div class="safe_item_link">
-                                <el-button type="primary" size="small" @click="changePasswordFlag=!changePasswordFlag">绑定QQ</el-button>
+                                <el-button type="primary" size="small" @click="changeQQFlag=!changeQQFlag">绑定QQ</el-button>
                             </div>
                         </div>
+                        <changeQQ v-if="changeQQFlag"></changeQQ>
                     </div>
                 </div>
             </el-tab-pane>
@@ -270,6 +271,7 @@
 import avatar from './avatar.vue'
 import changePassword from './changePassword.vue'
 import changeTelephone from './changeTelephone.vue'
+import changeQQ from './changeQQ.vue'
 export default {
     data(){
         return{
@@ -277,6 +279,8 @@ export default {
             changePasswordFlag:false,
             // flag:用于控制修改密码的组件出现
             changeTelephoneFlag:false,
+            // flag:用于控制修改QQ的组件出现
+            changeQQFlag:false,
             //发送私信
             receiver:{
                 msgReceiverNickname:'',
@@ -334,6 +338,7 @@ export default {
         avatar,
         changePassword,
         changeTelephone,
+        changeQQ,
     },
     methods:{
         //修改用户信息方法
