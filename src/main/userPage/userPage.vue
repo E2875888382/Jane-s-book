@@ -112,9 +112,10 @@
                                 <span>未绑定手机号</span>
                             </div>
                             <div class="safe_item_link">
-                                <el-button type="primary" size="small" @click="changePasswordFlag=!changePasswordFlag">更换手机</el-button>
+                                <el-button type="primary" size="small" @click="changeTelephoneFlag=!changeTelephoneFlag">更换手机</el-button>
                             </div>
                         </div>
+                        <changeTelephone v-if="changeTelephoneFlag"></changeTelephone>
                         <el-divider></el-divider>
                         <div class="safe_item">
                             <div class="safe_item_title">
@@ -268,11 +269,14 @@
 //导入头像组件
 import avatar from './avatar.vue'
 import changePassword from './changePassword.vue'
+import changeTelephone from './changeTelephone.vue'
 export default {
     data(){
         return{
             // flag:用于控制修改密码的组件出现
             changePasswordFlag:false,
+            // flag:用于控制修改密码的组件出现
+            changeTelephoneFlag:false,
             //发送私信
             receiver:{
                 msgReceiverNickname:'',
@@ -329,6 +333,7 @@ export default {
     components:{
         avatar,
         changePassword,
+        changeTelephone,
     },
     methods:{
         //修改用户信息方法

@@ -8,8 +8,8 @@
             <el-input type="password" v-model="Form.checkPass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="submitForm('Form')">提交</el-button>
-            <el-button @click="resetForm('Form')">重置</el-button>
+            <el-button type="primary" size="small" @click="submitForm('Form')">提交</el-button>
+            <el-button size="small" @click="resetForm('Form')">重置</el-button>
         </el-form-item>
     </el-form>
 </div>
@@ -91,6 +91,6 @@ export default {
 <style scoped>
 .container{
     margin-top: 30px;
-    height:200px;
+    height:180px;
 }
 </style>
