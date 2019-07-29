@@ -539,7 +539,7 @@ export default {
     width: 400px;
     height: 220px;
     margin: 0 auto;
-    background: url('https://s1.hdslb.com/bfs/static/security/static/img/logo_normal.79d580e.png') no-repeat;
+    background: url('../../img/safe.png') no-repeat;
     position: relative;
 }
 .header_medium{
