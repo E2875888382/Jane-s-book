@@ -46,7 +46,7 @@ export default {
         },
         useAvatar(){
             // 此时可以自行将文件上传至服务器
-            this.$http.post("uploadAvatar",this.Form.img[0],{credentials: true}).then(function(result){
+            this.$http.post("uploadAvatar",{img:this.Form.img[0],email:this.$store.state.userIfo.email}).then(function(result){
                 if(result.body.code == 200){
                     this.$message( '切换头像成功');
                     this.getLoginUserIfo();
@@ -55,7 +55,6 @@ export default {
         },
         //获取用户信息并保存到vuex
         getLoginUserIfo(){
-             //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
@@ -63,7 +62,7 @@ export default {
             })
         },
         useAvatarT(src){
-            this.$http.post("uploadAvatarT",{src:src},{credentials: true}).then(function(result){
+            this.$http.post("uploadAvatarT",{src:src,email:this.$store.state.userIfo.email}).then(function(result){
                 if(result.body.code == 200){
                     this.$message( '切换头像成功');
                     this.getLoginUserIfo();
