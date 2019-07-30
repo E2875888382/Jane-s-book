@@ -8,14 +8,16 @@
     </el-carousel>
 
     <ul class="col-11 box m-auto" :style="{height:boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
-        <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth">
+        <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn">
             <div slot="waterfall-over">没有更多了</div>
             <div class="img-info" slot-scope="props">
                 <p class="some-info">第{{props.value.id}}张图片</p>
                 <div class="ifo">
                     <van-image width="24" height="24" class="avatar" :src="$store.state.userIfo.avatar"/>
-                    <span>二莫莫莫莫莫莫</span>
-                    <i></i>
+                    <span class="user">二莫莫莫莫莫莫</span>
+                    <el-popover placement="top" trigger="hover" content="支持一下" popper-class='tip'>
+                        <i @click="praise(props.value.id,$event)" slot="reference"></i>
+                    </el-popover>
                 </div>
             </div>
         </vue-waterfall-easy>
@@ -129,6 +131,18 @@ export default {
             this.imgs = this.imgs.concat(imgsGroup[this.group]);//增量添加图片
             this.boxheight += 600;
             this.group++;//记载完1组图片记得设置this.group
+        },
+        clickFn(event, { index, value }) {
+            // 阻止a标签跳转
+            event.preventDefault()
+            // 只有当点击到图片时才进行操作
+            if (event.target.tagName.toLowerCase() == 'img') {
+                this.$router.push({ path:`/photoDetails/${value.id}`});
+            }
+        },
+        praise(id,event){
+            console.log(id)
+            event.target.classList.toggle('praise');
         }
     }
 }
@@ -164,6 +178,7 @@ export default {
 }
 .box>>>.vue-waterfall-easy-container .vue-waterfall-easy a.img-wraper > img:hover{
     transform: scale(1.2);
+    cursor: pointer;
 }
 .avatar{
     display: flex;
@@ -181,7 +196,7 @@ export default {
     display:flex;
     align-items: center;
 }
-.ifo span{
+.ifo .user{
     cursor: pointer;
     color: #999;
     width: 60%;
@@ -192,6 +207,9 @@ export default {
     line-height: 30px;
     font-size: 14px;
     font-weight: 400;
+}
+.praise{
+    background-position: 0em -43em !important;
 }
 .ifo i{
     display: inline-block;

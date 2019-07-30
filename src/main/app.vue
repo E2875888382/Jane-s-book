@@ -24,12 +24,17 @@ export default{
 }
 </script>
 
-<style scoped>
+<style>
 .v-enter,.v-leave-to{
      opacity: 0;
      transform: translate3d(100px,0,100px);
 } 
 .v-enter-active,.v-leave-active{
      transition: all 0.2s;
+}
+.el-popover--plain {
+     padding: 10px !important;
+     min-width:50px !important;
+     margin-bottom:0;
 }
 </style>
