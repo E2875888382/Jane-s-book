@@ -206,6 +206,7 @@ export default {
             this.$http.get('logOut',{credentials: true}).then((result) => {
                 if(result.body.code == 700){
                     this.$store.commit('userStatus',{currentUser:'',unLoginFlag:true,loginFlag:false});
+                    this.$router.push({ path:'/street'});
                 }else{
                     console.log(result.body);
                 }
