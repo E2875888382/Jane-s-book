@@ -14,6 +14,8 @@ import Developer from './main/developer/developer_index.vue'
 import Street_index from './main/street/street_index.vue'
 import Street_details from './main/street/street_details.vue'
 import Street_new from './main/street/street_new.vue'
+import Photo_index from './main/photo/photo_index.vue'
+import Photo_details from './main/photo/photo_details.vue'
 
 //手动安装vue-router
 Vue.use(VueRouter)
@@ -31,6 +33,8 @@ var router=new VueRouter({
         { path:'/street',component:Street_index },
         { path:'/streetDetails/:id',component:Street_details },
         { path:'/street/new',component:Street_new },
+        { path:'/photo',component:Photo_index },
+        { path:'/photoDetails/:id',component:Photo_details },
     ]
 })
 
