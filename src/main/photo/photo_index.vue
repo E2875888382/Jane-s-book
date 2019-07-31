@@ -47,12 +47,12 @@ export default {
     },
     mounted(){
         this.getCount();
-        this.load();
     },
     methods:{
         getCount(){
             this.$http.get('getPhotoCount').then((result)=>{
                 this.maxGroup = Math.ceil(result.body.photoCount / 10);
+                this.load();
             })
         },
         load(){
