@@ -1,6 +1,5 @@
 var express=require('express');
 var bodyParser=require('body-parser');
-var fs=require('fs');
 var path=require('path');
 var session=require('express-session');
 
@@ -8,7 +7,6 @@ var session=require('express-session');
 var login_Router=require('./router/login_Router');
 var userPage_Router=require('./router/userPage_Router');
 var news_Router=require('./router/news_Router');
-var comic_Router=require('./router/comic_Router');
 var vlog_Router=require('./router/vlog_Router');
 var developer_Router=require('./router/developer_Router');
 var street_Router=require('./router/street_Router');
@@ -49,7 +47,6 @@ app.use(session({
 app.use(login_Router);
 app.use(userPage_Router);
 app.use(news_Router);
-app.use(comic_Router);
 app.use(vlog_Router);
 app.use(developer_Router);
 app.use(street_Router);
