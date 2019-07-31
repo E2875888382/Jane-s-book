@@ -30,8 +30,7 @@ function handleDisconnect(connection) {
 router.post('/getStreet',(request,response) =>{
     connection.connect();
     var begin = (request.body.page -1)*20;
-    var end = request.body.page*20;
-    var sql = `SELECT * FROM street LIMIT ${ begin },${ end }`;
+    var sql = `SELECT * FROM street LIMIT ${ begin },20`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');

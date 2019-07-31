@@ -30,8 +30,7 @@ function handleDisconnect(connection) {
 router.post('/getPhoto',(request,response) => {
     connection.connect();
     var begin = (request.body.group -1)*10;
-    var end = request.body.group*10;
-    var sql = `SELECT * FROM photo LIMIT ${ begin },${ end }`;
+    var sql = `SELECT * FROM photo LIMIT ${ begin },10`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');

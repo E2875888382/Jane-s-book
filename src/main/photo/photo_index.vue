@@ -56,7 +56,7 @@ export default {
             })
         },
         load(){
-            if(this.group >= this.maxGroup){
+            if(this.group > this.maxGroup){
                 this.$refs.waterfall.waterfallOver()
                 return 
             }else{
