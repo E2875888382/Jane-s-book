@@ -12,6 +12,7 @@ var comic_Router=require('./router/comic_Router');
 var vlog_Router=require('./router/vlog_Router');
 var developer_Router=require('./router/developer_Router');
 var street_Router=require('./router/street_Router');
+var photo_Router=require('./router/photo_Router');
 
 //解决控制台的溢出提示
 // (node:3772) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 
@@ -52,6 +53,7 @@ app.use(comic_Router);
 app.use(vlog_Router);
 app.use(developer_Router);
 app.use(street_Router);
+app.use(photo_Router);
 
 //设置服务器端口
 app.listen(8000,function(){

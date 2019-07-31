@@ -11,10 +11,10 @@
         <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn">
             <div slot="waterfall-over">没有更多了</div>
             <div class="img-info" slot-scope="props">
-                <p class="some-info">第{{props.value.id}}张图片</p>
+                <p class="some-info">{{props.value.title}}</p>
                 <div class="ifo">
-                    <van-image width="24" height="24" class="avatar" :src="$store.state.userIfo.avatar"/>
-                    <span class="user">二莫莫莫莫莫莫</span>
+                    <van-image width="24" height="24" class="avatar" :src="props.value.avatar"/>
+                    <span class="user">{{props.value.author}}</span>
                     <el-popover placement="top" trigger="hover" content="支持一下" popper-class='tip'>
                         <i @click="praise(props.value.id,$event)" slot="reference"></i>
                     </el-popover>
@@ -35,8 +35,9 @@ export default {
             boxheight:1000,
             imgWidth:208,
             imgs: [],
-            group: 0,//判断当前是第几组图片
+            group: 1,//判断当前是第几组图片
             maxcol:5,
+            maxGroup:0,
             banner:['https://i0.hdslb.com/bfs/vc/ef1b0509f201362abfc69e6a31e618323e07e73f.jpg@1376w_320h_1e.webp',
                     'https://i0.hdslb.com/bfs/vc/d5df1339b718ec50ef76726fab781c50aaf4b9ba.jpg@1376w_320h_1e.webp'],
         }
@@ -45,92 +46,26 @@ export default {
         vueWaterfallEasy
     },
     mounted(){
+        this.getCount();
         this.load();
     },
     methods:{
+        getCount(){
+            this.$http.get('getPhotoCount').then((result)=>{
+                this.maxGroup = Math.ceil(result.body.photoCount / 10);
+            })
+        },
         load(){
-            // 默认只能加载4组图片
-            if(this.group == 4){
+            if(this.group >= this.maxGroup){
                 this.$refs.waterfall.waterfallOver()
                 return 
+            }else{
+                this.$http.post('getPhoto',{group:this.group}).then((result)=>{
+                    this.imgs = this.imgs.concat(result.body.photo);//增量添加图片
+                    this.boxheight += 600;
+                    this.group++;//记载完1组图片记得设置this.group
+                })
             }
-            var imgsGroup = [
-                [
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rujv3OWNKnFnzL7dRnL5ta4gc10V3fCsibmDPLfblOHJmPvzxvoq6QqQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rdudX5tS4hz6fQSF47eKPWvcEU6mZmBMEowYvRkYN6MiaRpkCjkib8gAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rwDGnvjic7656RToc8iaPsDISyKtDV9KESZoNlj001Mvs5JckSFcjDpPQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgianUTXVNSA2XcfPRPick0FXIXXCklVyNM87qRRHVepicgvicJibwXTUPOA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rKfNOqJvicJ9LrglTaSaex1Iw5tT6625rqBbdj1qjicOic4iaYUGxibq7PMA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r5uZiamqkYm7Wf2MqTbeKfLTbCnWHuMicPSB86wJFjgKqzEuaSIuV1icZw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rzPz13aibrU3eo33iaxaoticsEyHjOQs5w5Rl6ibJ2alE5OtRVYqj5JyQAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rhIBVdMukVfpfTOhicWmzYZyOsduFKfqlicgJ7AlGks3POq33L25H7jEw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rym9o7k43ObjHQzIiaDUnMw5pfSia5hVNoykpxRuUsjTqn1zbljyGr7Hg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r2ZrUeYE0jCHia8HosFleCSb3glqgMEcCoNibiaOpCDRLzwENLkQNyjDbw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgWhECta0OPjEGRalCj8ARRmicjY1icT1E0E8wzdht8iaZXQcs4iabA97Sw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rHI4sqoBcTFiaISe2Wx3ZjsPgaODCVusyXF8O5QOV656sODibiaZic1S9icg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rDcpPTcJtTVZkmvGPrsIx1Z7ZPHTDicYOgKP4ibvWD8OpKnpJaibdPpib3g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rm5O87a6hZUh7dAwsKNZjibShA2WWRzOnSEges2iafpaVU2jmfFdibMCWA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535raP8ruElgzQkbWIibDlA5JdmlW8ekUBRIaEa59h5icfahNEicPibJ5w6LTA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rYlaz6F91lvhvrmFDNCb0zia4jicsZWLHODodwVuMZ0OXpEv65EEkQicIA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                ],
-                [
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rym9o7k43ObjHQzIiaDUnMw5pfSia5hVNoykpxRuUsjTqn1zbljyGr7Hg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r2ZrUeYE0jCHia8HosFleCSb3glqgMEcCoNibiaOpCDRLzwENLkQNyjDbw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgWhECta0OPjEGRalCj8ARRmicjY1icT1E0E8wzdht8iaZXQcs4iabA97Sw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rHI4sqoBcTFiaISe2Wx3ZjsPgaODCVusyXF8O5QOV656sODibiaZic1S9icg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rDcpPTcJtTVZkmvGPrsIx1Z7ZPHTDicYOgKP4ibvWD8OpKnpJaibdPpib3g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rm5O87a6hZUh7dAwsKNZjibShA2WWRzOnSEges2iafpaVU2jmfFdibMCWA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535raP8ruElgzQkbWIibDlA5JdmlW8ekUBRIaEa59h5icfahNEicPibJ5w6LTA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rYlaz6F91lvhvrmFDNCb0zia4jicsZWLHODodwVuMZ0OXpEv65EEkQicIA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rujv3OWNKnFnzL7dRnL5ta4gc10V3fCsibmDPLfblOHJmPvzxvoq6QqQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rdudX5tS4hz6fQSF47eKPWvcEU6mZmBMEowYvRkYN6MiaRpkCjkib8gAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rwDGnvjic7656RToc8iaPsDISyKtDV9KESZoNlj001Mvs5JckSFcjDpPQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgianUTXVNSA2XcfPRPick0FXIXXCklVyNM87qRRHVepicgvicJibwXTUPOA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rKfNOqJvicJ9LrglTaSaex1Iw5tT6625rqBbdj1qjicOic4iaYUGxibq7PMA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r5uZiamqkYm7Wf2MqTbeKfLTbCnWHuMicPSB86wJFjgKqzEuaSIuV1icZw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rzPz13aibrU3eo33iaxaoticsEyHjOQs5w5Rl6ibJ2alE5OtRVYqj5JyQAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rhIBVdMukVfpfTOhicWmzYZyOsduFKfqlicgJ7AlGks3POq33L25H7jEw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                ],
-                [
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rym9o7k43ObjHQzIiaDUnMw5pfSia5hVNoykpxRuUsjTqn1zbljyGr7Hg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r2ZrUeYE0jCHia8HosFleCSb3glqgMEcCoNibiaOpCDRLzwENLkQNyjDbw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgWhECta0OPjEGRalCj8ARRmicjY1icT1E0E8wzdht8iaZXQcs4iabA97Sw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rHI4sqoBcTFiaISe2Wx3ZjsPgaODCVusyXF8O5QOV656sODibiaZic1S9icg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rDcpPTcJtTVZkmvGPrsIx1Z7ZPHTDicYOgKP4ibvWD8OpKnpJaibdPpib3g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rm5O87a6hZUh7dAwsKNZjibShA2WWRzOnSEges2iafpaVU2jmfFdibMCWA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535raP8ruElgzQkbWIibDlA5JdmlW8ekUBRIaEa59h5icfahNEicPibJ5w6LTA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rYlaz6F91lvhvrmFDNCb0zia4jicsZWLHODodwVuMZ0OXpEv65EEkQicIA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rujv3OWNKnFnzL7dRnL5ta4gc10V3fCsibmDPLfblOHJmPvzxvoq6QqQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rdudX5tS4hz6fQSF47eKPWvcEU6mZmBMEowYvRkYN6MiaRpkCjkib8gAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rwDGnvjic7656RToc8iaPsDISyKtDV9KESZoNlj001Mvs5JckSFcjDpPQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgianUTXVNSA2XcfPRPick0FXIXXCklVyNM87qRRHVepicgvicJibwXTUPOA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rKfNOqJvicJ9LrglTaSaex1Iw5tT6625rqBbdj1qjicOic4iaYUGxibq7PMA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r5uZiamqkYm7Wf2MqTbeKfLTbCnWHuMicPSB86wJFjgKqzEuaSIuV1icZw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rzPz13aibrU3eo33iaxaoticsEyHjOQs5w5Rl6ibJ2alE5OtRVYqj5JyQAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rhIBVdMukVfpfTOhicWmzYZyOsduFKfqlicgJ7AlGks3POq33L25H7jEw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                ],
-                [
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rym9o7k43ObjHQzIiaDUnMw5pfSia5hVNoykpxRuUsjTqn1zbljyGr7Hg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r2ZrUeYE0jCHia8HosFleCSb3glqgMEcCoNibiaOpCDRLzwENLkQNyjDbw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgWhECta0OPjEGRalCj8ARRmicjY1icT1E0E8wzdht8iaZXQcs4iabA97Sw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rHI4sqoBcTFiaISe2Wx3ZjsPgaODCVusyXF8O5QOV656sODibiaZic1S9icg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rDcpPTcJtTVZkmvGPrsIx1Z7ZPHTDicYOgKP4ibvWD8OpKnpJaibdPpib3g/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rm5O87a6hZUh7dAwsKNZjibShA2WWRzOnSEges2iafpaVU2jmfFdibMCWA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535raP8ruElgzQkbWIibDlA5JdmlW8ekUBRIaEa59h5icfahNEicPibJ5w6LTA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rYlaz6F91lvhvrmFDNCb0zia4jicsZWLHODodwVuMZ0OXpEv65EEkQicIA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rujv3OWNKnFnzL7dRnL5ta4gc10V3fCsibmDPLfblOHJmPvzxvoq6QqQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rdudX5tS4hz6fQSF47eKPWvcEU6mZmBMEowYvRkYN6MiaRpkCjkib8gAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rwDGnvjic7656RToc8iaPsDISyKtDV9KESZoNlj001Mvs5JckSFcjDpPQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rgianUTXVNSA2XcfPRPick0FXIXXCklVyNM87qRRHVepicgvicJibwXTUPOA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rKfNOqJvicJ9LrglTaSaex1Iw5tT6625rqBbdj1qjicOic4iaYUGxibq7PMA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535r5uZiamqkYm7Wf2MqTbeKfLTbCnWHuMicPSB86wJFjgKqzEuaSIuV1icZw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rzPz13aibrU3eo33iaxaoticsEyHjOQs5w5Rl6ibJ2alE5OtRVYqj5JyQAQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                    {id:17482,src:'https://mmbiz.qpic.cn/mmbiz_jpg/n9RSiaiayZMLtJOOxkFZuO4HHCqB1p535rhIBVdMukVfpfTOhicWmzYZyOsduFKfqlicgJ7AlGks3POq33L25H7jEw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1'},
-                ],
-            ]
-            this.imgs = this.imgs.concat(imgsGroup[this.group]);//增量添加图片
-            this.boxheight += 600;
-            this.group++;//记载完1组图片记得设置this.group
         },
         clickFn(event, { index, value }) {
             // 阻止a标签跳转
