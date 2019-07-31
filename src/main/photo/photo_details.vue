@@ -2,7 +2,28 @@
 <div class="bg col-12">
     <div class="content col-11 m-auto">
         <div class="left_box col-9">
-
+            <div class="main_box col-12">
+                <div class="title_box">
+                    <span>灰色制服</span>
+                    <span><i class="el-icon-warning-outline"></i>举报</span>
+                </div>
+                <div>
+                    <el-tag size="mini" type="danger" effect="plain" >摄影扶持计划</el-tag>
+                </div>
+                <div class="flex_box details">
+                    <div class="flex_box">
+                        <span>摄影·私服</span>
+                        <span>上传时间:2017-12-04 12:52:26</span>
+                    </div>
+                    <div class="flex_box">
+                        <span>浏览:8527</span>
+                        <span>收藏:34</span>
+                        <span>支持:66</span>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+            <div class="reply_box col-12"></div>
         </div>
         <div class="right_box col-3">
             <div class="author_ifo col-12">
@@ -39,6 +60,58 @@ export default {
 </script>
 
 <style scoped>
+.main_box{
+    background-color: #fff;
+    border: 1px solid #e3e8ec;
+    border-radius: 12px;
+    min-height:300px;
+    padding:30px;
+}
+.reply_box{
+    background-color: #fff;
+    border: 1px solid #e3e8ec;
+    border-radius: 12px;
+    min-height:300px;
+    margin-top:20px;
+}
+.title_box{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.title_box span:nth-child(1){
+    margin: 0;
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #666;
+    display: inline-block;
+    vertical-align: middle;
+}
+.title_box span:nth-child(2){
+    font-size: 12px;
+    vertical-align: middle;
+    color: #b0b0b0;
+    cursor: pointer;
+}
+.el-tag{
+    border-radius: 25px;
+    padding: 1px 14px;
+}
+.flex_box{
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    vertical-align: middle;
+    color: #999;
+    cursor: pointer;
+}
+.flex_box span{
+    margin: 0 15px 0 0;
+}
+.details{
+    margin:25px 0 10px 0;
+}
 .bg{
     padding:30px 0;
     background-color: #f2f3f5;

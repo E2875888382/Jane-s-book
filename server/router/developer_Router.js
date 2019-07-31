@@ -25,7 +25,7 @@ function handleDisconnect(connection) {
       connection.connect();
     });
 };
-// 获取vlog的数量
+// 获取Developer的数量
 router.get('/getDeveloper',(request,response)=>{
     connection.connect();
     var sql = `SELECT * FROM developer `;
