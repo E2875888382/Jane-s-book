@@ -30,29 +30,15 @@ Vue.use(infiniteScroll);
 
 var store = new Vuex.Store({
     state:{
-        currentUser:'',
+        currentUser:'',//当前用户
         loginFlag:false,//登录状态标记
-        unLoginFlag:true,//登录状态标记
-        messageCount:'10',//消息数目
-        userIfo:{
-            avatar:'',//头像
-            birth:'',//出生日期
-            email:'',//email
-            gender:'',//性别
-            userId:'', //用户ID
-            currentUser:'',//当前用户
-            telephone:'',//绑定手机号
-            level:0,//用户等级
-            sign:'',//个性签名
-            nickName:'',//昵称
-            qq:'',//QQ
-        }
+        messageCount:'10',//好友消息数目
+        userIfo:{},//用户信息
     },
     mutations:{
         userStatus(state,user){
             state.currentUser = user.currentUser;
             state.loginFlag = user.loginFlag;
-            state.unLoginFlag = user.unLoginFlag;
         },
         userIfo(state,userIfo){
             state.userIfo = userIfo;

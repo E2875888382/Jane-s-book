@@ -26,6 +26,7 @@ function handleDisconnect(connection) {
       connection.connect();
     });
 };
+
 //获取好友列表接口
 router.post('/getFriends',(request,response) =>{
       connection.connect();
@@ -108,9 +109,8 @@ router.post('/isRead', (request,response) =>{
     handleDisconnect(connection);
 })
 
-//存储私信
+//发送私信
 router.post('/sendMsg', (request,response) =>{
-    if(request.session.user){
       connection.connect();
       var sql=  `INSERT INTO message (sender,receiver,content,sendTime) VALUES ("${ request.session.user.email }","${ request.body.receiver }","${ request.body.content}","${request.body.sendTime}")`;
       connection.query(sql, (error, result) =>{
@@ -120,7 +120,6 @@ router.post('/sendMsg', (request,response) =>{
           response.status(200).json({ message:'ok', code:200 });
       });
       handleDisconnect(connection);
-    }
 })
 
 //删除好友接口
@@ -139,7 +138,7 @@ router.post('/deleteFriend', (request,response) =>{
 //更新用户信息接口
 router.post('/updateUserInfo', (request,response) =>{
     connection.connect();
-    var sql= `UPDATE user SET nickName ="${request.body.update.nickName}",gender ="${request.body.update.gender}",birthday ="${request.body.update.birth}",sign ="${request.body.update.sign}",telephone ="${request.body.update.telephone}" WHERE email ="${request.body.email}"`;
+    var sql= `UPDATE user SET nickName ="${request.body.update.nickName}",gender ="${request.body.update.gender}",birthday ="${request.body.update.birth}",sign ="${request.body.update.sign}" WHERE email ="${request.body.email}"`;
     connection.query(sql,  (error, result) => {
       if (error){
           response.status(500).send('server error');
@@ -213,5 +212,6 @@ router.post('/changeQQ',(request,response) =>{
     });
     handleDisconnect(connection);
 })
+
 //导出router
 module.exports=router;

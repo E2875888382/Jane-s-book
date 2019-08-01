@@ -7,9 +7,9 @@
                 <ul>
                     <li><router-link to="/street" class="top_link">步行街</router-link></li>
                     <li><router-link to="/news" class="top_link">新闻</router-link></li>
+                    <li><router-link to="/photo" class="top_link">相簿</router-link></li>
                     <li><router-link to="/vlog" class="top_link">微博</router-link></li>
                     <li><router-link to="/developer" class="top_link">开发者</router-link></li>
-                    <li><router-link to="/photo" class="top_link">相簿</router-link></li>
                 </ul>
             </div>
             <div class="search_box">
@@ -39,8 +39,12 @@
                     </el-popover>
                 </div>
                 <!-- 登录按钮 -->
-                <div class="login_btn" v-if="$store.state.unLoginFlag">
+                <div class="login_btn" v-if="!$store.state.loginFlag">
                     <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>
+                </div>
+                <!-- 注册按钮  -->
+                <div class="new_btn"  v-if="!$store.state.loginFlag">
+                    <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>
                 </div>
                 <!-- 登录模态框 -->
                 <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%">
@@ -56,10 +60,6 @@
                         <el-button type="primary" @click="login()">登 录</el-button>
                     </div>
                 </el-dialog>
-                <!-- 注册按钮  -->
-                <div class="new_btn"  v-if="$store.state.unLoginFlag">
-                    <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>
-                </div>
                 <!-- 注册模态框 -->
                 <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
                     <el-form :model="newForm" :rules="rules" ref="newForm">
@@ -165,7 +165,7 @@ export default {
             //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUser',{ credentials: true }).then(function(result){
                 if(result.body.user){
-                   this.$store.commit('userStatus',{currentUser:result.body.user.email,loginFlag:false,unLoginFlag:true});
+                   this.$store.commit('userStatus',{currentUser:result.body.user.email,loginFlag:false});
                 }
             })
         },
@@ -181,7 +181,7 @@ export default {
             //注册新用户，提交表单并获取返回的登录信息
             this.$http.post('newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
                 this.dialogNewVisible = false;
-                this.$store.commit('userStatus',{ currentUser:result.body.user,loginFlag:true,unLoginFlag:false});
+                this.$store.commit('userStatus',{ currentUser:result.body.user,loginFlag:true});
                 location.href="#/";//注册并且登录完成，重定向到首页
             },function(error){
                 console.log(error);
@@ -193,7 +193,7 @@ export default {
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
                     this.getLoginUserIfo();
-                    this.$store.commit('userStatus',{currentUser:result.body.user,unLoginFlag:false,loginFlag:true});
+                    this.$store.commit('userStatus',{currentUser:result.body.user,loginFlag:true});
                 }else{
                     console.log(result.body);
                 }
@@ -205,7 +205,7 @@ export default {
             //退出登录，获取返回状态
             this.$http.get('logOut',{credentials: true}).then((result) => {
                 if(result.body.code == 700){
-                    this.$store.commit('userStatus',{currentUser:'',unLoginFlag:true,loginFlag:false});
+                    this.$store.commit('userStatus',{currentUser:'',loginFlag:false});
                     this.$router.push({ path:'/street'});
                 }else{
                     console.log(result.body);

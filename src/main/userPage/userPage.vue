@@ -15,22 +15,16 @@
                     <el-divider content-position="left">基本信息</el-divider>
                     <div class="user_info_footer">
                         <div class="user_info_item">
-                            <span class="font_label">用户ID：</span><span class="msg">{{ $store.state.userIfo.id }}</span> 
-                        </div>
-                        <div class="user_info_item">
-                            <span class="font_label">出生日期：</span><span class="msg">{{ $store.state.userIfo.birthday }}</span>
-                        </div>
-                        <div class="user_info_item">
-                            <span class="font_label">我的手机：</span><span class="msg">{{ $store.state.userIfo.telephone }}</span>
+                            <span class="font_label">用户ID：</span><span class="msg">{{ $store.state.userIfo.userID }}</span>
                         </div>
                         <div class="user_info_item">
                             <span class="font_label">我的邮箱：</span><span class="msg">{{ $store.state.userIfo.email }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">性别：</span><span class="msg">{{ $store.state.userIfo.gender }}</span>
+                            <span class="font_label">出生日期：</span><span class="msg">{{ $store.state.userIfo.birthday }}</span>
                         </div>
                         <div class="user_info_item">
-                            <span class="font_label">我的等级：</span><span class="msg">{{ $store.state.userIfo.level }}</span>
+                            <span class="font_label">性别：</span><span class="msg">{{ $store.state.userIfo.gender }}</span>
                         </div>
                         <div class="user_info_item">
                             <span class="font_label">我的签名：</span><span class="msg">{{ $store.state.userIfo.sign }}</span>
@@ -48,9 +42,6 @@
                     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                         <el-form-item label="昵称" prop="nickName">
                             <el-input v-model="ruleForm.nickName"></el-input>
-                        </el-form-item>
-                        <el-form-item label="手机" prop="telephone">
-                            <el-input v-model="ruleForm.telephone"></el-input>
                         </el-form-item>
                         <el-form-item label="出生日期" required>
                             <el-form-item prop="birth">
@@ -300,7 +291,6 @@ export default {
             //更改用户信息表单
             ruleForm: {
                 nickName: '',
-                telephone: '',
                 birth: '',
                 sign: '',
                 gender:'',
@@ -310,10 +300,6 @@ export default {
                 nickName: [
                     { required: true, message: '请输入昵称', trigger: 'blur' },
                     { min: 1, max: 8, message: '长度在 1 到 8 个字符', trigger: 'blur' }
-                ],
-                telephone:[
-                    { required: true, message: '请输入手机号码', trigger: 'blur' },
-                    { min:11,  message: '11 个数字', trigger: 'blur' }   
                 ],
                 gender: [
                     { required: true, message: '请选择性别', trigger: 'change' }
@@ -359,7 +345,7 @@ export default {
             }
             return this.tips;
         },
-        //修改用户信息方法
+        //修改用户信息
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
