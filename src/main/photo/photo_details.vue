@@ -4,21 +4,22 @@
         <div class="left_box col-9">
             <div class="main_box col-12">
                 <div class="title_box">
-                    <span>灰色制服</span>
+                    <span>{{ photoDetails.title }}</span>
                     <span><i class="el-icon-warning-outline"></i>举报</span>
                 </div>
                 <div>
                     <el-tag size="mini" type="danger" effect="plain" >摄影扶持计划</el-tag>
+                    <el-tag size="mini" type="info" v-for="(item,index) in tags" :key="index">{{ item }}</el-tag>
                 </div>
                 <div class="flex_box details">
                     <div class="flex_box">
                         <span>摄影·私服</span>
-                        <span>上传时间:2017-12-04 12:52:26</span>
+                        <span>上传时间:{{ photoDetails.time }}</span>
                     </div>
                     <div class="flex_box">
-                        <span>浏览:8527</span>
+                        <span>浏览:{{ photoDetails.view }}</span>
                         <span>收藏:34</span>
-                        <span>支持:66</span>
+                        <span>支持:{{ photoDetails.praise }}</span>
                     </div>
                 </div>
                 <hr/>
@@ -93,10 +94,10 @@
         </div>
         <div class="right_box col-3">
             <div class="author_ifo col-12">
-                <van-image width="80" height="80" class="avatar" :src="$store.state.userIfo.avatar"/>
+                <van-image width="80" height="80" class="avatar" :src="photoDetails.avatar"/>
                 <div class="author">
                     <span class="level">up 3</span>
-                    <span class="name">鸡汁云树</span>
+                    <span class="name">{{ photoDetails.author }}</span>
                 </div>
                 <div class="btn">
                     <el-button size="mini" type="danger">关注</el-button>
@@ -107,7 +108,7 @@
                 <div class="praise_box">
                     <span>点赞</span>
                     <i></i>
-                    <span class="praise">66</span>
+                    <span class="praise">{{ photoDetails.praise }}</span>
                 </div>
                 <div class="other_box">
                     <span>收藏</span>
@@ -124,15 +125,43 @@
 export default {
     data(){
         return {
+            id:this.$route.params.id,
             input:'',
             currentPage:1,
-            previewList:[
-                'https://i0.hdslb.com/bfs/album/fc07382d1e91cc175724e69578b71edc5a8edadd.jpg@2000w_1e.webp',
-                'https://i0.hdslb.com/bfs/album/63c63a4a21f31e04309770cb8945f64938d3f623.jpg'
-            ]
+            photoDetails:{},
+            previewList:[],
+            tags:[],
         }
     },
+    mounted(){
+        this.getNewsDetails();
+    },
     methods: {
+        getNewsDetails(){
+            this.$http.post("getPhotoDetails",{ id:this.id }).then((result) =>{
+                if(result.body.code == 200){
+                    this.photoDetails = result.body.photoDetails[0];
+                    if(this.photoDetails.tags){
+                        this.tags = this.photoDetails.tags.split(',');
+                    }
+                    if(this.photoDetails.photo1){
+                        this.previewList.push(this.photoDetails.photo1)
+                    }
+                    if(this.photoDetails.photo2){
+                        this.previewList.push(this.photoDetails.photo2)
+                    }
+                    if(this.photoDetails.photo3){
+                        this.previewList.push(this.photoDetails.photo3)
+                    }
+                    if(this.photoDetails.photo4){
+                        this.previewList.push(this.photoDetails.photo4)
+                    }
+                    if(this.photoDetails.photo5){
+                        this.previewList.push(this.photoDetails.photo5)
+                    }
+                }
+            })
+        },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
@@ -203,6 +232,7 @@ export default {
 .el-tag{
     border-radius: 25px;
     padding: 1px 14px;
+    margin-left: 5px;
 }
 .flex_box{
     display: flex;

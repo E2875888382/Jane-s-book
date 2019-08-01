@@ -53,5 +53,17 @@ router.get('/getPhotoCount',(request,response) => {
     handleDisconnect(connection);
 })
 
+// 根据id查询相簿内容
+router.post('/getPhotoDetails',(request,response) => {
+    connection.connect();
+    var sql = `SELECT * FROM photo where id = ${request.body.id}`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,photoDetails:result });
+    })
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;
