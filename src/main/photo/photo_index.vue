@@ -76,8 +76,15 @@ export default {
             }
         },
         praise(id,event){
-            console.log(id)
-            event.target.classList.toggle('praise');
+            if(!event.target.classList.contains("praise")){
+                this.$http.post('photoPraise',{id:id}).then((result)=>{
+                    event.target.classList.add('praise');
+                })
+            }else{
+                this.$http.post('cancelPhotoPraise',{id:id}).then((result)=>{
+                    event.target.classList.remove('praise');
+                })
+            }
         }
     }
 }
