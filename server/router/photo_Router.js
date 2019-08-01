@@ -91,5 +91,19 @@ router.post('/cancelPhotoPraise',(request,response)=>{
     })
     handleDisconnect(connection);
 })
+
+//增加阅读量
+router.post('/addPhotoView',(request,response) =>{
+    connection.connect();
+    var sql = ' UPDATE photo SET `view` = `view` + 1  WHERE id = '+request.body.id;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'阅读量增加' });
+    })
+    handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;

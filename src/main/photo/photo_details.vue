@@ -107,7 +107,7 @@
             <div class="dashboard col-12">
                 <div class="praise_box">
                     <span>点赞</span>
-                    <i></i>
+                    <i @click="praise($event)"></i>
                     <span class="praise">{{ photoDetails.praise }}</span>
                 </div>
                 <div class="other_box">
@@ -134,6 +134,7 @@ export default {
         }
     },
     mounted(){
+        this.addView();
         this.getNewsDetails();
     },
     methods: {
@@ -162,17 +163,37 @@ export default {
                 }
             })
         },
-      handleSizeChange(val) {
+        handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
+        },
+        handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
-      }
+        },
+        praise(event){
+            if(!event.target.classList.contains("gold")){
+                this.$http.post('photoPraise',{id:this.id}).then((result)=>{
+                    event.target.classList.add('gold');
+                    this.photoDetails.praise++;
+                })
+            }else{
+                this.$http.post('cancelPhotoPraise',{id:this.id}).then((result)=>{
+                    event.target.classList.remove('gold');
+                    this.photoDetails.praise--;
+                })
+            }
+        },
+        addView(){
+            this.$http.post('addPhotoView',{id:this.id}).then((result)=>{
+            })
+        }
     },
 }
 </script>
 
 <style scoped>
+.gold{
+    background-position: 0em -40em !important;
+}
 .main_box{
     background-color: #fff;
     border: 1px solid #e3e8ec;
