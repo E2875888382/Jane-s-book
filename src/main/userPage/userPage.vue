@@ -155,15 +155,11 @@
                     </el-badge>
                 </span>
                 <div v-if="$store.state.loginFlag">
-                    <div>
-                        <span>好友消息</span>
-                        <el-divider></el-divider>
-                    </div>
                     <div class="messageBox">
                         <el-card class="box-card" v-for="item in friendsMessage" :key="item.index">
                             <div slot="header" class="clearfix">
-                                <span class="sendTime">{{ item.sendTime }}</span>
-                                <span>{{ item.sender }}：</span>
+                                <span class="sendTime">{{ item.time }}</span>
+                                <span>{{ item.userID }}：</span>
                                 <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.id)">已读</el-button>
                             </div>
                             <div class="text item">{{ item.content }}</div>
@@ -172,81 +168,46 @@
                 </div>
             </el-tab-pane>
 
-            <!-- 管理好友 -->
-            <el-tab-pane>
-                <span slot="label"  @click="getFriends">
-                    <van-icon name="friends-o" /> 好友管理
-                </span>
-                <div v-if="$store.state.loginFlag">
-                    <div class="searchFriendBox">
-                        <div>
-                            <span>添加好友</span>
-                            <el-divider></el-divider>
-                        </div>
-                        <div>
-                            <div style="margin-bottom:20px;text-align:center" >
-                                <el-input placeholder="请输入email"  class="input-with-select" style="width:300px" v-model="searchFriendInput"></el-input>
-                                <el-button slot="append" icon="el-icon-search"  @click="searchFriend"></el-button>
-                            </div>
-                            <div v-for="item in searchFriendResult" :key="item.email">
-                                <div class="searchFriendList">
-                                <span>{{ item.nickName }}</span>
-                                <p>{{ item.email }}</p>
-                                </div>
-                                <el-button type="primary" plain @click="addFriend(item.email,item.nickName)">添加关注</el-button>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <el-divider content-position="left">我的好友</el-divider>
-                    </div>
-                    <div class="friendListBox col-12">
-                        <div v-for="item in friendsList" :key="item.friendEmail">
-                            <div class="friendList col-10">
-                                <span>{{ item.friendNickName }}</span>
-                                <p>{{ item.friendEmail }}</p>
-                            </div>
-                            <el-dropdown>
-                                <el-button type="primary">
-                                    已关注<i class="el-icon-arrow-down el-icon--right"></i>
-                                </el-button>
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item><a @click="deleteFriend(item.friendEmail)">取消关注</a></el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
-                            <el-divider></el-divider>
-                        </div>
-                    </div>
-                </div> 
-            </el-tab-pane>
-
             <!-- 发送私信 -->
             <el-tab-pane>
                 <span slot="label"  @click="getFriends">
-                    <van-icon name="friends-o" /> 发送私信
+                    <van-icon name="friends-o" /> 好友互动
                 </span>
-                <div v-if="$store.state.loginFlag" class="col-12">
-                    <div class="sendMsgBox col-12">
-                        <div>
-                            <span>发送私信</span>
-                            <el-divider content-position="right">我的好友</el-divider>
+                <div v-if="$store.state.loginFlag" class="col-12" style="display:flex">
+                    <div class="left_friend_list col-4">
+                        <div class="friendList_item col-12" >
+                            <el-input placeholder="请输入userID"  class="input-with-select col-10" v-model="searchFriendInput"></el-input>
+                            <el-button slot="append" icon="el-icon-search"  @click="searchFriend"></el-button>
                         </div>
-                        <div class="left_friend_list col-4">
-                            <div v-for="item in friendsList" :key="item.friendEmail" @click="sendMsgReceiver( item.friendNickName,item.friendEmail )">
-                                <div class="friendList_sendMsg col-12">
-                                    <span>{{ item.friendNickName }}</span>
-                                    <p>{{ item.friendEmail }}</p>
-                                    <el-divider></el-divider>
-                                </div>
+                        <div v-for="item in searchFriendResult" :key="item.userID"  class="friendList_item col-12" >
+                            <van-image width="60" height="60" class="avatar" :src="item.avatar"/>
+                            <div>
+                                <p>{{ item.nickName }}</p>
+                                <span>{{ item.sign }}</span>
                             </div>
+                            <el-button type="primary" plain @click="addFriend(item.userID)"  style="margin-left:auto">添加关注</el-button>
                         </div>
-                        <div class="rigth_send_msg col-8">
-                            <p>发送给：{{ receiver.msgReceiverNickname }} {{ receiver.msgReceiverEmail }}</p>
-                            <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea col-12">
-                            </el-input>
-                            <div class="send_box">
-                                <el-button type="primary" round @click="sendMsg">发送</el-button>
+                        <div class="friendList_item col-12"  v-for="item in friendsList" :key="item.userID" @click="sendMsgReceiver(item.nickName,item.userID,$event )">
+                            <van-image width="60" height="60" class="avatar" :src="item.avatar"/>
+                            <div>
+                                <p>{{ item.nickName }}</p>
+                                <span>{{ item.sign }}</span>
                             </div>
+                            <el-dropdown style="margin-left:auto">
+                                <i class="el-icon-arrow-down el-dropdown-link" ></i>
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item><span @click="deleteFriend(item.userID)">删除好友</span></el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div>
+                    </div>
+                    <div class="rigth_send_msg col-8">
+                        <p>{{ receiver.nickName }}</p>
+                        <hr>
+                        <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea col-12">
+                        </el-input>
+                        <div class="send_box">
+                            <el-button type="primary" round @click="sendMsg">发送</el-button>
                         </div>
                     </div>
                 </div>
@@ -276,8 +237,8 @@ export default {
             changeQQFlag:false,
             //发送私信
             receiver:{
-                msgReceiverNickname:'',
-                msgReceiverEmail:'',
+                nickName:'',
+                receiverID:'',
                 textarea:'',//私信内容
             },
             //好友消息列表
@@ -381,7 +342,7 @@ export default {
         },
         //获取好友消息
         getFriendsMessage(){
-                this.$http.post("getFriendsMessage" ,{user:this.$store.state.userIfo.email}).then( (result) =>{
+                this.$http.post("getFriendsMessage" ,{user:this.$store.state.userIfo.userID}).then( (result) =>{
                     this.friendsMessage = result.body;
                     if(result.body.length>0){
                         this.$store.commit('getMessageCount',result.body.length);
@@ -399,14 +360,14 @@ export default {
             })
         },
         //删除好友
-        deleteFriend(email){
-            this.$http.post("deleteFriend",{delete:email,user:this.$store.state.userIfo.email}).then( (result) =>{
+        deleteFriend(friendID){
+            this.$http.post("deleteFriend",{friendID:friendID,userID:this.$store.state.userIfo.userID}).then( (result) =>{
                 this.getFriends();//删除好友成功刷新好友列表
             })
         },
         //获取好友列表
         getFriends(){
-                this.$http.post("getFriends" ,{user:this.$store.state.userIfo.email}).then( (result) =>{
+                this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
                     this.friendsList = result.body;
                 }) 
         },
@@ -417,8 +378,8 @@ export default {
             })
         },
         //添加好友
-        addFriend(email,nickName){
-            this.$http.post("addFriend" ,{addEmail:email,addNickName:nickName,user:this.$store.state.userIfo.email}).then( (result) =>{
+        addFriend(userID){
+            this.$http.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:userID}).then( (result) =>{
                 if(result.body.code==200){
                     this.$message({
                         message: '添加好友成功',
@@ -431,14 +392,14 @@ export default {
             })
         },
         //获取要发送消息给的好友
-        sendMsgReceiver(nickName,email){
-            this.receiver.msgReceiverNickname = nickName;
-            this.receiver.msgReceiverEmail = email;
+        sendMsgReceiver(nickName,receiverID,event){
+            this.receiver.nickName = nickName;
+            this.receiver.receiverID = receiverID;
         },
         //发送私信
         sendMsg(){
-            if(this.receiver.textarea!==''&& this.receiver.msgReceiverEmail!==''){
-                this.$http.post("sendMsg" ,{receiver:this.receiver.msgReceiverEmail,content:this.receiver.textarea,sendTime:new Date().toLocaleString()},{ credentials: true}).then( (result) =>{
+            if(this.receiver.textarea!==''&& this.receiver.receiverID!==''){
+                this.$http.post("sendMsg" ,{userID:this.$store.state.userIfo.userID,receiverID:this.receiver.receiverID,content:this.receiver.textarea,time:new Date().toLocaleString()}).then( (result) =>{
                     if(result.body.code==200){
                         this.$message({
                             message: '发送私信成功',
@@ -565,7 +526,6 @@ export default {
     font-family: MicrosoftYaHei;
     float: left;
 }
- 
 .safe_p{
     text-align: center;
 }
@@ -606,38 +566,6 @@ export default {
     text-align: center;
     top: 60px;
 }
-.friendList{
-    float: left;
-    padding-left: 30px;
-}
-.friendList p{
-    line-height: 14px;
-    font-size: 12px;
-    color: #6d757a;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.friendListBox{
-    height: 730px;
-    overflow:auto;
-}
-.searchFriendBox{
-    height: 170px;
-}
-.searchFriendList{
-    width: 700px;
-    float: left;
-    padding-left: 30px;
-}
-.searchFriendList p{
-    line-height: 14px;
-    font-size: 12px;
-    color: #6d757a;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-} 
 .messageBox{
     height: 850px;
     overflow:auto;
@@ -651,39 +579,29 @@ export default {
     margin-bottom: 10px;
 }
 .left_friend_list{
-    height: 700px;
+    height: 100%;
     overflow: auto;
     cursor: pointer;
-    float: right;
-}
-.rigth_send_msg{
-    height: 700px;
     border-right:1px solid #DCDFE6;
-    position:absolute;
-    left: 0;
-    top:70px;
 }
-.rigth_send_msg p{
-    text-indent: 2em;
-}
-.sendMsgBox{
-    height: 800px;
-    position: relative;
-}
-.friendList_sendMsg{
+.friendList_item{
     height: 80px;
-    float: left;
+    padding:10px;
+    display: flex;
+    align-items:center;
 }
-.friendList_sendMsg:hover{
-    color: greenyellow;
+.friendList_item p{
+    margin: 0;
+    line-height: 30px;
+    height:30px;
+    font-size:14px;
 }
-.friendList_sendMsg p{
-    line-height: 14px;
-    font-size: 12px;
-    color: #6d757a;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.friendList_item span{
+    margin: 0;
+    line-height: 30px;
+    height:30px;
+    font-size:12px;
+    color:#999;
 }
 .textarea{
   margin-left: 20px;
@@ -691,5 +609,14 @@ export default {
 .send_box{
     margin:20px 10px 0px 20px;
     text-align: right;
+}
+.avatar{
+    background-color: #f0f8ff;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-right:10px;
 }
 </style>
