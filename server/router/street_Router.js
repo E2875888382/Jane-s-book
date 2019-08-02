@@ -30,7 +30,10 @@ function handleDisconnect(connection) {
 router.post('/getStreet',(request,response) =>{
     connection.connect();
     var begin = (request.body.page -1)*20;
-    var sql = `SELECT * FROM street LIMIT ${ begin },20`;
+    var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,street.streetID
+    FROM street,USER
+    WHERE street.userID = user.userID
+    LIMIT ${begin},20`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -56,7 +59,10 @@ router.get('/getStreetCount',(request,response) => {
 // 查询帖子正文
 router.post('/getStreetDetails',(request,response) => {
   connection.connect();
-  var sql = `SELECT * FROM street WHERE id = ${ request.body.id }`;
+  var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,user.level,user.avatar,street.replyCount,street.img,street.content
+  FROM street,USER
+  WHERE street.userID = user.userID AND
+  streetID = ${request.body.streetID}`;
   connection.query(sql,(error,result) =>{
       if(error){
           response.status(500).send('server error');
@@ -69,7 +75,9 @@ router.post('/getStreetDetails',(request,response) => {
 // 根据id查询所有回复
 router.post('/getStreetReply',(request,response) => {
   connection.connect();
-  var sql = `SELECT * FROM reply WHERE streetId = ${ request.body.id }`;
+  var sql = ` SELECT user.avatar,user.nickName,reply.time,reply.praise,user.level,reply.content
+  FROM USER,reply
+  WHERE user.userID = reply.userID AND streetID = ${request.body.streetID}`;
   connection.query(sql,(error,result) =>{
       if(error){
           response.status(500).send('server error');
@@ -82,10 +90,8 @@ router.post('/getStreetReply',(request,response) => {
 // 添加回复
 router.post('/addReply',(request,response) => {
     connection.connect();
-    var sql = 'INSERT INTO reply(streetId,USER,TIME,light,TEXT,\`from\`,avatar,LEVEL,img) VALUES ('+ `${request.body.newReply.streetId},
-    '${request.body.newReply.user}','${request.body.newReply.time}',${request.body.newReply.light},
-    '${request.body.newReply.text}','${request.body.newReply.from}','${request.body.newReply.avatar}',
-    ${request.body.newReply.level},'${request.body.newReply.img}')`;
+    var sql = `INSERT INTO reply(streetID,userID,TIME,content) VALUES (${request.body.newReply.streetID},
+        '${request.body.newReply.userID}','${request.body.newReply.time}','${request.body.newReply.content}')`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -104,8 +110,8 @@ router.post('/uploadNewStreet', (request,response) =>{
         newStreet.img = '';
     }
     connection.connect();
-    var sql=`INSERT INTO street(topic,author,TIME,avatar,TEXT,LEVEL,img)
-    VALUES('${newStreet.topic}','${newStreet.author}','${newStreet.time}','${newStreet.avatar}','${newStreet.text}',${newStreet.level},'${newStreet.img}')`;
+    var sql=`INSERT INTO street(topic,userID,TIME,content,img)
+    VALUES('${newStreet.topic}','${newStreet.userID}','${newStreet.time}','${newStreet.content}','${newStreet.img}')`;
     connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');
@@ -118,7 +124,7 @@ router.post('/uploadNewStreet', (request,response) =>{
 //增加帖子浏览量
 router.post('/addStreetView',(request,response) =>{
     connection.connect();
-    var sql = ` UPDATE street SET view = view + 1  WHERE id = ${request.body.id}`;
+    var sql = ` UPDATE street SET view = view + 1  WHERE streetID = ${request.body.streetID}`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -131,7 +137,7 @@ router.post('/addStreetView',(request,response) =>{
 //增加帖子回复量
 router.post('/addStreetReply',(request,response) =>{
     connection.connect();
-    var sql = ` UPDATE street SET replyCount = replyCount + 1  WHERE id = ${request.body.id}`;
+    var sql = ` UPDATE street SET replyCount = replyCount + 1  WHERE streetID = ${request.body.streetID}`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -144,8 +150,8 @@ router.post('/addStreetReply',(request,response) =>{
 // 查询所有最后回复
 router.get('/getLastReply',(request,response) =>{
     connection.connect();
-    var sql = `SELECT USER,TIME,streetId
-    FROM reply RIGHT JOIN (SELECT MAX(TIME) AS ti ,streetId AS id FROM reply GROUP BY streetId) A ON reply.streetId =A.id AND reply.time=A.ti`;
+    var sql = `SELECT TIME,streetID,user.nickName
+    FROM (reply RIGHT JOIN (SELECT MAX(TIME) AS ti ,streetId AS id FROM reply GROUP BY streetId) A ON reply.streetID =A.id AND reply.time=A.ti) LEFT JOIN USER ON reply.userID=user.userID`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');

@@ -16,14 +16,14 @@
             <van-image width="50" height="50" class="avatar" :src="streetDetails.avatar"/>
             <div>
                 <div class="top_box">
-                    <a href="#">{{ streetDetails.author }}</a>
+                    <a href="#">{{ streetDetails.nickName }}</a>
                     <span class="level">（{{ streetDetails.level }}级）</span>
                     <el-tag type="info" effect="dark" size="mini">楼主</el-tag>
                     <span class="time">{{ streetDetails.time }}</span>
                     <span class="floor">楼主</span>
                 </div>
-                <p class="subtopic">{{ streetDetails.topic }}<span> 由 {{ streetDetails.author }} 发表在虎扑步行街·步行街主干道</span></p>
-                <p class="text">{{ streetDetails.text }}</p>
+                <p class="subtopic">{{ streetDetails.topic }}<span> 由 {{ streetDetails.nickName }} 发表在虎扑步行街·步行街主干道</span></p>
+                <p class="text">{{ streetDetails.content }}</p>
                 <el-image v-if="streetDetails.img" style="width: 500px; height: 300px" :src="streetDetails.img" fit="fill"></el-image>
                 <p class="from">发自虎扑iPhone客户端</p>
             </div>
@@ -32,15 +32,14 @@
             <van-image width="50" height="50" class="avatar" :src="item.avatar"/>
             <div>
                 <div class="top_box">
-                    <a href="#">{{ item.user }}</a>
+                    <a href="#">{{ item.nickName }}</a>
                     <span class="level">（{{ item.level }}级）</span>
                     <span class="time">{{ item.time }}</span>
-                    <span class="light">亮了({{ item.light }})</span>
+                    <span class="light">亮了({{ item.praise }})</span>
                     <span class="floor">{{ index + 1 }}楼</span>
                 </div>
-                <p class="text">{{ item.text }}</p>
-                <el-image v-if="item.img" style="width: 400px; height: 300px" :src="item.img" fit="fill"></el-image>
-                <p class="from">{{ item.from }}</p>
+                <p class="text">{{ item.content }}</p>
+                <p class="from">虎扑PC客户端</p>
             </div>
         </div>
         <div class="col-12 add-reply" v-if="$store.state.loginFlag">
@@ -84,7 +83,7 @@ export default {
     methods:{
         //增加帖子浏览量
         addStreetView(){
-            this.$http.post("addStreetView",{ id:this.id }).then((result) =>{
+            this.$http.post("addStreetView",{ streetID:this.id }).then((result) =>{
 
             },(error) =>{
                 console.log(error);
@@ -92,7 +91,7 @@ export default {
         },
         // 增加回复量
         addStreetReply(){
-            this.$http.post("addStreetReply",{ id:this.id }).then((result) =>{
+            this.$http.post("addStreetReply",{ streetID:this.id }).then((result) =>{
 
             },(error) =>{
                 console.log(error);
@@ -102,20 +101,16 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     var newReply = {
-                        avatar:this.$store.state.userIfo.avatar,
-                        from:'发自虎扑PC客户端',
-                        img:'',
-                        level:this.$store.state.userIfo.level,
-                        light:0,
-                        streetId:parseInt(this.id),
-                        text:this.ruleForm.reply_content,
+                        streetID:parseInt(this.id),
+                        content:this.ruleForm.reply_content,
                         time:new Date().toLocaleString(),
-                        user:this.$store.state.userIfo.nickName
+                        userID:this.$store.state.userIfo.userID
                     }
                     this.$http.post('addReply',{ newReply:newReply }).then((result)=>{
                         if(result.body.code == 200){
-                            this.streetReply.push(newReply);
+                            this.getStreetReply();
                             this.addStreetReply();
+                            this.getStreetDetails();
                             this.$message({
                                 message: '回复成功',
                                 type: 'success'
@@ -132,14 +127,14 @@ export default {
             this.$refs[formName].resetFields();
         },
         getStreetDetails(){
-            this.$http.post('getStreetDetails',{ id:this.id }).then((result)=>{
+            this.$http.post('getStreetDetails',{ streetID:this.id }).then((result)=>{
                 if(result.body.code == 200){
                     this.streetDetails = result.body.streetDetails[0];
                 }
             })
         },
         getStreetReply(){
-            this.$http.post('getStreetReply',{ id:this.id }).then((result)=>{
+            this.$http.post('getStreetReply',{ streetID:this.id }).then((result)=>{
                 if(result.body.code == 200){
                     this.streetReply = result.body.streetReply;
                 }

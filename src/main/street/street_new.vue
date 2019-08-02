@@ -46,11 +46,9 @@ export default {
                 if (valid) {
                     var newStreet = {
                         topic:this.Form.topic,
-                        text:this.Form.text,
+                        content:this.Form.text,
                         img:this.Form.img,
-                        author:this.$store.state.userIfo.nickName,
-                        avatar:this.$store.state.userIfo.avatar,
-                        level:this.$store.state.userIfo.level,
+                        userID:this.$store.state.userIfo.userID,
                         time:new Date().toLocaleString(),
                     }
                     this.$http.post('uploadNewStreet',{ new:newStreet }).then((result)=>{

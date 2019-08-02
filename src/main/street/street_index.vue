@@ -14,9 +14,9 @@
                 <div class="col-2"><p>最后回复</p></div>
             </div>
             <div class="item row col-12 m-auto" v-for="(item,index) in streetList" :key="index">
-                <div class="col-6 title"><router-link :to="'/streetDetails/'+item.id">{{ item.topic }}</router-link></div>
+                <div class="col-6 title"><router-link :to="'/streetDetails/'+item.streetID">{{ item.topic }}</router-link></div>
                 <div class="col-2 author">
-                    <a>{{ item.author }}</a>
+                    <a>{{ item.nickName }}</a>
                     <p>{{ item.time }}</p>
                 </div>
                 <div class="col-2 watch">{{ item.replyCount }}/{{ item.view }}</div>
@@ -82,9 +82,9 @@ export default {
                 this.lastReply = result.body.lastReply;
                 for(var i = 0;i<this.lastReply.length;i++){
                     for(var j = 0;j<this.streetList.length;j++){
-                        if(this.lastReply[i].streetId == this.streetList[j].id){
+                        if(this.lastReply[i].streetID == this.streetList[j].streetID){
                             this.streetList[j].lastReplyTime = this.lastReply[i].TIME;
-                            this.streetList[j].lastReplyAuthor = this.lastReply[i].USER;
+                            this.streetList[j].lastReplyAuthor = this.lastReply[i].nickName;
                         }
                     }
                 }
