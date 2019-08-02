@@ -54,7 +54,7 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              this.$http.post('changePassword',{new:this.Form.pass,user:this.$store.state.userIfo.email}).then((result)=>{
+              this.$http.post('changePassword',{new:this.Form.pass,userID:this.$store.state.userIfo.userID}).then((result)=>{
                   if(result.body.code == 200){
                       this.$message({
                           message:'修改密码成功',

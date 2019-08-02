@@ -30,7 +30,7 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              this.$http.post('changeQQ',{new:this.Form.newQQ,user:this.$store.state.userIfo.email}).then((result)=>{
+              this.$http.post('changeQQ',{new:this.Form.newQQ,userID:this.$store.state.userIfo.userID}).then((result)=>{
                   if(result.body.code == 200){
                       this.$message({
                           message:'绑定QQ成功',

@@ -30,7 +30,7 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              this.$http.post('changeTelephone',{new:this.Form.newTelephone,user:this.$store.state.userIfo.email}).then((result)=>{
+              this.$http.post('changeTelephone',{new:this.Form.newTelephone,userID:this.$store.state.userIfo.userID}).then((result)=>{
                   if(result.body.code == 200){
                       this.$message({
                           message:'绑定手机成功',

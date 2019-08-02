@@ -159,8 +159,8 @@
                         <el-card class="box-card" v-for="item in friendsMessage" :key="item.index">
                             <div slot="header" class="clearfix">
                                 <span class="sendTime">{{ item.time }}</span>
-                                <span>{{ item.userID }}：</span>
-                                <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.id)">已读</el-button>
+                                <span>{{ item.nickName }}：</span>
+                                <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.messageID)">已读</el-button>
                             </div>
                             <div class="text item">{{ item.content }}</div>
                         </el-card>
@@ -173,7 +173,7 @@
                 <span slot="label"  @click="getFriends">
                     <van-icon name="friends-o" /> 好友互动
                 </span>
-                <div v-if="$store.state.loginFlag" class="col-12" style="display:flex">
+                <div v-if="$store.state.loginFlag" style="display:flex">
                     <div class="left_friend_list col-4">
                         <div class="friendList_item col-12" >
                             <el-input placeholder="请输入userID"  class="input-with-select col-10" v-model="searchFriendInput"></el-input>
@@ -204,7 +204,7 @@
                     <div class="rigth_send_msg col-8">
                         <p>{{ receiver.nickName }}</p>
                         <hr>
-                        <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="textarea col-12">
+                        <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="col-12">
                         </el-input>
                         <div class="send_box">
                             <el-button type="primary" round @click="sendMsg">发送</el-button>
@@ -311,7 +311,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     //发送更改后的用户信息到后台
-                    this.$http.post('updateUserInfo',{email:this.$store.state.userIfo.email,update:this.ruleForm, credentials: true }).then((result) =>{
+                    this.$http.post('updateUserInfo',{userID:this.$store.state.userIfo.userID,update:this.ruleForm}).then((result) =>{
                         if(result.body.code==200){
                             this.getLoginUserIfo();
                             this.$message({
@@ -342,7 +342,7 @@ export default {
         },
         //获取好友消息
         getFriendsMessage(){
-                this.$http.post("getFriendsMessage" ,{user:this.$store.state.userIfo.userID}).then( (result) =>{
+                this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
                     this.friendsMessage = result.body;
                     if(result.body.length>0){
                         this.$store.commit('getMessageCount',result.body.length);
@@ -567,9 +567,12 @@ export default {
     top: 60px;
 }
 .messageBox{
-    height: 850px;
+    height: 960px;
     overflow:auto;
-} 
+}
+.messageBox::-webkit-scrollbar{
+    display:none;
+}
 .sendTime{
     color: #999;
     font-size: 12px;
@@ -602,9 +605,6 @@ export default {
     height:30px;
     font-size:12px;
     color:#999;
-}
-.textarea{
-  margin-left: 20px;
 }
 .send_box{
     margin:20px 10px 0px 20px;

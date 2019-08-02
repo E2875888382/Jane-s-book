@@ -88,7 +88,9 @@ router.post('/addFriend', (request,response) =>{
 //获取好友消息接口
 router.post('/getFriendsMessage', (request,response) =>{
       connection.connect();  
-      var sql=`SELECT * FROM message WHERE receiverID = "${ request.body.user }" AND isRead = 0`;
+      var sql=`SELECT message.time,message.content,user.nickName,message.messageID
+      FROM message,USER
+      WHERE message.userID = user.userID AND message.receiverID = ${request.body.userID} AND message.isRead = 0`;
       connection.query(sql, (error, result) =>{
           if (error){
               response.status(500).send('server error');
@@ -101,7 +103,7 @@ router.post('/getFriendsMessage', (request,response) =>{
 //设置已读状态
 router.post('/isRead', (request,response) =>{
     connection.connect();
-    var sql= `UPDATE message SET isRead = 1 WHERE id = "${ request.body.id }"`;
+    var sql= `UPDATE message SET isRead = 1 WHERE messageID = "${ request.body.id }"`;
     connection.query(sql, (error, result) =>{
         if (error){
             response.status(500).send('server error');
@@ -140,7 +142,7 @@ router.post('/deleteFriend', (request,response) =>{
 //更新用户信息接口
 router.post('/updateUserInfo', (request,response) =>{
     connection.connect();
-    var sql= `UPDATE user SET nickName ="${request.body.update.nickName}",gender ="${request.body.update.gender}",birthday ="${request.body.update.birth}",sign ="${request.body.update.sign}" WHERE email ="${request.body.email}"`;
+    var sql= `UPDATE user SET nickName ="${request.body.update.nickName}",gender ="${request.body.update.gender}",birthday ="${request.body.update.birth}",sign ="${request.body.update.sign}" WHERE userID ="${request.body.userID}"`;
     connection.query(sql,  (error, result) => {
       if (error){
           response.status(500).send('server error');
@@ -179,7 +181,7 @@ router.post('/uploadAvatarT', (request,response) =>{
 // 更改密码
 router.post('/changePassword',(request,response) =>{
     connection.connect();
-    var sql=`UPDATE USER SET PASSWORD = '${request.body.new }' WHERE email = '${request.body.user }'`;
+    var sql=`UPDATE USER SET PASSWORD = '${request.body.new }' WHERE userID = '${request.body.userID }'`;
     connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');
@@ -192,7 +194,7 @@ router.post('/changePassword',(request,response) =>{
 // 更改手机号
 router.post('/changeTelephone',(request,response) =>{
     connection.connect();
-    var sql=`UPDATE USER SET telephone = '${request.body.new }' WHERE email = '${request.body.user }'`;
+    var sql=`UPDATE USER SET telephone = '${request.body.new }' WHERE userID = '${request.body.userID }'`;
     connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');
@@ -205,7 +207,7 @@ router.post('/changeTelephone',(request,response) =>{
 // 更改QQ号
 router.post('/changeQQ',(request,response) =>{
     connection.connect();
-    var sql=`UPDATE USER SET qq = '${request.body.new }' WHERE email = '${request.body.user }'`;
+    var sql=`UPDATE USER SET qq = '${request.body.new }' WHERE userID = '${request.body.userID }'`;
     connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');
