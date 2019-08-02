@@ -3,13 +3,13 @@
         <h3>{{ newsDetails.title }}</h3>
         <div class="time_read_box">
             <span>来源：{{ newsDetails.source }} 发布时间：{{ newsDetails.time }}</span>
-            <span>阅读：{{ newsDetails.read }}</span>
+            <span>阅读：{{ newsDetails.view }}</span>
         </div>
         <el-divider></el-divider>
         <div class="news_content col-12">
             <van-image width="600" height="400" :src="newsDetails.img"/>
             <div class="right_box">
-                <p>{{ newsDetails.details | cut }}</p>
+                <p>{{ newsDetails.content | cut }}</p>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@ export default {
     methods:{
         //获取新闻详情
         getNewsDetails(){
-            this.$http.post("getNewsDetails",{ id:this.id }).then((result) =>{
+            this.$http.post("getNewsDetails",{ newID:this.id }).then((result) =>{
                 if(result.body.code == 200){
                     this.newsDetails = result.body.newsList[0];
                 }
@@ -47,7 +47,7 @@ export default {
         },
         //增加文章阅读量
         addNewsRead(){
-            this.$http.post("addNewsRead",{ id:this.id }).then((result) =>{
+            this.$http.post("addNewsRead",{ newID:this.id }).then((result) =>{
 
             },(error) =>{
                 console.log(error);

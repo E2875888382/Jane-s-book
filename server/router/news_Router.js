@@ -56,7 +56,7 @@ router.get('/getNewsCount',(request,response) => {
 //查询新闻详情
 router.post('/getNewsDetails',(request,response) =>{
     connection.connect();   
-    var sql = `SELECT * FROM news WHERE id = "${ request.body.id }"`;
+    var sql = `SELECT * FROM news WHERE newID = ${ request.body.newID }`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -69,7 +69,7 @@ router.post('/getNewsDetails',(request,response) =>{
 //增加新闻阅读量
 router.post('/addNewsRead',(request,response) =>{
     connection.connect();
-    var sql = ' UPDATE news SET `read` = `read` + 1  WHERE id = '+request.body.id;
+    var sql = ` UPDATE news SET view = view + 1  WHERE newID = ${request.body.newID}`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
