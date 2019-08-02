@@ -75,9 +75,9 @@ router.post('/getStreetDetails',(request,response) => {
 // 根据id查询所有回复
 router.post('/getStreetReply',(request,response) => {
   connection.connect();
-  var sql = ` SELECT user.avatar,user.nickName,reply.time,reply.praise,user.level,reply.content
-  FROM USER,reply
-  WHERE user.userID = reply.userID AND streetID = ${request.body.streetID}`;
+  var sql = ` SELECT user.avatar,user.nickName,streetReply.time,streetReply.praise,user.level,streetReply.content
+  FROM USER,streetReply
+  WHERE user.userID = streetReply.userID AND streetID = ${request.body.streetID}`;
   connection.query(sql,(error,result) =>{
       if(error){
           response.status(500).send('server error');
@@ -90,7 +90,7 @@ router.post('/getStreetReply',(request,response) => {
 // 添加回复
 router.post('/addReply',(request,response) => {
     connection.connect();
-    var sql = `INSERT INTO reply(streetID,userID,TIME,content) VALUES (${request.body.newReply.streetID},
+    var sql = `INSERT INTO streetReply(streetID,userID,TIME,content) VALUES (${request.body.newReply.streetID},
         '${request.body.newReply.userID}','${request.body.newReply.time}','${request.body.newReply.content}')`;
     connection.query(sql,(error,result) =>{
         if(error){
@@ -151,7 +151,7 @@ router.post('/addStreetReply',(request,response) =>{
 router.get('/getLastReply',(request,response) =>{
     connection.connect();
     var sql = `SELECT TIME,streetID,user.nickName
-    FROM (reply RIGHT JOIN (SELECT MAX(TIME) AS ti ,streetId AS id FROM reply GROUP BY streetId) A ON reply.streetID =A.id AND reply.time=A.ti) LEFT JOIN USER ON reply.userID=user.userID`;
+    FROM (streetReply RIGHT JOIN (SELECT MAX(TIME) AS ti ,streetId AS id FROM streetReply GROUP BY streetId) A ON streetReply.streetID =A.id AND streetReply.time=A.ti) LEFT JOIN USER ON streetReply.userID=user.userID`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
