@@ -46,7 +46,7 @@ export default {
         },
         useAvatar(){
             // 此时可以自行将文件上传至服务器
-            this.$http.post("uploadAvatar",{img:this.Form.img[0],email:this.$store.state.userIfo.email}).then(function(result){
+            this.$http.post("uploadAvatar",{img:this.Form.img[0],userID:this.$store.state.userIfo.userID}).then(function(result){
                 if(result.body.code == 200){
                     this.$message( '切换头像成功');
                     this.getLoginUserIfo();
@@ -62,7 +62,7 @@ export default {
             })
         },
         useAvatarT(src){
-            this.$http.post("uploadAvatarT",{src:src,email:this.$store.state.userIfo.email}).then(function(result){
+            this.$http.post("uploadAvatarT",{src:src,userID:this.$store.state.userIfo.userID}).then(function(result){
                 if(result.body.code == 200){
                     this.$message( '切换头像成功');
                     this.getLoginUserIfo();

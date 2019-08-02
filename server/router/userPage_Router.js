@@ -155,7 +155,7 @@ router.post('/updateUserInfo', (request,response) =>{
 //上传头像接口
 router.post('/uploadAvatar', (request,response) =>{
     connection.connect();
-    var sql=`UPDATE USER SET avatar = "${request.body.img.content}" WHERE email = "${request.body.email}"`;
+    var sql=`UPDATE USER SET avatar = "${request.body.img.content}" WHERE userID = "${request.body.userID}"`;
     connection.query(sql, (error, result) =>{
         if (error){
             response.status(500).send('server error');
@@ -168,7 +168,7 @@ router.post('/uploadAvatar', (request,response) =>{
 //上传头像接口
 router.post('/uploadAvatarT', (request,response) =>{
     connection.connect();
-    var sql=`UPDATE USER SET avatar = "${request.body.src}" WHERE email = "${request.body.email}"`;
+    var sql=`UPDATE USER SET avatar = "${request.body.src}" WHERE userID = "${request.body.userID}"`;
     connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');
