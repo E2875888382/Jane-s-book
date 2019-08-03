@@ -115,7 +115,7 @@ router.post('/addPhotoView',(request,response) =>{
 router.post('/getPhotoReply',(request,response)=>{
     connection.connect();
     var begin = (request.body.currentPage -1)*5;
-    var sql = `SELECT user.nickName,photoreply.time,photoreply.content,photoreply.praise,user.avatar
+    var sql = `SELECT user.nickName,photoreply.time,photoreply.content,photoreply.praise,user.avatar,photoreply.down,photoreply.photoReplyID
     FROM USER,photoreply
     WHERE user.userID = photoreply.userID
     AND photoID = ${request.body.photoID} LIMIT ${begin},5`;
@@ -157,5 +157,30 @@ router.post('/addPhotoReply',(request,response)=>{
     handleDisconnect(connection);
 })
 
+// 评论的点赞+1
+router.post('/photoReplyPraise',(request,response)=>{
+    connection.connect();
+    var sql = `UPDATE photoreply SET praise = praise + 1 WHERE photoReplyID = ${request.body.photoReplyID}`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'success'});
+    })
+    handleDisconnect(connection);
+})
+
+// 评论的踩+1
+router.post('/photoReplyDown',(request,response)=>{
+    connection.connect();
+    var sql = `UPDATE photoreply SET down = down + 1 WHERE photoReplyID = ${request.body.photoReplyID}`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'success'});
+    })
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;

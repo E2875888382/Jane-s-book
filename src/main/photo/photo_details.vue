@@ -37,7 +37,7 @@
                             <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none"></el-input>
                             <el-button type="primary" @click="addReply">发表评论</el-button>
                         </div>
-                        <div class="reply_item col-12" v-for="(item,index) in reply" :key="index">
+                        <div class="reply_item col-12" v-for="(item) in reply" :key="item.photoReplyID">
                             <van-image width="48" height="48" class="avatar_reply" :src="item.avatar"/>
                             <div class="col-10 reply_details">
                                 <p class="user_name">{{ item.nickName }}</p>
@@ -45,8 +45,8 @@
                                 <div class="ifo">
                                     <span>来自PC客户端</span>
                                     <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down"></i>1</span>
+                                    <span><i class="icon_praise" @click.once="addPhotoReplyPraise(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
+                                    <span><i class="icon_down" @click.once="addPhotoReplyDown(item.photoReplyID,$event)"></i>{{ item.down }}</span>
                                 </div>
                             </div>
                         </div>
@@ -61,33 +61,6 @@
                         </el-pagination>
                     </el-tab-pane>
                     <el-tab-pane label="按时间排序" name="second">
-                        <div class="reply_input" v-if="$store.state.loginFlag">
-                            <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
-                            <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none"></el-input>
-                            <el-button type="primary">发表评论</el-button>
-                        </div>
-                        <div class="reply_item col-12" v-for="(item,index) in reply" :key="index">
-                            <van-image width="48" height="48" class="avatar_reply" :src="item.avatar"/>
-                            <div class="col-10 reply_details">
-                                <p class="user_name">{{ item.nickName }}</p>
-                                <p class="reply_content">{{ item.content }}</p>
-                                <div class="ifo">
-                                    <span>来自PC客户端</span>
-                                    <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down"></i>1</span>
-                                </div>
-                            </div>
-                        </div>
-                        <el-pagination
-                            background
-                            @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
-                            :current-page="currentPage"
-                            :page-size="5"
-                            layout="total,prev, pager, next, jumper"
-                            :total="replyCount">
-                        </el-pagination>
                     </el-tab-pane>
                 </el-tabs>
             </div>
@@ -201,6 +174,18 @@ export default {
                     this.getPhotoCount();
                 })
             }
+        },
+        addPhotoReplyPraise(photoReplyID,event){
+            this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
+                event.target.classList.add('goldenPraise');
+                this.getPhotoReply();
+            })
+        },
+        addPhotoReplyDown(photoReplyID,event){
+            this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
+                event.target.classList.add('goldenDown');
+                this.getPhotoReply();
+            })
         }
     },
 }
@@ -209,6 +194,12 @@ export default {
 <style scoped>
 .gold{
     background-position: 0em -40em !important;
+}
+.goldenPraise{
+    background-position: -154px -89px !important;
+}
+.goldenDown{
+    background-position: -153px -216px !important;
 }
 .main_box{
     background-color: #fff;
