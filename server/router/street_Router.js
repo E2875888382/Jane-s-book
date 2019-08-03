@@ -72,10 +72,10 @@ router.post('/getStreetDetails',(request,response) => {
   handleDisconnect(connection);
 })
 
-// 根据id查询所有回复
+// 查询所有回复
 router.post('/getStreetReply',(request,response) => {
   connection.connect();
-  var sql = ` SELECT user.avatar,user.nickName,streetReply.time,streetReply.praise,user.level,streetReply.content
+  var sql = ` SELECT user.avatar,user.nickName,streetReply.time,streetReply.praise,user.level,streetReply.content,streetreply.streetReplyID
   FROM USER,streetReply
   WHERE user.userID = streetReply.userID AND streetID = ${request.body.streetID}`;
   connection.query(sql,(error,result) =>{
@@ -161,5 +161,17 @@ router.get('/getLastReply',(request,response) =>{
     handleDisconnect(connection);
 })
 
+// 评论的点赞+1
+router.post('/streetReplyPraise',(request,response)=>{
+    connection.connect();
+    var sql = `UPDATE streetreply SET praise = praise + 1 WHERE streetReplyID = ${request.body.streetReplyID}`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'success'});
+    })
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;

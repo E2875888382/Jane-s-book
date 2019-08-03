@@ -28,14 +28,14 @@
                 <p class="from">发自虎扑iPhone客户端</p>
             </div>
         </div>
-        <div class="reply col-12" v-for="(item,index) in streetReply" :key="index">
+        <div class="reply col-12" v-for="(item,index) in streetReply" :key="item.streetReplyID">
             <van-image width="50" height="50" class="avatar" :src="item.avatar"/>
             <div>
                 <div class="top_box">
                     <a href="#">{{ item.nickName }}</a>
                     <span class="level">（{{ item.level }}级）</span>
                     <span class="time">{{ item.time }}</span>
-                    <span class="light">亮了({{ item.praise }})</span>
+                    <span class="light" @click.once="addStreetReplyPraise(item.streetReplyID,$event)">亮了({{ item.praise }})</span>
                     <span class="floor">{{ index + 1 }}楼</span>
                 </div>
                 <p class="text">{{ item.content }}</p>
@@ -139,12 +139,24 @@ export default {
                     this.streetReply = result.body.streetReply;
                 }
             })
+        },
+        addStreetReplyPraise(streetReplyID,event){
+            this.$http.post('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
+                if(result.body.code == 200){
+                    event.target.classList.add('gold');
+                    this.getStreetReply();
+                }
+            })
+
         }
     }
 }
 </script>
 
 <style scoped>
+.gold{
+    background-position: -8px -545px !important;
+}
 .container{
     margin-top:40px;
     margin-bottom: 40px;
