@@ -73,8 +73,8 @@
                     <span class="name">{{ photoDetails.nickName }}</span>
                 </div>
                 <div class="btn" v-if="$store.state.loginFlag">
-                    <el-button size="mini" type="danger" v-if="isMe">我</el-button>
-                    <el-button size="mini" type="danger" v-if="!isFriend&&!isMe">关注</el-button>
+                    <el-button size="mini" type="danger" v-if="isMe" disabled>我</el-button>
+                    <el-button size="mini" type="danger" v-if="!isFriend&&!isMe" @click="addFriend">关注</el-button>
                     <el-button size="mini" type="danger" v-if="isFriend" disabled>已关注</el-button>
                     <el-button size="mini" type="danger" plain>发消息</el-button>
                 </div>
@@ -119,6 +119,17 @@ export default {
         this.getPhotoCount();
     },
     methods: {
+        addFriend(){
+            this.$http.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then( (result) =>{
+                if(result.body.code==200){
+                    this.$message({
+                        message: '添加好友成功',
+                        type: 'success'
+                    });
+                    this.getPhotoDetails();
+                }
+            })
+        },
         isMyPhoto(){
             if(this.$store.state.userIfo.userID == this.photoDetails.userID){
                 this.isMe = true;
