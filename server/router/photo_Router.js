@@ -111,5 +111,37 @@ router.post('/addPhotoView',(request,response) =>{
     handleDisconnect(connection);
 })
 
+// 获取评论
+router.post('/getPhotoReply',(request,response)=>{
+    connection.connect();
+    var begin = (request.body.currentPage -1)*5;
+    var sql = `SELECT user.nickName,photoreply.time,photoreply.content,photoreply.praise,user.avatar
+    FROM USER,photoreply
+    WHERE user.userID = photoreply.userID
+    AND photoID = ${request.body.photoID} LIMIT ${begin},5`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,photoReply:result });
+    })
+    handleDisconnect(connection);
+})
+
+// 获取评论数量
+router.post('/getPhotoCount',(request,response) => {
+    connection.connect();
+    var sql = `SELECT  COUNT(*)
+    FROM photoreply
+    WHERE  photoID = ${request.body.photoID}`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,photoCount:result });
+    })
+    handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;

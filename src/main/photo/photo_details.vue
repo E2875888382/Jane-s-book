@@ -32,20 +32,20 @@
             <div class="reply_box col-12">
                 <el-tabs value="first">
                     <el-tab-pane label="按热度排序" name="first">
-                        <div class="reply_input">
+                        <div class="reply_input" v-if="$store.state.loginFlag">
                             <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
                             <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none"></el-input>
                             <el-button type="primary">发表评论</el-button>
                         </div>
-                        <div class="reply_item col-12" v-for="item in 5" :key="item">
-                            <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
+                        <div class="reply_item col-12" v-for="(item,index) in reply" :key="index">
+                            <van-image width="48" height="48" class="avatar_reply" :src="item.avatar"/>
                             <div class="col-10 reply_details">
-                                <p class="user_name">老兰康娜</p>
-                                <p class="reply_content">请问一下，你是不是充气的？</p>
+                                <p class="user_name">{{ item.nickName }}</p>
+                                <p class="reply_content">{{ item.content }}</p>
                                 <div class="ifo">
                                     <span>来自PC客户端</span>
-                                    <span>2018-09-12 06:23</span>
-                                    <span><i class="icon_praise"></i>2</span>
+                                    <span>{{ item.time }}</span>
+                                    <span><i class="icon_praise"></i>{{ item.praise }}</span>
                                     <span><i class="icon_down"></i>1</span>
                                 </div>
                             </div>
@@ -57,24 +57,24 @@
                             :current-page="currentPage"
                             :page-size="5"
                             layout="total,prev, pager, next, jumper"
-                            :total="100">
+                            :total="replyCount">
                         </el-pagination>
                     </el-tab-pane>
                     <el-tab-pane label="按时间排序" name="second">
-                        <div class="reply_input">
+                        <div class="reply_input" v-if="$store.state.loginFlag">
                             <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
                             <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none"></el-input>
                             <el-button type="primary">发表评论</el-button>
                         </div>
-                        <div class="reply_item col-12" v-for="item in 5" :key="item">
-                            <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
+                        <div class="reply_item col-12" v-for="(item,index) in reply" :key="index">
+                            <van-image width="48" height="48" class="avatar_reply" :src="item.avatar"/>
                             <div class="col-10 reply_details">
-                                <p class="user_name">老兰康娜</p>
-                                <p class="reply_content">请问一下，你是不是充气的？</p>
+                                <p class="user_name">{{ item.nickName }}</p>
+                                <p class="reply_content">{{ item.content }}</p>
                                 <div class="ifo">
                                     <span>来自PC客户端</span>
-                                    <span>2018-09-12 06:23</span>
-                                    <span><i class="icon_praise"></i>2</span>
+                                    <span>{{ item.time }}</span>
+                                    <span><i class="icon_praise"></i>{{ item.praise }}</span>
                                     <span><i class="icon_down"></i>1</span>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                             :current-page="currentPage"
                             :page-size="5"
                             layout="total,prev, pager, next, jumper"
-                            :total="100">
+                            :total="replyCount">
                         </el-pagination>
                     </el-tab-pane>
                 </el-tabs>
@@ -131,14 +131,18 @@ export default {
             photoDetails:{},
             previewList:[],
             tags:[],
+            reply:[],
+            replyCount:0,
         }
     },
     mounted(){
         this.addView();
-        this.getNewsDetails();
+        this.getPhotoDetails();
+        this.getPhotoReply();
+        this.getPhotoCount();
     },
     methods: {
-        getNewsDetails(){
+        getPhotoDetails(){
             this.$http.post("getPhotoDetails",{ photoID:this.id }).then((result) =>{
                 if(result.body.code == 200){
                     this.photoDetails = result.body.photoDetails[0];
@@ -151,11 +155,22 @@ export default {
                 }
             })
         },
+        getPhotoReply(){
+            this.$http.post('getPhotoReply',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
+                this.reply = result.body.photoReply;
+            })
+        },
+        getPhotoCount(){
+            this.$http.post('getPhotoCount',{photoID:this.id}).then((result)=>{
+                this.replyCount = result.body.photoCount[0]['COUNT(*)'];
+            })
+        },
         handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         },
         handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+            this.currentPage = val;
+            this.getPhotoReply();
         },
         praise(event){
             if(!event.target.classList.contains("gold")){
