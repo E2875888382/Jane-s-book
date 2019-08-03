@@ -73,7 +73,8 @@
                     <span class="name">{{ photoDetails.nickName }}</span>
                 </div>
                 <div class="btn" v-if="$store.state.loginFlag">
-                    <el-button size="mini" type="danger" v-if="!isFriend">关注</el-button>
+                    <el-button size="mini" type="danger" v-if="isMe">我</el-button>
+                    <el-button size="mini" type="danger" v-if="!isFriend&&!isMe">关注</el-button>
                     <el-button size="mini" type="danger" v-if="isFriend" disabled>已关注</el-button>
                     <el-button size="mini" type="danger" plain>发消息</el-button>
                 </div>
@@ -108,6 +109,7 @@ export default {
             reply:[],
             replyCount:0,
             isFriend:false,
+            isMe:false,
         }
     },
     mounted(){
@@ -117,6 +119,11 @@ export default {
         this.getPhotoCount();
     },
     methods: {
+        isMyPhoto(){
+            if(this.$store.state.userIfo.userID == this.photoDetails.userID){
+                this.isMe = true;
+            }
+        },
         checkFriend(){
             this.$http.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then((result)=>{
                 if(result.body.code == 200){
@@ -132,6 +139,7 @@ export default {
                     this.photoDetails = result.body.photoDetails[0];
                     if(this.$store.state.loginFlag == true){
                         this.checkFriend();
+                        this.isMyPhoto();
                     }
                     if(this.photoDetails.photo !== null){
                         this.previewList = this.photoDetails.photo.split(';')
