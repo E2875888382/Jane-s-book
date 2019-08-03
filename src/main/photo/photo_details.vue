@@ -72,7 +72,7 @@
                     <span class="level">up {{ photoDetails.level }}</span>
                     <span class="name">{{ photoDetails.nickName }}</span>
                 </div>
-                <div class="btn">
+                <div class="btn" v-if="$store.state.loginFlag">
                     <el-button size="mini" type="danger">关注</el-button>
                     <el-button size="mini" type="danger" plain>发消息</el-button>
                 </div>

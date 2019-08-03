@@ -98,7 +98,6 @@ export default {
 .container{
     margin-top:40px;
     margin-bottom: 40px;
-    border:1px solid #ccc;
     height:1150px;
 }
 .content{
