@@ -10,6 +10,7 @@ var news_Router=require('./router/news_Router');//新闻模块路由
 var developer_Router=require('./router/developer_Router');//开发者模块路由
 var street_Router=require('./router/street_Router');//步行街模块路由
 var photo_Router=require('./router/photo_Router');//相簿模块路由
+var relation_Router=require('./router/relation_Router');//关系模块路由
 
 //解决控制台的溢出提示
 // (node:3772) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 
@@ -49,6 +50,7 @@ app.use(news_Router);
 app.use(developer_Router);
 app.use(street_Router);
 app.use(photo_Router);
+app.use(relation_Router);
 
 //设置服务器端口
 app.listen(8000,function(){

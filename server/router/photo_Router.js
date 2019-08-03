@@ -59,7 +59,7 @@ router.get('/getPhotoCount',(request,response) => {
 // 根据id查询相簿内容
 router.post('/getPhotoDetails',(request,response) => {
     connection.connect();
-    var sql = `SELECT photo.title,user.avatar,user.nickName,photo.tags,photo.view,photo.praise,photo.time,user.level,photo.photo
+    var sql = `SELECT photo.title,user.avatar,user.nickName,photo.tags,photo.view,photo.praise,photo.time,user.level,photo.photo,user.userID
     FROM USER,photo
     WHERE user.userID = photo.userID
     AND photoID = ${request.body.photoID}`;
