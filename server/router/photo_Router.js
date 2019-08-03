@@ -30,7 +30,10 @@ function handleDisconnect(connection) {
 router.post('/getPhoto',(request,response) => {
     connection.connect();
     var begin = (request.body.group -1)*10;
-    var sql = `SELECT * FROM photo LIMIT ${ begin },10`;
+    var sql = `SELECT photo.src,photo.title,photo.photoID,user.avatar,user.nickName
+    FROM USER,photo
+    WHERE user.userID = photo.userID
+    LIMIT ${begin},10`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -56,7 +59,10 @@ router.get('/getPhotoCount',(request,response) => {
 // 根据id查询相簿内容
 router.post('/getPhotoDetails',(request,response) => {
     connection.connect();
-    var sql = `SELECT * FROM photo where id = ${request.body.id}`;
+    var sql = `SELECT photo.title,user.avatar,user.nickName,photo.tags,photo.view,photo.praise,photo.time,user.level,photo.photo
+    FROM USER,photo
+    WHERE user.userID = photo.userID
+    AND photoID = ${request.body.photoID}`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -69,7 +75,7 @@ router.post('/getPhotoDetails',(request,response) => {
 // 点赞+1
 router.post('/photoPraise',(request,response)=>{
     connection.connect();
-    var sql = `UPDATE photo SET praise = praise + 1 WHERE id = `+request.body.id;
+    var sql = `UPDATE photo SET praise = praise + 1 WHERE photoID = ${request.body.photoID}`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -82,7 +88,7 @@ router.post('/photoPraise',(request,response)=>{
 // 点赞-1
 router.post('/cancelPhotoPraise',(request,response)=>{
     connection.connect();
-    var sql = `UPDATE photo SET praise = praise - 1 WHERE id = `+request.body.id;
+    var sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${request.body.photoID}`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
@@ -95,7 +101,7 @@ router.post('/cancelPhotoPraise',(request,response)=>{
 //增加阅读量
 router.post('/addPhotoView',(request,response) =>{
     connection.connect();
-    var sql = ' UPDATE photo SET `view` = `view` + 1  WHERE id = '+request.body.id;
+    var sql = `UPDATE photo SET view = view + 1  WHERE photoID =${request.body.photoID} `;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');

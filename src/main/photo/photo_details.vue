@@ -96,8 +96,8 @@
             <div class="author_ifo col-12">
                 <van-image width="80" height="80" class="avatar" :src="photoDetails.avatar"/>
                 <div class="author">
-                    <span class="level">up 3</span>
-                    <span class="name">{{ photoDetails.author }}</span>
+                    <span class="level">up {{ photoDetails.level }}</span>
+                    <span class="name">{{ photoDetails.nickName }}</span>
                 </div>
                 <div class="btn">
                     <el-button size="mini" type="danger">关注</el-button>
@@ -139,26 +139,14 @@ export default {
     },
     methods: {
         getNewsDetails(){
-            this.$http.post("getPhotoDetails",{ id:this.id }).then((result) =>{
+            this.$http.post("getPhotoDetails",{ photoID:this.id }).then((result) =>{
                 if(result.body.code == 200){
                     this.photoDetails = result.body.photoDetails[0];
+                    if(this.photoDetails.photo !== null){
+                        this.previewList = this.photoDetails.photo.split(';')
+                    }
                     if(this.photoDetails.tags){
                         this.tags = this.photoDetails.tags.split(',');
-                    }
-                    if(this.photoDetails.photo1){
-                        this.previewList.push(this.photoDetails.photo1)
-                    }
-                    if(this.photoDetails.photo2){
-                        this.previewList.push(this.photoDetails.photo2)
-                    }
-                    if(this.photoDetails.photo3){
-                        this.previewList.push(this.photoDetails.photo3)
-                    }
-                    if(this.photoDetails.photo4){
-                        this.previewList.push(this.photoDetails.photo4)
-                    }
-                    if(this.photoDetails.photo5){
-                        this.previewList.push(this.photoDetails.photo5)
                     }
                 }
             })
@@ -171,19 +159,19 @@ export default {
         },
         praise(event){
             if(!event.target.classList.contains("gold")){
-                this.$http.post('photoPraise',{id:this.id}).then((result)=>{
+                this.$http.post('photoPraise',{photoID:this.id}).then((result)=>{
                     event.target.classList.add('gold');
                     this.photoDetails.praise++;
                 })
             }else{
-                this.$http.post('cancelPhotoPraise',{id:this.id}).then((result)=>{
+                this.$http.post('cancelPhotoPraise',{photoID:this.id}).then((result)=>{
                     event.target.classList.remove('gold');
                     this.photoDetails.praise--;
                 })
             }
         },
         addView(){
-            this.$http.post('addPhotoView',{id:this.id}).then((result)=>{
+            this.$http.post('addPhotoView',{photoID:this.id}).then((result)=>{
             })
         }
     },

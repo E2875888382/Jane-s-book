@@ -14,9 +14,9 @@
                 <p class="some-info">{{props.value.title}}</p>
                 <div class="ifo">
                     <van-image width="24" height="24" class="avatar" :src="props.value.avatar"/>
-                    <span class="user">{{props.value.author}}</span>
+                    <span class="user">{{props.value.nickName}}</span>
                     <el-popover placement="top" trigger="hover" content="支持一下" popper-class='tip'>
-                        <i @click="praise(props.value.id,$event)" slot="reference"></i>
+                        <i @click="praise(props.value.photoID,$event)" slot="reference"></i>
                     </el-popover>
                 </div>
             </div>
@@ -72,16 +72,16 @@ export default {
             event.preventDefault()
             // 只有当点击到图片时才进行操作
             if (event.target.tagName.toLowerCase() == 'img') {
-                this.$router.push({ path:`/photoDetails/${value.id}`});
+                this.$router.push({ path:`/photoDetails/${value.photoID}`});
             }
         },
         praise(id,event){
             if(!event.target.classList.contains("praise")){
-                this.$http.post('photoPraise',{id:id}).then((result)=>{
+                this.$http.post('photoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.add('praise');
                 })
             }else{
-                this.$http.post('cancelPhotoPraise',{id:id}).then((result)=>{
+                this.$http.post('cancelPhotoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.remove('praise');
                 })
             }
