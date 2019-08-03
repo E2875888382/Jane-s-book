@@ -143,5 +143,19 @@ router.post('/getPhotoCount',(request,response) => {
     handleDisconnect(connection);
 })
 
+// 新增评论
+router.post('/addPhotoReply',(request,response)=>{
+    connection.connect();
+    var sql = `INSERT INTO photoreply(photoID,userID,TIME,content)
+    VALUES (${request.body.photoID},${request.body.userID},'${request.body.time}','${request.body.content}')`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'评论成功' });
+    })
+    handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;

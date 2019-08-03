@@ -35,7 +35,7 @@
                         <div class="reply_input" v-if="$store.state.loginFlag">
                             <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
                             <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none"></el-input>
-                            <el-button type="primary">发表评论</el-button>
+                            <el-button type="primary" @click="addReply">发表评论</el-button>
                         </div>
                         <div class="reply_item col-12" v-for="(item,index) in reply" :key="index">
                             <van-image width="48" height="48" class="avatar_reply" :src="item.avatar"/>
@@ -188,6 +188,19 @@ export default {
         addView(){
             this.$http.post('addPhotoView',{photoID:this.id}).then((result)=>{
             })
+        },
+        addReply(){
+            if(this.input!==''){
+                this.$http.post('addPhotoReply',{photoID:this.id,userID:this.$store.state.userIfo.userID,time:new Date().toLocaleString(),content:this.input}).then((result)=>{
+                    this.$message({
+                        message:'评论成功',
+                        type:'success'
+                    });
+                    this.getPhotoDetails();
+                    this.getPhotoReply();
+                    this.getPhotoCount();
+                })
+            }
         }
     },
 }
