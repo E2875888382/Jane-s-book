@@ -7,7 +7,6 @@ import VueRouter from 'vue-router'
 import UserPage from './main/userPage/userPage.vue'
 import News_index from './main/news/news_index.vue'
 import News_details from './main/news/news_details.vue'
-import Vlog from './main/vlog/vlog_index.vue'
 import Developer from './main/developer/developer_index.vue'
 import Street_index from './main/street/street_index.vue'
 import Street_details from './main/street/street_details.vue'
@@ -24,7 +23,6 @@ var router=new VueRouter({
         { path:'/userPage',component:UserPage },
         { path:'/news',component:News_index },
         { path:'/newsDetails/:id',component:News_details },
-        { path:'/vlog',component:Vlog },
         { path:'/developer',component:Developer },
         { path:'/street',component:Street_index },
         { path:'/streetDetails/:id',component:Street_details },

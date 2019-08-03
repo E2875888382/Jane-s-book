@@ -4,13 +4,12 @@ var path=require('path');
 var session=require('express-session');
 
 //导入路由
-var login_Router=require('./router/login_Router');
-var userPage_Router=require('./router/userPage_Router');
-var news_Router=require('./router/news_Router');
-var vlog_Router=require('./router/vlog_Router');
-var developer_Router=require('./router/developer_Router');
-var street_Router=require('./router/street_Router');
-var photo_Router=require('./router/photo_Router');
+var login_Router=require('./router/login_Router');//登录路由
+var userPage_Router=require('./router/userPage_Router');//用户系统路由
+var news_Router=require('./router/news_Router');//新闻模块路由
+var developer_Router=require('./router/developer_Router');//开发者模块路由
+var street_Router=require('./router/street_Router');//步行街模块路由
+var photo_Router=require('./router/photo_Router');//相簿模块路由
 
 //解决控制台的溢出提示
 // (node:3772) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 
@@ -47,7 +46,6 @@ app.use(session({
 app.use(login_Router);
 app.use(userPage_Router);
 app.use(news_Router);
-app.use(vlog_Router);
 app.use(developer_Router);
 app.use(street_Router);
 app.use(photo_Router);

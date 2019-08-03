@@ -8,7 +8,6 @@
                     <li><router-link to="/street" class="top_link">步行街</router-link></li>
                     <li><router-link to="/news" class="top_link">新闻</router-link></li>
                     <li><router-link to="/photo" class="top_link">相簿</router-link></li>
-                    <li><router-link to="/vlog" class="top_link">微博</router-link></li>
                     <li><router-link to="/developer" class="top_link">开发者</router-link></li>
                 </ul>
             </div>
@@ -338,7 +337,7 @@ export default {
     justify-content: space-around;
 }
 .left_box{
-    width:400px;
+    width:320px;
     height: 42px;
 }
 .left_box>ul{
