@@ -179,13 +179,15 @@
                             <el-input placeholder="请输入userID"  class="input-with-select col-10" v-model="searchFriendInput"></el-input>
                             <el-button slot="append" icon="el-icon-search"  @click="searchFriend"></el-button>
                         </div>
-                        <div v-for="item in searchFriendResult" :key="item.userID"  class="friendList_item col-12" >
+                        <div v-for="(item,index) in searchFriendResult" :key="index"  class="friendList_item col-12" >
                             <van-image width="60" height="60" class="avatar" :src="item.avatar"/>
                             <div>
                                 <p>{{ item.nickName }}</p>
                                 <span>{{ item.sign }}</span>
                             </div>
-                            <el-button type="primary" plain @click="addFriend(item.userID)"  style="margin-left:auto">添加关注</el-button>
+                            <el-button type="primary" plain v-if="isMe"  disabled style="margin-left:auto">我</el-button>
+                            <el-button type="primary" plain v-if="isFriend" disabled  style="margin-left:auto">已关注</el-button>
+                            <el-button type="primary" plain v-if="!isFriend&&!isMe" @click="addFriend(item.userID)"  style="margin-left:auto">添加关注</el-button>
                         </div>
                         <div class="friendList_item col-12"  v-for="item in friendsList" :key="item.userID" @click="sendMsgReceiver(item.nickName,item.userID,$event )">
                             <van-image width="60" height="60" class="avatar" :src="item.avatar"/>
@@ -227,6 +229,8 @@ import changeQQ from './changeQQ.vue'
 export default {
     data(){
         return{
+            isFriend:false,
+            isMe:false,
             tips:'',//安全系数提示
             safeNum:0,//安全系数
             // flag:用于控制修改密码的组件出现
@@ -282,6 +286,20 @@ export default {
         changeQQ,
     },
     methods:{
+        isMySelf(){
+            if(this.$store.state.userIfo.userID == this.searchFriendResult[0].userID){
+                this.isMe = true;
+            }
+        },
+        checkFriend(){
+            this.$http.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.searchFriendResult[0].userID}).then((result)=>{
+                if(result.body.code == 200){
+                    if(result.body.isFriend[0]['COUNT(*)'] == 1){
+                        this.isFriend = true;
+                    }
+                }
+            })
+        },
         // 计算安全信息
         sumSafeNum:function(){
             if(this.$store.state.userIfo.telephone.length!==0&&this.$store.state.userIfo.qq.length!==0){
@@ -373,8 +391,14 @@ export default {
         },
         //搜索好友
         searchFriend(){
+            this.isMe = false;
+            this.isFriend = false;
             this.$http.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
                 this.searchFriendResult = result.body;
+                if(this.searchFriendResult[0]){
+                    this.checkFriend();
+                    this.isMySelf();
+                }
             })
         },
         //添加好友
