@@ -76,7 +76,7 @@
                     <el-button size="mini" type="danger" v-if="isMe" disabled>我</el-button>
                     <el-button size="mini" type="danger" v-if="!isFriend&&!isMe" @click="addFriend">关注</el-button>
                     <el-button size="mini" type="danger" v-if="isFriend" disabled>已关注</el-button>
-                    <el-button size="mini" type="danger" plain>发消息</el-button>
+                    <el-button size="mini" type="danger" plain @click="sendMsg">发消息</el-button>
                 </div>
             </div>
             <div class="dashboard col-12">
@@ -119,6 +119,19 @@ export default {
         this.getPhotoCount();
     },
     methods: {
+        sendMsg(){
+            if(this.isFriend){
+                this.$router.push({ path:'/userPage'});
+            }else if(this.isMe){
+                this.$message({
+                    message: '请不要自言自语！',
+                });
+            }else{
+                this.$message({
+                    message: '你和他/她还没有成为好友哦！',
+                });
+            }
+        },
         addFriend(){
             this.$http.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then( (result) =>{
                 if(result.body.code==200){
