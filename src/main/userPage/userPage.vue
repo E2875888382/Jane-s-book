@@ -219,6 +219,9 @@
                 <span slot="label"  >
                     <van-icon name="star" /> 我的收藏
                 </span>
+                <div v-if="$store.state.loginFlag">
+                    <collection></collection>
+                </div>
             </el-tab-pane>
         </el-tabs>
     </div>
