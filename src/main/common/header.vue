@@ -164,7 +164,7 @@ export default {
             //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUser',{ credentials: true }).then(function(result){
                 if(result.body.user){
-                   this.$store.commit('userStatus',{currentUser:result.body.user.email,loginFlag:false});
+                   this.$store.commit('userStatus',{currentUser:result.body.user.email,loginFlag:true});
                 }
             })
         },
