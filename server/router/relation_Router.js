@@ -40,6 +40,34 @@ router.post('/checkFriend',(request,response)=>{
     handleDisconnect(connection);
 })
 
+// 收藏一个相簿
+router.post('/photoCollection',(request,response)=>{
+  connection.connect();
+  var sql = `INSERT INTO photocollection (userID,photoID,TIME)
+  VALUES (${request.body.userID},${request.body.photoID},'${request.body.time}')`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,message:'收藏成功'});
+  })
+  handleDisconnect(connection);
+})
+
+// 检查当前相簿是否被收藏过
+router.post('/checkPhotoCollection',(request,response)=>{
+  connection.connect();
+  var sql = `SELECT COUNT(*)
+  FROM photocollection
+  WHERE userID = ${request.body.userID} AND photoID = ${request.body.photoID}`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,isCollection:result});
+  })
+  handleDisconnect(connection);
+})
 
 //导出router
 module.exports=router;

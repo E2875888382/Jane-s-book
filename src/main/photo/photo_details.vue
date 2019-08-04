@@ -86,8 +86,10 @@
                     <span class="praise">{{ photoDetails.praise }}</span>
                 </div>
                 <div class="other_box">
-                    <span>收藏</span>
-                    <i></i>
+                    <span v-if="!isCollection">收藏</span>
+                    <span v-if="isCollection">已收藏</span>
+                    <i @click="photoCollection" v-if="!isCollection"></i>
+                    <i v-if="isCollection" class="goldCollection"></i>
                 </div>
             </div>
         </div>
@@ -110,6 +112,7 @@ export default {
             replyCount:0,
             isFriend:false,
             isMe:false,
+            isCollection:false,
         }
     },
     mounted(){
@@ -119,6 +122,26 @@ export default {
         this.getPhotoCount();
     },
     methods: {
+        checkPhotoCollection(){
+            this.$http.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                if(result.body.code==200){
+                    if(result.body.isCollection[0]["COUNT(*)"] > 0){
+                        this.isCollection = true;
+                    }
+                }
+            })
+        },
+        photoCollection(){
+            this.$http.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                if(result.body.code==200){
+                    this.$message({
+                        message: '添加收藏成功',
+                        type: 'success'
+                    });
+                    this.checkPhotoCollection();
+                }
+            })
+        },
         sendMsg(){
             if(this.isFriend){
                 this.$router.push({ path:'/userPage'});
@@ -164,6 +187,7 @@ export default {
                     if(this.$store.state.loginFlag == true){
                         this.checkFriend();
                         this.isMyPhoto();
+                        this.checkPhotoCollection();
                     }
                     if(this.photoDetails.photo !== null){
                         this.previewList = this.photoDetails.photo.split(';')
@@ -238,6 +262,9 @@ export default {
 </script>
 
 <style scoped>
+.goldCollection{
+    background-position: 0em -12em !important;
+}
 .gold{
     background-position: 0em -40em !important;
 }
@@ -412,7 +439,7 @@ export default {
     background-color: #fff;
     border: 1px solid #e3e8ec;
     border-radius: 12px;
-    padding: 18px 24px;
+    padding: 18px 20px;
     box-sizing: border-box;
     display: flex;
 }
@@ -426,7 +453,7 @@ export default {
     color: #ff8e29;
 }
 .other_box{
-    width:100px;
+    width:110px;
     height:32px;
     padding-left: 5px;
 }
