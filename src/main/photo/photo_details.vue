@@ -18,7 +18,6 @@
                     </div>
                     <div class="flex_box">
                         <span>浏览:{{ photoDetails.view }}</span>
-                        <span>收藏:34</span>
                         <span>支持:{{ photoDetails.praise }}</span>
                     </div>
                 </div>

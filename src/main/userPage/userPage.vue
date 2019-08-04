@@ -215,6 +215,11 @@
                 </div>
             </el-tab-pane>
 
+            <el-tab-pane>
+                <span slot="label"  >
+                    <van-icon name="star" /> 我的收藏
+                </span>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -226,6 +231,7 @@ import avatar from './avatar.vue'
 import changePassword from './changePassword.vue'
 import changeTelephone from './changeTelephone.vue'
 import changeQQ from './changeQQ.vue'
+import collection from './collection.vue'
 export default {
     data(){
         return{
@@ -284,6 +290,7 @@ export default {
         changePassword,
         changeTelephone,
         changeQQ,
+        collection,
     },
     methods:{
         isMySelf(){
