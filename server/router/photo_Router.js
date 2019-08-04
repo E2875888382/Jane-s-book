@@ -112,13 +112,31 @@ router.post('/addPhotoView',(request,response) =>{
 })
 
 // 获取评论
+router.post('/getPhotoReplyByTime',(request,response)=>{
+    connection.connect();
+    var begin = (request.body.currentPage -1)*5;
+    var sql = `SELECT user.nickName,photoreply.time,photoreply.content,photoreply.praise,user.avatar,photoreply.down,photoreply.photoReplyID
+    FROM USER,photoreply
+    WHERE user.userID = photoreply.userID
+    AND photoID = ${request.body.photoID} ORDER BY time DESC LIMIT ${begin},5`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,photoReplyByTime:result });
+    })
+    handleDisconnect(connection);
+})
+
+
+// 获取评论
 router.post('/getPhotoReply',(request,response)=>{
     connection.connect();
     var begin = (request.body.currentPage -1)*5;
     var sql = `SELECT user.nickName,photoreply.time,photoreply.content,photoreply.praise,user.avatar,photoreply.down,photoreply.photoReplyID
     FROM USER,photoreply
     WHERE user.userID = photoreply.userID
-    AND photoID = ${request.body.photoID} LIMIT ${begin},5`;
+    AND photoID = ${request.body.photoID} ORDER BY praise DESC LIMIT ${begin},5`;
     connection.query(sql,(error,result) =>{
         if(error){
             response.status(500).send('server error');
