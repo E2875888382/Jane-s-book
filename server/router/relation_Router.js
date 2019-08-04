@@ -69,5 +69,35 @@ router.post('/checkPhotoCollection',(request,response)=>{
   handleDisconnect(connection);
 })
 
+// 查询用户收藏的相簿
+router.post('/getPhotoCollection',(request,response)=>{
+  connection.connect();
+  var sql = `SELECT photo.userID,photo.src,photocollection.time,photocollection.photoID,photo.title
+  FROM photo,photocollection
+  WHERE photo.photoID = photocollection.photoID
+  AND photocollection.userID = ${request.body.userID}`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,photoCollection:result});
+  })
+  handleDisconnect(connection);
+})
+
+// 取消关注某个相簿
+router.post('/unlikePhoto',(request,response)=>{
+  connection.connect();
+  var sql = `DELETE FROM photocollection
+  WHERE userID = ${request.body.userID} AND photoID = ${request.body.photoID}`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,message:'取消收藏成功'});
+  })
+  handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;
