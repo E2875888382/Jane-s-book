@@ -131,15 +131,17 @@ export default {
             })
         },
         photoCollection(){
-            this.$http.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
-                if(result.body.code==200){
-                    this.$message({
-                        message: '添加收藏成功',
-                        type: 'success'
-                    });
-                    this.checkPhotoCollection();
-                }
-            })
+            if(this.$store.state.loginFlag){
+                this.$http.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                    if(result.body.code==200){
+                        this.$message({
+                            message: '添加收藏成功',
+                            type: 'success'
+                        });
+                        this.checkPhotoCollection();
+                    }
+                })
+            }
         },
         sendMsg(){
             if(this.isFriend){
