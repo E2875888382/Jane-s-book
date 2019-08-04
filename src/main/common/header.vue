@@ -173,6 +173,7 @@ export default {
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
+                    this.getFriendsMessage();
                 }
             })
         },
@@ -220,7 +221,17 @@ export default {
             },function(error){
                 console.log(error);
             })
-        }
+        },
+        //获取好友消息
+        getFriendsMessage(){
+                this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                    if(result.body.length>0){
+                        this.$store.commit('getMessageCount',result.body.length);
+                    }else{
+                        this.$store.commit('getMessageCount','');
+                    }
+                })
+        },
     }
 }
 </script>
