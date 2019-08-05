@@ -7,6 +7,16 @@
         </el-carousel-item>
     </el-carousel>
 
+    <div class="col-11 m-auto leader">
+        <el-page-header   content="全部相簿">
+        </el-page-header>
+        <div>
+            <i class="el-icon-edit"></i>
+            <router-link to="/photo/new" class="lead_link">发表我的相簿</router-link>
+        </div>
+    </div>
+
+
     <ul class="col-11 box m-auto" :style="{height:boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
         <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn">
             <div slot="waterfall-over">没有更多了</div>
@@ -175,5 +185,15 @@ export default {
     font-weight: bold;
     margin: 0;
     margin-bottom: 12px;
+}
+.leader{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    height:40px;
+}
+.lead_link{
+    color:#fd7e14 !important;
+    font-size:12px;
 }
 </style>

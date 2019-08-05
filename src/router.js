@@ -13,7 +13,7 @@ import Street_details from './main/street/street_details.vue'
 import Street_new from './main/street/street_new.vue'
 import Photo_index from './main/photo/photo_index.vue'
 import Photo_details from './main/photo/photo_details.vue'
-
+import Photo_new from './main/photo/photo_new.vue'
 //手动安装vue-router
 Vue.use(VueRouter)
 //创建vue-router对象
@@ -29,6 +29,7 @@ var router=new VueRouter({
         { path:'/street/new',component:Street_new },
         { path:'/photo',component:Photo_index },
         { path:'/photoDetails/:id',component:Photo_details },
+        { path:'/photo/new',component:Photo_new },
     ]
 })
 
