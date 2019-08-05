@@ -200,5 +200,23 @@ router.post('/photoReplyDown',(request,response)=>{
     })
     handleDisconnect(connection);
 })
+
+// 发表新相簿
+router.post('/addNewPhoto',(request,response)=>{
+    connection.connect();
+    var sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
+    VALUES(${request.body.userID},'${request.body.tags}',
+    '${request.body.src}','${request.body.title}','${request.body.time}',
+    '${request.body.photo}')`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,message:'success'});
+    })
+    handleDisconnect(connection);
+})
+
+
 //导出router
 module.exports=router;

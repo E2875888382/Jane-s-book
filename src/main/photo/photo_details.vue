@@ -230,7 +230,7 @@ export default {
                         this.checkPhotoCollection();
                     }
                     if(this.photoDetails.photo !== null){
-                        this.previewList = this.photoDetails.photo.split(';')
+                        this.previewList = this.photoDetails.photo.split('@')
                     }
                     if(this.photoDetails.tags){
                         this.tags = this.photoDetails.tags.split(',');
