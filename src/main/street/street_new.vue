@@ -9,10 +9,10 @@
         </div>
         <el-form :model="Form" :rules="rules" ref="Form"  class="demo-ruleForm col-12">
             <el-form-item prop="topic" label="主题">
-                <el-input v-model="Form.topic" ></el-input>
+                <el-input v-model="Form.topic" maxlength="40" show-word-limit></el-input>
             </el-form-item>
             <el-form-item prop="text" label="文字描述">
-                <el-input type="textarea" v-model="Form.text" :rows="5"></el-input>
+                <el-input type="textarea" v-model="Form.text" :rows="8" resize="none" maxlength="500" show-word-limit></el-input>
             </el-form-item>
             <van-uploader @oversize="oversize" v-model="Form.img" multiple  :max-count="1" :max-size="1000000" preview-size="200"/>
             <el-form-item>

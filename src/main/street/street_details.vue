@@ -50,8 +50,7 @@
             <van-image width="50" height="50" class="avatar" :src="$store.state.userIfo.avatar"/>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm col-11">
                 <el-form-item prop="reply_content">
-                    <el-input type="textarea" v-model="ruleForm.reply_content" :rows="5" resize="none"   maxlength="30"
-  show-word-limit></el-input>
+                    <el-input type="textarea" v-model="ruleForm.reply_content" :rows="5" resize="none" maxlength="50" show-word-limit></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">回复</el-button>
@@ -67,14 +66,14 @@
 export default {
     data(){
         return {
-            isCollection:false,
-            id:this.$route.params.id,
-            streetDetails:[],
-            streetReply:[],
-            ruleForm:{
+            isCollection:false,//是否已收藏
+            id:this.$route.params.id,//当前帖子的streetID
+            streetDetails:[],//帖子详细内容
+            streetReply:[],//评论列表
+            ruleForm:{//评论输入框
                 reply_content:''
             },
-            rules:{
+            rules:{//输入框规则
                 reply_content: [
                     { required: true, message: '请填写回复内容', trigger: 'blur' }
                 ]
@@ -87,6 +86,7 @@ export default {
         this.getStreetReply();
     },
     methods:{
+        // 查看是否已经收藏
         checkStreetCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post("checkStreetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id}).then( (result) =>{
@@ -98,6 +98,7 @@ export default {
                 })
             }
         },
+        // 收藏该帖子
         streetCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post("streetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
@@ -111,7 +112,6 @@ export default {
                 })
             }
         },
-
         //增加帖子浏览量
         addStreetView(){
             this.$http.post("addStreetView",{ streetID:this.id }).then((result) =>{
@@ -128,6 +128,7 @@ export default {
                 console.log(error);
             })
         },
+        // 提交评论
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -154,9 +155,11 @@ export default {
                 }
             });
         },
+        // 重置评论
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
+        // 获取帖子详情
         getStreetDetails(){
             this.$http.post('getStreetDetails',{ streetID:this.id }).then((result)=>{
                 if(result.body.code == 200){
@@ -165,6 +168,7 @@ export default {
                 }
             })
         },
+        // 获取评论列表
         getStreetReply(){
             this.$http.post('getStreetReply',{ streetID:this.id }).then((result)=>{
                 if(result.body.code == 200){
@@ -172,6 +176,7 @@ export default {
                 }
             })
         },
+        // 点亮某条评论
         addStreetReplyPraise(streetReplyID,event){
             this.$http.post('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
                 if(result.body.code == 200){

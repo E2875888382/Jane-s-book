@@ -33,7 +33,7 @@
                     <el-tab-pane label="按热度排序" name="first">
                         <div class="reply_input" v-if="$store.state.loginFlag">
                             <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
-                            <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none"></el-input>
+                            <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none" maxlength="50" show-word-limit></el-input>
                             <el-button type="primary" @click="addReply">发表评论</el-button>
                         </div>
                         <div class="reply_item col-12" v-for="(item) in reply" :key="item.photoReplyID">
@@ -62,7 +62,7 @@
                     <el-tab-pane label="按时间排序" name="second">
                         <div class="reply_input" v-if="$store.state.loginFlag">
                             <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
-                            <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none"></el-input>
+                            <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none" maxlength="50" show-word-limit></el-input>
                             <el-button type="primary" @click="addReply">发表评论</el-button>
                         </div>
                         <div class="reply_item col-12" v-for="(item) in replyByTime" :key="item.photoReplyID">
