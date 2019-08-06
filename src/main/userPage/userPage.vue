@@ -1,6 +1,7 @@
 <template>
     <div class="content col-11" >
         <el-tabs tab-position="left" style="height: 1000px;"  type="border-card">
+
             <!-- 个人主页 -->
             <el-tab-pane>
                 <span slot="label">
@@ -39,29 +40,7 @@
                     <i class="el-icon-user"></i> 我的信息
                 </span>
                 <div v-if="$store.state.loginFlag">
-                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                        <el-form-item label="昵称" prop="nickName">
-                            <el-input v-model="ruleForm.nickName"></el-input>
-                        </el-form-item>
-                        <el-form-item label="出生日期" required>
-                            <el-form-item prop="birth">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birth" style="width: 100%;"></el-date-picker>
-                            </el-form-item>
-                        </el-form-item>
-                        <el-form-item label="性别" prop="gender">
-                            <el-radio-group v-model="ruleForm.gender">
-                                <el-radio label="男"></el-radio>
-                                <el-radio label="女"></el-radio>
-                            </el-radio-group>
-                        </el-form-item>
-                        <el-form-item label="个性签名" prop="sign">
-                            <el-input type="textarea" v-model="ruleForm.sign"></el-input>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="submitForm('ruleForm')">确定修改</el-button>
-                            <el-button @click="resetForm('ruleForm')">重置</el-button>
-                        </el-form-item>
-                    </el-form>
+                    <edit></edit>
                 </div>
             </el-tab-pane>
 
@@ -223,6 +202,7 @@
                     <collection></collection>
                 </div>
             </el-tab-pane>
+
         </el-tabs>
     </div>
 </template>
@@ -235,52 +215,25 @@ import changePassword from './changePassword.vue'
 import changeTelephone from './changeTelephone.vue'
 import changeQQ from './changeQQ.vue'
 import collection from './collection.vue'
+import edit from './edit.vue'
+
 export default {
     data(){
         return{
-            isFriend:false,
-            isMe:false,
+            isFriend:false,//判断搜索结果是否已经是好友
+            isMe:false,//判断搜索结果是否是自己
             tips:'',//安全系数提示
             safeNum:0,//安全系数
-            // flag:用于控制修改密码的组件出现
-            changePasswordFlag:false,
-            // flag:用于控制修改密码的组件出现
-            changeTelephoneFlag:false,
-            // flag:用于控制修改QQ的组件出现
-            changeQQFlag:false,
-            //发送私信
-            receiver:{
-                nickName:'',
-                receiverID:'',
+            changePasswordFlag:false,// flag:用于控制修改密码的组件出现
+            changeTelephoneFlag:false,// flag:用于控制修改密码的组件出现
+            changeQQFlag:false,// flag:用于控制修改QQ的组件出现
+            receiver:{//发送私信
+                nickName:'',//接受者昵称
+                receiverID:'',//接受者userID
                 textarea:'',//私信内容
             },
-            //添加好友搜索框
-            searchFriendInput:'',
-            //添加好友搜索结果
-            searchFriendResult:[],
-            //更改用户信息表单
-            ruleForm: {
-                nickName: '',
-                birth: '',
-                sign: '',
-                gender:'',
-            },
-            //规则，用于校验更改用户信息
-            rules: {
-                nickName: [
-                    { required: true, message: '请输入昵称', trigger: 'blur' },
-                    { min: 1, max: 8, message: '长度在 1 到 8 个字符', trigger: 'blur' }
-                ],
-                gender: [
-                    { required: true, message: '请选择性别', trigger: 'change' }
-                ],
-                birth: [
-                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                ],
-                sign: [
-                    { required: true, message: '请填写个性签名', trigger: 'blur' }
-                ]
-            }
+            searchFriendInput:'',//添加好友搜索框
+            searchFriendResult:[],//添加好友搜索结果
         }
     },
     //在这里注册组件
@@ -290,6 +243,7 @@ export default {
         changeTelephone,
         changeQQ,
         collection,
+        edit,
     },
     methods:{
         isMySelf(){
@@ -329,31 +283,6 @@ export default {
                 this.tips = '您的账号安全状况还不错哟，完善剩余的安全项可进一步提高安全评分哟';
             }
             return this.tips;
-        },
-        //修改用户信息
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    //发送更改后的用户信息到后台
-                    this.$http.post('updateUserInfo',{userID:this.$store.state.userIfo.userID,update:this.ruleForm}).then((result) =>{
-                        if(result.body.code==200){
-                            this.getLoginUserIfo();
-                            this.$message({
-                                message: '修改信息成功',
-                                type: 'success'
-                            });
-                            this.$refs[formName].resetFields();//成功后重置输入表单
-                        }
-                    })
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
-        },
-        //重置用户信息表单
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
         },
         //获取用户信息并保存到vuex
         getLoginUserIfo(){
