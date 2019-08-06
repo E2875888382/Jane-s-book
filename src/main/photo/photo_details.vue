@@ -44,8 +44,8 @@
                                 <div class="ifo">
                                     <span>来自PC客户端</span>
                                     <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise" @click.once="addPhotoReplyPraise(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down" @click.once="addPhotoReplyDown(item.photoReplyID,$event)"></i>{{ item.down }}</span>
+                                    <span><i class="icon_praise" @click.once="item.flag&&addPhotoReplyPraise(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
+                                    <span><i class="icon_down" @click.once="item.flag&&addPhotoReplyDown(item.photoReplyID,$event)"></i>{{ item.down }}</span>
                                 </div>
                             </div>
                         </div>
@@ -73,8 +73,8 @@
                                 <div class="ifo">
                                     <span>来自PC客户端</span>
                                     <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise" @click.once="addPhotoReplyPraise(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down" @click.once="addPhotoReplyDown(item.photoReplyID,$event)"></i>{{ item.down }}</span>
+                                    <span><i class="icon_praise" @click.once="item.flag&&addPhotoReplyPraise(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
+                                    <span><i class="icon_down" @click.once="item.flag&&addPhotoReplyDown(item.photoReplyID,$event)"></i>{{ item.down }}</span>
                                 </div>
                             </div>
                         </div>
@@ -240,11 +240,21 @@ export default {
         },
         getPhotoReply(){
             this.$http.post('getPhotoReply',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
+
+                result.body.photoReply.map(function(i){
+                    i.flag = true;
+                })
+
                 this.reply = result.body.photoReply;
             })
         },
         getPhotoReplyByTime(){
             this.$http.post('getPhotoReplyByTime',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
+
+                result.body.photoReplyByTime.map(function(i){
+                    i.flag = true;
+                })
+
                 this.replyByTime = result.body.photoReplyByTime;
             })
         },
@@ -298,15 +308,39 @@ export default {
         addPhotoReplyPraise(photoReplyID,event){
             this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
                 event.target.classList.add('goldenPraise');
-                this.getPhotoReply();
-                this.getPhotoReplyByTime();
+                // this.getPhotoReply();
+                // this.getPhotoReplyByTime();
+                this.reply.forEach(element => {
+                    if(element.photoReplyID == photoReplyID){
+                        element.flag = false;
+                        element.praise++;
+                    }
+                });
+                this.replyByTime.forEach(element => {
+                    if(element.photoReplyID == photoReplyID){
+                        element.flag = false;
+                        element.praise++;
+                    }
+                });
             })
         },
         addPhotoReplyDown(photoReplyID,event){
             this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
                 event.target.classList.add('goldenDown');
-                this.getPhotoReply();
-                this.getPhotoReplyByTime();
+                // this.getPhotoReply();
+                // this.getPhotoReplyByTime();
+                this.reply.forEach(element => {
+                    if(element.photoReplyID == photoReplyID){
+                        element.flag = false;
+                        element.down++;
+                    }
+                });
+                this.replyByTime.forEach(element => {
+                    if(element.photoReplyID == photoReplyID){
+                        element.flag = false;
+                        element.down++;
+                    }
+                });
             })
         }
     },

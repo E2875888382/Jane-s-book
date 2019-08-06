@@ -50,7 +50,8 @@
             <van-image width="50" height="50" class="avatar" :src="$store.state.userIfo.avatar"/>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm col-11">
                 <el-form-item prop="reply_content">
-                    <el-input type="textarea" v-model="ruleForm.reply_content" :rows="5" resize="none"></el-input>
+                    <el-input type="textarea" v-model="ruleForm.reply_content" :rows="5" resize="none"   maxlength="30"
+  show-word-limit></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">回复</el-button>
