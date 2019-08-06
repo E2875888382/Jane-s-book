@@ -3,14 +3,14 @@
         <el-tabs tab-position="left" style="height: 1000px;"  type="border-card">
             <!-- 个人主页 -->
             <el-tab-pane>
-                <span slot="label" @click="getLoginUserIfo()">
+                <span slot="label">
                     <i class="el-icon-s-home"></i> 个人主页
                 </span>
                 <div v-if="$store.state.loginFlag">
                     <div class="user_info_head">
                         <van-image width="64" height="64" class="user_img" :src="$store.state.userIfo.avatar"/>
                         <span class="user_name">{{ $store.state.userIfo.nickName }}</span>
-                        <van-progress :percentage="$store.state.userIfo.level"  :pivot-text="'LV'+ $store.state.userIfo.level " class="process_bar" color="#f2826a"/>
+                        <el-progress :text-inside="true" :stroke-width="26" :percentage="$store.state.userIfo.level" class="process_bar"></el-progress>
                     </div>
                     <el-divider content-position="left">基本信息</el-divider>
                     <div class="user_info_footer">
@@ -149,14 +149,14 @@
 
             <!-- 好友消息 -->
             <el-tab-pane>
-                <span slot="label"  @click="getFriendsMessage">
+                <span slot="label">
                     <el-badge :value="$store.state.messageCount" class="item">
                         <i class="el-icon-message"></i> 好友消息
                     </el-badge>
                 </span>
                 <div v-if="$store.state.loginFlag">
                     <div class="messageBox">
-                        <el-card class="box-card" v-for="item in friendsMessage" :key="item.index">
+                        <el-card class="box-card" v-for="item in $store.state.message" :key="item.index">
                             <div slot="header" class="clearfix">
                                 <span class="sendTime">{{ item.time }}</span>
                                 <span>{{ item.nickName }}：</span>
@@ -170,7 +170,7 @@
 
             <!-- 发送私信 -->
             <el-tab-pane>
-                <span slot="label"  @click="getFriends">
+                <span slot="label">
                     <van-icon name="friends-o" /> 好友互动
                 </span>
                 <div v-if="$store.state.loginFlag" style="display:flex">
@@ -189,7 +189,7 @@
                             <el-button type="primary" plain v-if="isFriend" disabled  style="margin-left:auto">已关注</el-button>
                             <el-button type="primary" plain v-if="!isFriend&&!isMe" @click="addFriend(item.userID)"  style="margin-left:auto">添加关注</el-button>
                         </div>
-                        <div class="friendList_item col-12"  v-for="item in friendsList" :key="item.userID" @click="sendMsgReceiver(item.nickName,item.userID,$event )">
+                        <div class="friendList_item col-12"  v-for="item in $store.state.friendsList" :key="item.userID" @click="sendMsgReceiver(item.nickName,item.userID,$event )">
                             <van-image width="60" height="60" class="avatar" :src="item.avatar"/>
                             <div>
                                 <p>{{ item.nickName }}</p>
@@ -254,14 +254,10 @@ export default {
                 receiverID:'',
                 textarea:'',//私信内容
             },
-            //好友消息列表
-            friendsMessage:[],
             //添加好友搜索框
             searchFriendInput:'',
             //添加好友搜索结果
             searchFriendResult:[],
-            //好友列表
-            friendsList:[],
             //更改用户信息表单
             ruleForm: {
                 nickName: '',
@@ -371,7 +367,7 @@ export default {
         //获取好友消息
         getFriendsMessage(){
                 this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                    this.friendsMessage = result.body;
+                    this.$store.commit('getMessage',result.body);
                     if(result.body.length>0){
                         this.$store.commit('getMessageCount',result.body.length);
                     }else{
@@ -393,10 +389,10 @@ export default {
                 this.getFriends();//删除好友成功刷新好友列表
             })
         },
-        //获取好友列表
+        // 获取好友列表
         getFriends(){
                 this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                    this.friendsList = result.body;
+                    this.$store.commit('getFriends',result.body);
                 }) 
         },
         //搜索好友

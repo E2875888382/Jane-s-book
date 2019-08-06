@@ -34,6 +34,10 @@ var store = new Vuex.Store({
         loginFlag:false,//登录状态标记
         messageCount:'10',//好友消息数目
         userIfo:{},//用户信息
+        message:[],//好友信息
+        friendsList:[],//好友列表
+        photoCollection:[],//收藏相簿
+        streetCollection:[],//收藏帖子
     },
     mutations:{
         userStatus(state,user){
@@ -45,6 +49,18 @@ var store = new Vuex.Store({
         },
         getMessageCount(state,count){
             state.messageCount = count;
+        },
+        getMessage(state,message){
+            state.message = message;
+        },
+        getFriends(state,friends){
+            state.friendsList = friends;
+        },
+        getPhotoCollection(state,photoCollection){
+            state.photoCollection = photoCollection;
+        },
+        getStreetCollection(state,streetCollection){
+            state.streetCollection = streetCollection;
         }
     }
 })

@@ -174,6 +174,9 @@ export default {
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
                     this.getFriendsMessage();
+                    this.getFriends();
+                    this.getPhotoCollection();
+                    this.getStreetCollection();
                 }
             })
         },
@@ -226,6 +229,7 @@ export default {
         //获取好友消息
         getFriendsMessage(){
                 this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                    this.$store.commit('getMessage',result.body);
                     if(result.body.length>0){
                         this.$store.commit('getMessageCount',result.body.length);
                     }else{
@@ -233,6 +237,30 @@ export default {
                     }
                 })
         },
+        // 获取好友列表
+        getFriends(){
+                this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                    this.$store.commit('getFriends',result.body);
+                }) 
+        },
+        getPhotoCollection(){
+            if(this.$store.state.loginFlag){
+                this.$http.post('getPhotoCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
+                    if(result.body.code == 200){
+                        this.$store.commit('getPhotoCollection',result.body.photoCollection);
+                    }
+                })
+            }
+        },
+        getStreetCollection(){
+            if(this.$store.state.loginFlag){
+                this.$http.post('getStreetCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
+                    if(result.body.code == 200){
+                        this.$store.commit('getStreetCollection',result.body.streetCollection);
+                    }
+                })
+            }
+        }
     }
 }
 </script>

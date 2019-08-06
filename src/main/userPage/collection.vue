@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName">
         <el-tab-pane label="相簿" name="first">
     
-            <el-popover v-for="(item,index) in collection" :key="index" width="200" trigger="hover">
+            <el-popover v-for="(item,index) in $store.state.photoCollection" :key="index" width="200" trigger="hover">
                 <p class="title">{{ item.title }}</p>
                 <p class="time">收藏时间：{{ item.time }}</p>
                 <div style="display:flex;justify-content:center">
@@ -24,7 +24,7 @@
 
         <el-tab-pane label="步行街" name="second">
             <el-collapse accordion>
-                <el-collapse-item v-for="item in streetCollection" :key="item.streetID" :title="item.topic" :name="item.streetID">
+                <el-collapse-item v-for="item in $store.state.streetCollection" :key="item.streetID" :title="item.topic" :name="item.streetID">
                     <div class="streetDetails">
                         <span>收藏时间：{{ item.time }}</span>
                         <div>
@@ -49,10 +49,6 @@ export default {
             collection:[],
             streetCollection:[],
         }
-    },
-    mounted(){
-        this.getPhotoCollection();
-        this.getStreetCollection();
     },
     methods:{
         unlike(photoID){
@@ -93,7 +89,7 @@ export default {
             if(this.$store.state.loginFlag){
                 this.$http.post('getPhotoCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
                     if(result.body.code == 200){
-                        this.collection = result.body.photoCollection;
+                        this.$store.commit('getPhotoCollection',result.body.photoCollection);
                     }
                 })
             }
@@ -102,7 +98,7 @@ export default {
             if(this.$store.state.loginFlag){
                 this.$http.post('getStreetCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
                     if(result.body.code == 200){
-                        this.streetCollection = result.body.streetCollection;
+                        this.$store.commit('getStreetCollection',result.body.streetCollection);
                     }
                 })
             }
