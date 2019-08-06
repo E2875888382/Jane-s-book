@@ -60,6 +60,8 @@ export default {
                           message:'修改密码成功',
                           type:'success'
                       });
+                      this.$router.push({path:'/'});
+                      this.$message('请重新登陆');
                       this.logOut();
                   }
               })

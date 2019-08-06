@@ -91,8 +91,8 @@
                         <div class="safe_item">
                             <div class="safe_item_title">
                                 <div class="p">
-                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="$store.state.userIfo.telephone.length ==0" />
-                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon" v-if="$store.state.userIfo.telephone.length !==0"/>
+                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="!$store.state.userIfo.telephone" />
+                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon" v-if="$store.state.userIfo.telephone"/>
                                     <span>绑定手机号</span>
                                 </div>
                             </div>
@@ -127,8 +127,8 @@
                         <div class="safe_item">
                             <div class="safe_item_title">
                                 <div class="p">
-                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="$store.state.userIfo.qq.length ==0" />
-                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="$store.state.userIfo.qq.length !==0" />
+                                    <van-icon name="clear" size="20" color="#efa957" class="icon" v-if="!$store.state.userIfo.qq" />
+                                    <van-icon name="checked" size="20" color="#42cb6c" class="icon"  v-if="$store.state.userIfo.qq" />
                                     <span>绑定QQ号</span>
                                 </div>
                             </div>
@@ -312,10 +312,10 @@ export default {
         },
         // 计算安全信息
         sumSafeNum:function(){
-            if(this.$store.state.userIfo.telephone.length!==0&&this.$store.state.userIfo.qq.length!==0){
+            if(this.$store.state.userIfo.telephone&&this.$store.state.userIfo.qq){
                 this.safeNum = 100;
             }
-            else if(this.$store.state.userIfo.telephone.length==0&&this.$store.state.userIfo.qq.length==0){
+            else if(!this.$store.state.userIfo.telephone&&!this.$store.state.userIfo.qq){
                 this.safeNum = 30;
             }else{
                 this.safeNum = 70;
@@ -324,10 +324,10 @@ export default {
         },
         // 计算安全信息
         safeTips(){
-            if(this.$store.state.userIfo.telephone.length!==0&&this.$store.state.userIfo.qq.length!==0){
+            if(this.$store.state.userIfo.telephone&&this.$store.state.userIfo.qq){
                 this.tips = '你的账号安全状况真棒，请继续保持哦';
             }
-            else if(this.$store.state.userIfo.telephone.length==0&&this.$store.state.userIfo.qq.length==0){
+            else if(!this.$store.state.userIfo.telephone&&!this.$store.state.userIfo.qq){
                 this.tips = '你的账号安全状况有点糟糕，请完善信息鸭';
             }else{
                 this.tips = '您的账号安全状况还不错哟，完善剩余的安全项可进一步提高安全评分哟';
