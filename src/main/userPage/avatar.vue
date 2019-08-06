@@ -45,13 +45,15 @@ export default {
             this.$message( '请上传小于100KB的图片');
         },
         useAvatar(){
-            // 此时可以自行将文件上传至服务器
-            this.$http.post("uploadAvatar",{img:this.Form.img[0],userID:this.$store.state.userIfo.userID}).then(function(result){
-                if(result.body.code == 200){
-                    this.$message( '切换头像成功');
-                    this.getLoginUserIfo();
-                }
-            })
+            if(this.Form.img[0]){
+                // 此时可以自行将文件上传至服务器
+                this.$http.post("uploadAvatar",{img:this.Form.img[0],userID:this.$store.state.userIfo.userID}).then(function(result){
+                    if(result.body.code == 200){
+                        this.$message( '切换头像成功');
+                        this.getLoginUserIfo();
+                    }
+                })
+            }
         },
         //获取用户信息并保存到vuex
         getLoginUserIfo(){
