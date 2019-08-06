@@ -161,7 +161,7 @@ export default {
             }
         },
         checkPhotoCollection(){
-            this.$http.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+            this.$http.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id}).then( (result) =>{
                 if(result.body.code==200){
                     if(result.body.isCollection[0]["COUNT(*)"] > 0){
                         this.isCollection = true;

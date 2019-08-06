@@ -8,9 +8,13 @@
             </el-breadcrumb>
         </div>
         <div class="topic-box col-12">
-            <span>{{ streetDetails.topic }}</span>
-            <span>{{ streetDetails.replyCount }}回复</span>
-            <span>{{ streetDetails.view }}浏览</span>
+            <div>
+                <span>{{ streetDetails.topic }}</span>
+                <span>{{ streetDetails.replyCount }}回复</span>
+                <span>{{ streetDetails.view }}浏览</span>
+            </div>
+            <el-button icon="el-icon-star-off" circle v-if="!isCollection" @click="streetCollection"></el-button>
+            <el-button icon="el-icon-star-on" circle style="background:gold" v-if="isCollection"></el-button>
         </div>
         <div class="col-12 main">
             <van-image width="50" height="50" class="avatar" :src="streetDetails.avatar"/>
@@ -62,6 +66,7 @@
 export default {
     data(){
         return {
+            isCollection:false,
             id:this.$route.params.id,
             streetDetails:[],
             streetReply:[],
@@ -81,6 +86,31 @@ export default {
         this.getStreetReply();
     },
     methods:{
+        checkStreetCollection(){
+            if(this.$store.state.loginFlag){
+                this.$http.post("checkStreetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id}).then( (result) =>{
+                    if(result.body.code==200){
+                        if(result.body.isCollection[0]["COUNT(*)"] > 0){
+                            this.isCollection = true;
+                        }
+                    }
+                })
+            }
+        },
+        streetCollection(){
+            if(this.$store.state.loginFlag){
+                this.$http.post("streetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                    if(result.body.code==200){
+                        this.$message({
+                            message: '添加收藏成功',
+                            type: 'success'
+                        });
+                        this.checkStreetCollection();
+                    }
+                })
+            }
+        },
+
         //增加帖子浏览量
         addStreetView(){
             this.$http.post("addStreetView",{ streetID:this.id }).then((result) =>{
@@ -130,6 +160,7 @@ export default {
             this.$http.post('getStreetDetails',{ streetID:this.id }).then((result)=>{
                 if(result.body.code == 200){
                     this.streetDetails = result.body.streetDetails[0];
+                    this.checkStreetCollection();
                 }
             })
         },
@@ -171,13 +202,15 @@ export default {
 .topic-box{
     height:40px;
     display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
 }
-.topic-box span:nth-child(1){
+.topic-box div span:nth-child(1){
     font-size:18px;
     line-height: 40px;
     font-weight:600;
 }
-.topic-box span:nth-child(2),.topic-box span:nth-child(3){
+.topic-box div span:nth-child(2),.topic-box  div span:nth-child(3){
     display: inline-block;
     font-size:12px;
     line-height: 40px;

@@ -69,6 +69,35 @@ router.post('/checkPhotoCollection',(request,response)=>{
   handleDisconnect(connection);
 })
 
+// 检查当前步行街帖子是否被收藏过
+router.post('/checkStreetCollection',(request,response)=>{
+  connection.connect();
+  var sql = `SELECT COUNT(*)
+  FROM streetcollection
+  WHERE userID = ${request.body.userID} AND streetID = ${request.body.streetID}`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,isCollection:result});
+  })
+  handleDisconnect(connection);
+})
+
+// 收藏一个步行街帖子
+router.post('/streetCollection',(request,response)=>{
+  connection.connect();
+  var sql = `INSERT INTO streetcollection (userID,streetID,TIME)
+  VALUES (${request.body.userID},${request.body.streetID},'${request.body.time}')`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,message:'收藏成功'});
+  })
+  handleDisconnect(connection);
+})
+
 // 查询用户收藏的相簿
 router.post('/getPhotoCollection',(request,response)=>{
   connection.connect();

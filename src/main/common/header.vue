@@ -194,6 +194,7 @@ export default {
                     this.dialogLoginVisible = false;
                     this.getLoginUserIfo();
                     this.$store.commit('userStatus',{currentUser:result.body.user,loginFlag:true});
+                    this.$router.push({ path:'/street'});
                 }else{
                     console.log(result.body);
                 }
