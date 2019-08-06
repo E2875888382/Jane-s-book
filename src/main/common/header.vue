@@ -20,22 +20,11 @@
             <div class="right_box">
                 <!-- 登录后状态框 -->
                 <div class="new" v-if="$store.state.loginFlag">
-                    <el-popover
-                        placement="bottom"
-                        width="150"
-                        trigger="hover">
-                        <div class="user_box">
-                            <p>{{ $store.state.userIfo.nickName }}</p>
-                            <p>
-                                <el-badge :value="$store.state.messageCount" class="item">
-                                    <i class="el-icon-message"></i><a href="#/userPage" >我的消息</a>
-                                </el-badge>
-                            </p>
-                            <p><i class="el-icon-user"></i><a href="#/userPage" >我的主页</a></p>
-                            <p><i class="el-icon-switch-button"></i><em @click="logOut()">退出登录</em></p>
-                        </div>
-                        <van-image slot="reference" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
-                    </el-popover>
+                    <van-image @click="function(){$router.push({ path:'/userPage'})}" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
+                    <el-badge :is-dot="Boolean($store.state.messageCount)" >
+                        <el-button type="info" plain icon="el-icon-message" circle size="mini" @click="function(){$router.push({ path:'/userPage'})}"></el-button>
+                    </el-badge>
+                    <el-button type="warning" plain icon="el-icon-switch-button" circle size="mini" @click="logOut()"></el-button>
                 </div>
                 <!-- 登录按钮 -->
                 <div class="login_btn" v-if="!$store.state.loginFlag">
@@ -266,6 +255,9 @@ export default {
 </script>
 
 <style scoped>
+.new>>>.el-badge__content.is-fixed{
+    top:10px;
+}
 .header{
     background-image: url('../../img/header.png');
     height:170px;
@@ -296,16 +288,13 @@ export default {
     float: right;
     width: 60px;
 }
-.user_box{
-    height:150px;
-    text-align: center;
-}
 .new{
     height: 42px;
+    width:100%;
     line-height: 42px;
     text-align: center;
     display: flex;
-    justify-content:center;
+    justify-content:space-evenly;
     align-items:center; 
 }
 .right_box{
@@ -426,5 +415,6 @@ export default {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    cursor: pointer;
 }
 </style>
