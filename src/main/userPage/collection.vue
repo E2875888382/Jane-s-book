@@ -23,7 +23,17 @@
 
 
         <el-tab-pane label="步行街" name="second">
-
+            <el-collapse accordion>
+                <el-collapse-item v-for="item in streetCollection" :key="item.streetID" :title="item.topic" :name="item.streetID">
+                    <div class="streetDetails">
+                        <span>收藏时间：{{ item.time }}</span>
+                        <div>
+                            <el-button type="primary" icon="el-icon-view" size="mini"  @click="streetDetails(item.streetID)"></el-button>
+                            <el-button type="danger" icon="el-icon-delete" size="mini"  @click="unlikeStreet(item.streetID)"></el-button>
+                        </div>
+                    </div>
+                </el-collapse-item>
+            </el-collapse>
 
 
         </el-tab-pane>
@@ -37,10 +47,12 @@ export default {
         return {
             activeName: 'first',
             collection:[],
+            streetCollection:[],
         }
     },
     mounted(){
         this.getPhotoCollection();
+        this.getStreetCollection();
     },
     methods:{
         unlike(photoID){
@@ -56,15 +68,41 @@ export default {
                 })
             }
         },
+        unlikeStreet(streetID){
+            if(this.$store.state.loginFlag){
+                this.$http.post('unlikeStreet',{userID:this.$store.state.userIfo.userID,streetID:streetID}).then((result)=>{
+                    if(result.body.code == 200){
+                        this.$message({
+                            message: '取消收藏成功',
+                            type: 'success'
+                        });
+                        this.getStreetCollection();
+                    }
+                })
+            }
+        },
         details(photoID){
             let route = '/photoDetails/'+photoID;
             this.$router.push({ path:route});
+        },
+        streetDetails(streetID){
+            let route = '/streetDetails/'+streetID;
+            this.$router.push({ path:route });
         },
         getPhotoCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post('getPhotoCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
                     if(result.body.code == 200){
                         this.collection = result.body.photoCollection;
+                    }
+                })
+            }
+        },
+        getStreetCollection(){
+            if(this.$store.state.loginFlag){
+                this.$http.post('getStreetCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
+                    if(result.body.code == 200){
+                        this.streetCollection = result.body.streetCollection;
                     }
                 })
             }
@@ -104,5 +142,12 @@ export default {
     line-height:1.5;
     color:#999;
     margin-bottom: 10px;
+}
+.streetDetails {
+    display:flex;
+    justify-content:space-between;
+}
+.streetDetails span{
+    color: #999;
 }
 </style>

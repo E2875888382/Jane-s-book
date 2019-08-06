@@ -128,5 +128,34 @@ router.post('/unlikePhoto',(request,response)=>{
   handleDisconnect(connection);
 })
 
+// 取消关注某个步行街帖子
+router.post('/unlikeStreet',(request,response)=>{
+  connection.connect();
+  var sql = `DELETE FROM streetcollection
+  WHERE userID = ${request.body.userID} AND streetID = ${request.body.streetID}`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,message:'取消收藏成功'});
+  })
+  handleDisconnect(connection);
+})
+
+// 查询用户收藏的步行街帖子
+router.post('/getStreetCollection',(request,response)=>{
+  connection.connect();
+  var sql = ` SELECT street.streetID,streetcollection.time,street.topic
+  FROM street,streetcollection
+  WHERE street.streetID = streetcollection.streetID
+  AND streetcollection.userID = ${request.body.userID}`;
+  connection.query(sql,(error,result) =>{
+      if(error){
+          response.status(500).send('server error');
+      }
+      response.status(200).json({ code:200,streetCollection:result});
+  })
+  handleDisconnect(connection);
+})
 //导出router
 module.exports=router;
