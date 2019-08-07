@@ -62,7 +62,7 @@ router.get('/getLoginUserInfo', (request,response) =>{
 //搜索好友接口
 router.post('/searchFriend', (request,response) =>{
     connection.connect();
-    var sql = `SELECT nickName,userID,avatar,sign FROM user  WHERE userID = "${ request.body.search }"`;
+    var sql = `SELECT nickName,userID,avatar,sign FROM user  WHERE nickName like "%${ request.body.search }%"`;
     connection.query(sql,  (error, result) => {
         if (error){
             response.status(500).send('server error');

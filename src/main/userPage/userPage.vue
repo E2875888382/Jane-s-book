@@ -164,9 +164,9 @@
                                 <p>{{ item.nickName }}</p>
                                 <span>{{ item.sign }}</span>
                             </div>
-                            <el-button type="primary" plain v-if="isMe"  disabled style="margin-left:auto">我</el-button>
-                            <el-button type="primary" plain v-if="isFriend" disabled  style="margin-left:auto">已关注</el-button>
-                            <el-button type="primary" plain v-if="!isFriend&&!isMe" @click="addFriend(item.userID)"  style="margin-left:auto">添加关注</el-button>
+                            <el-button type="primary" size="mini"  plain v-if="item.isMe"  disabled style="margin-left:auto">我</el-button>
+                            <el-button type="primary" size="mini" plain v-if="item.isFriend" disabled  style="margin-left:auto">已关注</el-button>
+                            <el-button type="primary" size="mini" plain v-if="!item.isFriend&&!item.isMe" @click="addFriend(item.userID)"  style="margin-left:auto">添加关注</el-button>
                         </div>
                         <div class="friendList_item col-12"  v-for="item in $store.state.friendsList" :key="item.userID" @click="sendMsgReceiver(item.nickName,item.userID,$event )">
                             <van-image width="60" height="60" class="avatar" :src="item.avatar"/>
@@ -220,8 +220,6 @@ import edit from './edit.vue'
 export default {
     data(){
         return{
-            isFriend:false,//判断搜索结果是否已经是好友
-            isMe:false,//判断搜索结果是否是自己
             tips:'',//安全系数提示
             safeNum:0,//安全系数
             changePasswordFlag:false,// flag:用于控制修改密码的组件出现
@@ -246,20 +244,6 @@ export default {
         edit,
     },
     methods:{
-        isMySelf(){
-            if(this.$store.state.userIfo.userID == this.searchFriendResult[0].userID){
-                this.isMe = true;
-            }
-        },
-        checkFriend(){
-            this.$http.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.searchFriendResult[0].userID}).then((result)=>{
-                if(result.body.code == 200){
-                    if(result.body.isFriend[0]['COUNT(*)'] == 1){
-                        this.isFriend = true;
-                    }
-                }
-            })
-        },
         // 计算安全信息
         sumSafeNum:function(){
             if(this.$store.state.userIfo.telephone&&this.$store.state.userIfo.qq){
@@ -326,14 +310,22 @@ export default {
         },
         //搜索好友
         searchFriend(){
-            this.isMe = false;
-            this.isFriend = false;
             this.$http.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
+                result.body.forEach(element => {
+                    element.isMe = false;
+                    element.isFriend = false;
+                    if(this.$store.state.userIfo.userID == element.userID){
+                        element.isMe = true;
+                    }
+                    this.$http.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:element.userID}).then((result)=>{
+                        if(result.body.code == 200){
+                            if(result.body.isFriend[0]['COUNT(*)'] == 1){
+                                element.isFriend = true;
+                            }
+                        }
+                    })
+                });
                 this.searchFriendResult = result.body;
-                if(this.searchFriendResult[0]){
-                    this.checkFriend();
-                    this.isMySelf();
-                }
             })
         },
         //添加好友
@@ -564,6 +556,10 @@ export default {
     height:30px;
     font-size:12px;
     color:#999;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 130px;
+    display: block;
 }
 .send_box{
     margin:20px 10px 0px 20px;
