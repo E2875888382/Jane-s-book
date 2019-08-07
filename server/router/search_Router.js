@@ -62,7 +62,7 @@ router.get('/searchForPhoto',(request,response)=>{
 // 搜索用户
 router.get('/searchForUser',(request,response)=>{
     connection.connect();
-    var sql = `SELECT userID,nickName,avatar
+    var sql = `SELECT userID,nickName,avatar,email,birthday,level,gender,sign
     FROM USER
     WHERE nickName LIKE '%${request.query.content}%'`;
     connection.query(sql,(error,result) =>{
