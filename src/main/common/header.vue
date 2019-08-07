@@ -11,18 +11,12 @@
                     <li><router-link to="/developer" class="top_link">开发者</router-link></li>
                 </ul>
             </div>
-            <div class="search_box">
-                <div class="search-form" >
-                    <input type="text" class="form-control search-input" placeholder="Search for...">
-                    <button class="form-btn"></button>
-                </div>
-            </div>
+            <search></search>
             <div class="right_box">
                 <!-- 登录后状态框 -->
                 <div class="new" v-if="$store.state.loginFlag">
-                    <van-image @click="function(){$router.push({ path:'/userPage'})}" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
                     <el-badge :is-dot="Boolean($store.state.messageCount)" >
-                        <el-button type="info" plain icon="el-icon-message" circle size="mini" @click="function(){$router.push({ path:'/userPage'})}"></el-button>
+                        <van-image @click="function(){$router.push({ path:'/userPage'})}" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
                     </el-badge>
                     <el-button type="warning" plain icon="el-icon-switch-button" circle size="mini" @click="logOut()"></el-button>
                 </div>
@@ -78,6 +72,7 @@
 </template>
 
 <script>
+import search from './search.vue'
 export default {
      data() {
         let checkEmail = (rule, value, callback) => {
@@ -143,6 +138,9 @@ export default {
                 ]
             },
         };
+    },
+    components:{
+        search,
     },
     created(){
         this.getLoginUser();//组件创建后获取登录状态
@@ -256,7 +254,7 @@ export default {
 
 <style scoped>
 .new>>>.el-badge__content.is-fixed{
-    top:10px;
+    top:8px;
 }
 .header{
     background-image: url('../../img/header.png');
@@ -310,55 +308,6 @@ export default {
     background: transparent no-repeat 0;
     z-index: 10;
     background-image:url('../../img/head-logo.png'); 
-}
-.search_box{
-    width: 200px;
-    height: 32px;
-    padding: 0 2px;
-    background-color: rgba(0,0,0,.12);
-    border-radius: 6px;
-    font-size: 12px;
-    z-index: 10;
-    display: flex;
-    align-self: center;
-}
-.search-form{
-    width:200px;
-    height:32px;
-    padding:0;
-    margin:0;
-    background-color: hsla(0,0%,100%,.88);
-    border-radius: 4px;
-    transition: background-color 0.2s;
-    display: flex;
-}
-.search-form:hover{
-    background-color: #fff;
-    cursor: pointer;
-}
-.search-input{
-    float: left;
-    width: 162px;
-    color: #222;
-    font-size: 12px;
-    overflow: hidden;
-    height: 32px;
-    line-height: 32px;
-    padding: 0 12px;
-    border: 0;
-    box-shadow: none;
-    background-color: transparent;
-} 
-.form-btn{
-    display: block;
-    width: 48px;
-    min-width: 0;
-    cursor: pointer;
-    height: 32px;
-    background: url("../../img/icons.png") -653px -720px;
-    margin: 0;
-    padding: 0;
-    border: 0;
 }
 .top_box{
     display: flex;
