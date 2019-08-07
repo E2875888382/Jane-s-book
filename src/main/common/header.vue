@@ -186,7 +186,10 @@ export default {
                     this.$store.commit('userStatus',{currentUser:result.body.user,loginFlag:true});
                     this.$router.push({ path:'/street'});
                 }else{
-                    console.log(result.body);
+                    this.$message({
+                        message:'账号或密码错误',
+                        type:'warning'
+                    })
                 }
             },(error) => {
                 console.log(error);

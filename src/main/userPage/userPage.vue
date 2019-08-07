@@ -155,7 +155,7 @@
                 <div v-if="$store.state.loginFlag" style="display:flex">
                     <div class="left_friend_list col-4">
                         <div class="friendList_item col-12" >
-                            <el-input placeholder="请输入userID"  class="input-with-select col-10" v-model="searchFriendInput"></el-input>
+                            <el-input placeholder="请输入昵称"  class="input-with-select col-10" v-model="searchFriendInput"></el-input>
                             <el-button slot="append" icon="el-icon-search"  @click="searchFriend"></el-button>
                         </div>
                         <div v-for="(item,index) in searchFriendResult" :key="index"  class="friendList_item col-12" >
