@@ -48,14 +48,21 @@ export default {
         },
         search(){
             if(this.input.trim()!==''){
+                this.$router.push({ path:'/searchResult'});
                 this.$http.get('searchForStreet',{params:{content:this.input}}).then((result)=>{
-                    console.log(result.body.street)
+                    if(result.body.code == 200){
+                        this.$store.commit('searchStreet',result.body.street)
+                    }
                 })
                 this.$http.get('searchForPhoto',{params:{content:this.input}}).then((result)=>{
-                    console.log(result.body.photo)
+                    if(result.body.code == 200){
+                        this.$store.commit('searchPhoto',result.body.photo)
+                    }
                 })
                 this.$http.get('searchForUser',{params:{content:this.input}}).then((result)=>{
-                    console.log(result.body.user)
+                    if(result.body.code == 200){
+                        this.$store.commit('searchUser',result.body.user)
+                    }
                 })
             }
         }

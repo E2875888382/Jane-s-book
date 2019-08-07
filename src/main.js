@@ -38,6 +38,9 @@ var store = new Vuex.Store({
         friendsList:[],//好友列表
         photoCollection:[],//收藏相簿
         streetCollection:[],//收藏帖子
+        searchStreet:[],//搜索的帖子
+        searchPhoto:[],//搜索的相簿
+        searchUser:[],//搜索的用户
     },
     mutations:{
         userStatus(state,user){
@@ -61,6 +64,15 @@ var store = new Vuex.Store({
         },
         getStreetCollection(state,streetCollection){
             state.streetCollection = streetCollection;
+        },
+        searchStreet(state,street){
+            state.searchStreet = street;
+        },
+        searchPhoto(state,photo){
+            state.searchPhoto = photo;
+        },
+        searchUser(state,user){
+            state.searchUser = user;
         }
     }
 })
