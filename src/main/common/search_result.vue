@@ -72,6 +72,15 @@
                 </el-table-column>
             </el-table>
         </el-tab-pane>
+        <el-tab-pane label="新闻">
+            <el-collapse accordion>
+                <el-collapse-item :name="index" v-for="(item,index) in $store.state.searchNews" :key="item.newID">
+                    <router-link slot="title" :to="'/newsDetails/'+item.newID">{{item.title}}</router-link>
+                    <span class="streetAuthor">来源：{{item.source}}</span>
+                    <span class="streetTime">发表时间：{{item.TIME}}</span>
+                </el-collapse-item>
+            </el-collapse>
+        </el-tab-pane>
     </el-tabs>
 </div>
 </template>

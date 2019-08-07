@@ -73,5 +73,20 @@ router.get('/searchForUser',(request,response)=>{
     })
     handleDisconnect(connection);
 })
+
+// 搜索新闻
+router.get('/searchForNews',(request,response)=>{
+    connection.connect();
+    var sql = `SELECT title,TIME,newID,source
+    FROM news
+    WHERE title LIKE '%${request.query.content}%'`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,news:result});
+    })
+    handleDisconnect(connection);
+})
 //导出router
 module.exports=router;

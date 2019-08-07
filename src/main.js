@@ -41,6 +41,7 @@ var store = new Vuex.Store({
         searchStreet:[],//搜索的帖子
         searchPhoto:[],//搜索的相簿
         searchUser:[],//搜索的用户
+        searchNews:[],//搜素的新闻
     },
     mutations:{
         userStatus(state,user){
@@ -73,6 +74,9 @@ var store = new Vuex.Store({
         },
         searchUser(state,user){
             state.searchUser = user;
+        },
+        searchNews(state,news){
+            state.searchNews = news;
         }
     }
 })

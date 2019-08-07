@@ -64,6 +64,11 @@ export default {
                         this.$store.commit('searchUser',result.body.user)
                     }
                 })
+                this.$http.get('searchForNews',{params:{content:this.input}}).then((result)=>{
+                    if(result.body.code == 200){
+                        this.$store.commit('searchNews',result.body.news)
+                    }
+                })
             }
         }
     }
