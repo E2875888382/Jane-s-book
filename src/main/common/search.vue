@@ -40,10 +40,10 @@ export default {
             return [
                 { "value": "梦之泪伤狂少"},
                 { "value": "这波什么水平"},
-                { "value": "新旺角茶餐厅"},
-                { "value": "泷千家"},
-                { "value": "胖仙女纸杯蛋糕"},
-                { "value": "贡茶"},
+                { "value": "jrs"},
+                { "value": "为什么"},
+                { "value": "谢邀"},
+                { "value": "高圆圆"},
             ];
         },
         search(){
@@ -75,7 +75,7 @@ export default {
     width: 300px;
     height: 32px;
     background-color: rgba(0,0,0,.12);
-    border-radius: 6px;
+    border-radius: 20px;
     font-size: 12px;
     z-index: 10;
     display: flex;
@@ -87,7 +87,7 @@ export default {
     padding:0;
     margin:0;
     background-color: hsla(0,0%,100%,.88);
-    border-radius: 4px;
+    border-radius: 20px;
     transition: background-color 0.2s;
     display: flex;
     justify-content: space-between;
@@ -112,6 +112,7 @@ export default {
     padding:0 10px;
     line-height: 32px;
     font-size:13px;
+    border-radius: 20px 0 0 20px;
 }
 .form-btn{
     display: block;
@@ -122,6 +123,7 @@ export default {
     background: url("../../img/icons.png") -653px -720px;
     margin: 0;
     padding: 0;
-    border: 0;
+    border: 1px solid #DCDFE6;
+    border-radius:0 20px 20px 0;
 }
 </style>
