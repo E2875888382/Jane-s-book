@@ -48,6 +48,7 @@ export default {
         },
         search(){
             if(this.input.trim()!==''){
+                this.$store.commit('searchContent',this.input);
                 this.$router.push({ path:'/searchResult'});
                 this.$http.get('searchForStreet',{params:{content:this.input}}).then((result)=>{
                     if(result.body.code == 200){

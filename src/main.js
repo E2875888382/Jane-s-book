@@ -42,6 +42,7 @@ var store = new Vuex.Store({
         searchPhoto:[],//搜索的相簿
         searchUser:[],//搜索的用户
         searchNews:[],//搜素的新闻
+        search:''//搜索的内容，用于格式化搜索结果
     },
     mutations:{
         userStatus(state,user){
@@ -77,6 +78,9 @@ var store = new Vuex.Store({
         },
         searchNews(state,news){
             state.searchNews = news;
+        },
+        searchContent(state,search){
+            state.search = search;
         }
     }
 })

@@ -8,7 +8,7 @@
         <el-tab-pane label="步行街">
             <el-collapse accordion>
                 <el-collapse-item :name="index" v-for="(item,index) in $store.state.searchStreet" :key="item.streetID">
-                    <router-link slot="title" :to="'/streetDetails/'+item.streetID">{{item.topic}}</router-link>
+                    <router-link slot="title" :to="'/streetDetails/'+item.streetID" v-html="highLight(item.topic)"></router-link>
                     <span class="streetAuthor">作者：{{item.nickName}}</span>
                     <span class="streetTime">发表时间：{{item.time}}</span>
                 </el-collapse-item>
@@ -16,7 +16,7 @@
         </el-tab-pane>
         <el-tab-pane label="相簿">
             <el-popover v-for="(item,index) in $store.state.searchPhoto" :key="index" width="150" trigger="hover">
-                <p class="photoTitle">标题：{{ item.title }}</p>
+                <p class="photoTitle" v-html="highLight(item.title)"></p>
                 <p class="photoAuthor">作者：{{ item.nickName }}</p>
                 <router-link :to="'/photoDetails/'+item.photoID" slot="reference">
                     <el-image :src="item.src" fit="cover" class="cover"></el-image>
@@ -75,7 +75,7 @@
         <el-tab-pane label="新闻">
             <el-collapse accordion>
                 <el-collapse-item :name="index" v-for="(item,index) in $store.state.searchNews" :key="item.newID">
-                    <router-link slot="title" :to="'/newsDetails/'+item.newID">{{item.title}}</router-link>
+                    <router-link slot="title" :to="'/newsDetails/'+item.newID" v-html="highLight(item.title)" ></router-link>
                     <span class="streetAuthor">来源：{{item.source}}</span>
                     <span class="streetTime">发表时间：{{item.TIME}}</span>
                 </el-collapse-item>
@@ -87,7 +87,14 @@
 
 <script>
 export default {
-    
+    methods:{
+        highLight:function(value){
+            // 1.从vuex中取出搜索的内容
+            let search = this.$store.state.search;
+            value = value.split(search).join(`<em style="color:gold;font-style:normal">${search}</em>`)
+            return value;
+        }
+    }
 }
 </script>
 
