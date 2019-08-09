@@ -107,7 +107,7 @@ export default {
                             message: '添加收藏成功',
                             type: 'success'
                         });
-                        this.checkStreetCollection();
+                        this.checkStreetCollection();// 收藏完要刷新收藏状态，防止重复收藏
                     }
                 })
             }
@@ -140,9 +140,9 @@ export default {
                     }
                     this.$http.post('addReply',{ newReply:newReply }).then((result)=>{
                         if(result.body.code == 200){
-                            this.getStreetReply();
-                            this.addStreetReply();
-                            this.getStreetDetails();
+                            this.getStreetReply();// 刷新回复列表
+                            this.addStreetReply();// 增加回复量
+                            this.getStreetDetails();// 刷新帖子详情
                             this.$message({
                                 message: '回复成功',
                                 type: 'success'
@@ -155,7 +155,7 @@ export default {
                 }
             });
         },
-        // 重置评论
+        // 重置评论表单
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
@@ -180,8 +180,8 @@ export default {
         addStreetReplyPraise(streetReplyID,event){
             this.$http.post('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
                 if(result.body.code == 200){
-                    event.target.classList.add('gold');
-                    this.getStreetReply();
+                    event.target.classList.add('gold');// 点亮后该表灯泡颜色
+                    this.getStreetReply();// 点亮后刷新评论列表
                 }
             })
 

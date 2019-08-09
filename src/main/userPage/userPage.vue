@@ -209,7 +209,7 @@
 
 
 <script>
-//导入头像组件
+
 import avatar from './avatar.vue'
 import changePassword from './changePassword.vue'
 import changeTelephone from './changeTelephone.vue'
@@ -234,7 +234,6 @@ export default {
             searchFriendResult:[],//添加好友搜索结果
         }
     },
-    //在这里注册组件
     components:{
         avatar,
         changePassword,
@@ -246,17 +245,21 @@ export default {
     methods:{
         // 计算安全信息
         sumSafeNum:function(){
+            // 如果用户手机和QQ都有，安全系数为100
             if(this.$store.state.userIfo.telephone&&this.$store.state.userIfo.qq){
                 this.safeNum = 100;
             }
+            // 如果手机和QQ都没有，安全系数为30
             else if(!this.$store.state.userIfo.telephone&&!this.$store.state.userIfo.qq){
                 this.safeNum = 30;
-            }else{
+            }
+            // 如果只有手机或只有QQ，安全系数为70
+            else{
                 this.safeNum = 70;
             }
             return this.safeNum;
         },
-        // 计算安全信息
+        // 根据安全系数改变安全提示
         safeTips(){
             if(this.$store.state.userIfo.telephone&&this.$store.state.userIfo.qq){
                 this.tips = '你的账号安全状况真棒，请继续保持哦';
@@ -270,7 +273,6 @@ export default {
         },
         //获取用户信息并保存到vuex
         getLoginUserIfo(){
-             //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
@@ -279,14 +281,14 @@ export default {
         },
         //获取好友消息
         getFriendsMessage(){
-                this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                    this.$store.commit('getMessage',result.body);
-                    if(result.body.length>0){
-                        this.$store.commit('getMessageCount',result.body.length);
-                    }else{
-                        this.$store.commit('getMessageCount','');
-                    }
-                })
+            this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                this.$store.commit('getMessage',result.body);
+                if(result.body.length>0){
+                    this.$store.commit('getMessageCount',result.body.length);
+                }else{
+                    this.$store.commit('getMessageCount','');
+                }
+            })
         },
         //将消息设置为已读
         isRead(id){
@@ -304,13 +306,15 @@ export default {
         },
         // 获取好友列表
         getFriends(){
-                this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                    this.$store.commit('getFriends',result.body);
-                }) 
+            this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                this.$store.commit('getFriends',result.body);
+            }) 
         },
         //搜索好友
         searchFriend(){
             this.$http.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
+                // 根据昵称查询会出现多人的情况，遍历每个对象，发送查询请求，查看是否已关注或者是自己
+                // 给每个对象添加两个flag，表示是否已关注和是否是自己
                 result.body.forEach(element => {
                     element.isMe = false;
                     element.isFriend = false;
@@ -336,9 +340,9 @@ export default {
                         message: '添加好友成功',
                         type: 'success'
                     });
-                    this.searchFriendResult = [];
-                    this.searchFriendInput = '';
-                    this.getFriends();//添加好友成功后刷新好友列表
+                    this.searchFriendResult = [];// 重置搜索结果
+                    this.searchFriendInput = '';// 重置搜索框
+                    this.getFriends();// 添加好友成功后刷新好友列表
                 }
             })
         },

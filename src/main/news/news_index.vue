@@ -33,9 +33,9 @@
 export default {
     data(){
         return {
-            newsList:[],
-            newsCount:0,
-            currentPage:1,
+            newsList:[],// 新闻数组
+            newsCount:0,// 新闻数量
+            currentPage:1,// 当前页
         }
     },
     created(){
@@ -43,9 +43,11 @@ export default {
         this.getNewsCount();
     },
     methods:{
+        // 页数变化触发请求一组新数据
         handleCurrentChange(val) {
             this.getNews(val);
         },
+        // 获取新闻组
         getNews(num){
             this.$http.post("getNews",{ page:num }).then((result) =>{
                 if(result.body.code == 200){
@@ -53,6 +55,7 @@ export default {
                 }
             })
         },
+        // 获取新闻数量
         getNewsCount(){
             this.$http.get("getNewsCount").then((result) =>{
                 if(result.body.code == 200){

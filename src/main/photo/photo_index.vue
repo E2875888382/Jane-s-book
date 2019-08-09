@@ -42,12 +42,12 @@ import vueWaterfallEasy from 'vue-waterfall-easy'
 export default {
     data(){
         return {
-            boxheight:1000,
-            imgWidth:208,
-            imgs: [],
-            group: 1,//判断当前是第几组图片
-            maxcol:5,
-            maxGroup:0,
+            boxheight:1000,// 容器初始高度
+            imgWidth:208,// 图片宽度
+            imgs: [],// 图片数组
+            group: 1,// 判断当前是第几组图片
+            maxcol:5,// 最大列数
+            maxGroup:0,// 图片组最大组数
             banner:['https://i0.hdslb.com/bfs/vc/ef1b0509f201362abfc69e6a31e618323e07e73f.jpg@1376w_320h_1e.webp',
                     'https://i0.hdslb.com/bfs/vc/d5df1339b718ec50ef76726fab781c50aaf4b9ba.jpg@1376w_320h_1e.webp'],
         }
@@ -56,27 +56,31 @@ export default {
         vueWaterfallEasy
     },
     mounted(){
-        this.getCount();
+        this.getCount();// mounted阶段获取图片最多能有多少组
     },
     methods:{
+        // 获取图片组数
         getCount(){
             this.$http.get('getPhotoCount').then((result)=>{
                 this.maxGroup = Math.ceil(result.body.photoCount / 10);
-                this.load();
+                this.load();// 获取到最大组数后开始加载第一组图片
             })
         },
+        // 加载图片组
         load(){
+            // 如果当前组数大于最大组数，就停止触发无限加载
             if(this.group > this.maxGroup){
                 this.$refs.waterfall.waterfallOver()
                 return 
             }else{
                 this.$http.post('getPhoto',{group:this.group}).then((result)=>{
-                    this.imgs = this.imgs.concat(result.body.photo);//增量添加图片
-                    this.boxheight += 600;
-                    this.group++;//记载完1组图片记得设置this.group
+                    this.imgs = this.imgs.concat(result.body.photo);// 增量添加图片
+                    this.boxheight += 600;// 容器高度增加，不然没法容纳图片
+                    this.group++;// 记载完1组图片当前组数增加1
                 })
             }
         },
+        // 点击图片跳转到相簿详情
         clickFn(event, { index, value }) {
             // 阻止a标签跳转
             event.preventDefault()
@@ -85,12 +89,14 @@ export default {
                 this.$router.push({ path:`/photoDetails/${value.photoID}`});
             }
         },
+        // 点赞相簿
         praise(id,event){
+            // 如果当前事件目标没有praise样式，说明没有点赞过，触发点赞
             if(!event.target.classList.contains("praise")){
                 this.$http.post('photoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.add('praise');
                 })
-            }else{
+            }else{// 否则就是点赞过了，触发取消点赞
                 this.$http.post('cancelPhotoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.remove('praise');
                 })

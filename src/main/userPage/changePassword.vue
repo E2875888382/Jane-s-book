@@ -18,61 +18,62 @@
 <script>
 export default {
     data() {
-      var validatePass = (rule, value, callback) => {
-        let rePassword = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,30}$/;
-        if (!rePassword.test(value)) {
-            callback(new Error('请输入8-10位的混合密码（数字，字母）'))
-        } else {
-            callback()
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.Form.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
-      return {
-        Form: {
-          pass: '',
-          checkPass: '',
-        },
-        rules: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-        }
-      };
+        var validatePass = (rule, value, callback) => {
+            let rePassword = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,30}$/;
+            if (!rePassword.test(value)) {
+                callback(new Error('请输入8-10位的混合密码（数字，字母）'))
+            } else {
+                callback()
+            }
+        };
+        var validatePass2 = (rule, value, callback) => {
+            if (value === '') {
+              callback(new Error('请再次输入密码'));
+            } else if (value !== this.Form.pass) {
+              callback(new Error('两次输入密码不一致!'));
+            } else {
+              callback();
+            }
+        };
+        return {
+            Form: {
+                pass: '',
+                checkPass: '',
+            },
+            rules: {
+                pass: [
+                  { validator: validatePass, trigger: 'blur' }
+                ],
+                checkPass: [
+                  { validator: validatePass2, trigger: 'blur' }
+                ],
+            }
+        };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-              this.$http.post('changePassword',{new:this.Form.pass,userID:this.$store.state.userIfo.userID}).then((result)=>{
-                  if(result.body.code == 200){
-                      this.$message({
-                          message:'修改密码成功',
-                          type:'success'
-                      });
-                      this.$router.push({path:'/'});
-                      this.$message('请重新登陆');
-                      this.logOut();
-                  }
-              })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
+        // 提交表单
+        submitForm(formName) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+                this.$http.post('changePassword',{new:this.Form.pass,userID:this.$store.state.userIfo.userID}).then((result)=>{
+                    if(result.body.code == 200){
+                        this.$message({
+                            message:'修改密码成功',
+                            type:'success'
+                        });
+                        this.$router.push({path:'/'});// 修改密码后重定向到首页
+                        this.$message('请重新登陆');// 提示重新登陆
+                        this.logOut();// 退出登录请求
+                    }
+                })
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
+        },
+        // 退出登录
         logOut(){
-            //退出登录，获取返回状态
             this.$http.get('logOut',{credentials: true}).then((result) => {
                 if(result.body.code == 700){
                     this.$store.commit('userStatus',{currentUser:'',unLoginFlag:true,loginFlag:false});
@@ -83,9 +84,10 @@ export default {
                 console.log(error);
             })
         },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
+        // 重置表单
+        resetForm(formName) {
+          this.$refs[formName].resetFields();
+        }
     }
 }
 </script>

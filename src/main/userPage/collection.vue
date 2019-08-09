@@ -7,8 +7,8 @@
                 <p class="title">{{ item.title }}</p>
                 <p class="time">收藏时间：{{ item.time }}</p>
                 <div style="display:flex;justify-content:center">
-                    <el-button type="primary" icon="el-icon-view" size="mini" @click="details(item.photoID)"></el-button>
-                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="unlike(item.photoID)"></el-button>
+                    <el-button type="primary" icon="el-icon-view" size="mini" @click="photoDetails(item.photoID)"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" size="mini" @click="unlikePhoto(item.photoID)"></el-button>
                 </div>
                 <el-image
                     :src="item.src"
@@ -50,8 +50,13 @@ export default {
             streetCollection:[],
         }
     },
+    mounted(){
+        this.getPhotoCollection();
+        this.getStreetCollection();
+    },
     methods:{
-        unlike(photoID){
+        // 取消收藏相簿
+        unlikePhoto(photoID){
             if(this.$store.state.loginFlag){
                 this.$http.post('unlikePhoto',{userID:this.$store.state.userIfo.userID,photoID:photoID}).then((result)=>{
                     if(result.body.code == 200){
@@ -59,11 +64,12 @@ export default {
                             message: '取消收藏成功',
                             type: 'success'
                         });
-                        this.getPhotoCollection();
+                        this.getPhotoCollection();// 重新获取收藏相簿列表
                     }
                 })
             }
         },
+        // 取消收藏帖子
         unlikeStreet(streetID){
             if(this.$store.state.loginFlag){
                 this.$http.post('unlikeStreet',{userID:this.$store.state.userIfo.userID,streetID:streetID}).then((result)=>{
@@ -72,19 +78,22 @@ export default {
                             message: '取消收藏成功',
                             type: 'success'
                         });
-                        this.getStreetCollection();
+                        this.getStreetCollection();// 重新获取收藏帖子列表
                     }
                 })
             }
         },
-        details(photoID){
+        // 查看相簿详情（跳转路由）
+        photoDetails(photoID){
             let route = '/photoDetails/'+photoID;
-            this.$router.push({ path:route});
+            this.$router.push({ path:route});// 根据photoID跳转路由
         },
+        // 查看帖子详情（跳转路由）
         streetDetails(streetID){
             let route = '/streetDetails/'+streetID;
-            this.$router.push({ path:route });
+            this.$router.push({ path:route });// 根据streetID跳转路由
         },
+        // 获取相簿收藏列表
         getPhotoCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post('getPhotoCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
@@ -94,6 +103,7 @@ export default {
                 })
             }
         },
+        // 获取帖子收藏列表
         getStreetCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post('getStreetCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{

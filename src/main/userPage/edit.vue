@@ -61,19 +61,18 @@ export default {
         }
     },
     methods:{
-        //修改用户信息
+        // 提交表单
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    //发送更改后的用户信息到后台
                     this.$http.post('updateUserInfo',{userID:this.$store.state.userIfo.userID,update:this.ruleForm}).then((result) =>{
                         if(result.body.code==200){
-                            this.getLoginUserIfo();
+                            this.getLoginUserIfo();// 提交成功后重新请求用户信息
                             this.$message({
                                 message: '修改信息成功',
                                 type: 'success'
                             });
-                            this.$refs[formName].resetFields();//成功后重置输入表单
+                            this.$refs[formName].resetFields();// 提交成功后重置表单
                         }
                     })
                 } else {
@@ -82,13 +81,12 @@ export default {
                 }
             });
         },
-        //重置用户信息表单
+        //重置表单
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
         //获取用户信息并保存到vuex
         getLoginUserIfo(){
-             //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);

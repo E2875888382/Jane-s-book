@@ -41,6 +41,7 @@ export default {
       };
     },
     methods: {
+        // 提交表单
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -62,9 +63,11 @@ export default {
                 }
             });
         },
+        // 重置表单
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
+        // 图片oversize处理
         oversize(){
             this.$message( '请上传小于1M的图片');
         },

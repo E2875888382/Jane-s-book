@@ -56,8 +56,8 @@
 export default {
     data() {
         return {
-            title:'',
-            dynamicTags: ['私服', '生活', ],
+            title:'',// 标题
+            dynamicTags: ['私服', '生活', ],// 标签
             inputVisible: false,
             inputValue: '',
             src:[],
@@ -65,10 +65,11 @@ export default {
         }
     },
     methods: {
+        // oversize触发
         oversize(){
             this.$message( '请上传小于1M的图片');
         },
-
+        // tag关闭触发
         handleClose(tag) {
             this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
         },
@@ -76,14 +77,14 @@ export default {
         showInput() {
             this.inputVisible = true;
             this.$nextTick(_ => {
-            this.$refs.saveTagInput.$refs.input.focus();
+                this.$refs.saveTagInput.$refs.input.focus();
             });
         },
 
         handleInputConfirm() {
             let inputValue = this.inputValue;
             if (inputValue) {
-            this.dynamicTags.push(inputValue);
+                this.dynamicTags.push(inputValue);
             }
             this.inputVisible = false;
             this.inputValue = '';

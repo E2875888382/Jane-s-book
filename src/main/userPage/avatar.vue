@@ -41,9 +41,11 @@ export default {
         }
     },
     methods: {
+        // 上传图片超出限制触发oversize
         oversize(){
             this.$message( '请上传小于100KB的图片');
         },
+        // 上传自定义头像
         useAvatar(){
             if(this.Form.img[0]){
                 // 此时可以自行将文件上传至服务器
@@ -63,6 +65,7 @@ export default {
                 }
             })
         },
+        // 上传推荐头像
         useAvatarT(src){
             this.$http.post("uploadAvatarT",{src:src,userID:this.$store.state.userIfo.userID}).then(function(result){
                 if(result.body.code == 200){

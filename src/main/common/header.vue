@@ -147,6 +147,7 @@ export default {
         this.getLoginUserIfo();//组件创建后获取登录者的基本信息
     },
     methods:{
+        // 获取登录状态
         getLoginUser(){
             //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUser',{ credentials: true }).then(function(result){
@@ -155,6 +156,7 @@ export default {
                 }
             })
         },
+        // 获取用户信息
         getLoginUserIfo(){
             //请求登录者的基本信息，并保存到vuex
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
@@ -167,6 +169,7 @@ export default {
                 }
             })
         },
+        // 新用户注册
         newUser(){
             //注册新用户，提交表单并获取返回的登录信息
             this.$http.post('newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
@@ -177,14 +180,14 @@ export default {
                 console.log(error);
             })
         },
+        // 登录
         login(){
-            //登录，提交表单并获取登录信息
             this.$http.post('login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
-                    this.getLoginUserIfo();
+                    this.getLoginUserIfo(); //登录后获取用户信息
                     this.$store.commit('userStatus',{currentUser:result.body.user,loginFlag:true});
-                    this.$router.push({ path:'/street'});
+                    this.$router.push({ path:'/street'});// 登录后重定向到首页
                 }else{
                     this.$message({
                         message:'账号或密码错误',
@@ -195,12 +198,12 @@ export default {
                 console.log(error);
             })
         },
+        // 退出登录
         logOut(){
-            //退出登录，获取返回状态
             this.$http.get('logOut',{credentials: true}).then((result) => {
                 if(result.body.code == 700){
                     this.$store.commit('userStatus',{currentUser:'',loginFlag:false});
-                    this.$router.push({ path:'/street'});
+                    this.$router.push({ path:'/'});//重定向到首页
                 }else{
                     console.log(result.body);
                 }
@@ -208,8 +211,8 @@ export default {
                 console.log(error);
             })
         },
+        // 发送验证码，获取返回验证码并对比
         sendSms(){
-            //发送验证码，获取返回验证码并对比
             this.$http.post('sendSms',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
                 this.sms = result.body.sms;
             },function(error){
@@ -218,21 +221,22 @@ export default {
         },
         //获取好友消息
         getFriendsMessage(){
-                this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                    this.$store.commit('getMessage',result.body);
-                    if(result.body.length>0){
-                        this.$store.commit('getMessageCount',result.body.length);
-                    }else{
-                        this.$store.commit('getMessageCount','');
-                    }
-                })
+            this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                this.$store.commit('getMessage',result.body);
+                if(result.body.length>0){
+                    this.$store.commit('getMessageCount',result.body.length);
+                }else{
+                    this.$store.commit('getMessageCount','');
+                }
+            })
         },
         // 获取好友列表
         getFriends(){
-                this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                    this.$store.commit('getFriends',result.body);
-                }) 
+            this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                this.$store.commit('getFriends',result.body);
+            }) 
         },
+        // 获取收藏的相簿
         getPhotoCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post('getPhotoCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
@@ -242,6 +246,7 @@ export default {
                 })
             }
         },
+        // 获取收藏的帖子
         getStreetCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post('getStreetCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{

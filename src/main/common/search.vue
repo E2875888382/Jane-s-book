@@ -46,10 +46,11 @@ export default {
                 { "value": "高圆圆"},
             ];
         },
+        // 搜索
         search(){
-            if(this.input.trim()!==''){
+            if(this.input.trim()!==''){// 去除空格后判断是否为空
                 this.$store.commit('searchContent',this.input);
-                this.$router.push({ path:'/searchResult'});
+                this.$router.push({ path:'/searchResult'});// 跳转到搜索结果页
                 this.$http.get('searchForStreet',{params:{content:this.input}}).then((result)=>{
                     if(result.body.code == 200){
                         this.$store.commit('searchStreet',result.body.street)

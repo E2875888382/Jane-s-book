@@ -128,29 +128,30 @@
 export default {
     data(){
         return {
-            id:this.$route.params.id,
-            input:'',
-            currentPage:1,
-            photoDetails:{},
-            previewList:[],
-            tags:[],
-            reply:[],
-            replyCount:0,
-            isFriend:false,
-            isMe:false,
-            isCollection:false,
-            replyByTime:[],
-            activeName:'first',
+            id:this.$route.params.id,// 路由传过来的当前相簿的photoID
+            input:'',// 评论输入框
+            currentPage:1,// 当前评论页
+            photoDetails:{},// 相簿详细信息
+            previewList:[],// 图片预览
+            tags:[],// 相簿标签
+            reply:[],// 评论数组
+            replyCount:0,// 评论数目，用于分页
+            isFriend:false,// 当前作者是否是好友
+            isMe:false,// 当前作者是否是用户
+            isCollection:false,// 当前相簿是否已收藏
+            replyByTime:[],// 按回复时间排序的评论数组
+            activeName:'first',// tabs活动页参数
         }
     },
     mounted(){
-        this.addView();
-        this.getPhotoDetails();
-        this.getPhotoReply();
-        this.getPhotoCount();
-        this.getPhotoReplyByTime();
+        this.addView();// mounted阶段把当前的浏览量加1
+        this.getPhotoDetails();// 获取相簿详情
+        this.getPhotoReply();// 获取按点赞排序的评论
+        this.getPhotoCount();// 获取评论数量
+        this.getPhotoReplyByTime();// 获取按时间排序的评论
     },
     methods: {
+        // tabs页切换时刷新评论
         handleClick(tab, event) {
             if(this.activeName == 'first'){
                 this.getPhotoCount();
@@ -160,6 +161,7 @@ export default {
                 this.getPhotoReplyByTime();
             }
         },
+        // 检查是否被收藏过
         checkPhotoCollection(){
             this.$http.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id}).then( (result) =>{
                 if(result.body.code==200){
@@ -169,6 +171,7 @@ export default {
                 }
             })
         },
+        // 收藏当前相簿
         photoCollection(){
             if(this.$store.state.loginFlag){
                 this.$http.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
@@ -177,24 +180,27 @@ export default {
                             message: '添加收藏成功',
                             type: 'success'
                         });
-                        this.checkPhotoCollection();
+                        this.checkPhotoCollection();// 收藏完要更新是否已收藏，防止重复收藏
                     }
                 })
             }
         },
+        // 发送信息
         sendMsg(){
+            // 如果已经是好友，跳转到用户页
             if(this.isFriend){
                 this.$router.push({ path:'/userPage'});
-            }else if(this.isMe){
+            }else if(this.isMe){// 如果是自己，触发提示
                 this.$message({
                     message: '请不要自言自语！',
                 });
-            }else{
+            }else{// 如果没有成为好友，无法发消息
                 this.$message({
                     message: '你和他/她还没有成为好友哦！',
                 });
             }
         },
+        // 关注当前作者
         addFriend(){
             this.$http.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then( (result) =>{
                 if(result.body.code==200){
@@ -202,15 +208,17 @@ export default {
                         message: '添加好友成功',
                         type: 'success'
                     });
-                    this.getPhotoDetails();
+                    this.getPhotoDetails();// 添加好友后刷新状态
                 }
             })
         },
+        // 检查作者是否是自己
         isMyPhoto(){
             if(this.$store.state.userIfo.userID == this.photoDetails.userID){
                 this.isMe = true;
             }
         },
+        // 检查作者与用户是否为好友关系
         checkFriend(){
             this.$http.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then((result)=>{
                 if(result.body.code == 200){
@@ -220,34 +228,37 @@ export default {
                 }
             })
         },
+        // 获取相簿详情
         getPhotoDetails(){
             this.$http.post("getPhotoDetails",{ photoID:this.id }).then((result) =>{
                 if(result.body.code == 200){
                     this.photoDetails = result.body.photoDetails[0];
-                    if(this.$store.state.loginFlag == true){
+                    if(this.$store.state.loginFlag == true){// 如果已经登录，检查各种状态
                         this.checkFriend();
                         this.isMyPhoto();
                         this.checkPhotoCollection();
                     }
-                    if(this.photoDetails.photo !== null){
+                    if(this.photoDetails.photo !== null){// 如果相簿不为空，根据标志符分割图片数组，因为数据库存放的是几个图片组合的字符串，彼此用一个标志符分割
                         this.previewList = this.photoDetails.photo.split('@')
                     }
-                    if(this.photoDetails.tags){
+                    if(this.photoDetails.tags){// 如果标签不为空，分割标签数组
                         this.tags = this.photoDetails.tags.split(',');
                     }
                 }
             })
         },
+        // 获取相簿按点赞排序的评论
         getPhotoReply(){
             this.$http.post('getPhotoReply',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
 
                 result.body.photoReply.map(function(i){
-                    i.flag = true;
+                    i.flag = true;// 一开始把flag置为true，用于控制点赞和踩的行为
                 })
 
                 this.reply = result.body.photoReply;
             })
         },
+        // 获取相簿按时间排序的评论
         getPhotoReplyByTime(){
             this.$http.post('getPhotoReplyByTime',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
 
@@ -258,6 +269,7 @@ export default {
                 this.replyByTime = result.body.photoReplyByTime;
             })
         },
+        // 获取评论数量
         getPhotoCount(){
             this.$http.post('getPhotoCount',{photoID:this.id}).then((result)=>{
                 this.replyCount = result.body.photoCount[0]['COUNT(*)'];
@@ -266,14 +278,17 @@ export default {
         handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
         },
+        // 获取一组评论
         handleCurrentChange(val) {
             this.currentPage = val;
             this.getPhotoReply();
         },
+        // 获取一组评论
         handleCurrentChangeByTime(val) {
             this.currentPage = val;
             this.getPhotoReplyByTime();
         },
+        // 点赞
         praise(event){
             if(!event.target.classList.contains("gold")){
                 this.$http.post('photoPraise',{photoID:this.id}).then((result)=>{
@@ -287,10 +302,12 @@ export default {
                 })
             }
         },
+        // 增加浏览量
         addView(){
             this.$http.post('addPhotoView',{photoID:this.id}).then((result)=>{
             })
         },
+        // 增加回复量
         addReply(){
             if(this.input!==''){
                 this.$http.post('addPhotoReply',{photoID:this.id,userID:this.$store.state.userIfo.userID,time:new Date().toLocaleString(),content:this.input}).then((result)=>{
@@ -305,11 +322,11 @@ export default {
                 })
             }
         },
+        // 增加评论的点赞量
         addPhotoReplyPraise(photoReplyID,event){
             this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
                 event.target.classList.add('goldenPraise');
-                // this.getPhotoReply();
-                // this.getPhotoReplyByTime();
+                // 点赞之后控制无法点踩
                 this.reply.forEach(element => {
                     if(element.photoReplyID == photoReplyID){
                         element.flag = false;
@@ -324,11 +341,11 @@ export default {
                 });
             })
         },
+        // 增加评论的踩
         addPhotoReplyDown(photoReplyID,event){
             this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
                 event.target.classList.add('goldenDown');
-                // this.getPhotoReply();
-                // this.getPhotoReplyByTime();
+                // 点踩之后控制无法点赞
                 this.reply.forEach(element => {
                     if(element.photoReplyID == photoReplyID){
                         element.flag = false;

@@ -50,16 +50,19 @@ export default {
         }
     },
     mounted(){
-        this.getStreetList(1);
+        this.getStreetList(1);// 组件mounted阶段请求第一页帖子
         this.getStreetCount();
     },
     methods:{
+        // 返回按钮，回到'/'
         back(){
             this.$router.push({ path:'/'});
         },
+        // 点击不同页根据页数请求贴子组
         handleCurrentChange(val) {
             this.getStreetList(val);
         },
+        // 请求一组贴子，参数n是组数
         getStreetList(n){
             this.$http.post('getStreet',{ page:n }).then((result)=>{
                 if(result.body.code == 200){
@@ -67,19 +70,23 @@ export default {
                         e.lastReplyTime = '';
                         e.lastReplyAuthor = '';
                     });
-                    this.getLastReply();
+                    this.getLastReply();// 获取帖子后请求对应的最后回复
                     this.streetList = result.body.streetList;
                 }
             })
         },
+        // 获取帖子总数，用于分页
         getStreetCount(){
             this.$http.get('getStreetCount').then((result)=>{
                 this.streetCount = result.body.streetCount[0]['COUNT(*)'];
             })
         },
+        // 获取最后回复
         getLastReply(){
             this.$http.get('getLastReply').then((result)=>{
                 this.lastReply = result.body.lastReply;
+                // 获取到最后回复后，遍历回复数组，根据streetID找到对应帖子
+                // 并且把最后回复加上去
                 for(var i = 0;i<this.lastReply.length;i++){
                     for(var j = 0;j<this.streetList.length;j++){
                         if(this.lastReply[i].streetID == this.streetList[j].streetID){

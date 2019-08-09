@@ -27,30 +27,31 @@ export default {
         };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-              this.$http.post('changeTelephone',{new:this.Form.newTelephone,userID:this.$store.state.userIfo.userID}).then((result)=>{
-                  if(result.body.code == 200){
-                      this.$message({
-                          message:'绑定手机成功',
-                          type:'success'
-                      });
-                      this.getLoginUserIfo();
-                  }
-              })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
+        // 提交表单
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+            if (valid) {
+                this.$http.post('changeTelephone',{new:this.Form.newTelephone,userID:this.$store.state.userIfo.userID}).then((result)=>{
+                    if(result.body.code == 200){
+                        this.$message({
+                            message:'绑定手机成功',
+                            type:'success'
+                        });
+                        this.getLoginUserIfo();// 绑定手机后重新获取用户信息
+                    }
+                })
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+            });
+        },
+        // 重置表单
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
         //获取用户信息并保存到vuex
         getLoginUserIfo(){
-             //请求登录session，用于持久化登录状态
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
