@@ -44,14 +44,13 @@
                                 <div class="ifo">
                                     <span>来自PC客户端</span>
                                     <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise" @click.once="item.flag&&addPhotoReplyPraise(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down" @click.once="item.flag&&addPhotoReplyDown(item.photoReplyID,$event)"></i>{{ item.down }}</span>
+                                    <span><i class="icon_praise" @click.once="addPhotoReplyPraiseHot(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
+                                    <span><i class="icon_down" @click.once="addPhotoReplyDownHot(item.photoReplyID,$event)"></i>{{ item.down }}</span>
                                 </div>
                             </div>
                         </div>
                         <el-pagination
                             background
-                            @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
                             :current-page="currentPage"
                             :page-size="5"
@@ -73,14 +72,13 @@
                                 <div class="ifo">
                                     <span>来自PC客户端</span>
                                     <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise" @click.once="item.flag&&addPhotoReplyPraise(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down" @click.once="item.flag&&addPhotoReplyDown(item.photoReplyID,$event)"></i>{{ item.down }}</span>
+                                    <span><i class="icon_praise" @click.once="addPhotoReplyPraiseTime(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
+                                    <span><i class="icon_down" @click.once="addPhotoReplyDownTime(item.photoReplyID,$event)"></i>{{ item.down }}</span>
                                 </div>
                             </div>
                         </div>
                         <el-pagination
                             background
-                            @size-change="handleSizeChange"
                             @current-change="handleCurrentChangeByTime"
                             :current-page="currentPage"
                             :page-size="5"
@@ -275,9 +273,6 @@ export default {
                 this.replyCount = result.body.photoCount[0]['COUNT(*)'];
             })
         },
-        handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-        },
         // 获取一组评论
         handleCurrentChange(val) {
             this.currentPage = val;
@@ -323,42 +318,70 @@ export default {
             }
         },
         // 增加评论的点赞量
-        addPhotoReplyPraise(photoReplyID,event){
-            this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
-                event.target.classList.add('goldenPraise');
-                // 点赞之后控制无法点踩
-                this.reply.forEach(element => {
-                    if(element.photoReplyID == photoReplyID){
+        addPhotoReplyPraiseHot(photoReplyID,event){
+            // 点赞之后控制无法点踩
+            this.reply.forEach(element => {
+                if(element.photoReplyID == photoReplyID){
+                    if(!element.flag){
+                        return;
+                    }else{
+                        event.target.classList.add('goldenPraise');
                         element.flag = false;
                         element.praise++;
+                        this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
+                        })
                     }
-                });
-                this.replyByTime.forEach(element => {
-                    if(element.photoReplyID == photoReplyID){
+                }
+            });
+        },
+        // 增加评论的点赞量
+        addPhotoReplyPraiseTime(photoReplyID,event){
+            // 点赞之后控制无法点踩
+            this.replyByTime.forEach(element => {
+                if(element.photoReplyID == photoReplyID){
+                    if(!element.flag){
+                        return;
+                    }else{
+                        event.target.classList.add('goldenPraise');
                         element.flag = false;
                         element.praise++;
+                        this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
+                        })
                     }
-                });
-            })
+                }
+            });
         },
         // 增加评论的踩
-        addPhotoReplyDown(photoReplyID,event){
-            this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
-                event.target.classList.add('goldenDown');
-                // 点踩之后控制无法点赞
-                this.reply.forEach(element => {
-                    if(element.photoReplyID == photoReplyID){
+        addPhotoReplyDownHot(photoReplyID,event){
+            this.reply.forEach(element => {
+                if(element.photoReplyID == photoReplyID){
+                    if(!element.flag){
+                        return;
+                    }else{
+                        event.target.classList.add('goldenDown');
                         element.flag = false;
                         element.down++;
+                        this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
+                        })
                     }
-                });
-                this.replyByTime.forEach(element => {
-                    if(element.photoReplyID == photoReplyID){
+                }
+            });
+        },
+        // 增加评论的踩
+        addPhotoReplyDownTime(photoReplyID,event){
+            this.replyByTime.forEach(element => {
+                if(element.photoReplyID == photoReplyID){
+                    if(!element.flag){
+                        return;
+                    }else{
+                        event.target.classList.add('goldenDown');
                         element.flag = false;
                         element.down++;
+                        this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
+                        })
                     }
-                });
-            })
+                }
+            });
         }
     },
 }
