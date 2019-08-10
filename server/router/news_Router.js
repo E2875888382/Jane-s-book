@@ -79,5 +79,21 @@ router.post('/addNewsRead',(request,response) =>{
     handleDisconnect(connection);
 })
 
+// 查询10条最新发生的新闻
+router.get('/getTenNews',(request,response) =>{
+    connection.connect();
+    var sql = `SELECT title,newID
+    FROM news
+    ORDER BY TIME DESC
+    LIMIT 0,10`;
+    connection.query(sql,(error,result) =>{
+        if(error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json({ code:200,tenNews:result });
+    })
+    handleDisconnect(connection);
+})
+
 //导出router
 module.exports=router;

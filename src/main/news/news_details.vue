@@ -6,14 +6,22 @@
             <span>阅读：{{ newsDetails.view }}</span>
         </div>
         <el-divider></el-divider>
-        <div class="news_content">
-            <van-image width="660" :src="newsDetails.imgTop"/>
-            <div class="content_box">
-                <p>{{ newsDetails.abstract }}。</p>
-                <div v-html="cut(newsDetails.content)"></div>
-                <van-image width="660" v-for="(item,index) in imgContent" :key="index" :src="item"/>
+        <div class="news_content col-12">
+            <div style="width:660px">
+                <van-image width="660" :src="newsDetails.imgTop"/>
+                <div class="content_box">
+                    <p>{{ newsDetails.abstract }}。</p>
+                    <div v-html="cut(newsDetails.content)"></div>
+                    <van-image width="660" v-for="(item,index) in imgContent" :key="index" :src="item"/>
+                </div>
+                <p class="editor">{{ newsDetails.editor }}</p>
             </div>
-            <p class="editor">{{ newsDetails.editor }}</p>
+            <div style="width:300px;min-height:400px">
+                <p class="ranking_head">24小时新闻排行榜</p>
+                <p class="ranking_item" v-for="(item,index) in tenNews" :key="index">
+                    <span :class="{ number:index<3 }">{{ index+1 }}</span><router-link :to="'/newsDetails/'+item.newID">{{ item.title }}</router-link>
+                </p>
+            </div>
         </div>
         <el-backtop></el-backtop>
     </div>
@@ -26,11 +34,21 @@ export default {
             id:this.$route.params.id,
             newsDetails:{},
             imgContent:[],
+            tenNews:[],
         }
     },
-    created(){
+    mounted(){
         this.addNewsRead();
         this.getNewsDetails();
+        this.getTenNews();
+    },
+    watch:{
+        '$route':function(){
+            this.id = this.$route.params.id;
+            this.addNewsRead();
+            this.getNewsDetails();
+            this.getTenNews();
+        }
     },
     methods:{
         //过滤器，用于把句号换为换行符
@@ -66,6 +84,15 @@ export default {
             },(error) =>{
                 console.log(error);
             })
+        },
+        getTenNews(){
+            this.$http.get("getTenNews").then((result)=>{
+                if(result.body.code == 200){
+                    this.tenNews = result.body.tenNews;
+                }
+            },(error)=>{
+                console.log(error);
+            })
         }
     }
 }
@@ -85,8 +112,7 @@ export default {
 }
 .news_content{
     display: flex;
-    width:660px;
-    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .content_box p{
     font-size: 14px;
@@ -99,5 +125,30 @@ export default {
     line-height: 24px;
     font-size: 14px;
     margin-top:10px;
+}
+.ranking_head{
+    font-size: 18px;
+    font-weight: 400;
+    color: #1a2939;
+    font-family: "Microsoft Yahei";
+}
+.ranking_item{
+    line-height: 20px;
+    font-size: 12px;
+    padding:3px;
+    margin:0;
+}
+.ranking_item a{
+    color: #989da2 !important;
+    text-decoration-line: none;
+}
+.ranking_item span{
+    font-style: italic;
+    font-weight: 700;
+    width:25px;
+    display: inline-block;
+}
+.number{
+    color: #ad0007;
 }
 </style>
