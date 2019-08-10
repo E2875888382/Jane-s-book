@@ -53,5 +53,19 @@
     - ```npm run dev ```
 - webpack编译完成会自动打开浏览器（loaclhost:3000/）
     
-  
+- 踩过的坑：
+   - 1.vue-router的router-link如果跳转的是同一个组件，会发生地址栏改变数据却没有更新的情况
+     - 因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效
+     - 复用机制导致数据没有重新渲染
+     - 新闻组件是通过:newID来跳转页面的，同组件时新闻数据没法更新
+     - 解决：使用watch监听路由变化，
+     ```watch:{
+            '$route':function(){
+                this.id = this.$route.params.id;
+                this.addNewsRead();
+                this.getNewsDetails();
+                this.getTenNews();
+            }
+        },
+     ```
     
