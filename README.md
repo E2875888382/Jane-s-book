@@ -59,13 +59,14 @@
      - 复用机制导致数据没有重新渲染
      - 新闻组件是通过:newID来跳转页面的，同组件时新闻数据没法更新
      - 解决：使用watch监听路由变化，
-     ```watch:{
+     ```
+     watch:{
             '$route':function(){
-                this.id = this.$route.params.id;
-                this.addNewsRead();
-                this.getNewsDetails();
-                this.getTenNews();
-            }
-        },
+                    this.id = this.$route.params.id;
+                    this.addNewsRead();
+                    this.getNewsDetails();
+                    this.getTenNews();
+                }
+            },
      ```
     
