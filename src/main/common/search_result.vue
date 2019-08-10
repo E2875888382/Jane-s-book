@@ -76,7 +76,7 @@
             <el-collapse accordion>
                 <el-collapse-item :name="index" v-for="(item,index) in $store.state.searchNews" :key="item.newID">
                     <router-link slot="title" :to="'/newsDetails/'+item.newID" v-html="highLight(item.title)" ></router-link>
-                    <span class="streetAuthor">来源：{{item.source}}</span>
+                    <span class="streetAuthor">{{item.source}}</span>
                     <span class="streetTime">发表时间：{{item.TIME}}</span>
                 </el-collapse-item>
             </el-collapse>

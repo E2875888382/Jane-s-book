@@ -4,13 +4,13 @@
     <el-divider></el-divider>
     <div class="media" v-for="item in newsList" :key="item.newID">
         <div class="media-left">
-            <van-image width="150" height="100" class="user_img" :src="item.img"/>
+            <van-image width="150" height="100" class="user_img" :src="item.imgTop"/>
         </div>
         <div class="media-body">
             <h5 class="media-heading"><router-link :to="'/newsDetails/'+item.newID">{{ item.title }}</router-link></h5>
             <p>{{ item.abstract }}</p>
             <div class="time_read_box">
-                <span>来源：{{ item.source }} 发布时间：{{ item.time }} </span>
+                <span>{{ item.source }} 发布时间：{{ item.time }} </span>
                 <span>阅读：{{ item.view }}</span>
             </div>
             <el-divider></el-divider>
