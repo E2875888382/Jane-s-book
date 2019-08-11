@@ -227,7 +227,7 @@ export default {
                 if(result.body.length>0){
                     this.$store.commit('getMessageCount',result.body.length);
                 }else{
-                    this.$store.commit('getMessageCount','');
+                    this.$store.commit('getMessageCount',0);
                 }
             })
         },

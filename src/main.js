@@ -42,7 +42,7 @@ var store = new Vuex.Store({
     state:{
         currentUser:'',//当前用户
         loginFlag:false,//登录状态标记
-        messageCount:'10',//好友消息数目
+        messageCount:0,//好友消息数目
         userIfo:{},//用户信息
         message:[],//好友信息
         historyMessage:[],//已读消息

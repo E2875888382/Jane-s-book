@@ -37,7 +37,7 @@
             <!-- 好友消息 -->
             <el-tab-pane>
                 <span slot="label">
-                    <el-badge :value="$store.state.messageCount" class="item">
+                    <el-badge :is-dot="Boolean($store.state.messageCount)">
                         <i class="el-icon-message"></i> 好友消息
                     </el-badge>
                 </span>
@@ -91,5 +91,9 @@ export default {
 .content{
      height:1000px;
      margin:100px auto;
+}
+span>>>.el-badge__content.is-fixed{
+    top:10px;
+    right:2px;
 }
 </style>

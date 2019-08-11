@@ -2,7 +2,7 @@
 <div>
     <div class="messageBox">
         <el-tabs value="first">
-            <el-tab-pane label="未读消息" name="first">
+            <el-tab-pane :label="'未读消息('+$store.state.messageCount+')'" name="first">
                 <el-table :data="$store.state.message" style="width: 100%">
                     <el-table-column prop="content" min-width="500px"> </el-table-column>
                     <el-table-column prop="time"> </el-table-column>
@@ -15,7 +15,7 @@
                     <div slot="empty" class="empty"> </div>
                 </el-table>
             </el-tab-pane>
-            <el-tab-pane label="已读消息" name="second">
+            <el-tab-pane :label="'未读消息('+$store.state.historyMessage.length+')'" name="second">
                 <el-table :data="$store.state.historyMessage" style="width: 100%">
                     <el-table-column prop="content" min-width="500px"> </el-table-column>
                     <el-table-column prop="time"> </el-table-column>
@@ -52,11 +52,11 @@ export default{
                 if(result.body.length>0){
                     this.$store.commit('getMessageCount',result.body.length);
                 }else{
-                    this.$store.commit('getMessageCount','');
+                    this.$store.commit('getMessageCount',0);
                 }
             })
         },
-        //获取好友消息
+        //获取已读的好友消息
         getHistoryMessage(){
             this.$http.post("getHistoryFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
                 this.$store.commit('getHistoryMessage',result.body);
