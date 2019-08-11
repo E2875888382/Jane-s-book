@@ -8,29 +8,7 @@
                     <i class="el-icon-s-home"></i> 个人主页
                 </span>
                 <div v-if="$store.state.loginFlag">
-                    <div class="user_info_head">
-                        <van-image width="64" height="64" class="user_img" :src="$store.state.userIfo.avatar"/>
-                        <span class="user_name">{{ $store.state.userIfo.nickName }}</span>
-                        <el-progress :text-inside="true" :stroke-width="26" :percentage="$store.state.userIfo.level" class="process_bar"></el-progress>
-                    </div>
-                    <el-divider content-position="left">基本信息</el-divider>
-                    <div class="user_info_footer">
-                        <div class="user_info_item">
-                            <span class="font_label">用户ID：</span><span class="msg">{{ $store.state.userIfo.userID }}</span>
-                        </div>
-                        <div class="user_info_item">
-                            <span class="font_label">我的邮箱：</span><span class="msg">{{ $store.state.userIfo.email }}</span>
-                        </div>
-                        <div class="user_info_item">
-                            <span class="font_label">出生日期：</span><span class="msg">{{ $store.state.userIfo.birthday }}</span>
-                        </div>
-                        <div class="user_info_item">
-                            <span class="font_label">性别：</span><span class="msg">{{ $store.state.userIfo.gender }}</span>
-                        </div>
-                        <div class="user_info_item">
-                            <span class="font_label">我的签名：</span><span class="msg">{{ $store.state.userIfo.sign }}</span>
-                        </div>
-                    </div>
+                    <userIfo></userIfo>
                 </div> 
             </el-tab-pane>
 
@@ -134,16 +112,7 @@
                     </el-badge>
                 </span>
                 <div v-if="$store.state.loginFlag">
-                    <div class="messageBox">
-                        <el-card class="box-card" v-for="item in $store.state.message" :key="item.index">
-                            <div slot="header" class="clearfix">
-                                <span class="sendTime">{{ item.time }}</span>
-                                <span>{{ item.nickName }}：</span>
-                                <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.messageID)">已读</el-button>
-                            </div>
-                            <div class="text item">{{ item.content }}</div>
-                        </el-card>
-                    </div>
+                    <readMessage></readMessage>
                 </div>
             </el-tab-pane>
 
@@ -216,6 +185,8 @@ import changeTelephone from './changeTelephone.vue'
 import changeQQ from './changeQQ.vue'
 import collection from './collection.vue'
 import edit from './edit.vue'
+import userIfo from './userIfo.vue'
+import readMessage from './readMessage.vue'
 
 export default {
     data(){
@@ -241,6 +212,8 @@ export default {
         changeQQ,
         collection,
         edit,
+        userIfo,
+        readMessage,
     },
     methods:{
         // 计算安全信息
@@ -276,25 +249,6 @@ export default {
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
-                }
-            })
-        },
-        //获取好友消息
-        getFriendsMessage(){
-            this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                this.$store.commit('getMessage',result.body);
-                if(result.body.length>0){
-                    this.$store.commit('getMessageCount',result.body.length);
-                }else{
-                    this.$store.commit('getMessageCount','');
-                }
-            })
-        },
-        //将消息设置为已读
-        isRead(id){
-            this.$http.post("isRead" ,{id:id},{ credentials: true}).then( (result) =>{
-                if(result.body.code == 200){
-                    this.getFriendsMessage();//设置为已读后刷新信息列表
                 }
             })
         },
@@ -377,65 +331,6 @@ export default {
 .content{
      height:1000px;
      margin:100px auto;
-}
-.user_info_head{
-    width: 800px;
-    height: 150px;
-    margin: 20px;
-    position: relative;
-}
-.user_info_footer{
-    width: 800px;
-    height: 600px;
-    margin: 20px;
-    position: relative;
-   
-}
-.process_bar{
-    width: 300px;
-    height: 20px;
-    position: absolute;
-    top: 50px;
-    left: 100px;
-}
-.user_name{
-    font-size: 18px;
-    font-weight: 700;
-    color: #222;
-    cursor: default;
-    position: absolute;
-    top: 10px;
-    left: 100px;
-}
-.user_info_item{
-    width: 800px;
-    height: 60px;
-}
-.font_label{
-    font-size: 14px;
-    color: #48576a;
-    width: 95px;
-    text-align: right;
-    margin-right: 20px;
-    float: left;
-    line-height: 30px;
-    padding: 0;
-}
-.msg{
-    font-size: 14px;
-    color: #48576a;
-    float: left;
-    line-height: 30px;
-    padding: 0;
-}
-.user_img{
-    width: 64px;
-    height: 64px;
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
 }
 .header_low{
     width: 400px;
@@ -520,21 +415,6 @@ export default {
     color: #fff;
     text-align: center;
     top: 60px;
-}
-.messageBox{
-    height: 960px;
-    overflow:auto;
-}
-.messageBox::-webkit-scrollbar{
-    display:none;
-}
-.sendTime{
-    color: #999;
-    font-size: 12px;
-    line-height: 22px;
-}
-.box-card{
-    margin-bottom: 10px;
 }
 .left_friend_list{
     height: 100%;
