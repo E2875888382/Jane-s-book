@@ -70,8 +70,6 @@
             },
      ```
    - 2.已经登录用户刷新页面后，nodejs报错：Cannot set headers after they are sent to the client
-     - 原因：header组件和collection组件在mounted阶段都调用了请求收藏列表的方法，
-     -      浏览器发出同名的请求，服务器返回了2次及2次以上的响应
-     - 解决：collection去掉请求就行了，只要header请求到就可以了，因为收藏列表数据保存在vuex中，子组件可以随时调用
-     -      没有必要重复请求
+     - 原因：header组件和collection组件在mounted阶段都调用了请求收藏列表的方法，浏览器发出同名的请求，服务器返回了2次及2次以上的响应
+     - 解决：collection去掉请求就行了，只要header请求到就可以了，因为收藏列表数据保存在vuex中，子组件可以随时调用，没有必要重复请求
     
