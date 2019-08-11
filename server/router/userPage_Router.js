@@ -100,6 +100,21 @@ router.post('/getFriendsMessage', (request,response) =>{
       handleDisconnect(connection);
 })
 
+//获取好友消息接口
+router.post('/getHistoryFriendsMessage', (request,response) =>{
+    connection.connect();  
+    var sql=`SELECT message.time,message.content,user.nickName,message.messageID
+    FROM message,USER
+    WHERE message.userID = user.userID AND message.receiverID = ${request.body.userID} AND message.isRead = 1`;
+    connection.query(sql, (error, result) =>{
+        if (error){
+            response.status(500).send('server error');
+        }
+        response.status(200).json(result);
+    });
+    handleDisconnect(connection);
+})
+
 //设置已读状态
 router.post('/isRead', (request,response) =>{
     connection.connect();

@@ -16,7 +16,12 @@
                 </el-table>
             </el-tab-pane>
             <el-tab-pane label="已读消息" name="second">
-
+                <el-table :data="$store.state.historyMessage" style="width: 100%">
+                    <el-table-column prop="content" min-width="500px"> </el-table-column>
+                    <el-table-column prop="time"> </el-table-column>
+                    <el-table-column prop="nickName"> </el-table-column>
+                    <div slot="empty" class="empty"> </div>
+                </el-table>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -35,7 +40,8 @@ export default{
         isRead(id){
             this.$http.post("isRead" ,{id:id},{ credentials: true}).then( (result) =>{
                 if(result.body.code == 200){
-                    this.getFriendsMessage();//设置为已读后刷新信息列表
+                    this.getFriendsMessage();
+                    this.getHistoryMessage();//设置为已读后刷新信息列表
                 }
             })
         },
@@ -48,6 +54,12 @@ export default{
                 }else{
                     this.$store.commit('getMessageCount','');
                 }
+            })
+        },
+        //获取好友消息
+        getHistoryMessage(){
+            this.$http.post("getHistoryFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                this.$store.commit('getHistoryMessage',result.body);
             })
         },
     }

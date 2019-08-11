@@ -45,6 +45,7 @@ var store = new Vuex.Store({
         messageCount:'10',//好友消息数目
         userIfo:{},//用户信息
         message:[],//好友信息
+        historyMessage:[],//已读消息
         friendsList:[],//好友列表
         photoCollection:[],//收藏相簿
         streetCollection:[],//收藏帖子
@@ -67,6 +68,9 @@ var store = new Vuex.Store({
         },
         getMessage(state,message){// 获取消息列表
             state.message = message;
+        },
+        getHistoryMessage(state,message){// 获取已读消息列表
+            state.historyMessage = message;
         },
         getFriends(state,friends){// 获取好友列表
             state.friendsList = friends;

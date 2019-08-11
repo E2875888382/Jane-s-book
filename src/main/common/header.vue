@@ -163,6 +163,7 @@ export default {
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
                     this.getFriendsMessage();
+                    this.getHistoryMessage();
                     this.getFriends();
                     this.getPhotoCollection();
                     this.getStreetCollection();
@@ -228,6 +229,12 @@ export default {
                 }else{
                     this.$store.commit('getMessageCount','');
                 }
+            })
+        },
+        //获取好友消息
+        getHistoryMessage(){
+            this.$http.post("getHistoryFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
+                this.$store.commit('getHistoryMessage',result.body);
             })
         },
         // 获取好友列表
