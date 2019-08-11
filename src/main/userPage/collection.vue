@@ -50,10 +50,6 @@ export default {
             streetCollection:[],
         }
     },
-    mounted(){
-        this.getPhotoCollection();
-        this.getStreetCollection();
-    },
     methods:{
         // 取消收藏相簿
         unlikePhoto(photoID){
