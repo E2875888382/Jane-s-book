@@ -1,20 +1,35 @@
 <template>
 <div>
     <div class="messageBox">
-        <el-card class="box-card" v-for="item in $store.state.message" :key="item.index">
-            <div slot="header" class="clearfix">
-                <span class="sendTime">{{ item.time }}</span>
-                <span>{{ item.nickName }}：</span>
-                <el-button style="float: right; padding: 3px 0" type="text" @click="isRead(item.messageID)">已读</el-button>
-            </div>
-            <div class="text item">{{ item.content }}</div>
-        </el-card>
+        <el-tabs value="first">
+            <el-tab-pane label="未读消息" name="first">
+                <el-table :data="$store.state.message" style="width: 100%">
+                    <el-table-column prop="content" min-width="500px"> </el-table-column>
+                    <el-table-column prop="time"> </el-table-column>
+                    <el-table-column prop="nickName"> </el-table-column>
+                    <el-table-column align="right">
+                        <template slot-scope="scope">
+                            <el-button size="mini" type="primary" @click="isRead(scope.row.messageID)">标为已读</el-button>
+                        </template>
+                    </el-table-column>
+                    <div slot="empty" class="empty"> </div>
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="已读消息" name="second">
+
+            </el-tab-pane>
+        </el-tabs>
     </div>
 </div>
 </template>
 
 <script>
 export default{
+    data(){
+        return {
+
+        }
+    },
     methods:{
         //将消息设置为已读
         isRead(id){
@@ -47,12 +62,18 @@ export default{
 .messageBox::-webkit-scrollbar{
     display:none;
 }
-.box-card{
-    margin-bottom: 10px;
-}
-.sendTime{
-    color: #999;
-    font-size: 12px;
-    line-height: 22px;
+.empty{
+    background-image: url(//s1.hdslb.com/bfs/static/jinkela/space/asserts/nodata02.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    color: #6d757a;
+    content: "\6570\636E\4E3A\7A7A";
+    display: block;
+    font-size: 14px;
+    height: 450px;
+    overflow: hidden;
+    line-height: 640px;
+    text-align: center;
 }
 </style>

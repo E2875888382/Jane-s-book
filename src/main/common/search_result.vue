@@ -27,6 +27,7 @@
             <el-table
                 :data="$store.state.searchUser"
                 style="width: 100%">
+                <div slot="empty" class="empty"> </div>
                 <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" class="demo-table-expand">
@@ -127,5 +128,19 @@ export default {
     justify-content: center;
     overflow: hidden;
     cursor: pointer;
+}
+.empty{
+    background-image: url(//s1.hdslb.com/bfs/static/jinkela/space/asserts/nodata02.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    color: #6d757a;
+    content: "\6570\636E\4E3A\7A7A";
+    display: block;
+    font-size: 14px;
+    height: 450px;
+    overflow: hidden;
+    line-height: 640px;
+    text-align: center;
 }
 </style>
