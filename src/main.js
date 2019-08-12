@@ -41,6 +41,11 @@ Vue.use(Vuex);
 Vue.use(infiniteScroll);
 Vue.use(Common);
 
+
+Vue.http.interceptors.push((request,next)=>{
+    request.credentials = true; // 接口每次请求会跨域携带cookie
+    next()
+})
 // 创建vuex
 var store = new Vuex.Store({
     state:{

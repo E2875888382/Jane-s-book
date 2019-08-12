@@ -72,18 +72,6 @@ export default {
             }
           });
         },
-        // 退出登录
-        logOut(){
-            this.$http.get('logOut',{credentials: true}).then((result) => {
-                if(result.body.code == 700){
-                    this.$store.commit('userStatus',{currentUser:'',unLoginFlag:true,loginFlag:false});
-                }else{
-                    console.log(result.body);
-                }
-            },(error) => {
-                console.log(error);
-            })
-        },
         // 重置表单
         resetForm(formName) {
           this.$refs[formName].resetFields();

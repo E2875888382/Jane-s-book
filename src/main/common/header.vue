@@ -74,7 +74,7 @@
 <script>
 import search from './search.vue'
 export default {
-     data() {
+    data() {
         let checkEmail = (rule, value, callback) => {
             let reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             if (!reEmail.test(value)) {
@@ -149,7 +149,7 @@ export default {
         // 获取用户信息
         getStatus(){
             //请求登录者的基本信息，并保存到vuex
-            this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
+            this.$http.get('getLoginUserInfo').then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
                     this.$store.commit('userStatus',true);
@@ -174,7 +174,7 @@ export default {
         },
         // 登录
         login(){
-            this.$http.post('login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{
+            this.$http.post('login',this.loginForm).then((result) =>{
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
                     this.getStatus(); //登录后获取用户信息
@@ -189,22 +189,9 @@ export default {
                 console.log(error);
             })
         },
-        // 退出登录
-        logOut(){
-            this.$http.get('logOut',{credentials: true}).then((result) => {
-                if(result.body.code == 700){
-                    this.$store.commit('userStatus',false);
-                    this.$router.push({ path:'/'});//重定向到首页
-                }else{
-                    console.log(result.body);
-                }
-            },(error) => {
-                console.log(error);
-            })
-        },
         // 发送验证码，获取返回验证码并对比
         sendSms(){
-            this.$http.post('sendSms',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
+            this.$http.post('sendSms',this.newForm).then(function(result){
                 this.sms = result.body.sms;
             },function(error){
                 console.log(error);
