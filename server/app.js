@@ -2,9 +2,6 @@ var express=require('express');
 var bodyParser=require('body-parser');
 var path=require('path');
 var session=require('express-session');
-const cookieParser = require('cookie-parser');
-
-
 
 //导入路由
 var login_Router=require('./router/login_Router');//登录路由
@@ -22,13 +19,15 @@ var search_Router=require('./router/search_Router');//搜索模块路由(主页�
 require('events').EventEmitter.defaultMaxListeners = 0;
 
 var app=express();
-//配置body-parser用于处理post请求
+
+//配置body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 //设置静态文件夹
 app.use('/node_modules/',express.static(path.join(__dirname,'../node_modules/')));
+
 //设置跨域
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -39,17 +38,16 @@ app.all('*', function(req, res, next) {
     next();
 });
 
-app.use(cookieParser('123456')); //使用cookie中间件，传入签名123456进行加密
-
 //配置express-session
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
+    name:'user',
     saveUninitialized: true,
     cookie:{
         maxAge:24*60*60*1000
     }
- }));
+}));
 
 //挂载router
 app.use(login_Router);
@@ -61,8 +59,7 @@ app.use(photo_Router);
 app.use(relation_Router);
 app.use(search_Router);
 
-
 //设置服务器端口
 app.listen(8000,function(){
-    console.log('----- Data server is on -----');
+    console.log('----- server on -----');
 });

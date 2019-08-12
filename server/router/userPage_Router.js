@@ -15,7 +15,7 @@ router.post('/getFriends',(request,response) =>{
 //获取用户信息接口
 router.get('/getLoginUserInfo', (request,response) =>{
     if(request.session.user){
-        var sql=`SELECT * FROM user WHERE email = "${request.session.user.email}"`;
+        var sql=`SELECT * FROM user WHERE email = "${request.session.user}"`;
         db(sql,(result)=>{
             response.status(200).json(result);
         })
