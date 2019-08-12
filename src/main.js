@@ -44,7 +44,6 @@ Vue.use(Common);
 // 创建vuex
 var store = new Vuex.Store({
     state:{
-        currentUser:'',//当前用户
         loginFlag:false,//登录状态标记
         messageCount:0,//好友消息数目
         userIfo:{},//用户信息
@@ -60,9 +59,8 @@ var store = new Vuex.Store({
         search:''//搜索的内容，用于格式化搜索结果
     },
     mutations:{
-        userStatus(state,user){// 获取登录状态
-            state.currentUser = user.currentUser;
-            state.loginFlag = user.loginFlag;
+        userStatus(state,loginFlag){// 获取登录状态
+            state.loginFlag = loginFlag;
         },
         userIfo(state,userIfo){// 获取用户信息
             state.userIfo = userIfo;

@@ -31,19 +31,12 @@ router.post('/login', (request,response) =>{
         else {
           //使用session记录登录状态
           request.session.user=request.body;
+          response.cookie('connect.sid',request.session.user,{ maxAge: 10000*2,signed:true});
           response.status(200).json({  message:"登录成功",code:1,user:request.session.user.email  });
         }
     })
 });
 
-//返回登陆状态列表接口
-router.get('/getLoginUser', (request,response) =>{
-    if(request.session.user){  
-        response.status(200).json({user:request.session.user });
-    }else{
-        response.status(200).json({  message:"没有登录记录",code:600  });
-    }
-})
 
 //退出登录接口
 router.get('/logOut', (request,response) =>{

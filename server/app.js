@@ -2,6 +2,7 @@ var express=require('express');
 var bodyParser=require('body-parser');
 var path=require('path');
 var session=require('express-session');
+const cookieParser = require('cookie-parser');
 
 
 
@@ -33,11 +34,12 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
+
+app.use(cookieParser('123456')); //使用cookie中间件，传入签名123456进行加密
 
 //配置express-session
 app.use(session({

@@ -143,25 +143,16 @@ export default {
         search,
     },
     created(){
-        this.getLoginUser();//组件创建后获取登录状态
-        this.getLoginUserIfo();//组件创建后获取登录者的基本信息
+        this.getStatus();//组件创建后获取登录者的基本信息
     },
     methods:{
-        // 获取登录状态
-        getLoginUser(){
-            //请求登录session，用于持久化登录状态
-            this.$http.get('getLoginUser',{ credentials: true }).then(function(result){
-                if(result.body.user){
-                   this.$store.commit('userStatus',{currentUser:result.body.user.email,loginFlag:true});
-                }
-            })
-        },
         // 获取用户信息
-        getLoginUserIfo(){
+        getStatus(){
             //请求登录者的基本信息，并保存到vuex
             this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
+                    this.$store.commit('userStatus',true);
                     this.getFriendsMessage();
                     this.getHistoryMessage();
                     this.getFriends();
@@ -175,7 +166,7 @@ export default {
             //注册新用户，提交表单并获取返回的登录信息
             this.$http.post('newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
                 this.dialogNewVisible = false;
-                this.$store.commit('userStatus',{ currentUser:result.body.user,loginFlag:true});
+                this.getStatus();
                 location.href="#/";//注册并且登录完成，重定向到首页
             },function(error){
                 console.log(error);
@@ -186,8 +177,7 @@ export default {
             this.$http.post('login',this.loginForm,{emulateJSON:true,credentials: true}).then((result) =>{
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
-                    this.getLoginUserIfo(); //登录后获取用户信息
-                    this.$store.commit('userStatus',{currentUser:result.body.user,loginFlag:true});
+                    this.getStatus(); //登录后获取用户信息
                     this.$router.push({ path:'/street'});// 登录后重定向到首页
                 }else{
                     this.$message({
@@ -203,7 +193,7 @@ export default {
         logOut(){
             this.$http.get('logOut',{credentials: true}).then((result) => {
                 if(result.body.code == 700){
-                    this.$store.commit('userStatus',{currentUser:'',loginFlag:false});
+                    this.$store.commit('userStatus',false);
                     this.$router.push({ path:'/'});//重定向到首页
                 }else{
                     console.log(result.body);
