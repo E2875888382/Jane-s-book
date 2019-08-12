@@ -179,6 +179,7 @@ export default {
                             type: 'success'
                         });
                         this.checkPhotoCollection();// 收藏完要更新是否已收藏，防止重复收藏
+                        this.getPhotoCollection();
                     }
                 })
             }

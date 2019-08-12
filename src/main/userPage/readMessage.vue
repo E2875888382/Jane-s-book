@@ -45,23 +45,6 @@ export default{
                 }
             })
         },
-        //获取好友消息
-        getFriendsMessage(){
-            this.$http.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                this.$store.commit('getMessage',result.body);
-                if(result.body.length>0){
-                    this.$store.commit('getMessageCount',result.body.length);
-                }else{
-                    this.$store.commit('getMessageCount',0);
-                }
-            })
-        },
-        //获取已读的好友消息
-        getHistoryMessage(){
-            this.$http.post("getHistoryFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                this.$store.commit('getHistoryMessage',result.body);
-            })
-        },
         cellStyle({row, column, rowIndex, columnIndex}){
             if(columnIndex === 0){
                 return {'font-size':'14px','text-indent':'2em' }

@@ -89,26 +89,6 @@ export default {
             let route = '/streetDetails/'+streetID;
             this.$router.push({ path:route });// 根据streetID跳转路由
         },
-        // 获取相簿收藏列表
-        getPhotoCollection(){
-            if(this.$store.state.loginFlag){
-                this.$http.post('getPhotoCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
-                    if(result.body.code == 200){
-                        this.$store.commit('getPhotoCollection',result.body.photoCollection);
-                    }
-                })
-            }
-        },
-        // 获取帖子收藏列表
-        getStreetCollection(){
-            if(this.$store.state.loginFlag){
-                this.$http.post('getStreetCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
-                    if(result.body.code == 200){
-                        this.$store.commit('getStreetCollection',result.body.streetCollection);
-                    }
-                })
-            }
-        }
     }
 }
 </script>

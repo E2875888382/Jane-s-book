@@ -61,12 +61,6 @@ export default {
                 this.getFriends();//删除好友成功刷新好友列表
             })
         },
-        // 获取好友列表
-        getFriends(){
-            this.$http.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-                this.$store.commit('getFriends',result.body);
-            }) 
-        },
         //搜索好友
         searchFriend(){
             this.$http.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{

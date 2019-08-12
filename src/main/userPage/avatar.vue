@@ -57,14 +57,6 @@ export default {
                 })
             }
         },
-        //获取用户信息并保存到vuex
-        getLoginUserIfo(){
-            this.$http.get('getLoginUserInfo',{ credentials: true }).then( (result) =>{
-                if(result.body[0]){
-                    this.$store.commit('userIfo',result.body[0]);
-                }
-            })
-        },
         // 上传推荐头像
         useAvatarT(src){
             this.$http.post("uploadAvatarT",{src:src,userID:this.$store.state.userIfo.userID}).then(function(result){

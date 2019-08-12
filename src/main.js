@@ -32,10 +32,14 @@ import router from './router.js'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+//导入全局函数
+import Common from './main/common/common.js';
+
 //配置elementUI，vuex，infiniteScroll
 Vue.use(ElementUI)
 Vue.use(Vuex);
 Vue.use(infiniteScroll);
+Vue.use(Common);
 
 // 创建vuex
 var store = new Vuex.Store({
