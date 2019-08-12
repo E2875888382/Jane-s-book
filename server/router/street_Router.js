@@ -1,104 +1,55 @@
 var express=require('express');
 var router=express.Router();
-var mysql=require('mysql');
-var connection=mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'12345',
-    port: '3306', 
-    database:'videos',
-    multipleStatements: true // 支持执行多条 sql 语句
-});
-//https://blog.csdn.net/bipedal_bit/article/details/48246963
-//用于处理第二次连接数据库出现error的问题
-function handleDisconnect(connection) {
-    connection.on('error', function(err) {
-      if (!err.fatal) {
-        return;
-      }
-      if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
-        throw err;
-      }
-      console.log('Re-connecting lost connection: ' + err.stack);
-      connection = mysql.createConnection(connection.config);
-      handleDisconnect(connection);
-      connection.connect();
-    });
-};
+var db = require('../mysql.js');
 
 //查询步行街帖子
 router.post('/getStreet',(request,response) =>{
-    connection.connect();
     var begin = (request.body.page -1)*20;
     var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,street.streetID
     FROM street,USER
     WHERE street.userID = user.userID
     LIMIT ${begin},20`;
-    connection.query(sql,(error,result) =>{
-        if(error){
-            response.status(500).send('server error');
-        }
+    db(sql,(result)=>{
         response.status(200).json({ code:200,streetList:result });
     })
-    handleDisconnect(connection);
 })
 
 // 查询帖子数量
 router.get('/getStreetCount',(request,response) => {
-  connection.connect();
-  var sql = `SELECT COUNT(*) FROM street`;
-  connection.query(sql,(error,result) =>{
-      if(error){
-          response.status(500).send('server error');
-      }
-      response.status(200).json({ code:200,streetCount:result });
-  })
-  handleDisconnect(connection);
+    var sql = `SELECT COUNT(*) FROM street`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,streetCount:result });
+    })
 })
 
 // 查询帖子正文
 router.post('/getStreetDetails',(request,response) => {
-  connection.connect();
-  var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,user.level,user.avatar,street.replyCount,street.img,street.content
-  FROM street,USER
-  WHERE street.userID = user.userID AND
-  streetID = ${request.body.streetID}`;
-  connection.query(sql,(error,result) =>{
-      if(error){
-          response.status(500).send('server error');
-      }
-      response.status(200).json({ code:200,streetDetails:result });
-  })
-  handleDisconnect(connection);
+    var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,user.level,user.avatar,street.replyCount,street.img,street.content
+    FROM street,USER
+    WHERE street.userID = user.userID AND
+    streetID = ${request.body.streetID}`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,streetDetails:result });
+    })
 })
 
 // 查询所有回复
 router.post('/getStreetReply',(request,response) => {
-  connection.connect();
-  var sql = ` SELECT user.avatar,user.nickName,streetReply.time,streetReply.praise,user.level,streetReply.content,streetreply.streetReplyID
-  FROM USER,streetReply
-  WHERE user.userID = streetReply.userID AND streetID = ${request.body.streetID}`;
-  connection.query(sql,(error,result) =>{
-      if(error){
-          response.status(500).send('server error');
-      }
-      response.status(200).json({ code:200,streetReply:result });
-  })
-  handleDisconnect(connection);
+    var sql = ` SELECT user.avatar,user.nickName,streetReply.time,streetReply.praise,user.level,streetReply.content,streetreply.streetReplyID
+    FROM USER,streetReply
+    WHERE user.userID = streetReply.userID AND streetID = ${request.body.streetID}`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,streetReply:result });
+    })
 })
 
 // 添加回复
 router.post('/addReply',(request,response) => {
-    connection.connect();
     var sql = `INSERT INTO streetReply(streetID,userID,TIME,content) VALUES (${request.body.newReply.streetID},
-        '${request.body.newReply.userID}','${request.body.newReply.time}','${request.body.newReply.content}')`;
-    connection.query(sql,(error,result) =>{
-        if(error){
-            response.status(500).send('server error');
-        }
+    '${request.body.newReply.userID}','${request.body.newReply.time}','${request.body.newReply.content}')`;
+    db(sql,(result)=>{
         response.status(200).json({ code:200 });
     })
-    handleDisconnect(connection);
 })
 
 // 发新帖
@@ -109,69 +60,45 @@ router.post('/uploadNewStreet', (request,response) =>{
     }else{
         newStreet.img = '';
     }
-    connection.connect();
     var sql=`INSERT INTO street(topic,userID,TIME,content,img)
     VALUES('${newStreet.topic}','${newStreet.userID}','${newStreet.time}','${newStreet.content}','${newStreet.img}')`;
-    connection.query(sql,  (error, result) => {
-        if (error){
-            response.status(500).send('server error');
-        }
+    db(sql,(result)=>{
         response.status(200).json({message:"上传成功",code:200});
-    });
-    handleDisconnect(connection);
+    })
 })
 
 //增加帖子浏览量
 router.post('/addStreetView',(request,response) =>{
-    connection.connect();
     var sql = ` UPDATE street SET view = view + 1  WHERE streetID = ${request.body.streetID}`;
-    connection.query(sql,(error,result) =>{
-        if(error){
-            response.status(500).send('server error');
-        }
+    db(sql,(result)=>{
         response.status(200).json({ code:200,message:'阅读量增加' });
     })
-    handleDisconnect(connection);
 })
 
 //增加帖子回复量
 router.post('/addStreetReply',(request,response) =>{
-    connection.connect();
     var sql = ` UPDATE street SET replyCount = replyCount + 1  WHERE streetID = ${request.body.streetID}`;
-    connection.query(sql,(error,result) =>{
-        if(error){
-            response.status(500).send('server error');
-        }
+    db(sql,(result)=>{
         response.status(200).json({ code:200,message:'回复量增加' });
     })
-    handleDisconnect(connection);
 })
 
 // 查询所有最后回复
 router.get('/getLastReply',(request,response) =>{
-    connection.connect();
     var sql = `SELECT TIME,streetID,user.nickName
     FROM (streetReply RIGHT JOIN (SELECT MAX(TIME) AS ti ,streetId AS id FROM streetReply GROUP BY streetId) A ON streetReply.streetID =A.id AND streetReply.time=A.ti) LEFT JOIN USER ON streetReply.userID=user.userID`;
-    connection.query(sql,(error,result) =>{
-        if(error){
-            response.status(500).send('server error');
-        }
+    db(sql,(result)=>{
         response.status(200).json({ code:200,lastReply:result });
     })
-    handleDisconnect(connection);
 })
 
 // 评论的点赞+1
 router.post('/streetReplyPraise',(request,response)=>{
-    connection.connect();
     var sql = `UPDATE streetreply SET praise = praise + 1 WHERE streetReplyID = ${request.body.streetReplyID}`;
-    connection.query(sql,(error,result) =>{
-        if(error){
-            response.status(500).send('server error');
-        }
+    db(sql,(result)=>{
         response.status(200).json({ code:200,message:'success'});
     })
-    handleDisconnect(connection);
 })
+
 //导出router
 module.exports=router;

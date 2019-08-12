@@ -3,6 +3,8 @@ var bodyParser=require('body-parser');
 var path=require('path');
 var session=require('express-session');
 
+
+
 //导入路由
 var login_Router=require('./router/login_Router');//登录路由
 var userPage_Router=require('./router/userPage_Router');//用户系统路由
@@ -56,6 +58,7 @@ app.use(street_Router);
 app.use(photo_Router);
 app.use(relation_Router);
 app.use(search_Router);
+
 
 //设置服务器端口
 app.listen(8000,function(){
