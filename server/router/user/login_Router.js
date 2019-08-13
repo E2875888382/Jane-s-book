@@ -3,7 +3,7 @@ var router=express.Router();
 var db = require('../../mysql.js');
 const nodemailer = require('nodemailer');
 
-//注册接口
+// 增加用户
 router.post('/newUser',(request,response) =>{
     var sql='SELECT * FROM user WHERE email ='+ '"'+request.body.email+'"';
     db(sql,(result)=>{
@@ -21,7 +21,7 @@ router.post('/newUser',(request,response) =>{
     })
 })
 
-//处理登录请求接口
+// 查询登录
 router.post('/login', (request,response) =>{
     var sql=`SELECT * FROM user WHERE email ="${request.body.email}"AND password = "${request.body.password }"`;
     db(sql,(result)=>{
@@ -36,14 +36,13 @@ router.post('/login', (request,response) =>{
     })
 });
 
-
-//退出登录接口
+// 退出登录
 router.get('/logOut', (request,response) =>{
     request.session.user=null;
     response.status(200).json({  message:"退出成功",code:700  });
 })
 
-//发送邮件验证码接口
+// 发送邮件验证码
 router.post('/sendSms', (request,response) =>{
     let transporter = nodemailer.createTransport({
         // host: 'smtp.ethereal.email',

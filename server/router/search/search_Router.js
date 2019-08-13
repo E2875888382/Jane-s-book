@@ -2,7 +2,7 @@ var express=require('express');
 var router=express.Router();
 var db = require('../../mysql.js');
 
-// 搜索步行街帖子
+// 查询帖子
 router.get('/searchForStreet',(request,response)=>{
     var sql = `SELECT street.topic,street.time,user.nickName,street.streetID
     FROM street,USER
@@ -12,8 +12,7 @@ router.get('/searchForStreet',(request,response)=>{
         response.status(200).json({ code:200,street:result});
     })
 })
-
-// 搜索相簿
+// 查询相簿
 router.get('/searchForPhoto',(request,response)=>{
     var sql = `SELECT photo.photoID,photo.src,user.nickName,photo.title
     FROM photo,USER
@@ -23,8 +22,7 @@ router.get('/searchForPhoto',(request,response)=>{
         response.status(200).json({ code:200,photo:result});
     })
 })
-
-// 搜索用户
+// 查询用户
 router.get('/searchForUser',(request,response)=>{
     var sql = `SELECT userID,nickName,avatar,email,birthday,level,gender,sign
     FROM USER
@@ -33,8 +31,7 @@ router.get('/searchForUser',(request,response)=>{
         response.status(200).json({ code:200,user:result});
     })
 })
-
-// 搜索新闻
+// 查询新闻
 router.get('/searchForNews',(request,response)=>{
     var sql = `SELECT title,TIME,newID,source
     FROM news

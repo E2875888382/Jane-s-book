@@ -4,7 +4,7 @@ var path=require('path');
 var session=require('express-session');
 
 //导入路由
-var login_Router=require('./router/login/login_Router');//登录路由
+var login_Router=require('./router/user/login_Router');//登录路由
 var userPage_Router=require('./router/user/userPage_Router');//用户系统路由
 var news_Router=require('./router/news/news_Router');//新闻模块路由
 var developer_Router=require('./router/developer/developer_Router');//开发者模块路由
