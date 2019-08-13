@@ -90,8 +90,8 @@ export default {
         checkStreetCollection(){
             if(this.$store.state.loginFlag){
                 this.post("checkStreetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id}).then( (result) =>{
-                    if(result.body.code==200){
-                        if(result.body.isCollection[0]["COUNT(*)"] > 0){
+                    if(result.data.code==200){
+                        if(result.data.isCollection[0]["COUNT(*)"] > 0){
                             this.isCollection = true;
                         }
                     }
@@ -102,7 +102,7 @@ export default {
         streetCollection(){
             if(this.$store.state.loginFlag){
                 this.post("streetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
-                    if(result.body.code==200){
+                    if(result.data.code==200){
                         this.$message({
                             message: '添加收藏成功',
                             type: 'success'
@@ -135,7 +135,7 @@ export default {
                         userID:this.$store.state.userIfo.userID
                     }
                     this.post('addReply',{ newReply:newReply }).then((result)=>{
-                        if(result.body.code == 200){
+                        if(result.data.code == 200){
                             this.getStreetReply();// 刷新回复列表
                             this.addStreetReply();// 增加回复量
                             this.getStreetDetails();// 刷新帖子详情
@@ -158,8 +158,8 @@ export default {
         // 获取帖子详情
         getStreetDetails(){
             this.post('getStreetDetails',{ streetID:this.id }).then((result)=>{
-                if(result.body.code == 200){
-                    this.streetDetails = result.body.streetDetails[0];
+                if(result.data.code == 200){
+                    this.streetDetails = result.data.streetDetails[0];
                     this.checkStreetCollection();
                 }
             })
@@ -167,15 +167,15 @@ export default {
         // 获取评论列表
         getStreetReply(){
             this.post('getStreetReply',{ streetID:this.id }).then((result)=>{
-                if(result.body.code == 200){
-                    this.streetReply = result.body.streetReply;
+                if(result.data.code == 200){
+                    this.streetReply = result.data.streetReply;
                 }
             })
         },
         // 点亮某条评论
         addStreetReplyPraise(streetReplyID,event){
             this.post('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
-                if(result.body.code == 200){
+                if(result.data.code == 200){
                     event.target.classList.add('gold');// 点亮后该表灯泡颜色
                     this.getStreetReply();// 点亮后刷新评论列表
                 }

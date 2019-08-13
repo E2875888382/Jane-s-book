@@ -162,8 +162,8 @@ export default {
         // 检查是否被收藏过
         checkPhotoCollection(){
             this.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id}).then( (result) =>{
-                if(result.body.code==200){
-                    if(result.body.isCollection[0]["COUNT(*)"] > 0){
+                if(result.data.code==200){
+                    if(result.data.isCollection[0]["COUNT(*)"] > 0){
                         this.isCollection = true;
                     }
                 }
@@ -173,7 +173,7 @@ export default {
         photoCollection(){
             if(this.$store.state.loginFlag){
                 this.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
-                    if(result.body.code==200){
+                    if(result.data.code==200){
                         this.$message({
                             message: '添加收藏成功',
                             type: 'success'
@@ -202,7 +202,7 @@ export default {
         // 关注当前作者
         addFriend(){
             this.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then( (result) =>{
-                if(result.body.code==200){
+                if(result.data.code==200){
                     this.$message({
                         message: '添加好友成功',
                         type: 'success'
@@ -220,8 +220,8 @@ export default {
         // 检查作者与用户是否为好友关系
         checkFriend(){
             this.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then((result)=>{
-                if(result.body.code == 200){
-                    if(result.body.isFriend[0]['COUNT(*)'] == 1){
+                if(result.data.code == 200){
+                    if(result.data.isFriend[0]['COUNT(*)'] == 1){
                         this.isFriend = true;
                     }
                 }
@@ -230,8 +230,8 @@ export default {
         // 获取相簿详情
         getPhotoDetails(){
             this.post("getPhotoDetails",{ photoID:this.id }).then((result) =>{
-                if(result.body.code == 200){
-                    this.photoDetails = result.body.photoDetails[0];
+                if(result.data.code == 200){
+                    this.photoDetails = result.data.photoDetails[0];
                     if(this.$store.state.loginFlag == true){// 如果已经登录，检查各种状态
                         this.checkFriend();
                         this.isMyPhoto();
@@ -250,28 +250,28 @@ export default {
         getPhotoReply(){
             this.post('getPhotoReply',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
 
-                result.body.photoReply.map(function(i){
+                result.data.photoReply.map(function(i){
                     i.flag = true;// 一开始把flag置为true，用于控制点赞和踩的行为
                 })
 
-                this.reply = result.body.photoReply;
+                this.reply = result.data.photoReply;
             })
         },
         // 获取相簿按时间排序的评论
         getPhotoReplyByTime(){
             this.post('getPhotoReplyByTime',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
 
-                result.body.photoReplyByTime.map(function(i){
+                result.data.photoReplyByTime.map(function(i){
                     i.flag = true;
                 })
 
-                this.replyByTime = result.body.photoReplyByTime;
+                this.replyByTime = result.data.photoReplyByTime;
             })
         },
         // 获取评论数量
         getPhotoCount(){
             this.post('getPhotoCount',{photoID:this.id}).then((result)=>{
-                this.replyCount = result.body.photoCount[0]['COUNT(*)'];
+                this.replyCount = result.data.photoCount[0]['COUNT(*)'];
             })
         },
         // 获取一组评论

@@ -66,27 +66,27 @@ export default {
             this.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
                 // 根据昵称查询会出现多人的情况，遍历每个对象，发送查询请求，查看是否已关注或者是自己
                 // 给每个对象添加两个flag，表示是否已关注和是否是自己
-                result.body.forEach(element => {
+                result.data.forEach(element => {
                     element.isMe = false;
                     element.isFriend = false;
                     if(this.$store.state.userIfo.userID == element.userID){
                         element.isMe = true;
                     }
                     this.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:element.userID}).then((result)=>{
-                        if(result.body.code == 200){
-                            if(result.body.isFriend[0]['COUNT(*)'] == 1){
+                        if(result.data.code == 200){
+                            if(result.data.isFriend[0]['COUNT(*)'] == 1){
                                 element.isFriend = true;
                             }
                         }
                     })
                 });
-                this.searchFriendResult = result.body;
+                this.searchFriendResult = result.data;
             })
         },
         //添加好友
         addFriend(userID){
             this.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:userID}).then( (result) =>{
-                if(result.body.code==200){
+                if(result.data.code==200){
                     this.$message({
                         message: '添加好友成功',
                         type: 'success'
@@ -106,7 +106,7 @@ export default {
         sendMsg(){
             if(this.receiver.textarea!==''&& this.receiver.receiverID!==''){
                 this.post("sendMsg" ,{userID:this.$store.state.userIfo.userID,receiverID:this.receiver.receiverID,content:this.receiver.textarea,time:new Date().toLocaleString()}).then( (result) =>{
-                    if(result.body.code==200){
+                    if(result.data.code==200){
                         this.$message({
                             message: '发送私信成功',
                             type: 'success'

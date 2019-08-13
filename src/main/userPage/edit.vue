@@ -66,7 +66,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.post('updateUserInfo',{userID:this.$store.state.userIfo.userID,update:this.ruleForm}).then((result) =>{
-                        if(result.body.code==200){
+                        if(result.data.code==200){
                             this.getLoginUserIfo();// 提交成功后重新请求用户信息
                             this.$message({
                                 message: '修改信息成功',

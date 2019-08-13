@@ -65,13 +65,13 @@ export default {
         // 请求一组贴子，参数n是组数
         getStreetList(n){
             this.post('getStreet',{ page:n }).then((result)=>{
-                if(result.body.code == 200){
-                    result.body.streetList.forEach(e => {
+                if(result.data.code == 200){
+                    result.data.streetList.forEach(e => {
                         e.lastReplyTime = '';
                         e.lastReplyAuthor = '';
                     });
                     this.getLastReply();// 获取帖子后请求对应的最后回复
-                    this.streetList = result.body.streetList;
+                    this.streetList = result.data.streetList;
                 }
             })
         },

@@ -54,7 +54,7 @@ export default {
         // 取消收藏相簿
         unlikePhoto(photoID){
             this.post('unlikePhoto',{userID:this.$store.state.userIfo.userID,photoID:photoID}).then((result)=>{
-                if(result.body.code == 200){
+                if(result.data.code == 200){
                     this.$message({
                         message: '取消收藏成功',
                         type: 'success'
@@ -66,7 +66,7 @@ export default {
         // 取消收藏帖子
         unlikeStreet(streetID){
             this.post('unlikeStreet',{userID:this.$store.state.userIfo.userID,streetID:streetID}).then((result)=>{
-                if(result.body.code == 200){
+                if(result.data.code == 200){
                     this.$message({
                         message: '取消收藏成功',
                         type: 'success'

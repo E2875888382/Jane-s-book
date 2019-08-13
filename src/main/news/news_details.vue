@@ -69,8 +69,8 @@ export default {
         //获取新闻详情
         getNewsDetails(){
             this.post("getNewsDetails",{ newID:this.id }).then((result) =>{
-                if(result.body.code == 200){
-                    this.newsDetails = result.body.newsList[0];
+                if(result.data.code == 200){
+                    this.newsDetails = result.data.newsList[0];
                     if(this.newsDetails.imgContent){
                         this.imgContent = this.newsDetails.imgContent.split(',')
                     }

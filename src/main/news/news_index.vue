@@ -50,8 +50,8 @@ export default {
         // 获取新闻组
         getNews(num){
             this.post("getNews",{ page:num }).then((result) =>{
-                if(result.body.code == 200){
-                    this.newsList = result.body.newsList;
+                if(result.data.code == 200){
+                    this.newsList = result.data.newsList;
                 }
             })
         },

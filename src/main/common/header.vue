@@ -172,7 +172,7 @@ export default {
         // 登录
         login(){
             this.post('login',this.loginForm).then((result)=>{
-                if(result.body.code == 1){
+                if(result.data.code == 1){
                     this.dialogLoginVisible = false;
                     this.getStatus(); //登录后获取用户信息
                     this.$router.push({ path:'/street'});// 登录后重定向到首页
@@ -187,7 +187,7 @@ export default {
         // 发送验证码，获取返回验证码并对比
         sendSms(){
             this.post('sendSms',this.newForm).then((result)=>{
-                this.sms = result.body.sms;
+                this.sms = result.data.sms;
             })
         },
     }

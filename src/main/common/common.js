@@ -18,33 +18,38 @@ exports.install = function(Vue,options){
     };
     Vue.prototype.post = function(url,data){
         return new Promise((resolve,reject)=>{
-            this.$http.post(url,data).then((result)=>{
+            axios({
+                method:'post',
+                url:url,
+                data:data,
+                withCredentials: true,
+            }).then((result)=>{
                 resolve(result);
             },(err)=>{
                 throw err;
-            }) 
+            })
         })
     }
     // 获取收藏的相簿
     Vue.prototype.getPhotoCollection = function(){
         this.post('getPhotoCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
-            if(result.body.code == 200){
-                this.$store.commit('getPhotoCollection',result.body.photoCollection);
+            if(result.data.code == 200){
+                this.$store.commit('getPhotoCollection',result.data.photoCollection);
             }
         })
     };
     // 获取收藏的帖子
     Vue.prototype.getStreetCollection = function(){
         this.post('getStreetCollection',{userID:this.$store.state.userIfo.userID}).then((result)=>{
-            if(result.body.code == 200){
-                this.$store.commit('getStreetCollection',result.body.streetCollection);
+            if(result.data.code == 200){
+                this.$store.commit('getStreetCollection',result.data.streetCollection);
             }
         })
     };
     // 获取好友列表
     Vue.prototype.getFriends = function(){
         this.post("getFriends" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-            this.$store.commit('getFriends',result.body);
+            this.$store.commit('getFriends',result.data);
         }) 
     };
     // 获取用户信息
@@ -58,9 +63,9 @@ exports.install = function(Vue,options){
     // 获取好友信息
     Vue.prototype.getFriendsMessage = function(){
         this.post("getFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-            this.$store.commit('getMessage',result.body);
-            if(result.body.length>0){
-                this.$store.commit('getMessageCount',result.body.length);
+            this.$store.commit('getMessage',result.data);
+            if(result.data.length>0){
+                this.$store.commit('getMessageCount',result.data.length);
             }else{
                 this.$store.commit('getMessageCount',0);
             }
@@ -69,7 +74,7 @@ exports.install = function(Vue,options){
     // 获取已读好友信息
     Vue.prototype.getHistoryMessage = function(){
         this.post("getHistoryFriendsMessage" ,{userID:this.$store.state.userIfo.userID}).then( (result) =>{
-            this.$store.commit('getHistoryMessage',result.body);
+            this.$store.commit('getHistoryMessage',result.data);
         })
     };
     // 退出登录

@@ -1,19 +1,9 @@
 //导入bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
 
-//导入vue-resource
-import VueResource from 'vue-resource'
-
 //导入vant
 import Vant from 'vant';
 import 'vant/lib/index.css';
-
-//配置vant，vue-resource
-Vue.use(Vant);
-Vue.use(VueResource);
-
-// 设置接口请求路径
-Vue.http.options.root = 'http://localhost:8000';
 
 // 导入滚动条插件，用于无限滚动加载数据
 import infiniteScroll from 'vue-infinite-scroll';
@@ -35,17 +25,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 //导入全局函数
 import Common from './main/common/common.js';
 
-//配置elementUI，vuex，infiniteScroll
+//配置elementUI，vuex，infiniteScroll,vant
 Vue.use(ElementUI)
 Vue.use(Vuex);
 Vue.use(infiniteScroll);
 Vue.use(Common);
+Vue.use(Vant);
 
-
-Vue.http.interceptors.push((request,next)=>{
-    request.credentials = true; // 接口每次请求会跨域携带cookie
-    next()
-})
 // 创建vuex
 var store = new Vuex.Store({
     state:{
@@ -108,7 +94,6 @@ var store = new Vuex.Store({
 
 var vm=new Vue({
     el:'#app',
-    data:{ },
     store,
     render:c => c(App),
     router
