@@ -49,7 +49,7 @@ export default {
         useAvatar(){
             if(this.Form.img[0]){
                 // 此时可以自行将文件上传至服务器
-                this.$http.post("uploadAvatar",{img:this.Form.img[0],userID:this.$store.state.userIfo.userID}).then(function(result){
+                this.post("uploadAvatar",{img:this.Form.img[0],userID:this.$store.state.userIfo.userID}).then(function(result){
                     if(result.body.code == 200){
                         this.$message( '切换头像成功');
                         this.getLoginUserIfo();
@@ -59,7 +59,7 @@ export default {
         },
         // 上传推荐头像
         useAvatarT(src){
-            this.$http.post("uploadAvatarT",{src:src,userID:this.$store.state.userIfo.userID}).then(function(result){
+            this.post("uploadAvatarT",{src:src,userID:this.$store.state.userIfo.userID}).then(function(result){
                 if(result.body.code == 200){
                     this.$message( '切换头像成功');
                     this.getLoginUserIfo();

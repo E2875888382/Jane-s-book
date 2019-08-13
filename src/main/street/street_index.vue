@@ -64,7 +64,7 @@ export default {
         },
         // 请求一组贴子，参数n是组数
         getStreetList(n){
-            this.$http.post('getStreet',{ page:n }).then((result)=>{
+            this.post('getStreet',{ page:n }).then((result)=>{
                 if(result.body.code == 200){
                     result.body.streetList.forEach(e => {
                         e.lastReplyTime = '';
@@ -77,13 +77,13 @@ export default {
         },
         // 获取帖子总数，用于分页
         getStreetCount(){
-            this.$http.get('getStreetCount').then((result)=>{
+            this.get('getStreetCount').then((result)=>{
                 this.streetCount = result.body.streetCount[0]['COUNT(*)'];
             })
         },
         // 获取最后回复
         getLastReply(){
-            this.$http.get('getLastReply').then((result)=>{
+            this.get('getLastReply').then((result)=>{
                 this.lastReply = result.body.lastReply;
                 // 获取到最后回复后，遍历回复数组，根据streetID找到对应帖子
                 // 并且把最后回复加上去

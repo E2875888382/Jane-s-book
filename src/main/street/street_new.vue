@@ -52,7 +52,7 @@ export default {
                         userID:this.$store.state.userIfo.userID,
                         time:new Date().toLocaleString(),
                     }
-                    this.$http.post('uploadNewStreet',{ new:newStreet }).then((result)=>{
+                    this.post('uploadNewStreet',{ new:newStreet }).then((result)=>{
                         if(result.body.code == 200){
                             this.$message.success('发帖成功，快去步行街看看吧');
                         }

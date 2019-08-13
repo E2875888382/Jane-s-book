@@ -49,7 +49,7 @@ export default {
         },
         // 获取新闻组
         getNews(num){
-            this.$http.post("getNews",{ page:num }).then((result) =>{
+            this.post("getNews",{ page:num }).then((result) =>{
                 if(result.body.code == 200){
                     this.newsList = result.body.newsList;
                 }
@@ -57,7 +57,7 @@ export default {
         },
         // 获取新闻数量
         getNewsCount(){
-            this.$http.get("getNewsCount").then((result) =>{
+            this.get("getNewsCount").then((result) =>{
                 if(result.body.code == 200){
                     this.newsCount = result.body.newsCount[0]["COUNT(*)"];
                 }

@@ -38,7 +38,7 @@ export default{
     methods:{
         //将消息设置为已读
         isRead(id){
-            this.$http.post("isRead" ,{id:id},{ credentials: true}).then( (result) =>{
+            this.post("isRead" ,{id:id},{ credentials: true}).then( (result) =>{
                 if(result.body.code == 200){
                     this.getFriendsMessage();
                     this.getHistoryMessage();//设置为已读后刷新信息列表

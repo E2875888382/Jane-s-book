@@ -53,31 +53,27 @@ export default {
     methods:{
         // 取消收藏相簿
         unlikePhoto(photoID){
-            if(this.$store.state.loginFlag){
-                this.$http.post('unlikePhoto',{userID:this.$store.state.userIfo.userID,photoID:photoID}).then((result)=>{
-                    if(result.body.code == 200){
-                        this.$message({
-                            message: '取消收藏成功',
-                            type: 'success'
-                        });
-                        this.getPhotoCollection();// 重新获取收藏相簿列表
-                    }
-                })
-            }
+            this.post('unlikePhoto',{userID:this.$store.state.userIfo.userID,photoID:photoID}).then((result)=>{
+                if(result.body.code == 200){
+                    this.$message({
+                        message: '取消收藏成功',
+                        type: 'success'
+                    });
+                    this.getPhotoCollection();// 重新获取收藏相簿列表
+                }
+            })
         },
         // 取消收藏帖子
         unlikeStreet(streetID){
-            if(this.$store.state.loginFlag){
-                this.$http.post('unlikeStreet',{userID:this.$store.state.userIfo.userID,streetID:streetID}).then((result)=>{
-                    if(result.body.code == 200){
-                        this.$message({
-                            message: '取消收藏成功',
-                            type: 'success'
-                        });
-                        this.getStreetCollection();// 重新获取收藏帖子列表
-                    }
-                })
-            }
+            this.post('unlikeStreet',{userID:this.$store.state.userIfo.userID,streetID:streetID}).then((result)=>{
+                if(result.body.code == 200){
+                    this.$message({
+                        message: '取消收藏成功',
+                        type: 'success'
+                    });
+                    this.getStreetCollection();// 重新获取收藏帖子列表
+                }
+            })
         },
         // 查看相簿详情（跳转路由）
         photoDetails(photoID){

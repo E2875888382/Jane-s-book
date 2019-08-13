@@ -68,7 +68,7 @@ export default {
         },
         //获取新闻详情
         getNewsDetails(){
-            this.$http.post("getNewsDetails",{ newID:this.id }).then((result) =>{
+            this.post("getNewsDetails",{ newID:this.id }).then((result) =>{
                 if(result.body.code == 200){
                     this.newsDetails = result.body.newsList[0];
                     if(this.newsDetails.imgContent){
@@ -79,19 +79,15 @@ export default {
         },
         //增加文章阅读量
         addNewsRead(){
-            this.$http.post("addNewsRead",{ newID:this.id }).then((result) =>{
+            this.post("addNewsRead",{ newID:this.id }).then((result) =>{
 
-            },(error) =>{
-                console.log(error);
             })
         },
         getTenNews(){
-            this.$http.get("getTenNews").then((result)=>{
+            this.get("getTenNews").then((result)=>{
                 if(result.body.code == 200){
                     this.tenNews = result.body.tenNews;
                 }
-            },(error)=>{
-                console.log(error);
             })
         }
     }

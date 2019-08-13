@@ -89,7 +89,7 @@ export default {
         // 查看是否已经收藏
         checkStreetCollection(){
             if(this.$store.state.loginFlag){
-                this.$http.post("checkStreetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id}).then( (result) =>{
+                this.post("checkStreetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id}).then( (result) =>{
                     if(result.body.code==200){
                         if(result.body.isCollection[0]["COUNT(*)"] > 0){
                             this.isCollection = true;
@@ -101,7 +101,7 @@ export default {
         // 收藏该帖子
         streetCollection(){
             if(this.$store.state.loginFlag){
-                this.$http.post("streetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                this.post("streetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
                     if(result.body.code==200){
                         this.$message({
                             message: '添加收藏成功',
@@ -114,18 +114,14 @@ export default {
         },
         //增加帖子浏览量
         addStreetView(){
-            this.$http.post("addStreetView",{ streetID:this.id }).then((result) =>{
+            this.post("addStreetView",{ streetID:this.id }).then((result) =>{
 
-            },(error) =>{
-                console.log(error);
             })
         },
         // 增加回复量
         addStreetReply(){
-            this.$http.post("addStreetReply",{ streetID:this.id }).then((result) =>{
+            this.post("addStreetReply",{ streetID:this.id }).then((result) =>{
 
-            },(error) =>{
-                console.log(error);
             })
         },
         // 提交评论
@@ -138,7 +134,7 @@ export default {
                         time:new Date().toLocaleString(),
                         userID:this.$store.state.userIfo.userID
                     }
-                    this.$http.post('addReply',{ newReply:newReply }).then((result)=>{
+                    this.post('addReply',{ newReply:newReply }).then((result)=>{
                         if(result.body.code == 200){
                             this.getStreetReply();// 刷新回复列表
                             this.addStreetReply();// 增加回复量
@@ -161,7 +157,7 @@ export default {
         },
         // 获取帖子详情
         getStreetDetails(){
-            this.$http.post('getStreetDetails',{ streetID:this.id }).then((result)=>{
+            this.post('getStreetDetails',{ streetID:this.id }).then((result)=>{
                 if(result.body.code == 200){
                     this.streetDetails = result.body.streetDetails[0];
                     this.checkStreetCollection();
@@ -170,7 +166,7 @@ export default {
         },
         // 获取评论列表
         getStreetReply(){
-            this.$http.post('getStreetReply',{ streetID:this.id }).then((result)=>{
+            this.post('getStreetReply',{ streetID:this.id }).then((result)=>{
                 if(result.body.code == 200){
                     this.streetReply = result.body.streetReply;
                 }
@@ -178,13 +174,12 @@ export default {
         },
         // 点亮某条评论
         addStreetReplyPraise(streetReplyID,event){
-            this.$http.post('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
+            this.post('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
                 if(result.body.code == 200){
                     event.target.classList.add('gold');// 点亮后该表灯泡颜色
                     this.getStreetReply();// 点亮后刷新评论列表
                 }
             })
-
         }
     }
 }

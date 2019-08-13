@@ -107,7 +107,7 @@ export default {
                     temp.push(this.photo[i].content)
                 };
                 let photo = temp.join('@');
-                this.$http.post('addNewPhoto',{userID:this.$store.state.userIfo.userID,tags:tags,src:src,title:this.title,time:time,photo:photo}).then((result)=>{
+                this.post('addNewPhoto',{userID:this.$store.state.userIfo.userID,tags:tags,src:src,title:this.title,time:time,photo:photo}).then((result)=>{
                     if(result.body.code == 200){
                         this.$message({
                             message:'发表成功',

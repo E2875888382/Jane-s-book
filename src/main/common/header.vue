@@ -148,8 +148,7 @@ export default {
     methods:{
         // 获取用户信息
         getStatus(){
-            //请求登录者的基本信息，并保存到vuex
-            this.$http.get('getLoginUserInfo').then( (result) =>{
+            this.get('getLoginUserInfo').then((result)=>{
                 if(result.body[0]){
                     this.$store.commit('userIfo',result.body[0]);
                     this.$store.commit('userStatus',true);
@@ -164,17 +163,15 @@ export default {
         // 新用户注册
         newUser(){
             //注册新用户，提交表单并获取返回的登录信息
-            this.$http.post('newUser',this.newForm,{emulateJSON:true,credentials: true}).then(function(result){
+            this.post('newUser',this.newForm).then((result)=>{
                 this.dialogNewVisible = false;
                 this.getStatus();
                 location.href="#/";//注册并且登录完成，重定向到首页
-            },function(error){
-                console.log(error);
             })
         },
         // 登录
         login(){
-            this.$http.post('login',this.loginForm).then((result) =>{
+            this.post('login',this.loginForm).then((result)=>{
                 if(result.body.code == 1){
                     this.dialogLoginVisible = false;
                     this.getStatus(); //登录后获取用户信息
@@ -185,16 +182,12 @@ export default {
                         type:'warning'
                     })
                 }
-            },(error) => {
-                console.log(error);
             })
         },
         // 发送验证码，获取返回验证码并对比
         sendSms(){
-            this.$http.post('sendSms',this.newForm).then(function(result){
+            this.post('sendSms',this.newForm).then((result)=>{
                 this.sms = result.body.sms;
-            },function(error){
-                console.log(error);
             })
         },
     }

@@ -61,7 +61,7 @@ export default {
     methods:{
         // 获取图片组数
         getCount(){
-            this.$http.get('getPhotoCount').then((result)=>{
+            this.get('getPhotoCount').then((result)=>{
                 this.maxGroup = Math.ceil(result.body.photoCount / 10);
                 this.load();// 获取到最大组数后开始加载第一组图片
             })
@@ -73,7 +73,7 @@ export default {
                 this.$refs.waterfall.waterfallOver()
                 return 
             }else{
-                this.$http.post('getPhoto',{group:this.group}).then((result)=>{
+                this.post('getPhoto',{group:this.group}).then((result)=>{
                     this.imgs = this.imgs.concat(result.body.photo);// 增量添加图片
                     this.boxheight += 600;// 容器高度增加，不然没法容纳图片
                     this.group++;// 记载完1组图片当前组数增加1
@@ -93,11 +93,11 @@ export default {
         praise(id,event){
             // 如果当前事件目标没有praise样式，说明没有点赞过，触发点赞
             if(!event.target.classList.contains("praise")){
-                this.$http.post('photoPraise',{photoID:id}).then((result)=>{
+                this.post('photoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.add('praise');
                 })
             }else{// 否则就是点赞过了，触发取消点赞
-                this.$http.post('cancelPhotoPraise',{photoID:id}).then((result)=>{
+                this.post('cancelPhotoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.remove('praise');
                 })
             }

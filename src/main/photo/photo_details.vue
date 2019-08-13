@@ -161,7 +161,7 @@ export default {
         },
         // 检查是否被收藏过
         checkPhotoCollection(){
-            this.$http.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id}).then( (result) =>{
+            this.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id}).then( (result) =>{
                 if(result.body.code==200){
                     if(result.body.isCollection[0]["COUNT(*)"] > 0){
                         this.isCollection = true;
@@ -172,7 +172,7 @@ export default {
         // 收藏当前相簿
         photoCollection(){
             if(this.$store.state.loginFlag){
-                this.$http.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                this.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
                     if(result.body.code==200){
                         this.$message({
                             message: '添加收藏成功',
@@ -201,7 +201,7 @@ export default {
         },
         // 关注当前作者
         addFriend(){
-            this.$http.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then( (result) =>{
+            this.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then( (result) =>{
                 if(result.body.code==200){
                     this.$message({
                         message: '添加好友成功',
@@ -219,7 +219,7 @@ export default {
         },
         // 检查作者与用户是否为好友关系
         checkFriend(){
-            this.$http.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then((result)=>{
+            this.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then((result)=>{
                 if(result.body.code == 200){
                     if(result.body.isFriend[0]['COUNT(*)'] == 1){
                         this.isFriend = true;
@@ -229,7 +229,7 @@ export default {
         },
         // 获取相簿详情
         getPhotoDetails(){
-            this.$http.post("getPhotoDetails",{ photoID:this.id }).then((result) =>{
+            this.post("getPhotoDetails",{ photoID:this.id }).then((result) =>{
                 if(result.body.code == 200){
                     this.photoDetails = result.body.photoDetails[0];
                     if(this.$store.state.loginFlag == true){// 如果已经登录，检查各种状态
@@ -248,7 +248,7 @@ export default {
         },
         // 获取相簿按点赞排序的评论
         getPhotoReply(){
-            this.$http.post('getPhotoReply',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
+            this.post('getPhotoReply',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
 
                 result.body.photoReply.map(function(i){
                     i.flag = true;// 一开始把flag置为true，用于控制点赞和踩的行为
@@ -259,7 +259,7 @@ export default {
         },
         // 获取相簿按时间排序的评论
         getPhotoReplyByTime(){
-            this.$http.post('getPhotoReplyByTime',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
+            this.post('getPhotoReplyByTime',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
 
                 result.body.photoReplyByTime.map(function(i){
                     i.flag = true;
@@ -270,7 +270,7 @@ export default {
         },
         // 获取评论数量
         getPhotoCount(){
-            this.$http.post('getPhotoCount',{photoID:this.id}).then((result)=>{
+            this.post('getPhotoCount',{photoID:this.id}).then((result)=>{
                 this.replyCount = result.body.photoCount[0]['COUNT(*)'];
             })
         },
@@ -287,12 +287,12 @@ export default {
         // 点赞
         praise(event){
             if(!event.target.classList.contains("gold")){
-                this.$http.post('photoPraise',{photoID:this.id}).then((result)=>{
+                this.post('photoPraise',{photoID:this.id}).then((result)=>{
                     event.target.classList.add('gold');
                     this.photoDetails.praise++;
                 })
             }else{
-                this.$http.post('cancelPhotoPraise',{photoID:this.id}).then((result)=>{
+                this.post('cancelPhotoPraise',{photoID:this.id}).then((result)=>{
                     event.target.classList.remove('gold');
                     this.photoDetails.praise--;
                 })
@@ -300,13 +300,13 @@ export default {
         },
         // 增加浏览量
         addView(){
-            this.$http.post('addPhotoView',{photoID:this.id}).then((result)=>{
+            this.post('addPhotoView',{photoID:this.id}).then((result)=>{
             })
         },
         // 增加回复量
         addReply(){
             if(this.input!==''){
-                this.$http.post('addPhotoReply',{photoID:this.id,userID:this.$store.state.userIfo.userID,time:new Date().toLocaleString(),content:this.input}).then((result)=>{
+                this.post('addPhotoReply',{photoID:this.id,userID:this.$store.state.userIfo.userID,time:new Date().toLocaleString(),content:this.input}).then((result)=>{
                     this.$message({
                         message:'评论成功',
                         type:'success'
@@ -329,7 +329,7 @@ export default {
                         event.target.classList.add('goldenPraise');
                         element.flag = false;
                         element.praise++;
-                        this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
+                        this.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
                         })
                     }
                 }
@@ -346,7 +346,7 @@ export default {
                         event.target.classList.add('goldenPraise');
                         element.flag = false;
                         element.praise++;
-                        this.$http.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
+                        this.post('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
                         })
                     }
                 }
@@ -362,7 +362,7 @@ export default {
                         event.target.classList.add('goldenDown');
                         element.flag = false;
                         element.down++;
-                        this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
+                        this.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
                         })
                     }
                 }
@@ -378,7 +378,7 @@ export default {
                         event.target.classList.add('goldenDown');
                         element.flag = false;
                         element.down++;
-                        this.$http.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
+                        this.post('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
                         })
                     }
                 }

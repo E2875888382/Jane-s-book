@@ -51,22 +51,22 @@ export default {
             if(this.input.trim()!==''){// 去除空格后判断是否为空
                 this.$store.commit('searchContent',this.input);
                 this.$router.push({ path:'/searchResult'});// 跳转到搜索结果页
-                this.$http.get('searchForStreet',{params:{content:this.input}}).then((result)=>{
+                this.get('searchForStreet',{params:{content:this.input}}).then((result)=>{
                     if(result.body.code == 200){
                         this.$store.commit('searchStreet',result.body.street)
                     }
                 })
-                this.$http.get('searchForPhoto',{params:{content:this.input}}).then((result)=>{
+                this.get('searchForPhoto',{params:{content:this.input}}).then((result)=>{
                     if(result.body.code == 200){
                         this.$store.commit('searchPhoto',result.body.photo)
                     }
                 })
-                this.$http.get('searchForUser',{params:{content:this.input}}).then((result)=>{
+                this.get('searchForUser',{params:{content:this.input}}).then((result)=>{
                     if(result.body.code == 200){
                         this.$store.commit('searchUser',result.body.user)
                     }
                 })
-                this.$http.get('searchForNews',{params:{content:this.input}}).then((result)=>{
+                this.get('searchForNews',{params:{content:this.input}}).then((result)=>{
                     if(result.body.code == 200){
                         this.$store.commit('searchNews',result.body.news)
                     }

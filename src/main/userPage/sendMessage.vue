@@ -57,13 +57,13 @@ export default {
     methods:{
         //删除好友
         deleteFriend(friendID){
-            this.$http.post("deleteFriend",{friendID:friendID,userID:this.$store.state.userIfo.userID}).then( (result) =>{
+            this.post("deleteFriend",{friendID:friendID,userID:this.$store.state.userIfo.userID}).then( (result) =>{
                 this.getFriends();//删除好友成功刷新好友列表
             })
         },
         //搜索好友
         searchFriend(){
-            this.$http.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
+            this.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
                 // 根据昵称查询会出现多人的情况，遍历每个对象，发送查询请求，查看是否已关注或者是自己
                 // 给每个对象添加两个flag，表示是否已关注和是否是自己
                 result.body.forEach(element => {
@@ -72,7 +72,7 @@ export default {
                     if(this.$store.state.userIfo.userID == element.userID){
                         element.isMe = true;
                     }
-                    this.$http.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:element.userID}).then((result)=>{
+                    this.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:element.userID}).then((result)=>{
                         if(result.body.code == 200){
                             if(result.body.isFriend[0]['COUNT(*)'] == 1){
                                 element.isFriend = true;
@@ -85,7 +85,7 @@ export default {
         },
         //添加好友
         addFriend(userID){
-            this.$http.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:userID}).then( (result) =>{
+            this.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:userID}).then( (result) =>{
                 if(result.body.code==200){
                     this.$message({
                         message: '添加好友成功',
@@ -105,7 +105,7 @@ export default {
         //发送私信
         sendMsg(){
             if(this.receiver.textarea!==''&& this.receiver.receiverID!==''){
-                this.$http.post("sendMsg" ,{userID:this.$store.state.userIfo.userID,receiverID:this.receiver.receiverID,content:this.receiver.textarea,time:new Date().toLocaleString()}).then( (result) =>{
+                this.post("sendMsg" ,{userID:this.$store.state.userIfo.userID,receiverID:this.receiver.receiverID,content:this.receiver.textarea,time:new Date().toLocaleString()}).then( (result) =>{
                     if(result.body.code==200){
                         this.$message({
                             message: '发送私信成功',

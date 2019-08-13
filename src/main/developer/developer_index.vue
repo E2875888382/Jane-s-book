@@ -38,7 +38,7 @@ export default {
     },
     methods:{
         getDeveloper(){
-            this.$http.get("getDeveloper").then((result) =>{
+            this.get("getDeveloper").then((result) =>{
                 this.developer = result.body;
             })
         },
