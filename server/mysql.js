@@ -16,7 +16,7 @@ module.exports = function(sql,callback){
         }else{
             connection.query(sql,(error,result) => {
                 if (error){
-                    response.status(500).send('server error');
+                    throw error;
                 }
                 connection.release();
                 callback(result);

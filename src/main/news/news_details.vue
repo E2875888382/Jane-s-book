@@ -85,8 +85,8 @@ export default {
         },
         getTenNews(){
             this.get("getTenNews").then((result)=>{
-                if(result.body.code == 200){
-                    this.tenNews = result.body.tenNews;
+                if(result.data.code == 200){
+                    this.tenNews = result.data.tenNews;
                 }
             })
         }

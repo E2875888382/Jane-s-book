@@ -149,8 +149,8 @@ export default {
         // 获取用户信息
         getStatus(){
             this.get('getLoginUserInfo').then((result)=>{
-                if(result.body[0]){
-                    this.$store.commit('userIfo',result.body[0]);
+                if(result.data[0]){
+                    this.$store.commit('userIfo',result.data[0]);
                     this.$store.commit('userStatus',true);
                     this.getFriendsMessage();
                     this.getHistoryMessage();

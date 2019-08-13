@@ -1,13 +1,21 @@
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:8000';
+
 exports.install = function(Vue,options){
     Vue.prototype.get = function(url,params){
         return new Promise((resolve,reject)=>{
-            this.$http.get(url,params).then((result)=>{
+            axios({
+                method:'get',
+                url:url,
+                params:params,
+                withCredentials: true,
+            }).then((result)=>{
                 resolve(result);
             },(err)=>{
                 throw err;
             })
         })
-    }
+    };
     Vue.prototype.post = function(url,data){
         return new Promise((resolve,reject)=>{
             this.$http.post(url,data).then((result)=>{
@@ -42,8 +50,8 @@ exports.install = function(Vue,options){
     // 获取用户信息
     Vue.prototype.getLoginUserIfo = function(){
         this.get('getLoginUserInfo').then( (result) =>{
-            if(result.body[0]){
-                this.$store.commit('userIfo',result.body[0]);
+            if(result.data[0]){
+                this.$store.commit('userIfo',result.data[0]);
             }
         })
     };
@@ -67,11 +75,11 @@ exports.install = function(Vue,options){
     // 退出登录
     Vue.prototype.logOut = function(){
         this.get('logOut').then((result) => {
-            if(result.body.code == 700){
+            if(result.data.code == 700){
                 this.$store.commit('userStatus',false);
                 this.$router.push({ path:'/'});//重定向到首页
             }else{
-                console.log(result.body);
+                console.log(result.data);
             }
         })
     };

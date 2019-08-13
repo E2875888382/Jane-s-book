@@ -39,7 +39,7 @@ export default {
     methods:{
         getDeveloper(){
             this.get("getDeveloper").then((result) =>{
-                this.developer = result.body;
+                this.developer = result.data;
             })
         },
     }

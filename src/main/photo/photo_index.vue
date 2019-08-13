@@ -62,7 +62,7 @@ export default {
         // 获取图片组数
         getCount(){
             this.get('getPhotoCount').then((result)=>{
-                this.maxGroup = Math.ceil(result.body.photoCount / 10);
+                this.maxGroup = Math.ceil(result.data.photoCount / 10);
                 this.load();// 获取到最大组数后开始加载第一组图片
             })
         },

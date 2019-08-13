@@ -78,13 +78,13 @@ export default {
         // 获取帖子总数，用于分页
         getStreetCount(){
             this.get('getStreetCount').then((result)=>{
-                this.streetCount = result.body.streetCount[0]['COUNT(*)'];
+                this.streetCount = result.data.streetCount[0]['COUNT(*)'];
             })
         },
         // 获取最后回复
         getLastReply(){
             this.get('getLastReply').then((result)=>{
-                this.lastReply = result.body.lastReply;
+                this.lastReply = result.data.lastReply;
                 // 获取到最后回复后，遍历回复数组，根据streetID找到对应帖子
                 // 并且把最后回复加上去
                 for(var i = 0;i<this.lastReply.length;i++){

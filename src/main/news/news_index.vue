@@ -58,8 +58,8 @@ export default {
         // 获取新闻数量
         getNewsCount(){
             this.get("getNewsCount").then((result) =>{
-                if(result.body.code == 200){
-                    this.newsCount = result.body.newsCount[0]["COUNT(*)"];
+                if(result.data.code == 200){
+                    this.newsCount = result.data.newsCount[0]["COUNT(*)"];
                 }
             })
         },
