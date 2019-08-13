@@ -36,7 +36,7 @@
   - express （node.js框架）
   - vuex （vue状态管理插件）
   - vue-router （vue的路由插件）
-  - vue-resource （vue的ajax插件）
+  - axios （http请求）
   - vue-infinite-scroll（vue的无限加载插件）
   - vue-waterfall-easy（vue的一个瀑布流布局插件）
   - element UI （UI）
