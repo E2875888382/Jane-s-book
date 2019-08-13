@@ -1,6 +1,6 @@
 var express=require('express');
 var router=express.Router();
-var db = require('../mysql.js');
+var db = require('../../mysql.js');
 
 // 获取Developer的数量
 router.get('/getDeveloper',(request,response)=>{

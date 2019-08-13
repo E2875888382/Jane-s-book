@@ -64,7 +64,7 @@ export default {
         },
         // 请求一组贴子，参数n是组数
         getStreetList(n){
-            this.post('getStreet',{ page:n }).then((result)=>{
+            this.get('getStreet',{ page:n }).then((result)=>{
                 if(result.data.code == 200){
                     result.data.streetList.forEach(e => {
                         e.lastReplyTime = '';

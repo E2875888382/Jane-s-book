@@ -146,7 +146,7 @@ export default {
         this.getStatus();//组件创建后获取登录者的基本信息
     },
     methods:{
-        // 获取用户信息
+        // 查询用户信息
         getStatus(){
             this.get('getLoginUserInfo').then((result)=>{
                 if(result.data[0]){
@@ -160,7 +160,7 @@ export default {
                 }
             })
         },
-        // 新用户注册
+        // 注册
         newUser(){
             //注册新用户，提交表单并获取返回的登录信息
             this.post('newUser',this.newForm).then((result)=>{
@@ -184,7 +184,7 @@ export default {
                 }
             })
         },
-        // 发送验证码，获取返回验证码并对比
+        // 发送验证码
         sendSms(){
             this.post('sendSms',this.newForm).then((result)=>{
                 this.sms = result.data.sms;

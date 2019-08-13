@@ -1,6 +1,6 @@
 var express=require('express');
 var router=express.Router();
-var db = require('../mysql.js');
+var db = require('../../mysql.js');
 
 // 搜索步行街帖子
 router.get('/searchForStreet',(request,response)=>{

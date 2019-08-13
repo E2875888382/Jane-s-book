@@ -49,7 +49,7 @@ export default {
         },
         // 获取新闻组
         getNews(num){
-            this.post("getNews",{ page:num }).then((result) =>{
+            this.get("getNews",{page:num }).then((result) =>{
                 if(result.data.code == 200){
                     this.newsList = result.data.newsList;
                 }

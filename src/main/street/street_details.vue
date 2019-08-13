@@ -114,13 +114,13 @@ export default {
         },
         //增加帖子浏览量
         addStreetView(){
-            this.post("addStreetView",{ streetID:this.id }).then((result) =>{
+            this.get("addStreetView",{ streetID:this.id }).then((result) =>{
 
             })
         },
         // 增加回复量
         addStreetReply(){
-            this.post("addStreetReply",{ streetID:this.id }).then((result) =>{
+            this.get("addStreetReply",{ streetID:this.id }).then((result) =>{
 
             })
         },
@@ -157,7 +157,7 @@ export default {
         },
         // 获取帖子详情
         getStreetDetails(){
-            this.post('getStreetDetails',{ streetID:this.id }).then((result)=>{
+            this.get('getStreetDetails',{ streetID:this.id }).then((result)=>{
                 if(result.data.code == 200){
                     this.streetDetails = result.data.streetDetails[0];
                     this.checkStreetCollection();
@@ -166,7 +166,7 @@ export default {
         },
         // 获取评论列表
         getStreetReply(){
-            this.post('getStreetReply',{ streetID:this.id }).then((result)=>{
+            this.get('getStreetReply',{ streetID:this.id }).then((result)=>{
                 if(result.data.code == 200){
                     this.streetReply = result.data.streetReply;
                 }
@@ -174,7 +174,7 @@ export default {
         },
         // 点亮某条评论
         addStreetReplyPraise(streetReplyID,event){
-            this.post('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
+            this.get('streetReplyPraise',{ streetReplyID:streetReplyID }).then((result)=>{
                 if(result.data.code == 200){
                     event.target.classList.add('gold');// 点亮后该表灯泡颜色
                     this.getStreetReply();// 点亮后刷新评论列表

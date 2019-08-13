@@ -1,6 +1,6 @@
 var express=require('express');
 var router=express.Router();
-var db = require('../mysql.js');
+var db = require('../../mysql.js');
 const nodemailer = require('nodemailer');
 
 //注册接口
@@ -30,7 +30,7 @@ router.post('/login', (request,response) =>{
         }
         else {
           //使用session记录登录状态
-          request.session.user=request.body.email;
+          request.session.user=result[0].userID;
           response.status(200).json({  message:"登录成功",code:1 });
         }
     })

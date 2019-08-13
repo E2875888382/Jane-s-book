@@ -1,10 +1,10 @@
 var express=require('express');
 var router=express.Router();
-var db = require('../mysql.js');
+var db = require('../../mysql.js');
 
 // 查询一组相簿
-router.post('/getPhoto',(request,response) => {
-    var begin = (request.body.group -1)*10;
+router.get('/getPhoto',(request,response) => {
+    var begin = (request.query.group -1)*10;
     var sql = `SELECT photo.src,photo.title,photo.photoID,user.avatar,user.nickName
     FROM USER,photo
     WHERE user.userID = photo.userID

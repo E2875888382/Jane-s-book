@@ -63,7 +63,7 @@ export default {
         },
         //搜索好友
         searchFriend(){
-            this.post("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
+            this.get("searchFriend" ,{search:this.searchFriendInput}).then( (result) =>{
                 // 根据昵称查询会出现多人的情况，遍历每个对象，发送查询请求，查看是否已关注或者是自己
                 // 给每个对象添加两个flag，表示是否已关注和是否是自己
                 result.data.forEach(element => {

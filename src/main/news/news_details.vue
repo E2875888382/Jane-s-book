@@ -68,7 +68,7 @@ export default {
         },
         //获取新闻详情
         getNewsDetails(){
-            this.post("getNewsDetails",{ newID:this.id }).then((result) =>{
+            this.get("getNewsDetails",{ newID:this.id }).then((result) =>{
                 if(result.data.code == 200){
                     this.newsDetails = result.data.newsList[0];
                     if(this.newsDetails.imgContent){
@@ -79,7 +79,7 @@ export default {
         },
         //增加文章阅读量
         addNewsRead(){
-            this.post("addNewsRead",{ newID:this.id }).then((result) =>{
+            this.get("addNewsRead",{ newID:this.id }).then((result) =>{
 
             })
         },

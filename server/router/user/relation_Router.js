@@ -1,6 +1,6 @@
 var express=require('express');
 var router=express.Router();
-var db = require('../mysql.js');
+var db = require('../../mysql.js');
 
 // 判断当前用户是否已关注
 router.post('/checkFriend',(request,response)=>{
@@ -50,14 +50,17 @@ router.post('/streetCollection',(request,response)=>{
 })
 
 // 查询用户收藏的相簿
-router.post('/getPhotoCollection',(request,response)=>{
-    var sql = `SELECT photo.userID,photo.src,photocollection.time,photocollection.photoID,photo.title
-    FROM photo,photocollection
-    WHERE photo.photoID = photocollection.photoID
-    AND photocollection.userID = ${request.body.userID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photoCollection:result});
-    })
+router.get('/getPhotoCollection',(request,response)=>{
+    if(request.session.user){
+        var sql = `SELECT photo.userID,photo.src,photocollection.time,photocollection.photoID,photo.title
+        FROM photo,photocollection
+        WHERE photo.photoID = photocollection.photoID
+        AND photocollection.userID = ${request.session.user}`;
+        db(sql,(result)=>{
+            response.status(200).json({ code:200,photoCollection:result});
+        })
+    }
+
 })
 
 // 取消关注某个相簿
@@ -79,14 +82,16 @@ router.post('/unlikeStreet',(request,response)=>{
 })
 
 // 查询用户收藏的步行街帖子
-router.post('/getStreetCollection',(request,response)=>{
-    var sql = ` SELECT street.streetID,streetcollection.time,street.topic
-    FROM street,streetcollection
-    WHERE street.streetID = streetcollection.streetID
-    AND streetcollection.userID = ${request.body.userID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,streetCollection:result});
-    })
+router.get('/getStreetCollection',(request,response)=>{
+    if(request.session.user){
+        var sql = ` SELECT street.streetID,streetcollection.time,street.topic
+        FROM street,streetcollection
+        WHERE street.streetID = streetcollection.streetID
+        AND streetcollection.userID = ${request.session.user}`;
+        db(sql,(result)=>{
+            response.status(200).json({ code:200,streetCollection:result});
+        })
+    }
 })
 
 //导出router

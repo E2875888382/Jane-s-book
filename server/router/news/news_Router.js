@@ -1,10 +1,10 @@
 var express=require('express');
 var router=express.Router();
-var db = require('../mysql.js');
+var db = require('../../mysql.js');
 
 //查询新闻接口
-router.post('/getNews',(request,response) =>{
-    var begin = (request.body.page -1)*10;
+router.get('/getNews',(request,response) =>{
+    var begin = (request.query.page -1)*10;
     var sql = `SELECT * FROM news LIMIT ${ begin },10`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,newsList:result });
@@ -20,16 +20,16 @@ router.get('/getNewsCount',(request,response) => {
 })
 
 //查询新闻详情
-router.post('/getNewsDetails',(request,response) =>{
-    var sql = `SELECT * FROM news WHERE newID = ${ request.body.newID }`;
+router.get('/getNewsDetails',(request,response) =>{
+    var sql = `SELECT * FROM news WHERE newID = ${ request.query.newID }`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,newsList:result });
     })
 })
 
 //增加新闻阅读量
-router.post('/addNewsRead',(request,response) =>{
-    var sql = ` UPDATE news SET view = view + 1  WHERE newID = ${request.body.newID}`;
+router.get('/addNewsRead',(request,response) =>{
+    var sql = ` UPDATE news SET view = view + 1  WHERE newID = ${request.query.newID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'阅读量增加' });
     })

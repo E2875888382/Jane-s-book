@@ -1,10 +1,10 @@
 var express=require('express');
 var router=express.Router();
-var db = require('../mysql.js');
+var db = require('../../mysql.js');
 
 //查询步行街帖子
-router.post('/getStreet',(request,response) =>{
-    var begin = (request.body.page -1)*20;
+router.get('/getStreet',(request,response) =>{
+    var begin = (request.query.page -1)*20;
     var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,street.streetID
     FROM street,USER
     WHERE street.userID = user.userID
@@ -23,21 +23,21 @@ router.get('/getStreetCount',(request,response) => {
 })
 
 // 查询帖子正文
-router.post('/getStreetDetails',(request,response) => {
+router.get('/getStreetDetails',(request,response) => {
     var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,user.level,user.avatar,street.replyCount,street.img,street.content
     FROM street,USER
     WHERE street.userID = user.userID AND
-    streetID = ${request.body.streetID}`;
+    streetID = ${request.query.streetID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,streetDetails:result });
     })
 })
 
 // 查询所有回复
-router.post('/getStreetReply',(request,response) => {
+router.get('/getStreetReply',(request,response) => {
     var sql = ` SELECT user.avatar,user.nickName,streetReply.time,streetReply.praise,user.level,streetReply.content,streetreply.streetReplyID
     FROM USER,streetReply
-    WHERE user.userID = streetReply.userID AND streetID = ${request.body.streetID}`;
+    WHERE user.userID = streetReply.userID AND streetID = ${request.query.streetID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,streetReply:result });
     })
@@ -68,16 +68,16 @@ router.post('/uploadNewStreet', (request,response) =>{
 })
 
 //增加帖子浏览量
-router.post('/addStreetView',(request,response) =>{
-    var sql = ` UPDATE street SET view = view + 1  WHERE streetID = ${request.body.streetID}`;
+router.get('/addStreetView',(request,response) =>{
+    var sql = ` UPDATE street SET view = view + 1  WHERE streetID = ${request.query.streetID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'阅读量增加' });
     })
 })
 
 //增加帖子回复量
-router.post('/addStreetReply',(request,response) =>{
-    var sql = ` UPDATE street SET replyCount = replyCount + 1  WHERE streetID = ${request.body.streetID}`;
+router.get('/addStreetReply',(request,response) =>{
+    var sql = ` UPDATE street SET replyCount = replyCount + 1  WHERE streetID = ${request.query.streetID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'回复量增加' });
     })
@@ -93,8 +93,8 @@ router.get('/getLastReply',(request,response) =>{
 })
 
 // 评论的点赞+1
-router.post('/streetReplyPraise',(request,response)=>{
-    var sql = `UPDATE streetreply SET praise = praise + 1 WHERE streetReplyID = ${request.body.streetReplyID}`;
+router.get('/streetReplyPraise',(request,response)=>{
+    var sql = `UPDATE streetreply SET praise = praise + 1 WHERE streetReplyID = ${request.query.streetReplyID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'success'});
     })

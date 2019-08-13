@@ -73,7 +73,7 @@ export default {
                 this.$refs.waterfall.waterfallOver()
                 return 
             }else{
-                this.post('getPhoto',{group:this.group}).then((result)=>{
+                this.get('getPhoto',{group:this.group}).then((result)=>{
                     this.imgs = this.imgs.concat(result.data.photo);// 增量添加图片
                     this.boxheight += 600;// 容器高度增加，不然没法容纳图片
                     this.group++;// 记载完1组图片当前组数增加1
