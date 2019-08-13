@@ -31,6 +31,7 @@
   - 6.搜索
     - 主页字段搜索（搜索结果按模块内容分类）
 - 技术栈：
+<<<<<<< HEAD
   - vue.js
   - webpack
   - express
@@ -42,6 +43,19 @@
   - elementUI
   - vant
   - bootstrap
+=======
+  - vue.js（前端框架）
+  - webpack (资源打包)
+  - express （node.js框架）
+  - vuex （vue状态管理插件）
+  - vue-router （vue的路由插件）
+  - axios （http请求）
+  - vue-infinite-scroll（vue的无限加载插件）
+  - vue-waterfall-easy（vue的一个瀑布流布局插件）
+  - element UI （UI）
+  - vant （UI）
+  - bootstrap （UI）
+>>>>>>> a8742465c1b37410c823c693db2dabd59bb722c4
 - 运行方式
   - 1.安装依赖
     - ```npm i  ```
