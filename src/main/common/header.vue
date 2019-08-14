@@ -22,40 +22,42 @@
                 </div>
                 <!-- 登录按钮 -->
                 <div class="login_btn" v-if="!$store.state.loginFlag">
-                    <el-link :underline="false"  @click="dialogLoginVisible = true">登录</el-link>
+                    <el-link :underline="false"  @click="()=>{dialogLoginVisible = true;this.slider=0}">登录</el-link>
                 </div>
                 <!-- 注册按钮  -->
                 <div class="new_btn"  v-if="!$store.state.loginFlag">
-                    <el-link :underline="false"  @click="dialogNewVisible = true">注册</el-link>
+                    <el-link :underline="false"  @click="()=>{dialogNewVisible = true;this.slider=0}">注册</el-link>
                 </div>
                 <!-- 登录模态框 -->
-                <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="30%">
+                <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="35%">
                     <el-form :model="loginForm" :rules="rules" ref="loginForm">
-                        <el-form-item label="邮箱:" label-width="100px" prop="email">
+                        <el-form-item label="邮箱:" label-width="60px" prop="email">
                             <el-input v-model="loginForm.email" autocomplete="off"></el-input>
                         </el-form-item>
-                        <el-form-item label="密码:" label-width="100px" prop="password">
+                        <el-form-item label="密码:" label-width="60px" prop="password">
                             <el-input v-model="loginForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
                         </el-form-item>
                     </el-form>
-                    <div slot="footer" class="dialog-footer">
+                    <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
+                    <div slot="footer" class="dialog-footer" v-if="showBtn">
                         <el-button type="primary" @click="login()">登 录</el-button>
                     </div>
                 </el-dialog>
                 <!-- 注册模态框 -->
-                <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="30%" >
-                    <el-form :model="newForm" :rules="rules" ref="newForm">
-                        <el-form-item label="邮箱:" label-width="100px" prop="email" >
+                <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="35%" >
+                    <el-form :model="newForm" :rules="rules" ref="newForm" label-position="right">
+                        <el-form-item label="邮箱:" label-width="90px" prop="email">
                             <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
                         </el-form-item>
-                        <el-form-item label="密码:" label-width="100px" prop="password">
+                        <el-form-item label="密码:" label-width="90px" prop="password">
                             <el-input v-model="newForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
                         </el-form-item>
-                        <el-form-item label="重复密码:" label-width="100px" prop="passwordAgain">
+                        <el-form-item label="重复密码:" label-width="90px" prop="passwordAgain">
                             <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
                         </el-form-item>
                     </el-form>
-                    <div slot="footer" class="dialog-footer">
+                    <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
+                    <div slot="footer" class="dialog-footer" v-if="showBtn">
                         <el-button type="primary" @click="newUser()">注 册</el-button>
                     </div>
                 </el-dialog>
@@ -98,6 +100,8 @@ export default {
             }
         }
         return {
+            showBtn:false,
+            slider:0,
             dialogNewVisible: false,//控制注册模态框标志
             dialogLoginVisible: false,//控制登录模态框标志
             newForm: { //注册表单
@@ -187,11 +191,58 @@ export default {
                 }
             })
         },
+        change(){
+            var bar = document.getElementsByClassName('el-slider__bar');
+            var btn = document.getElementsByClassName('el-slider__button');
+            if(this.slider == 100){
+                this.showBtn = true;
+                for(let i = 0;i<bar.length;i++){
+                    bar[i].style.backgroundColor = 'rgb(102,204,102)';
+                }
+                for(let i = 0;i<btn.length;i++){
+                    btn[i].style.backgroundPosition = '249px -1px';
+                }
+            }else{
+                this.showBtn = false;
+                for(let i = 0;i<bar.length;i++){
+                    bar[i].style.backgroundColor = 'rgb(255,255,102)';
+                }
+                for(let i = 0;i<btn.length;i++){
+                    btn[i].style.backgroundPosition = '323px -202px';
+                }
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
+.el-slider{
+    margin-left:30px;
+}
+.right_box>>>.el-dialog{
+    padding:0 60px 0 40px;
+}
+.el-slider>>>.el-slider__runway{
+    margin:0;
+    height:40px;
+    border-radius:40px;
+}
+.el-slider>>>.el-slider__bar{
+    height:40px;
+    border-radius:40px 0 0 40px;
+    background-color: rgb(255,255,102);
+}
+.el-slider>>>.el-slider__button-wrapper{
+    top:0;
+}
+.el-slider>>>.el-slider__button{
+    height:40px;
+    width:40px;
+    background-image: url(../../img/log.png);
+    background-position: 323px -202px;
+    background-color: white;
+}
 .new>>>.el-badge__content.is-fixed{
     top:8px;
 }
