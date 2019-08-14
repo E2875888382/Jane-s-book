@@ -54,9 +54,6 @@
                         <el-form-item label="重复密码:" label-width="100px" prop="passwordAgain">
                             <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
                         </el-form-item>
-                        <el-form-item label="输入邮箱验证码:" label-width="100px" prop="sms">
-                            <el-input v-model="newForm.sms" autocomplete="off"><el-button slot="append" @click="sendSms">发送验证码</el-button></el-input>
-                        </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="newUser()">注 册</el-button>
@@ -80,42 +77,33 @@ export default {
         let checkEmail = (rule, value, callback) => {
             let reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             if (!reEmail.test(value)) {
-            callback(new Error('请输入正确的邮箱格式'))
+                callback(new Error('请输入正确的邮箱格式'))
             } else {
-            callback()
+                callback()
             }
         }
         let checkPassword= (rule, value, callback) => {
             let rePassword = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,30}$/;
             if (!rePassword.test(value)) {
-            callback(new Error('请输入8-10位的混合密码（数字，字母）'))
+                callback(new Error('请输入8-10位的混合密码（数字，字母）'))
             } else {
-            callback()
+                callback()
             }
         }
         let checkPasswordAgain= (rule, value, callback) => {  
             if (value !== this.newForm.password) {
-            callback(new Error('请再次确认密码'))
+                callback(new Error('请再次确认密码'))
             } else {
-            callback()
-            }
-        }
-        let checkSms=(rule, value, callback) => {  
-            if (value !== this.sms) {
-            callback(new Error('请再次确认验证码'))
-            } else {
-            callback()
+                callback()
             }
         }
         return {
-            sms:'',//中间验证码
             dialogNewVisible: false,//控制注册模态框标志
             dialogLoginVisible: false,//控制登录模态框标志
             newForm: { //注册表单
                 email:'',
                 password:'',
                 passwordAgain:'',
-                sms:'',
             },
             loginForm:{ //登录表单
                 email:'',
@@ -134,10 +122,6 @@ export default {
                     { validator: checkPasswordAgain, trigger: 'blur' },
                     {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}
                 ],
-                sms:[
-                    { validator: checkSms, trigger: 'blur' },
-                    {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}
-                ]
             },
         };
     },
@@ -164,11 +148,24 @@ export default {
         },
         // 注册
         newUser(){
+            let newForm = {
+                email:this.newForm.email,
+                password:md5(this.newForm.password),
+            }
             //注册新用户，提交表单并获取返回的登录信息
-            this.post('newUser',this.newForm).then((result)=>{
-                this.dialogNewVisible = false;
-                this.getStatus();
-                location.href="#/";//注册并且登录完成，重定向到首页
+            this.post('newUser',newForm).then((result)=>{
+                if(result.data.code == 0){
+                    this.$message({
+                        message:'该邮箱已被注册',
+                        type:'warning'
+                    })
+                }else{
+                    this.dialogNewVisible = false;
+                    this.$message({
+                        message:'注册成功，请重新登陆',
+                        type:'success'
+                    })
+                }
             })
         },
         // 登录
@@ -188,12 +185,6 @@ export default {
                         type:'warning'
                     })
                 }
-            })
-        },
-        // 发送验证码
-        sendSms(){
-            this.post('sendSms',this.newForm).then((result)=>{
-                this.sms = result.data.sms;
             })
         },
     }

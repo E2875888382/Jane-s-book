@@ -10,7 +10,6 @@ var news_Router=require('./router/news/news_Router');//新闻模块路由
 var developer_Router=require('./router/developer/developer_Router');//开发者模块路由
 var street_Router=require('./router/street/street_Router');//步行街模块路由
 var photo_Router=require('./router/photo/photo_Router');//相簿模块路由
-var relation_Router=require('./router/user/relation_Router');//关系模块路由
 var search_Router=require('./router/search/search_Router');//搜索模块路由(主页搜索框)
 
 //解决控制台的内存溢出提示
@@ -54,7 +53,6 @@ app.use(news_Router);
 app.use(developer_Router);
 app.use(street_Router);
 app.use(photo_Router);
-app.use(relation_Router);
 app.use(search_Router);
 
 //设置服务器端口

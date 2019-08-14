@@ -2,6 +2,16 @@ var express=require('express');
 var router=express.Router();
 var db = require('../../mysql.js');
 
+
+
+// 查询当前用户是否已关注
+router.post('/checkFriend',(request,response)=>{
+    var sql = `SELECT COUNT(*)
+    FROM friend WHERE userID = ${request.session.user} AND friendID = ${request.body.friendID}`;
+    db(sql,(result)=>{
+      response.status(200).json({ code:200,isFriend:result});
+    })
+})
 // 查询好友列表
 router.get('/getFriends',(request,response) =>{
     if(request.session.user){

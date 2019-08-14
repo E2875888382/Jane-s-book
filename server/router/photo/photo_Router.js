@@ -2,6 +2,26 @@ var express=require('express');
 var router=express.Router();
 var db = require('../../mysql.js');
 
+
+// 查询收藏的相簿
+router.get('/getPhotoCollection',(request,response)=>{
+    var sql = `SELECT photo.userID,photo.src,photocollection.time,photocollection.photoID,photo.title
+    FROM photo,photocollection
+    WHERE photo.photoID = photocollection.photoID
+    AND photocollection.userID = ${request.session.user}`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,photoCollection:result});
+    })
+})
+// 查询当前相簿是否已收藏
+router.post('/checkPhotoCollection',(request,response)=>{
+    var sql = `SELECT COUNT(*)
+    FROM photocollection
+    WHERE userID = ${request.session.user} AND photoID = ${request.body.photoID}`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,isCollection:result});
+    })
+})
 // 查询一组相簿
 router.get('/getPhoto',(request,response) => {
     var begin = (request.query.group -1)*10;
@@ -110,6 +130,14 @@ router.post('/addNewPhoto',(request,response)=>{
         response.status(200).json({ code:200,message:'success'});
     })
 })
+// 增加收藏一个相簿
+router.post('/photoCollection',(request,response)=>{
+    var sql = `INSERT INTO photocollection (userID,photoID,TIME)
+    VALUES (${request.session.user},${request.body.photoID},'${request.body.time}')`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,message:'收藏成功'});
+    })
+})
 
 
 
@@ -121,6 +149,16 @@ router.post('/cancelPhotoPraise',(request,response)=>{
     })
 })
 
+
+
+// 删除关注某个相簿
+router.post('/unlikePhoto',(request,response)=>{
+    var sql = `DELETE FROM photocollection
+    WHERE userID = ${request.session.user} AND photoID = ${request.body.photoID}`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,message:'取消收藏成功'});
+    })
+})
 
 
 //导出router
