@@ -67,7 +67,7 @@ router.post('/getPhotoCount',(request,response) => {
 // 增加评论
 router.post('/addPhotoReply',(request,response)=>{
     var sql = `INSERT INTO photoreply(photoID,userID,TIME,content)
-    VALUES (${request.body.photoID},${request.body.userID},'${request.body.time}','${request.body.content}')`;
+    VALUES (${request.body.photoID},${request.session.user},'${request.body.time}','${request.body.content}')`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'评论成功' });
     })
@@ -103,7 +103,7 @@ router.post('/photoReplyDown',(request,response)=>{
 // 增加相簿
 router.post('/addNewPhoto',(request,response)=>{
     var sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
-    VALUES(${request.body.userID},'${request.body.tags}',
+    VALUES(${request.session.user},'${request.body.tags}',
     '${request.body.src}','${request.body.title}','${request.body.time}',
     '${request.body.photo}')`;
     db(sql,(result)=>{

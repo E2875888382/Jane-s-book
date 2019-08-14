@@ -161,7 +161,7 @@ export default {
         },
         // 检查是否被收藏过
         checkPhotoCollection(){
-            this.post("checkPhotoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id}).then( (result) =>{
+            this.post("checkPhotoCollection" ,{photoID:this.id}).then( (result) =>{
                 if(result.data.code==200){
                     if(result.data.isCollection[0]["COUNT(*)"] > 0){
                         this.isCollection = true;
@@ -172,7 +172,7 @@ export default {
         // 收藏当前相簿
         photoCollection(){
             if(this.$store.state.loginFlag){
-                this.post("photoCollection" ,{userID:this.$store.state.userIfo.userID,photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                this.post("photoCollection" ,{photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
                     if(result.data.code==200){
                         this.$message({
                             message: '添加收藏成功',
@@ -201,7 +201,7 @@ export default {
         },
         // 关注当前作者
         addFriend(){
-            this.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then( (result) =>{
+            this.post("addFriend" ,{friendID:this.photoDetails.userID}).then( (result) =>{
                 if(result.data.code==200){
                     this.$message({
                         message: '添加好友成功',
@@ -219,7 +219,7 @@ export default {
         },
         // 检查作者与用户是否为好友关系
         checkFriend(){
-            this.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:this.photoDetails.userID}).then((result)=>{
+            this.post('checkFriend',{friendID:this.photoDetails.userID}).then((result)=>{
                 if(result.data.code == 200){
                     if(result.data.isFriend[0]['COUNT(*)'] == 1){
                         this.isFriend = true;
@@ -306,7 +306,7 @@ export default {
         // 增加回复量
         addReply(){
             if(this.input!==''){
-                this.post('addPhotoReply',{photoID:this.id,userID:this.$store.state.userIfo.userID,time:new Date().toLocaleString(),content:this.input}).then((result)=>{
+                this.post('addPhotoReply',{photoID:this.id,time:new Date().toLocaleString(),content:this.input}).then((result)=>{
                     this.$message({
                         message:'评论成功',
                         type:'success'

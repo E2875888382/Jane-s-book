@@ -105,7 +105,7 @@ export default {
         //发送私信
         sendMsg(){
             if(this.receiver.textarea!==''&& this.receiver.receiverID!==''){
-                this.post("sendMsg" ,{userID:this.$store.state.userIfo.userID,receiverID:this.receiver.receiverID,content:this.receiver.textarea,time:new Date().toLocaleString()}).then( (result) =>{
+                this.post("sendMsg" ,{receiverID:this.receiver.receiverID,content:this.receiver.textarea,time:new Date().toLocaleString()}).then( (result) =>{
                     if(result.data.code==200){
                         this.$message({
                             message: '发送私信成功',

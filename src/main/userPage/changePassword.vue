@@ -55,7 +55,7 @@ export default {
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-                this.post('changePassword',{new:this.Form.pass,userID:this.$store.state.userIfo.userID}).then((result)=>{
+                this.post('changePassword',{new:this.Form.pass}).then((result)=>{
                     if(result.data.code == 200){
                         this.$message({
                             message:'修改密码成功',

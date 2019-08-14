@@ -89,7 +89,7 @@ export default {
         // 查看是否已经收藏
         checkStreetCollection(){
             if(this.$store.state.loginFlag){
-                this.post("checkStreetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id}).then( (result) =>{
+                this.post("checkStreetCollection" ,{streetID:this.id}).then( (result) =>{
                     if(result.data.code==200){
                         if(result.data.isCollection[0]["COUNT(*)"] > 0){
                             this.isCollection = true;
@@ -101,7 +101,7 @@ export default {
         // 收藏该帖子
         streetCollection(){
             if(this.$store.state.loginFlag){
-                this.post("streetCollection" ,{userID:this.$store.state.userIfo.userID,streetID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
+                this.post("streetCollection" ,{streetID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
                     if(result.data.code==200){
                         this.$message({
                             message: '添加收藏成功',
