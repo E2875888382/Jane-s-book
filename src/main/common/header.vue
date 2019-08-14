@@ -73,6 +73,8 @@
 
 <script>
 import search from './search.vue'
+import md5 from 'js-md5';
+
 export default {
     data() {
         let checkEmail = (rule, value, callback) => {
@@ -171,7 +173,11 @@ export default {
         },
         // 登录
         login(){
-            this.post('login',this.loginForm).then((result)=>{
+            let form = {
+                email:this.loginForm.email,
+                password:md5(this.loginForm.password),
+            }
+            this.post('login',form).then((result)=>{
                 if(result.data.code == 1){
                     this.dialogLoginVisible = false;
                     this.getStatus(); //登录后获取用户信息

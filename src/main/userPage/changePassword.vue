@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import md5 from 'js-md5';
 export default {
     data() {
         var validatePass = (rule, value, callback) => {
@@ -55,7 +56,7 @@ export default {
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-                this.post('changePassword',{new:this.Form.pass}).then((result)=>{
+                this.post('changePassword',{new:md5(this.Form.pass)}).then((result)=>{
                     if(result.data.code == 200){
                         this.$message({
                             message:'修改密码成功',
