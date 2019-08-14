@@ -50,55 +50,57 @@ DROP TABLE IF EXISTS `message`;
 
 CREATE TABLE `message` (
   `messageID` int(11) NOT NULL AUTO_INCREMENT COMMENT '消息序列',
-  `userID` int(5) unsigned zerofill NOT NULL,
-  `receiverID` int(5) unsigned zerofill NOT NULL,
+  `userID` int(5) unsigned zerofill NOT NULL COMMENT '发送人userID',
+  `receiverID` int(5) unsigned zerofill NOT NULL COMMENT '接收人userID',
   `content` varchar(100) DEFAULT NULL COMMENT '消息内容',
   `time` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '发送时间',
   `isRead` tinyint(1) DEFAULT '0' COMMENT '消息是否已读',
   KEY `messageID` (`messageID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `news` */
 
 DROP TABLE IF EXISTS `news`;
 
 CREATE TABLE `news` (
-  `newID` int(11) NOT NULL AUTO_INCREMENT COMMENT '新闻的编号',
-  `title` varchar(40) NOT NULL COMMENT '新闻标题',
-  `time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '2019-07-03' COMMENT '发布时间',
+  `title` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '新闻标题',
+  `time` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发布时间',
+  `source` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Twitter' COMMENT '新闻来源',
+  `editor` char(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '作者',
   `view` int(11) DEFAULT '0' COMMENT '阅读量',
-  `abstract` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '新闻摘要',
-  `img` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '缩略图地址',
-  `source` varchar(20) NOT NULL DEFAULT 'Twitter' COMMENT '新闻来源',
-  `content` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '新闻详情',
-  KEY `id` (`newID`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+  `imgTop` mediumtext NOT NULL COMMENT '缩略图地址',
+  `content` mediumtext COMMENT '新闻详情',
+  `imgContent` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '新闻配图',
+  `abstract` mediumtext NOT NULL COMMENT '新闻摘要',
+  `newID` int(11) NOT NULL AUTO_INCREMENT COMMENT '新闻id',
+  KEY `newID` (`newID`)
+) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `photo` */
 
 DROP TABLE IF EXISTS `photo`;
 
 CREATE TABLE `photo` (
-  `photoID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `userID` int(5) unsigned zerofill DEFAULT NULL,
+  `photoID` int(11) NOT NULL AUTO_INCREMENT COMMENT '相簿id',
+  `userID` int(5) unsigned zerofill DEFAULT NULL COMMENT '用户userID',
   `tags` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标签',
   `src` mediumtext COMMENT '封面',
   `title` char(100) DEFAULT NULL COMMENT '标题',
   `praise` int(11) DEFAULT '0' COMMENT '点赞数',
   `view` int(11) DEFAULT '0' COMMENT '浏览数',
   `time` char(100) DEFAULT NULL COMMENT '发布时间',
-  `photo` mediumtext,
+  `photo` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '相簿图片数组',
   KEY `id` (`photoID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `photocollection` */
 
 DROP TABLE IF EXISTS `photocollection`;
 
 CREATE TABLE `photocollection` (
-  `userID` int(5) unsigned zerofill DEFAULT NULL,
-  `photoID` int(11) DEFAULT NULL,
-  `time` char(50) DEFAULT NULL
+  `userID` int(5) unsigned zerofill DEFAULT NULL COMMENT '用户userID',
+  `photoID` int(11) DEFAULT NULL COMMENT '相簿id',
+  `time` char(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '收藏时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `photoreply` */
@@ -115,15 +117,15 @@ CREATE TABLE `photoreply` (
   `down` int(11) DEFAULT '0' COMMENT '踩数',
   KEY `id` (`photoID`),
   KEY `photoReplyID` (`photoReplyID`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `street` */
 
 DROP TABLE IF EXISTS `street`;
 
 CREATE TABLE `street` (
-  `streetID` int(11) NOT NULL AUTO_INCREMENT COMMENT '序列号',
-  `userID` int(5) unsigned zerofill DEFAULT NULL,
+  `streetID` int(11) NOT NULL AUTO_INCREMENT COMMENT '帖子id',
+  `userID` int(5) unsigned zerofill DEFAULT NULL COMMENT '用户userID',
   `topic` varchar(100) DEFAULT NULL COMMENT '主题',
   `time` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '发布时间',
   `view` int(11) DEFAULT '0' COMMENT '浏览数',
@@ -131,16 +133,16 @@ CREATE TABLE `street` (
   `content` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '正文',
   `img` mediumtext COMMENT '配图',
   KEY `id` (`streetID`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `streetcollection` */
 
 DROP TABLE IF EXISTS `streetcollection`;
 
 CREATE TABLE `streetcollection` (
-  `userID` int(5) unsigned zerofill DEFAULT NULL,
-  `streetID` int(11) DEFAULT NULL,
-  `time` char(50) DEFAULT NULL
+  `userID` int(5) unsigned zerofill DEFAULT NULL COMMENT '用户userID',
+  `streetID` int(11) DEFAULT NULL COMMENT '帖子id',
+  `time` char(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '收藏时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `streetreply` */
@@ -148,14 +150,14 @@ CREATE TABLE `streetcollection` (
 DROP TABLE IF EXISTS `streetreply`;
 
 CREATE TABLE `streetreply` (
-  `streetReplyID` int(11) NOT NULL AUTO_INCREMENT,
+  `streetReplyID` int(11) NOT NULL AUTO_INCREMENT COMMENT '评论id',
   `streetID` int(11) DEFAULT NULL COMMENT '回复的帖子的id',
-  `userID` int(5) unsigned zerofill DEFAULT NULL,
+  `userID` int(5) unsigned zerofill DEFAULT NULL COMMENT '用户userId',
   `time` varchar(50) DEFAULT NULL COMMENT '回复时间',
   `praise` int(11) DEFAULT '0' COMMENT '被点亮数目',
   `content` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '正文',
   KEY `streetReplyID` (`streetReplyID`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `user` */
 
@@ -174,7 +176,7 @@ CREATE TABLE `user` (
   `sign` varchar(100) DEFAULT NULL COMMENT '签名',
   `avatar` mediumtext COMMENT '头像',
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
