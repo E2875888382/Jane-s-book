@@ -56,7 +56,7 @@ export default {
         },
         // 取消收藏帖子
         unlikeStreet(streetID){
-            this.post('unlikeStreet',{streetID:streetID}).then((result)=>{
+            this.get('unlikeStreet',{streetID:streetID}).then((result)=>{
                 if(result.data.code == 200){
                     this.$message({
                         message: '取消收藏成功',
