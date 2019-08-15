@@ -89,7 +89,7 @@ export default {
         // 查看是否已经收藏
         checkStreetCollection(){
             if(this.$store.state.loginFlag){
-                this.post("checkStreetCollection" ,{streetID:this.id}).then( (result) =>{
+                this.get("checkStreetCollection" ,{streetID:this.id}).then( (result) =>{
                     if(result.data.code==200){
                         if(result.data.isCollection[0]["COUNT(*)"] > 0){
                             this.isCollection = true;
@@ -160,7 +160,9 @@ export default {
             this.get('getStreetDetails',{ streetID:this.id }).then((result)=>{
                 if(result.data.code == 200){
                     this.streetDetails = result.data.streetDetails[0];
-                    this.checkStreetCollection();
+                    if(this.$store.state.loginFlag){
+                        this.checkStreetCollection();
+                    }
                 }
             })
         },

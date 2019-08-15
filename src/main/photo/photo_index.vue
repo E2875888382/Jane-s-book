@@ -93,11 +93,11 @@ export default {
         praise(id,event){
             // 如果当前事件目标没有praise样式，说明没有点赞过，触发点赞
             if(!event.target.classList.contains("praise")){
-                this.post('photoPraise',{photoID:id}).then((result)=>{
+                this.get('photoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.add('praise');
                 })
             }else{// 否则就是点赞过了，触发取消点赞
-                this.post('cancelPhotoPraise',{photoID:id}).then((result)=>{
+                this.get('cancelPhotoPraise',{photoID:id}).then((result)=>{
                     event.target.classList.remove('praise');
                 })
             }

@@ -137,7 +137,7 @@ router.post('/changeQQ',(request,response) =>{
 
 //删除好友
 router.post('/deleteFriend', (request,response) =>{
-    var sql = `DELETE FROM friend WHERE userID = "${request.body.userID}" AND friendID = "${request.body.friendID}"`;
+    var sql = `DELETE FROM friend WHERE userID = "${request.session.user}" AND friendID = "${request.body.friendID}"`;
     db(sql,(result)=>{
         response.status(200).json({message:'删除成功'});
     })

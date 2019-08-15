@@ -44,7 +44,7 @@ export default {
     methods:{
         // 取消收藏相簿
         unlikePhoto(photoID){
-            this.post('unlikePhoto',{photoID:photoID}).then((result)=>{
+            this.get('unlikePhoto',{photoID:photoID}).then((result)=>{
                 if(result.data.code == 200){
                     this.$message({
                         message: '取消收藏成功',

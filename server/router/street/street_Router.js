@@ -14,10 +14,10 @@ router.get('/getStreetCollection',(request,response)=>{
     })
 })
 // 查询当前帖子是否已收藏
-router.post('/checkStreetCollection',(request,response)=>{
+router.get('/checkStreetCollection',(request,response)=>{
     var sql = `SELECT COUNT(*)
     FROM streetcollection
-    WHERE userID = ${request.session.user} AND streetID = ${request.body.streetID}`;
+    WHERE userID = ${request.session.user} AND streetID = ${request.query.streetID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,isCollection:result});
     })

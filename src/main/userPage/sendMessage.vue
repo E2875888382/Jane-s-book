@@ -56,7 +56,7 @@ export default {
     methods:{
         //删除好友
         deleteFriend(friendID){
-            this.post("deleteFriend",{friendID:friendID,userID:this.$store.state.userIfo.userID}).then( (result) =>{
+            this.post("deleteFriend",{friendID:friendID}).then( (result) =>{
                 this.getFriends();//删除好友成功刷新好友列表
             })
         },
@@ -71,7 +71,7 @@ export default {
                     if(this.$store.state.userIfo.userID == element.userID){
                         element.isMe = true;
                     }
-                    this.post('checkFriend',{userID:this.$store.state.userIfo.userID,friendID:element.userID}).then((result)=>{
+                    this.post('checkFriend',{friendID:element.userID}).then((result)=>{
                         if(result.data.code == 200){
                             if(result.data.isFriend[0]['COUNT(*)'] == 1){
                                 element.isFriend = true;
@@ -84,7 +84,7 @@ export default {
         },
         //添加好友
         addFriend(userID){
-            this.post("addFriend" ,{userID:this.$store.state.userIfo.userID,friendID:userID}).then( (result) =>{
+            this.post("addFriend" ,{friendID:userID}).then( (result) =>{
                 if(result.data.code==200){
                     this.$message({
                         message: '添加好友成功',
