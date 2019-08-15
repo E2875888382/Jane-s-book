@@ -166,8 +166,20 @@ export default {
                 }else{
                     this.dialogNewVisible = false;
                     this.$message({
-                        message:'注册成功，请重新登陆',
+                        message:'注册成功',
                         type:'success'
+                    });
+                    this.post('login',newForm).then((result)=>{
+                        if(result.data.code == 1){
+                            this.dialogLoginVisible = false;
+                            this.getStatus(); //登录后获取用户信息
+                            this.$router.push({ path:'/street'});// 登录后重定向到首页
+                        }else{
+                            this.$message({
+                                message:'账号或密码错误',
+                                type:'warning'
+                            })
+                        }
                     })
                 }
             })

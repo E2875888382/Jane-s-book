@@ -12,9 +12,7 @@ router.post('/newUser',(request,response) =>{
         else {
             var sql1='INSERT INTO user (email,password) VALUES ('+'"'+request.body.email+'",'+'"'+request.body.password+'")';
             db(sql1,(result)=>{
-                //使用session记录登录状态
-                request.session.user=request.body;
-                response.status(200).json({  message:"注册成功",code:1 ,user:request.session.user.email  });
+                response.status(200).json({  message:"注册成功",code:1 });
             })
         }
     })

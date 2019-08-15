@@ -31,7 +31,6 @@
     </div>
     <div class="rigth_send_msg col-8">
         <p>{{ receiver.nickName }}</p>
-        <hr>
         <el-input type="textarea" placeholder="请输入内容" v-model="receiver.textarea" maxlength="100" show-word-limit autofocus="true" resize="none" rows="10" class="col-12">
         </el-input>
         <div class="send_box">

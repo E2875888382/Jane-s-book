@@ -3,12 +3,12 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
         <el-form-item label="昵称" prop="nickName">
-            <el-input v-model="ruleForm.nickName" minlength="1" maxlength="10" show-word-limit></el-input>
+            <el-input v-model="ruleForm.nickName" minlength="1" maxlength="10" show-word-limit style="width:40%"></el-input>
         </el-form-item>
 
         <el-form-item label="出生日期" required>
             <el-form-item prop="birth">
-                <el-date-picker v-model="ruleForm.birth" type="date" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"></el-date-picker>
+                <el-date-picker v-model="ruleForm.birth" type="date" style="width:40%" placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
         </el-form-item>
 
@@ -20,7 +20,7 @@
         </el-form-item>
 
         <el-form-item label="个性签名" prop="sign">
-            <el-input type="textarea" v-model="ruleForm.sign" resize="none" rows="4" maxlength="50" show-word-limit></el-input>
+            <el-input type="textarea" v-model="ruleForm.sign" style="width:50%" resize="none" rows="5" maxlength="50" show-word-limit></el-input>
         </el-form-item>
 
         <el-form-item>

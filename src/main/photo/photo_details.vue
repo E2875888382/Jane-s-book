@@ -208,6 +208,7 @@ export default {
                         type: 'success'
                     });
                     this.getPhotoDetails();// 添加好友后刷新状态
+                    this.getFriends();
                 }
             })
         },
