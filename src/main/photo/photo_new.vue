@@ -131,7 +131,6 @@ export default {
 .container{
     margin-top:40px;
     margin-bottom: 40px;
-    border:1px solid #ccc;
     min-height:1000px;
 }
 .bread{

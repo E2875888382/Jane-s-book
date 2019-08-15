@@ -1,7 +1,7 @@
 <template>
-    <div class="container col-10">
+    <div class="container col-11">
         <div class="row">
-            <el-page-header content="步行街主干道" class="top col-10" @back="back"></el-page-header>
+            <h3 class="top col-10">步行街</h3>
             <div class="col-2 link-box" v-if="$store.state.loginFlag">
                 <router-link to="/street/new">发新帖<i class="link_icon"></i></router-link>
             </div>
@@ -54,10 +54,6 @@ export default {
         this.getStreetCount();
     },
     methods:{
-        // 返回按钮，回到'/'
-        back(){
-            this.$router.push({ path:'/'});
-        },
         // 点击不同页根据页数请求贴子组
         handleCurrentChange(val) {
             this.getStreetList(val);
@@ -105,7 +101,7 @@ export default {
 .container{
     margin-top:40px;
     margin-bottom: 40px;
-    height:1150px;
+    height:1200px;
 }
 .content{
     height: 1010px;
@@ -130,7 +126,7 @@ export default {
     height:48px;
 }
 .item:hover{
-    background-color: #ccc;
+    background-color: whitesmoke;
 }
 .title,.author,.last-reply,.watch{
     height:48px;

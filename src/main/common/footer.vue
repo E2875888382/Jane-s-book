@@ -1,29 +1,11 @@
 <template>
 <div class="bg col-12">
     <div class="footer col-10 m-auto">
-        <div class="left_div col-7">
+        <div class="left_div col-10">
             <p>Copyright by 虎扑JRs Elric Tang</p>
             <p>GitHub:https://github.com/E2875888382</p>
         </div>
-        <div class="right_div col-5">
-            <el-tooltip placement="top" effect="light" class="col-3">
-                <div slot="content">
-                    <img src="../../img/wechat.png" alt="" class="img-logo">
-                </div>
-                <el-button class="download">
-                    <div class="download_logo"></div>
-                    <em>客户端下载</em>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip placement="top" effect="light" class="col-3">
-                <div slot="content">
-                    <img src="../../img/wechat.png" alt="" class="img-logo">
-                </div>
-                <el-button class="qq">
-                    <div class="qq_logo"></div>
-                    <em>官方QQ</em>
-                </el-button>
-            </el-tooltip>
+        <div class="right_div col-2">
             <el-tooltip placement="top" effect="light" class="col-3">
                 <div slot="content">
                     <img src="../../img/wechat.png" alt="" class="img-logo">
@@ -58,22 +40,10 @@ export default {
     padding-top: 10px;
     padding-bottom: 10px;
 }
-.download,.qq,.wechat{
+.wechat{
     height:80px;
     border:none;
     background-color: #f6f9fa;
-}
-.download_logo{
-    display: block;
-    background:url(../../img/icons.png) no-repeat -1024px -194px;
-    width: 60px;
-    height: 60px;
-}
-.qq_logo{
-    display: block;
-    background:url(../../img/icons.png) no-repeat -1024px -322px;
-    width: 60px;
-    height: 60px;
 }
 .wechat_logo{
     display: block;

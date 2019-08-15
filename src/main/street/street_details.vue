@@ -192,7 +192,6 @@ export default {
 .container{
     margin-top:40px;
     margin-bottom: 40px;
-    border:1px solid #ccc;
     min-height:1000px;
 }
 .bread{
@@ -235,7 +234,7 @@ export default {
     grid-template-columns:10% 90%;
     grid-template-rows:1fr;
     margin-bottom: 20px;
-    background-color: #f1f1f1;
+    background-color: whitesmoke;
 }
 .light{
     background: url(https://b3.hoopchina.com.cn/images/img_icon_07.gif?t=2015090901) -8px -523px no-repeat;
@@ -276,6 +275,12 @@ export default {
 }
 .avatar{
     margin: 10px 0 0 10px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
 }
 .add-reply{
     height:200px;
