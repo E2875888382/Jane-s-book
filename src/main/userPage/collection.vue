@@ -1,40 +1,33 @@
 <template>
 <div class="col-12">
     <el-tabs v-model="activeName">
+
         <el-tab-pane label="相簿" name="first">
-    
             <el-popover v-for="(item,index) in $store.state.photoCollection" :key="index" width="200" trigger="hover">
                 <p class="title">{{ item.title }}</p>
                 <p class="time">收藏时间：{{ item.time }}</p>
                 <div style="display:flex;justify-content:center">
-                    <el-button type="primary" icon="el-icon-view" size="mini" @click="photoDetails(item.photoID)"></el-button>
                     <el-button type="danger" icon="el-icon-delete" size="mini" @click="unlikePhoto(item.photoID)"></el-button>
                 </div>
-                <el-image
-                    :src="item.src"
-                    fit="cover"
-                    class="item"
-                    slot="reference"
-                    >
-                </el-image>
-
+                <router-link :to="'/photoDetails/'+item.photoID" slot="reference">
+                    <el-image :src="item.src" fit="cover" class="item">
+                    </el-image>
+                </router-link>
             </el-popover>
         </el-tab-pane>
 
-
         <el-tab-pane label="步行街" name="second">
             <el-collapse accordion>
-                <el-collapse-item v-for="item in $store.state.streetCollection" :key="item.streetID" :title="item.topic" :name="item.streetID">
+                <el-collapse-item v-for="item in $store.state.streetCollection" :key="item.streetID" :name="item.streetID">
+                    <router-link slot="title" :to="'/streetDetails/'+item.streetID">{{ item.topic }}</router-link>
                     <div class="streetDetails">
                         <span>收藏时间：{{ item.time }}</span>
                         <div>
-                            <el-button type="primary" icon="el-icon-view" size="mini"  @click="streetDetails(item.streetID)"></el-button>
                             <el-button type="danger" icon="el-icon-delete" size="mini"  @click="unlikeStreet(item.streetID)"></el-button>
                         </div>
                     </div>
                 </el-collapse-item>
             </el-collapse>
-
 
         </el-tab-pane>
     </el-tabs>
@@ -46,8 +39,6 @@ export default {
     data(){
         return {
             activeName: 'first',
-            collection:[],
-            streetCollection:[],
         }
     },
     methods:{
@@ -74,16 +65,6 @@ export default {
                     this.getStreetCollection();// 重新获取收藏帖子列表
                 }
             })
-        },
-        // 查看相簿详情（跳转路由）
-        photoDetails(photoID){
-            let route = '/photoDetails/'+photoID;
-            this.$router.push({ path:route});// 根据photoID跳转路由
-        },
-        // 查看帖子详情（跳转路由）
-        streetDetails(streetID){
-            let route = '/streetDetails/'+streetID;
-            this.$router.push({ path:route });// 根据streetID跳转路由
         },
     }
 }

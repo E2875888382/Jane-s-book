@@ -10,7 +10,7 @@
     <div class="col-11 m-auto leader">
         <el-page-header   content="全部相簿">
         </el-page-header>
-        <div>
+        <div v-if="this.$store.state.loginFlag">
             <i class="el-icon-edit"></i>
             <router-link to="/photo/new" class="lead_link">发表我的相簿</router-link>
         </div>

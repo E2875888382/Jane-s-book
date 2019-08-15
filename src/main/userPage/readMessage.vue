@@ -4,8 +4,8 @@
         <el-tabs value="first">
             <el-tab-pane :label="'未读消息('+$store.state.messageCount+')'" name="first">
                 <el-table :data="$store.state.message" style="width: 100%" :default-sort = "{prop: 'time', order: 'descending'}" :cell-style="cellStyle">
-                    <el-table-column label="消息内容" prop="content" min-width="500px" header-align="center"> </el-table-column>
-                    <el-table-column label="时间" prop="time" sortable header-align="center" align="center"> </el-table-column>
+                    <el-table-column label="消息内容" prop="content" min-width="400px" header-align="center"> </el-table-column>
+                    <el-table-column label="时间" prop="time" sortable header-align="center" align="center" min-width="150px"> </el-table-column>
                     <el-table-column prop="nickName" align="center"> </el-table-column>
                     <el-table-column align="right">
                         <template slot-scope="scope">
@@ -15,9 +15,9 @@
                     <div slot="empty" class="empty"> </div>
                 </el-table>
             </el-tab-pane>
-            <el-tab-pane :label="'未读消息('+$store.state.historyMessage.length+')'" name="second">
+            <el-tab-pane :label="'已读消息('+$store.state.historyMessage.length+')'" name="second">
                 <el-table :data="$store.state.historyMessage" style="width: 100%" :default-sort = "{prop: 'time', order: 'descending'}" :cell-style="cellStyle">
-                    <el-table-column label="消息内容" prop="content" min-width="500px" header-align="center"> </el-table-column>
+                    <el-table-column label="消息内容" prop="content" min-width="400px" header-align="center"> </el-table-column>
                     <el-table-column label="时间" prop="time" sortable header-align="center" align="center"> </el-table-column>
                     <el-table-column prop="nickName" align="center"> </el-table-column>
                     <div slot="empty" class="empty"> </div>

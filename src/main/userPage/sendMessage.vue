@@ -1,5 +1,5 @@
 <template>
-<div style="display:flex">
+<div style="display:flex;height:800px">
     <div class="left_friend_list col-4">
         <div class="friendList_item col-12" >
             <el-input placeholder="请输入昵称"  class="input-with-select col-10" v-model="searchFriendInput"></el-input>
@@ -125,7 +125,6 @@ export default {
 
 <style scoped>
 .left_friend_list{
-    height: 100%;
     overflow: auto;
     cursor: pointer;
     border-right:1px solid #DCDFE6;
