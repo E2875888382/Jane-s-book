@@ -48,7 +48,7 @@
                     </div>
                 </el-dialog>
                 <!-- 注册模态框 -->
-                <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="35%" :close-on-click-modal="false">
+                <el-dialog title="注册" :visible.sync="dialogNewVisible" center width="35%" :close-on-click-modal="false">
                     <el-form :model="newForm" :rules="rules" ref="newForm" label-position="right">
                         <el-form-item label="邮箱:" label-width="90px" prop="email">
                             <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
@@ -403,5 +403,8 @@ export default {
     justify-content: center;
     overflow: hidden;
     cursor: pointer;
+}
+.dialog-footer>>>.el-button{
+    width:200px;
 }
 </style>

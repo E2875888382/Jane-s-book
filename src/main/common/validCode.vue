@@ -44,7 +44,7 @@ export default {
                 codeList.push({
                     code: chars.charAt(Math.floor(Math.random() * charsLen)),
                     color: `rgb(${rgb})`,
-                    fontSize: `1${[Math.floor(Math.random() * 10)]}px`,
+                    fontSize: `2${[Math.floor(Math.random() * 10)]}px`,
                     padding: `${[Math.floor(Math.random() * 10)]}px`,
                     transform: `rotate(${Math.floor(Math.random() * 90) - Math.floor(Math.random() * 90)}deg)`
                 })
