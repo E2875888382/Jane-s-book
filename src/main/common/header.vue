@@ -31,11 +31,15 @@
                 <!-- 登录模态框 -->
                 <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="35%">
                     <el-form :model="loginForm" :rules="rules" ref="loginForm">
-                        <el-form-item label="邮箱:" label-width="60px" prop="email">
+                        <el-form-item label="邮箱:" label-width="70px" prop="email">
                             <el-input v-model="loginForm.email" autocomplete="off"></el-input>
                         </el-form-item>
-                        <el-form-item label="密码:" label-width="60px" prop="password">
+                        <el-form-item label="密码:" label-width="70px" prop="password">
                             <el-input v-model="loginForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
+                        </el-form-item>
+                        <el-form-item label="验证码:" label-width="70px" prop="code">
+                            <el-input v-model="loginForm.code" autocomplete="off" style="max-width:150px"></el-input>
+                            <valid-code :value.sync="validCode" style="float:right"></valid-code>
                         </el-form-item>
                     </el-form>
                     <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
@@ -55,6 +59,10 @@
                         <el-form-item label="重复密码:" label-width="90px" prop="passwordAgain">
                             <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
                         </el-form-item>
+                        <el-form-item label="验证码:" label-width="90px" prop="code">
+                            <el-input v-model="newForm.code" autocomplete="off" style="max-width:130px"></el-input>
+                            <valid-code :value.sync="validCode" style="float:right"></valid-code>
+                        </el-form-item>
                     </el-form>
                     <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
                     <div slot="footer" class="dialog-footer" v-if="showBtn">
@@ -73,6 +81,7 @@
 <script>
 import search from './search.vue'
 import md5 from 'js-md5';
+import validCode from './validCode.vue'
 
 export default {
     data() {
@@ -99,7 +108,15 @@ export default {
                 callback()
             }
         }
+        let checkCode = (rule,value,callback)=>{
+            if(value.toLowerCase() !== this.validCode.toLowerCase()){
+                callback(new Error('请再次确认验证码'))
+            } else {
+                callback()
+            }
+        }
         return {
+            validCode:'',
             showBtn:false,
             slider:0,
             dialogNewVisible: false,//控制注册模态框标志
@@ -108,10 +125,12 @@ export default {
                 email:'',
                 password:'',
                 passwordAgain:'',
+                code:'',
             },
             loginForm:{ //登录表单
                 email:'',
-                password:'', 
+                password:'',
+                code:'', 
             }, 
             rules: { //模态框输入规则
                 email: [
@@ -126,11 +145,16 @@ export default {
                     { validator: checkPasswordAgain, trigger: 'blur' },
                     {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}
                 ],
+                code:[
+                    { validator: checkCode, trigger: 'blur' },
+                    {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}
+                ]
             },
         };
     },
     components:{
         search,
+        'valid-code':validCode,
     },
     created(){
         this.getStatus();//组件创建后获取登录者的基本信息
@@ -152,24 +176,53 @@ export default {
         },
         // 注册
         newUser(){
-            let newForm = {
-                email:this.newForm.email,
-                password:md5(this.newForm.password),
-            }
-            //注册新用户，提交表单并获取返回的登录信息
-            this.post('newUser',newForm).then((result)=>{
-                if(result.data.code == 0){
-                    this.$message({
-                        message:'该邮箱已被注册',
-                        type:'warning'
+            this.$refs['newForm'].validate((valid) => {
+                if(valid){
+                    let newForm = {
+                        email:this.newForm.email,
+                        password:md5(this.newForm.password),
+                    }
+                    //注册新用户，提交表单并获取返回的登录信息
+                    this.post('newUser',newForm).then((result)=>{
+                        if(result.data.code == 0){
+                            this.$message({
+                                message:'该邮箱已被注册',
+                                type:'warning'
+                            })
+                        }else{
+                            this.dialogNewVisible = false;
+                            this.$message({
+                                message:'注册成功',
+                                type:'success'
+                            });
+                            this.post('login',newForm).then((result)=>{
+                                if(result.data.code == 1){
+                                    this.dialogLoginVisible = false;
+                                    this.getStatus(); //登录后获取用户信息
+                                    this.$router.push({ path:'/street'});// 登录后重定向到首页
+                                }else{
+                                    this.$message({
+                                        message:'账号或密码错误',
+                                        type:'warning'
+                                    })
+                                }
+                            })
+                        }
                     })
                 }else{
-                    this.dialogNewVisible = false;
-                    this.$message({
-                        message:'注册成功',
-                        type:'success'
-                    });
-                    this.post('login',newForm).then((result)=>{
+                    return false;
+                }
+            })
+        },
+        // 登录
+        login(){
+            this.$refs['loginForm'].validate((valid) => {
+                if(valid){
+                    let form = {
+                        email:this.loginForm.email,
+                        password:md5(this.loginForm.password),
+                    }
+                    this.post('login',form).then((result)=>{
                         if(result.data.code == 1){
                             this.dialogLoginVisible = false;
                             this.getStatus(); //登录后获取用户信息
@@ -181,25 +234,8 @@ export default {
                             })
                         }
                     })
-                }
-            })
-        },
-        // 登录
-        login(){
-            let form = {
-                email:this.loginForm.email,
-                password:md5(this.loginForm.password),
-            }
-            this.post('login',form).then((result)=>{
-                if(result.data.code == 1){
-                    this.dialogLoginVisible = false;
-                    this.getStatus(); //登录后获取用户信息
-                    this.$router.push({ path:'/street'});// 登录后重定向到首页
                 }else{
-                    this.$message({
-                        message:'账号或密码错误',
-                        type:'warning'
-                    })
+                    return false;
                 }
             })
         },
