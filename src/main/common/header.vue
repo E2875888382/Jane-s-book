@@ -29,7 +29,7 @@
                     <el-link :underline="false"  @click="()=>{dialogNewVisible = true;this.slider=0}">注册</el-link>
                 </div>
                 <!-- 登录模态框 -->
-                <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="35%">
+                <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="35%" :close-on-click-modal="false">
                     <el-form :model="loginForm" :rules="rules" ref="loginForm">
                         <el-form-item label="邮箱:" label-width="70px" prop="email">
                             <el-input v-model="loginForm.email" autocomplete="off"></el-input>
@@ -48,7 +48,7 @@
                     </div>
                 </el-dialog>
                 <!-- 注册模态框 -->
-                <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="35%" >
+                <el-dialog title="注册账号" :visible.sync="dialogNewVisible" center width="35%" :close-on-click-modal="false">
                     <el-form :model="newForm" :rules="rules" ref="newForm" label-position="right">
                         <el-form-item label="邮箱:" label-width="90px" prop="email">
                             <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
