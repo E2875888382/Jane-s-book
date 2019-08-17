@@ -69,6 +69,7 @@ export default {
         //获取新闻详情
         getNewsDetails(){
             this.get("getNewsDetails",{ newID:this.id }).then((result) =>{
+                this.imgContent = [];//防止前面的内容重叠
                 if(result.data.code == 200){
                     this.newsDetails = result.data.newsList[0];
                     if(this.newsDetails.imgContent){
