@@ -39,7 +39,7 @@
                         </el-form-item>
                         <el-form-item label="验证码:" label-width="70px" prop="code">
                             <el-input v-model="loginForm.code" autocomplete="off" style="max-width:150px"></el-input>
-                            <valid-code :value.sync="validCode" style="float:right"></valid-code>
+                            <canvasCode :value.sync="validCode" v-if="dialogLoginVisible"></canvasCode>
                         </el-form-item>
                     </el-form>
                     <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
@@ -61,7 +61,7 @@
                         </el-form-item>
                         <el-form-item label="验证码:" label-width="90px" prop="code">
                             <el-input v-model="newForm.code" autocomplete="off" style="max-width:130px"></el-input>
-                            <valid-code :value.sync="validCode" style="float:right"></valid-code>
+                            <canvasCode :value.sync="validCode" v-if="dialogNewVisible"></canvasCode>
                         </el-form-item>
                     </el-form>
                     <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
@@ -81,7 +81,7 @@
 <script>
 import search from './search.vue'
 import md5 from 'js-md5';
-import validCode from './validCode.vue'
+import canvasCode from './canvasCode.vue'
 
 export default {
     data() {
@@ -154,7 +154,7 @@ export default {
     },
     components:{
         search,
-        'valid-code':validCode,
+        canvasCode,
     },
     created(){
         this.getStatus();//组件创建后获取登录者的基本信息
