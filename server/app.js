@@ -4,6 +4,7 @@ var path=require('path');
 var session=require('express-session');
 
 //导入路由
+var Index = require('./router/index/index')
 var login_Router=require('./router/user/login_Router');//登录路由
 var userPage_Router=require('./router/user/userPage_Router');//用户系统路由
 var news_Router=require('./router/news/news_Router');//新闻模块路由
@@ -47,6 +48,7 @@ app.use(session({
 }));
 
 //挂载router
+app.use(Index)
 app.use(login_Router);
 app.use(userPage_Router);
 app.use(news_Router);

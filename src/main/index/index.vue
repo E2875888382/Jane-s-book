@@ -1,7 +1,7 @@
 <template>
 <div class="col-9 m-auto bg">
     <div class="list">
-        <div class="list_item" v-for="(item,index) in streetList" :key="index">
+        <div class="list_item" v-for="(item,index) in articleList" :key="index">
             <div class="list_item_left">
                 <p class="title">
                     <router-link :to="'/streetDetails/'+item.streetID">{{ item.topic }}</router-link>
@@ -15,7 +15,8 @@
             </div>
             <el-image style="width:150px; height:100px" src="https://upload-images.jianshu.io/upload_images/17156415-a8a471fe304a0942.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240" fit="fill"></el-image>
         </div>
-        <el-button type="info" round>阅读更多</el-button>
+        <el-button type="info" round @click="load" v-if="!finished">阅读更多</el-button>
+        <p class="tips" v-if="finished">没有更多了</p>
     </div>
     <el-backtop></el-backtop>
 </div>
@@ -25,34 +26,33 @@
 export default {
     data(){
         return {
-            currentPage:0,
-            streetList:[],
-            streetCount:0,
+            currentPage:1,
+            articleList:[],
+            count:0,
+            finished:false,
         }
     },
     mounted(){
-        this.getStreetList(1);// 组件mounted阶段请求第一页帖子
-        this.getStreetCount();
+        this.article(this.currentPage);
     },
     methods:{
-        // 点击不同页根据页数请求贴子组
-        handleCurrentChange(val) {
-            this.getStreetList(val);
-        },
-        // 请求一组贴子，参数n是组数
-        getStreetList(n){
-            this.get('getStreet',{ page:n }).then((result)=>{
-                if(result.data.code == 200){
-                    this.streetList = result.data.streetList;
-                }
+        article(n){
+            this.jsp('article',{page:n}).then((data)=>{
+                this.articleList = this.articleList.concat(data.list);
+                this.count = data.count[0]['COUNT(*)'];
+                this.currentPage++;
+            }).catch((err)=>{
+                console.log(err);
             })
         },
-        // 获取帖子总数，用于分页
-        getStreetCount(){
-            this.get('getStreetCount').then((result)=>{
-                this.streetCount = result.data.streetCount[0]['COUNT(*)'];
-            })
-        },
+        load(){
+            let max = Math.ceil(this.count/10);
+            if(this.currentPage<=max){
+                this.article(this.currentPage);
+            }else{
+                this.finished = true;
+            }
+        }
     }
 }
 </script>
@@ -116,5 +116,11 @@ export default {
 .el-button{
     width:625px;
     margin-bottom: 30px;
+}
+.tips{
+    text-align:center;
+    color:#999;
+    margin:20px 0;
+    font-size: 13px;
 }
 </style>

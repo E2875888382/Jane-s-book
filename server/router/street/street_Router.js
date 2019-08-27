@@ -22,24 +22,6 @@ router.get('/checkStreetCollection',(request,response)=>{
         response.status(200).json({ code:200,isCollection:result});
     })
 })
-// 查询帖子
-router.get('/getStreet',(request,response) =>{
-    var begin = (request.query.page -1)*20;
-    var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,street.streetID
-    FROM street,USER
-    WHERE street.userID = user.userID
-    LIMIT ${begin},20`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,streetList:result });
-    })
-})
-// 查询帖子数量
-router.get('/getStreetCount',(request,response) => {
-    var sql = `SELECT COUNT(*) FROM street`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,streetCount:result });
-    })
-})
 // 查询帖子正文
 router.get('/getStreetDetails',(request,response) => {
     var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,user.level,user.avatar,street.replyCount,street.img,street.content

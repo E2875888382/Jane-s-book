@@ -2,7 +2,6 @@
 <div class="header col-12">
     <div class="left_box col-10">
         <ul>
-            <li><router-link to="/street">步行街</router-link></li>
             <li><router-link to="/news">新闻</router-link></li>
             <li><router-link to="/photo">相簿</router-link></li>
             <li><router-link to="/developer">开发者</router-link></li>
@@ -30,7 +29,7 @@
 </template>
 
 <script>
-import search from './search.vue'
+import search from '../search/search.vue'
 export default {
     data() {
         return {

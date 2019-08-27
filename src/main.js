@@ -14,17 +14,18 @@ import App from './main/app.vue'
 
 
 //导入路由
-import router from './router.js'
+import router from './main/common/router.js'
 
 //导入element UI
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 //导入全局函数
-import Common from './main/common/common.js';
 
 import store from './main/common/store.js'
-//配置elementUI，vuex，infiniteScroll,vant
+import VueJsonp from 'vue-jsonp'
+import Common from './main/common/common.js';
+Vue.use(VueJsonp)
 Vue.use(ElementUI)
 Vue.use(infiniteScroll);
 Vue.use(Common);
