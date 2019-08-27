@@ -1,17 +1,18 @@
-var express=require('express');
-var bodyParser=require('body-parser');
-var path=require('path');
-var session=require('express-session');
+const express=require('express');
+const bodyParser=require('body-parser');
+const path=require('path');
+const session=require('express-session');
 
 //导入路由
-var Index = require('./router/index/index')
-var login_Router=require('./router/user/login_Router');//登录路由
-var userPage_Router=require('./router/user/userPage_Router');//用户系统路由
-var news_Router=require('./router/news/news_Router');//新闻模块路由
-var developer_Router=require('./router/developer/developer_Router');//开发者模块路由
-var street_Router=require('./router/street/street_Router');//步行街模块路由
-var photo_Router=require('./router/photo/photo_Router');//相簿模块路由
-var search_Router=require('./router/search/search_Router');//搜索模块路由(主页搜索框)
+const Index = require('./router/index/index')
+const ArticleDeatil = require('./router/article/detail')
+const login_Router=require('./router/user/login_Router');//登录路由
+const userPage_Router=require('./router/user/userPage_Router');//用户系统路由
+const news_Router=require('./router/news/news_Router');//新闻模块路由
+const developer_Router=require('./router/developer/developer_Router');//开发者模块路由
+const street_Router=require('./router/street/street_Router');//步行街模块路由
+const photo_Router=require('./router/photo/photo_Router');//相簿模块路由
+const search_Router=require('./router/search/search_Router');//搜索模块路由(主页搜索框)
 
 //解决控制台的内存溢出提示
 require('events').EventEmitter.defaultMaxListeners = 0;
@@ -48,8 +49,9 @@ app.use(session({
 }));
 
 //挂载router
-app.use(Index)
+app.use(Index);
 app.use(login_Router);
+app.use(ArticleDeatil);
 app.use(userPage_Router);
 app.use(news_Router);
 app.use(developer_Router);

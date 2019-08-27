@@ -22,36 +22,6 @@ router.get('/checkStreetCollection',(request,response)=>{
         response.status(200).json({ code:200,isCollection:result});
     })
 })
-// 查询帖子正文
-router.get('/getStreetDetails',(request,response) => {
-    var sql = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,user.level,user.avatar,street.replyCount,street.img,street.content
-    FROM street,USER
-    WHERE street.userID = user.userID AND
-    streetID = ${request.query.streetID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,streetDetails:result });
-    })
-})
-// 查询所有回复
-router.get('/getStreetReply',(request,response) => {
-    var sql = ` SELECT user.avatar,user.nickName,streetReply.time,streetReply.praise,user.level,streetReply.content,streetreply.streetReplyID
-    FROM USER,streetReply
-    WHERE user.userID = streetReply.userID AND streetID = ${request.query.streetID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,streetReply:result });
-    })
-})
-// 查询所有最后回复
-router.get('/getLastReply',(request,response) =>{
-    var sql = `SELECT TIME,streetID,user.nickName
-    FROM (streetReply RIGHT JOIN (SELECT MAX(TIME) AS ti ,streetId AS id FROM streetReply GROUP BY streetId) A ON streetReply.streetID =A.id AND streetReply.time=A.ti) LEFT JOIN USER ON streetReply.userID=user.userID`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,lastReply:result });
-    })
-})
-
-
-
 // 增加回复
 router.post('/addReply',(request,response) => {
     var sql = `INSERT INTO streetReply(streetID,userID,TIME,content) VALUES (${request.body.newReply.streetID},
@@ -74,13 +44,7 @@ router.post('/uploadNewStreet', (request,response) =>{
         response.status(200).json({message:"上传成功",code:200});
     })
 })
-// 增加帖子浏览量
-router.get('/addStreetView',(request,response) =>{
-    var sql = ` UPDATE street SET view = view + 1  WHERE streetID = ${request.query.streetID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'阅读量增加' });
-    })
-})
+
 // 增加帖子回复量
 router.get('/addStreetReply',(request,response) =>{
     var sql = ` UPDATE street SET replyCount = replyCount + 1  WHERE streetID = ${request.query.streetID}`;
@@ -96,7 +60,6 @@ router.post('/streetCollection',(request,response)=>{
         response.status(200).json({ code:200,message:'收藏成功'});
     })
 })
-
 
 
 // 修改点赞量

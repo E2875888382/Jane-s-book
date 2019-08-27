@@ -4,7 +4,7 @@
         <div class="list_item" v-for="(item,index) in articleList" :key="index">
             <div class="list_item_left">
                 <p class="title">
-                    <router-link :to="'/streetDetails/'+item.streetID">{{ item.topic }}</router-link>
+                    <router-link :to="{name:'articleDetail',params:{articleId:item.streetID}}">{{ item.topic }}</router-link>
                 </p>
                 <p class="abstract">毁掉一个女生有多容易？ 接近她，对她好，让她爱上你，在你已经融入她的生活，看着她对你百般依赖后，毫不留情的踢开她，没个一两年她是走不出来的。 这...</p>
                 <div class="info">
