@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 
 //导入自定义的vue组件
 import Index from './main/street/index.vue'
+import Login from './main/login/login.vue'
 import UserPage from './main/userPage/userPage.vue'// 用户页面
 import News_index from './main/news/news_index.vue'// 新闻主页
 import News_details from './main/news/news_details.vue'// 新闻详细页
@@ -24,7 +25,8 @@ Vue.use(VueRouter)
 //创建vue-router对象
 var router=new VueRouter({
     routes:[
-        { path:'/',component:Index},
+        { path:'/',component:Index },
+        { path:'/login',component:Login },
         { path:'/userPage',component:UserPage },
         { path:'/news',component:News_index },
         { path:'/newsDetails/:id',component:News_details },

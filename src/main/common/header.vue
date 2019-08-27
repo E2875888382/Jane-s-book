@@ -10,143 +10,34 @@
         <search></search>
     </div>
     <div class="right_box col-2">
-                <!-- 登录后状态框 -->
-                <div class="new" v-if="$store.state.loginFlag">
-                    <el-badge :is-dot="Boolean($store.state.messageCount)" >
-                        <van-image @click="function(){$router.push({ path:'/userPage'})}" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
-                    </el-badge>
-                    <el-button type="warning" plain icon="el-icon-switch-button" circle size="mini" @click="logOut()"></el-button>
-                </div>
-                <!-- 登录按钮 -->
-                <div class="login_btn" v-if="!$store.state.loginFlag">
-                    <el-link :underline="false"  @click="()=>{dialogLoginVisible = true;this.slider=0}">登录</el-link>
-                </div>
-                <!-- 注册按钮  -->
-                <div class="new_btn"  v-if="!$store.state.loginFlag">
-                    <el-link :underline="false"  @click="()=>{dialogNewVisible = true;this.slider=0}">注册</el-link>
-                </div>
-                <!-- 登录模态框 -->
-                <el-dialog title="登录" :visible.sync="dialogLoginVisible" center width="35%" :close-on-click-modal="false">
-                    <el-form :model="loginForm" :rules="rules" ref="loginForm">
-                        <el-form-item label="邮箱:" label-width="70px" prop="email">
-                            <el-input v-model="loginForm.email" autocomplete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="密码:" label-width="70px" prop="password">
-                            <el-input v-model="loginForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
-                        </el-form-item>
-                        <el-form-item label="验证码:" label-width="70px" prop="code">
-                            <el-input v-model="loginForm.code" autocomplete="off" style="max-width:150px"></el-input>
-                            <canvasCode :value.sync="validCode" v-if="dialogLoginVisible"></canvasCode>
-                        </el-form-item>
-                    </el-form>
-                    <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
-                    <div slot="footer" class="dialog-footer" v-if="showBtn">
-                        <el-button type="primary" @click="login()">登 录</el-button>
-                    </div>
-                </el-dialog>
-                <!-- 注册模态框 -->
-                <el-dialog title="注册" :visible.sync="dialogNewVisible" center width="35%" :close-on-click-modal="false">
-                    <el-form :model="newForm" :rules="rules" ref="newForm" label-position="right">
-                        <el-form-item label="邮箱:" label-width="90px" prop="email">
-                            <el-input v-model="newForm.email" autocomplete="off"  ></el-input>
-                        </el-form-item>
-                        <el-form-item label="密码:" label-width="90px" prop="password">
-                            <el-input v-model="newForm.password" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
-                        </el-form-item>
-                        <el-form-item label="重复密码:" label-width="90px" prop="passwordAgain">
-                            <el-input v-model="newForm.passwordAgain" autocomplete="off" show-password minlength="8" maxlength="10"></el-input>
-                        </el-form-item>
-                        <el-form-item label="验证码:" label-width="90px" prop="code">
-                            <el-input v-model="newForm.code" autocomplete="off" style="max-width:130px"></el-input>
-                            <canvasCode :value.sync="validCode" v-if="dialogNewVisible"></canvasCode>
-                        </el-form-item>
-                    </el-form>
-                    <el-slider v-model="slider" :show-tooltip="false" @input="change()"></el-slider>
-                    <div slot="footer" class="dialog-footer" v-if="showBtn">
-                        <el-button type="primary" @click="newUser()">注 册</el-button>
-                    </div>
-                </el-dialog>
+        <!-- 登录后状态框 -->
+        <div class="new" v-if="$store.state.loginFlag">
+            <el-badge :is-dot="Boolean($store.state.messageCount)" >
+                <van-image @click="function(){$router.push({ path:'/userPage'})}" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
+            </el-badge>
+            <el-button type="warning" plain icon="el-icon-switch-button" circle size="mini" @click="logOut()"></el-button>
+        </div>
+        <!-- 登录按钮 -->
+        <div class="login_btn" v-if="!$store.state.loginFlag">
+            <el-link :underline="false"  @click="function(){$router.push({ path:'/login'})}">登录</el-link>
+        </div>
+        <!-- 注册按钮  -->
+        <div class="new_btn"  v-if="!$store.state.loginFlag">
+            <el-link :underline="false"  @click="function(){$router.push({ path:'/login'})}">注册</el-link>
+        </div>
     </div>
 </div>
 </template>
 
 <script>
 import search from './search.vue'
-import md5 from 'js-md5';
-import canvasCode from './canvasCode.vue'
-
 export default {
     data() {
-        let checkEmail = (rule, value, callback) => {
-            let reEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-            if (!reEmail.test(value)) {
-                callback(new Error('请输入正确的邮箱格式'))
-            } else {
-                callback()
-            }
-        }
-        let checkPassword= (rule, value, callback) => {
-            let rePassword = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,30}$/;
-            if (!rePassword.test(value)) {
-                callback(new Error('请输入8-10位的混合密码（数字，字母）'))
-            } else {
-                callback()
-            }
-        }
-        let checkPasswordAgain= (rule, value, callback) => {  
-            if (value !== this.newForm.password) {
-                callback(new Error('请再次确认密码'))
-            } else {
-                callback()
-            }
-        }
-        let checkCode = (rule,value,callback)=>{
-            if(value.toLowerCase() !== this.validCode.toLowerCase()){
-                callback(new Error('请再次确认验证码'))
-            } else {
-                callback()
-            }
-        }
         return {
-            validCode:'',
-            showBtn:false,
-            slider:0,
-            dialogNewVisible: false,//控制注册模态框标志
-            dialogLoginVisible: false,//控制登录模态框标志
-            newForm: { //注册表单
-                email:'',
-                password:'',
-                passwordAgain:'',
-                code:'',
-            },
-            loginForm:{ //登录表单
-                email:'',
-                password:'',
-                code:'', 
-            }, 
-            rules: { //模态框输入规则
-                email: [
-                    { validator: checkEmail, trigger: 'blur' },
-                    {'required': 'true', 'message': '请输入邮箱', 'trigger': 'blur'}
-                ],
-                password: [
-                    { validator: checkPassword, trigger: 'blur' },
-                    {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}
-                ],
-                passwordAgain:[
-                    { validator: checkPasswordAgain, trigger: 'blur' },
-                    {'required': 'true', 'message': '请输入密码', 'trigger': 'blur'}
-                ],
-                code:[
-                    { validator: checkCode, trigger: 'blur' },
-                    {'required': 'true', 'message': '请输入验证码', 'trigger': 'blur'}
-                ]
-            },
         };
     },
     components:{
         search,
-        canvasCode,
     },
     created(){
         this.getStatus();//组件创建后获取登录者的基本信息
@@ -166,92 +57,6 @@ export default {
                 }
             })
         },
-        // 注册
-        newUser(){
-            this.$refs['newForm'].validate((valid) => {
-                if(valid){
-                    let newForm = {
-                        email:this.newForm.email,
-                        password:md5(this.newForm.password),
-                    }
-                    //注册新用户，提交表单并获取返回的登录信息
-                    this.post('newUser',newForm).then((result)=>{
-                        if(result.data.code == 0){
-                            this.$message({
-                                message:'该邮箱已被注册',
-                                type:'warning'
-                            })
-                        }else{
-                            this.dialogNewVisible = false;
-                            this.$message({
-                                message:'注册成功',
-                                type:'success'
-                            });
-                            this.post('login',newForm).then((result)=>{
-                                if(result.data.code == 1){
-                                    this.dialogLoginVisible = false;
-                                    this.getStatus(); //登录后获取用户信息
-                                    this.$router.push({ path:'/street'});// 登录后重定向到首页
-                                }else{
-                                    this.$message({
-                                        message:'账号或密码错误',
-                                        type:'warning'
-                                    })
-                                }
-                            })
-                        }
-                    })
-                }else{
-                    return false;
-                }
-            })
-        },
-        // 登录
-        login(){
-            this.$refs['loginForm'].validate((valid) => {
-                if(valid){
-                    let form = {
-                        email:this.loginForm.email,
-                        password:md5(this.loginForm.password),
-                    }
-                    this.post('login',form).then((result)=>{
-                        if(result.data.code == 1){
-                            this.dialogLoginVisible = false;
-                            this.getStatus(); //登录后获取用户信息
-                            this.$router.push({ path:'/street'});// 登录后重定向到首页
-                        }else{
-                            this.$message({
-                                message:'账号或密码错误',
-                                type:'warning'
-                            })
-                        }
-                    })
-                }else{
-                    return false;
-                }
-            })
-        },
-        change(){
-            var bar = document.getElementsByClassName('el-slider__bar');
-            var btn = document.getElementsByClassName('el-slider__button');
-            if(this.slider == 100){
-                this.showBtn = true;
-                for(let i = 0;i<bar.length;i++){
-                    bar[i].style.backgroundColor = 'rgb(102,204,102)';
-                }
-                for(let i = 0;i<btn.length;i++){
-                    btn[i].style.backgroundPosition = '249px -1px';
-                }
-            }else{
-                this.showBtn = false;
-                for(let i = 0;i<bar.length;i++){
-                    bar[i].style.backgroundColor = 'rgb(255,255,102)';
-                }
-                for(let i = 0;i<btn.length;i++){
-                    btn[i].style.backgroundPosition = '323px -202px';
-                }
-            }
-        }
     }
 }
 </script>
@@ -263,32 +68,6 @@ export default {
     border-bottom:1px solid #f0f0f0;
     height:58px;
     justify-content: space-between;
-}
-.el-slider{
-    margin-left:30px;
-}
-.right_box>>>.el-dialog{
-    padding:0 60px 0 40px;
-}
-.el-slider>>>.el-slider__runway{
-    margin:0;
-    height:40px;
-    border-radius:40px;
-}
-.el-slider>>>.el-slider__bar{
-    height:40px;
-    border-radius:40px 0 0 40px;
-    background-color: rgb(255,255,102);
-}
-.el-slider>>>.el-slider__button-wrapper{
-    top:0;
-}
-.el-slider>>>.el-slider__button{
-    height:40px;
-    width:40px;
-    background-image: url(../../img/log.png);
-    background-position: 323px -202px;
-    background-color: white;
 }
 .new>>>.el-badge__content.is-fixed{
     top:8px;
@@ -315,11 +94,6 @@ export default {
     height: 42px;
     display: flex;
     flex-direction: row-reverse;
-}
-.top_box{
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
 }
 .left_box{
     height: 58px;
@@ -348,8 +122,5 @@ export default {
     justify-content: center;
     overflow: hidden;
     cursor: pointer;
-}
-.dialog-footer>>>.el-button{
-    width:200px;
 }
 </style>

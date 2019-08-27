@@ -1,10 +1,10 @@
 <template>
 <div>
-     <top></top>
+     <top v-if="$store.state.showHeader"></top>
      <transition mode="out-in">
           <router-view></router-view>
      </transition>
-     <bottom></bottom>
+     <bottom v-if="$store.state.showFooter"></bottom>
 </div>
 </template>
 
