@@ -12,7 +12,6 @@
                 </div>
                 <el-button class="wechat">
                     <div class="wechat_logo"></div>
-                    <em>官方微信</em>
                 </el-button>
             </el-tooltip>
         </div>
@@ -29,7 +28,6 @@ export default {
 
 <style scoped>
 .bg{
-    background: #f6f9fa;
     height:120px;
 }
 .footer{
@@ -43,7 +41,6 @@ export default {
 .wechat{
     height:80px;
     border:none;
-    background-color: #f6f9fa;
 }
 .wechat_logo{
     display: block;
@@ -60,8 +57,5 @@ p{
     color:#999;
     line-height:24px;
     margin:0;
-}
-em{
-    font-style: normal;
 }
 </style>

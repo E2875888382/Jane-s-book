@@ -1,18 +1,15 @@
 <template>
 <div class="header col-12">
-    <div class="mask"></div>
-    <div class="head_content">
-        <div class="top_box">
-            <div class="left_box">
-                <ul>
-                    <li><router-link to="/street" class="top_link">步行街</router-link></li>
-                    <li><router-link to="/news" class="top_link">新闻</router-link></li>
-                    <li><router-link to="/photo" class="top_link">相簿</router-link></li>
-                    <li><router-link to="/developer" class="top_link">开发者</router-link></li>
-                </ul>
-            </div>
-            <search></search>
-            <div class="right_box">
+    <div class="left_box col-10">
+        <ul>
+            <li><router-link to="/street">步行街</router-link></li>
+            <li><router-link to="/news">新闻</router-link></li>
+            <li><router-link to="/photo">相簿</router-link></li>
+            <li><router-link to="/developer">开发者</router-link></li>
+        </ul>
+        <search></search>
+    </div>
+    <div class="right_box col-2">
                 <!-- 登录后状态框 -->
                 <div class="new" v-if="$store.state.loginFlag">
                     <el-badge :is-dot="Boolean($store.state.messageCount)" >
@@ -69,11 +66,6 @@
                         <el-button type="primary" @click="newUser()">注 册</el-button>
                     </div>
                 </el-dialog>
-            </div>
-        </div>
-        <div class="bottom_box">
-            <a href="//www.bilibili.com" class="head-logo"></a>
-        </div>
     </div>
 </div>
 </template>
@@ -265,6 +257,13 @@ export default {
 </script>
 
 <style scoped>
+.header{
+    display:flex;
+    align-items: center;
+    border-bottom:1px solid #f0f0f0;
+    height:58px;
+    justify-content: space-between;
+}
 .el-slider{
     margin-left:30px;
 }
@@ -294,29 +293,6 @@ export default {
 .new>>>.el-badge__content.is-fixed{
     top:8px;
 }
-.header{
-    background-image: url('../../img/header.png');
-    height:170px;
-    background-position: center -10px;
-    background-repeat: no-repeat;
-}
-.mask{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 42px;
-    background-color: hsla(0,0%,90%,.4);
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
-}
-.head_content{
-    width:100%;
-    height: 170px;
-    margin: 0 auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
 .login_btn,.new_btn{
     height: 42px;
     line-height: 42px;
@@ -340,61 +316,30 @@ export default {
     display: flex;
     flex-direction: row-reverse;
 }
-.head-logo{
-    width: 220px;
-    height: 105px;
-    background: transparent no-repeat 0;
-    z-index: 10;
-    background-image:url('../../img/head-logo.png'); 
-}
 .top_box{
     display: flex;
     width: 100%;
     justify-content: space-around;
 }
 .left_box{
-    width:320px;
-    height: 42px;
+    height: 58px;
+    display: flex;
+    align-items: center;
 }
 .left_box>ul{
     list-style: none;
 }
-.bottom_box{
-    width:100%;
-    height:128px;
-    display: flex;
-}
 .left_box>ul li{
     float: left;
     width: 80px;
-    height: 42px;
-    line-height: 42px;
-    font-size: 12px;
+    height: 58px;
+    line-height: 58px;
+    font-size: 15px;
     text-align: center;
+    display: block;
 }
 .left_box>ul li:hover{
-    background-color:hsla(0,0%,100%,.4);
-}
-.top_link{
-    display: block;
-    color:#222;
-    height: 42px;
-    widows: 80px;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: 600;
-}
-.top_link:first-child{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.header_icon{
-    background: url('https://www.bilibili.com/favicon.ico') no-repeat;
-    width:20px;
-    height: 21px;
-    display: block;
-    background-size: 100%;
+    background-color:whitesmoke;
 }
 .user_img{
     display: flex;

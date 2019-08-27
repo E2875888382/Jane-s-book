@@ -1,7 +1,6 @@
 <template>
-    <div class="container col-11">
+    <div class="container col-8">
         <div class="row">
-            <h3 class="top col-10">步行街</h3>
             <div class="col-2 link-box" v-if="$store.state.loginFlag">
                 <router-link to="/street/new">发新帖<i class="link_icon"></i></router-link>
             </div>
@@ -11,7 +10,6 @@
                 <div class="col-6"><p>主题</p></div>
                 <div class="col-2"><p>作者</p></div>
                 <div class="col-2"><p>回复/浏览</p></div>
-                <div class="col-2"><p>最后回复</p></div>
             </div>
             <div class="item row col-12 m-auto" v-for="(item,index) in streetList" :key="index">
                 <div class="col-6 title"><router-link :to="'/streetDetails/'+item.streetID">{{ item.topic }}</router-link></div>
@@ -20,10 +18,6 @@
                     <p>{{ item.time }}</p>
                 </div>
                 <div class="col-2 watch">{{ item.replyCount }}/{{ item.view }}</div>
-                <div class="col-2 last-reply">
-                    <p>{{ item.lastReplyTime }}</p>
-                    <a>{{ item.lastReplyAuthor }}</a>
-                </div>
             </div>
         </div>
         <div class="pages col-12">
@@ -46,7 +40,6 @@ export default {
             currentPage:0,
             streetList:[],
             streetCount:0,
-            lastReply:[],
         }
     },
     mounted(){
@@ -62,11 +55,6 @@ export default {
         getStreetList(n){
             this.get('getStreet',{ page:n }).then((result)=>{
                 if(result.data.code == 200){
-                    result.data.streetList.forEach(e => {
-                        e.lastReplyTime = '';
-                        e.lastReplyAuthor = '';
-                    });
-                    this.getLastReply();// 获取帖子后请求对应的最后回复
                     this.streetList = result.data.streetList;
                 }
             })
@@ -75,22 +63,6 @@ export default {
         getStreetCount(){
             this.get('getStreetCount').then((result)=>{
                 this.streetCount = result.data.streetCount[0]['COUNT(*)'];
-            })
-        },
-        // 获取最后回复
-        getLastReply(){
-            this.get('getLastReply').then((result)=>{
-                this.lastReply = result.data.lastReply;
-                // 获取到最后回复后，遍历回复数组，根据streetID找到对应帖子
-                // 并且把最后回复加上去
-                for(var i = 0;i<this.lastReply.length;i++){
-                    for(var j = 0;j<this.streetList.length;j++){
-                        if(this.lastReply[i].streetID == this.streetList[j].streetID){
-                            this.streetList[j].lastReplyTime = this.lastReply[i].TIME;
-                            this.streetList[j].lastReplyAuthor = this.lastReply[i].nickName;
-                        }
-                    }
-                }
             })
         },
     }
@@ -105,10 +77,6 @@ export default {
 }
 .content{
     height: 1010px;
-}
-.top{
-    height:50px;
-    line-height:50px;
 }
 .top_title{
     border-bottom: 1px solid #ccc;
@@ -128,7 +96,7 @@ export default {
 .item:hover{
     background-color: whitesmoke;
 }
-.title,.author,.last-reply,.watch{
+.title,.author,.watch{
     height:48px;
     line-height: 48px;
     margin:0;
@@ -140,7 +108,7 @@ export default {
     font-size: 12px;
     line-height:48px;
 }
-.author a,.author p,.last-reply a,.last-reply p{
+.author a,.author p{
     display: block;
     height:24px;
     font-size:12px;
