@@ -3,16 +3,7 @@ var router=express.Router();
 var db = require('../../mysql.js');
 
 
-// 查询收藏的帖子
-router.get('/getStreetCollection',(request,response)=>{
-    var sql = ` SELECT street.streetID,streetcollection.time,street.topic
-    FROM street,streetcollection
-    WHERE street.streetID = streetcollection.streetID
-    AND streetcollection.userID = ${request.session.user}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,streetCollection:result});
-    })
-})
+
 // 查询当前帖子是否已收藏
 router.get('/checkStreetCollection',(request,response)=>{
     var sql = `SELECT COUNT(*)

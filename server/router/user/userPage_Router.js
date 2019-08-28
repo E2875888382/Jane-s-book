@@ -12,59 +12,6 @@ router.post('/checkFriend',(request,response)=>{
       response.status(200).json({ code:200,isFriend:result});
     })
 })
-// 查询好友列表
-router.get('/getFriends',(request,response) =>{
-    if(request.session.user){
-        var sql =`SELECT user.userID,user.nickName,user.avatar,user.sign
-        FROM USER,friend
-        WHERE user.userID = friend.friendID AND friend.userID =${request.session.user}`;
-        db(sql,(result)=>{
-            response.status(200).json(result);
-        })
-    }
-})
-// 查询用户信息
-router.get('/getLoginUserInfo', (request,response) =>{
-    if(request.session.user){
-        var sql=`SELECT * FROM user WHERE userID = "${request.session.user}"`;
-        db(sql,(result)=>{
-            response.status(200).json(result);
-        })
-    }else{
-      response.status(200).json({ message:"没有登录记录",code:600 });
-    }
-})
-// 查询好友
-router.get('/searchFriend', (request,response) =>{
-    var sql = `SELECT nickName,userID,avatar,sign FROM user  WHERE nickName like "%${ request.query.search }%"`;
-    db(sql,(result)=>{
-        response.status(200).json(result);
-    })
-})
-// 查询好友消息
-router.get('/getFriendsMessage', (request,response) =>{
-    if(request.session.user){
-        var sql=`SELECT message.time,message.content,user.nickName,message.messageID
-        FROM message,USER
-        WHERE message.userID = user.userID AND message.receiverID = ${request.session.user} AND message.isRead = 0`;
-        db(sql,(result)=>{
-            response.status(200).json(result);
-        })
-    }
-})
-// 查询好友历史消息
-router.get('/getHistoryFriendsMessage', (request,response) =>{
-    if(request.session.user){
-        var sql=`SELECT message.time,message.content,user.nickName,message.messageID
-        FROM message,USER
-        WHERE message.userID = user.userID AND message.receiverID = ${request.session.user} AND message.isRead = 1`;
-        db(sql,(result)=>{
-            response.status(200).json(result);
-        })
-    }
-})
-
-
 
 // 增加好友
 router.post('/addFriend', (request,response) =>{

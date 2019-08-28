@@ -54,7 +54,7 @@ export default {
                             message:' 切换头像成功',
                             type:'success'
                         });
-                        this.getLoginUserIfo();
+                        this.userIfo();
                     }
                 })
             }
@@ -67,7 +67,7 @@ export default {
                         message:' 切换头像成功',
                         type:'success'
                     });
-                    this.getLoginUserIfo();
+                    this.userIfo();
                 }
             })
         },

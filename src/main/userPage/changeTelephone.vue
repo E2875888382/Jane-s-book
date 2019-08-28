@@ -37,7 +37,7 @@ export default {
                             message:'绑定手机成功',
                             type:'success'
                         });
-                        this.getLoginUserIfo();// 绑定手机后重新获取用户信息
+                        this.userIfo();
                     }
                 })
             } else {

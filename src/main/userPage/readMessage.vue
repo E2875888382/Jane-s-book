@@ -40,8 +40,7 @@ export default{
         isRead(id){
             this.get("isRead" ,{id:id}).then( (result) =>{
                 if(result.data.code == 200){
-                    this.getFriendsMessage();
-                    this.getHistoryMessage();//设置为已读后刷新信息列表
+                   this.userIfo();
                 }
             })
         },

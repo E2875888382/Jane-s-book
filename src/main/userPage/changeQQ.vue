@@ -37,7 +37,7 @@ export default {
                             message:'绑定QQ成功',
                             type:'success'
                         });
-                        this.getLoginUserIfo();// 修改QQ后重新获取用户信息
+                        this.userIfo();
                     }
                 })
             } else {

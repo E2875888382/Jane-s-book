@@ -1,6 +1,8 @@
-var express=require('express');
-var router=express.Router();
-var db = require('../../mysql.js');
+const express=require('express');
+const router=express.Router();
+const db = require('../../mysql.js');
+
+global.users = new Map();
 
 // 增加用户
 router.post('/newUser',(request,response) =>{
@@ -28,16 +30,12 @@ router.post('/login', (request,response) =>{
         else {
           //使用session记录登录状态
           request.session.user=result[0].userID;
-          response.status(200).json({  message:"登录成功",code:1 });
+          let key = Number(result[0].userID)+new Date().getTime();
+          global.users.set(key,result[0].userID);
+          response.status(200).json({  message:"登录成功",code:1,token:key });
         }
     })
 });
-
-// 退出登录
-router.get('/logOut', (request,response) =>{
-    request.session.user=null;
-    response.status(200).json({  message:"退出成功",code:700  });
-})
 
 //导出router
 module.exports=router;

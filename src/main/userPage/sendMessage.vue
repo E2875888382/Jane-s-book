@@ -57,7 +57,7 @@ export default {
         //删除好友
         deleteFriend(friendID){
             this.post("deleteFriend",{friendID:friendID}).then( (result) =>{
-                this.getFriends();//删除好友成功刷新好友列表
+                this.userIfo();
             })
         },
         //搜索好友
@@ -92,7 +92,7 @@ export default {
                     });
                     this.searchFriendResult = [];// 重置搜索结果
                     this.searchFriendInput = '';// 重置搜索框
-                    this.getFriends();// 添加好友成功后刷新好友列表
+                    this.userIfo();
                 }
             })
         },

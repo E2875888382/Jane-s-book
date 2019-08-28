@@ -50,7 +50,7 @@ export default {
                         message: '取消收藏成功',
                         type: 'success'
                     });
-                    this.getPhotoCollection();// 重新获取收藏相簿列表
+                    this.userIfo();
                 }
             })
         },
@@ -62,7 +62,7 @@ export default {
                         message: '取消收藏成功',
                         type: 'success'
                     });
-                    this.getStreetCollection();// 重新获取收藏帖子列表
+                    this.userIfo();
                 }
             })
         },

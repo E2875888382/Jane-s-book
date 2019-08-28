@@ -174,14 +174,23 @@ export default {
                         password:md5(this.loginForm.password),
                     }
                     this.post('login',form).then((result)=>{
-                        if(result.data.code == 1){
-                            this.$router.push({ path:'/'});
-                        }else{
-                            this.$message({
-                                message:'账号或密码错误',
-                                type:'warning'
-                            })
-                        }
+                        return new Promise((resolve,reject)=>{
+                            if(result.data.code == 1){
+                                localStorage.setItem('token',result.data.token);
+                                resolve(result.data.token);
+                            }else{
+                                reject();
+                            }
+                        })
+                    }).then((token)=>{
+                        this.userIfo(token)
+                    }).then(()=>{
+                        this.$router.push({ path:'/'});
+                    }).catch(()=>{
+                        this.$message({
+                            message:'账号或密码错误',
+                            type:'warning'
+                        })
                     })
                 }else{
                     return false;

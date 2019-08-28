@@ -31,32 +31,12 @@
 <script>
 import search from '../search/search.vue'
 export default {
-    data() {
-        return {
-        };
-    },
     components:{
         search,
     },
     created(){
-        this.getStatus();//组件创建后获取登录者的基本信息
+        this.userIfo();
     },
-    methods:{
-        // 查询用户信息
-        getStatus(){
-            this.get('getLoginUserInfo').then((result)=>{
-                if(result.data[0]){
-                    this.$store.commit('userIfo',result.data[0]);
-                    this.$store.commit('userStatus',true);
-                    this.getFriendsMessage();
-                    this.getHistoryMessage();
-                    this.getFriends();
-                    this.getPhotoCollection();
-                    this.getStreetCollection();
-                }
-            })
-        },
-    }
 }
 </script>
 

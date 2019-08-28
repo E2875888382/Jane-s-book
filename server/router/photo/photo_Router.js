@@ -2,17 +2,6 @@ var express=require('express');
 var router=express.Router();
 var db = require('../../mysql.js');
 
-
-// 查询收藏的相簿
-router.get('/getPhotoCollection',(request,response)=>{
-    var sql = `SELECT photo.userID,photo.src,photocollection.time,photocollection.photoID,photo.title
-    FROM photo,photocollection
-    WHERE photo.photoID = photocollection.photoID
-    AND photocollection.userID = ${request.session.user}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photoCollection:result});
-    })
-})
 // 查询当前相簿是否已收藏
 router.get('/checkPhotoCollection',(request,response)=>{
     var sql = `SELECT COUNT(*)
