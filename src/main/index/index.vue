@@ -18,11 +18,13 @@
         <el-button type="info" round @click="load" v-if="!finished">阅读更多</el-button>
         <p class="tips" v-if="finished">没有更多了</p>
     </div>
+    <news></news>
     <el-backtop></el-backtop>
 </div>
 </template>
 
 <script>
+import news from './news.vue'
 export default {
     data(){
         return {
@@ -31,6 +33,9 @@ export default {
             count:0,
             finished:false,
         }
+    },
+    components:{
+        news
     },
     mounted(){
         this.article(this.currentPage);
@@ -60,6 +65,8 @@ export default {
 <style scoped>
 .bg{
     padding-top:30px;
+    display:flex;
+    justify-content: space-between;
 }
 .list{
     padding-left:15px;

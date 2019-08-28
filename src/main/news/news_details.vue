@@ -1,5 +1,5 @@
 <template>
-    <div class="content col-11">
+    <div class="content col-8">
         <h3>{{ newsDetails.title }}</h3>
         <div class="time_read_box">
             <span>{{ newsDetails.source }} 发布时间：{{ newsDetails.time }}</span>
@@ -16,12 +16,6 @@
                 </div>
                 <p class="editor">{{ newsDetails.editor }}</p>
             </div>
-            <div style="width:300px;min-height:400px">
-                <p class="ranking_head">24小时新闻排行榜</p>
-                <p class="ranking_item" v-for="(item,index) in tenNews" :key="index">
-                    <span :class="{ number:index<3 }">{{ index+1 }}</span><router-link :to="'/newsDetails/'+item.newID">{{ item.title }}</router-link>
-                </p>
-            </div>
         </div>
         <el-backtop></el-backtop>
     </div>
@@ -34,21 +28,11 @@ export default {
             id:this.$route.params.id,
             newsDetails:{},
             imgContent:[],
-            tenNews:[],
         }
     },
     mounted(){
         this.addNewsRead();
         this.getNewsDetails();
-        this.getTenNews();
-    },
-    watch:{
-        '$route':function(){
-            this.id = this.$route.params.id;
-            this.addNewsRead();
-            this.getNewsDetails();
-            this.getTenNews();
-        }
     },
     methods:{
         //过滤器，用于把句号换为换行符
@@ -84,13 +68,6 @@ export default {
 
             })
         },
-        getTenNews(){
-            this.get("getTenNews").then((result)=>{
-                if(result.data.code == 200){
-                    this.tenNews = result.data.tenNews;
-                }
-            })
-        }
     }
 }
 </script>
@@ -122,30 +99,5 @@ export default {
     line-height: 24px;
     font-size: 14px;
     margin-top:10px;
-}
-.ranking_head{
-    font-size: 18px;
-    font-weight: 400;
-    color: #1a2939;
-    font-family: "Microsoft Yahei";
-}
-.ranking_item{
-    line-height: 20px;
-    font-size: 12px;
-    padding:3px;
-    margin:0;
-}
-.ranking_item a{
-    color: #989da2 !important;
-    text-decoration-line: none;
-}
-.ranking_item span{
-    font-style: italic;
-    font-weight: 700;
-    width:25px;
-    display: inline-block;
-}
-.number{
-    color: #ad0007;
 }
 </style>

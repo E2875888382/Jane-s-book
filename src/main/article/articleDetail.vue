@@ -56,9 +56,9 @@
                 <van-image width="45" height="45" class="avatar" :src="detail.avatar"/>
                 <div>
                     <div class="author">
-                        {{ detail.nickName }} 
-                        <van-button plain type="danger" round size="mini" v-if="isLogin&&!isFollowed" @click="followed">关注</van-button>
-                        <van-button plain type="info" round size="mini" v-if="isLogin&&isFollowed">已关注</van-button>
+                        {{ detail.nickName }}
+                        <van-button plain type="danger" round size="mini" v-if="(isLogin&&!isFollowed)&&!isMe" @click="followed">关注</van-button>
+                        <van-button plain type="info" round size="mini" v-if="(isLogin&&isFollowed)&&!isMe">已关注</van-button>
                     </div>
                     <p class="sign">{{ detail.sign }}</p>
                 </div>
@@ -81,6 +81,7 @@ export default {
             currentComments:[],
             isFollowed:false,
             isCollected:false,
+            isMe:false,
         }
     },
     mounted(){
@@ -114,6 +115,10 @@ export default {
                     this.isFollowed = true;
                 }
             })
+            if(author == this.$store.state.userIfo.userID){
+                this.isMe = true;
+                this.isFollowed = false;
+            }
         },
         followed(){
             let author = this.detail.userID;

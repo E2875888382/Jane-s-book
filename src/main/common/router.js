@@ -6,7 +6,6 @@ import Login from '../login/login.vue'
 import ArticleDetail from '../article/articleDetail.vue'
 
 import UserPage from '../userPage/userPage.vue'// 用户页面
-import News_index from '../news/news_index.vue'// 新闻主页
 import News_details from '../news/news_details.vue'// 新闻详细页
 import Developer from '../developer/developer_index.vue'// 开发者页面
 import Street_details from '../street/street_details.vue'// 步行街详细页
@@ -26,7 +25,6 @@ var router=new VueRouter({
         { path:'/article/detail/:articleId',name:'articleDetail',component:ArticleDetail },
 
         { path:'/userPage',component:UserPage },
-        { path:'/news',component:News_index },
         { path:'/newsDetails/:id',component:News_details },
         { path:'/developer',component:Developer },
         { path:'/streetDetails/:id',component:Street_details },
