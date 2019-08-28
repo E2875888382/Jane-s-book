@@ -2,17 +2,6 @@ var express=require('express');
 var router=express.Router();
 var db = require('../../mysql.js');
 
-
-
-// 查询当前帖子是否已收藏
-router.get('/checkStreetCollection',(request,response)=>{
-    var sql = `SELECT COUNT(*)
-    FROM streetcollection
-    WHERE userID = ${request.session.user} AND streetID = ${request.query.streetID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,isCollection:result});
-    })
-})
 // 增加回复
 router.post('/addReply',(request,response) => {
     var sql = `INSERT INTO streetReply(streetID,userID,TIME,content) VALUES (${request.body.newReply.streetID},
@@ -43,15 +32,6 @@ router.get('/addStreetReply',(request,response) =>{
         response.status(200).json({ code:200,message:'回复量增加' });
     })
 })
-// 增加收藏一个帖子
-router.post('/streetCollection',(request,response)=>{
-    var sql = `INSERT INTO streetcollection (userID,streetID,TIME)
-    VALUES (${request.session.user},${request.body.streetID},'${request.body.time}')`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'收藏成功'});
-    })
-})
-
 
 // 修改点赞量
 router.get('/streetReplyPraise',(request,response)=>{
@@ -60,8 +40,6 @@ router.get('/streetReplyPraise',(request,response)=>{
         response.status(200).json({ code:200,message:'success'});
     })
 })
-
-
 
 // 删除关注某个帖子
 router.get('/unlikeStreet',(request,response)=>{

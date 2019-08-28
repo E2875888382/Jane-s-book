@@ -82,4 +82,36 @@ router.get('/out',(req,res)=>{
     res.type('text/javascript');
     res.status(200).send(`${req.query.callback}()`);
 })
+
+router.get('/follow',(req,res)=>{
+    let token = Number(req.query.token);
+    let current = global.users.get(token);
+    let friend = req.query.friend;
+    let sqlFollow = `INSERT  INTO friend(userID,friendID) VALUES ("${ current } ","${ friend }")`;
+    new Promise((resolve)=>{
+        db(sqlFollow,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.type('text/javascript');
+        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+    })
+})
+
+router.get('/collect',(req,res)=>{
+    let token = Number(req.query.token);
+    let current = global.users.get(token);
+    let article = req.query.article;
+    let time = new Date().toLocaleString;
+    let sqlCollect = `INSERT INTO streetcollection (userID,streetID,TIME)
+    VALUES (${current},${article},'${time}')`;
+    new Promise((resolve)=>{
+        db(sqlCollect,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.type('text/javascript');
+        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+    })
+})
 module.exports=router;

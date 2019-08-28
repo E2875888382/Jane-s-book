@@ -1,5 +1,17 @@
 <template>
 <div class="bg">
+    <div class="oper">
+        <div>
+            <div class="like"><van-icon name="good-job" color="#999"/></div>
+            <p>128赞</p>
+        </div>
+        <div v-if="isLogin">
+            <div class="col">
+                <van-icon name="like" color="#999" v-if="!isCollected" @click="collected"/>
+                <van-icon name="like" color="red" v-if="isCollected"/>
+            </div>
+        </div>
+    </div>
     <div class="main">
         <div class="left">
             <div class="content">
@@ -23,7 +35,7 @@
                         <p>{{ item.time }}</p>
                         <p>{{ item.content }}</p>
                         <div>
-                            <span>赞</span>
+                            <span><van-icon name="good-job" color="#999"/>赞{{ item.praise }}</span>
                         </div>
                     </div>
                 </div>
@@ -45,7 +57,8 @@
                 <div>
                     <div class="author">
                         {{ detail.nickName }} 
-                        <van-button plain type="danger" round size="mini">关注</van-button>
+                        <van-button plain type="danger" round size="mini" v-if="isLogin&&!isFollowed" @click="followed">关注</van-button>
+                        <van-button plain type="info" round size="mini" v-if="isLogin&&isFollowed">已关注</van-button>
                     </div>
                     <p class="sign">{{ detail.sign }}</p>
                 </div>
@@ -61,10 +74,13 @@
 export default {
     data(){
         return {
+            isLogin:this.$store.state.loginFlag,
             current:this.$route.params.articleId,
             comments:[],
             detail:{},
             currentComments:[],
+            isFollowed:false,
+            isCollected:false,
         }
     },
     mounted(){
@@ -76,6 +92,7 @@ export default {
                 this.detail = data.detail[0];
                 this.comments = data.comments;
                 this.onePage(1);
+                this.statusCheck();
             }).catch((err)=>{
                 console.log(err);
             })
@@ -83,6 +100,30 @@ export default {
         onePage(page){
             this.currentComments = this.comments.slice((page-1)*10,page*10);
         },
+        statusCheck(){
+            let author = this.detail.userID;
+            let articleCol = this.$store.state.streetCollection;
+            let friend = this.$store.state.friendsList;
+            articleCol.forEach(e=>{
+                if(e.streetID == this.current){
+                   this.isCollected = true;
+                }
+            });
+            friend.forEach(e=>{
+                if(e.userID == author){
+                    this.isFollowed = true;
+                }
+            })
+        },
+        followed(){
+            let author = this.detail.userID;
+            this.follow(author);
+            this.isFollowed = true;
+        },
+        collected(){
+            this.collect(this.current);
+            this.isCollected = true;
+        }
     }
 }
 </script>
@@ -176,6 +217,7 @@ export default {
     white-space: nowrap;
     height:23px;
     margin-bottom:5px;
+    padding-left:10px;
 }
 .sign{
     margin:0;
@@ -185,6 +227,7 @@ export default {
     font-size: 12px;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding-left:10px;
 }
 .comment_header{
     height:25px;
@@ -236,6 +279,12 @@ export default {
     width:100%;
     margin-top:12px;
     height:21px;
+    font-size:15px;
+    color:#999;
+}
+.comment_content div span{
+    display: flex;
+    align-items: center;
 }
 .page{
     display: flex;
@@ -258,5 +307,34 @@ export default {
     border: 1px solid #e6e6e6;
     width:68px !important;
     font-weight: 400 !important;
+}
+.oper{
+    position: fixed;
+    top: 216px;
+    left: calc((100vw - 1000px)/2 - 78px);
+    height:136px;
+    width:48px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.oper p{
+    font-size: 14px;
+    text-align: center;
+    color: #999;
+    line-height:19px;
+    margin:5px 0;
+}
+.like,.col{
+    width:48px;
+    height:48px;
+    font-size: 18px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(26,26,26,.1);
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 </style>

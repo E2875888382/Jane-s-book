@@ -2,24 +2,6 @@ var express=require('express');
 var router=express.Router();
 var db = require('../../mysql.js');
 
-
-
-// 查询当前用户是否已关注
-router.post('/checkFriend',(request,response)=>{
-    var sql = `SELECT COUNT(*)
-    FROM friend WHERE userID = ${request.session.user} AND friendID = ${request.body.friendID}`;
-    db(sql,(result)=>{
-      response.status(200).json({ code:200,isFriend:result});
-    })
-})
-
-// 增加好友
-router.post('/addFriend', (request,response) =>{
-    var sql= `INSERT  INTO friend(userID,friendID) VALUES ("${ request.session.user } ","${ request.body.friendID }")`;
-    db(sql,(result)=>{
-        response.status(200).json({message:'添加成功',code:200 });
-    })
-})
 // 增加私信
 router.post('/sendMsg', (request,response) =>{
     var sql=  `INSERT INTO message (userID,receiverID,content,time) VALUES ("${ request.session.user }","${ request.body.receiverID }","${ request.body.content}","${request.body.time}")`;
@@ -27,9 +9,6 @@ router.post('/sendMsg', (request,response) =>{
         response.status(200).json({ message:'ok', code:200 });
     })
 })
-
-
-
 // 修改已读状态
 router.get('/isRead', (request,response) =>{
     var sql= `UPDATE message SET isRead = 1 WHERE messageID = "${ request.query.id }"`;
@@ -79,9 +58,6 @@ router.post('/changeQQ',(request,response) =>{
         response.status(200).json({message:"修改成功",code:200});
     })
 })
-
-
-
 //删除好友
 router.post('/deleteFriend', (request,response) =>{
     var sql = `DELETE FROM friend WHERE userID = "${request.session.user}" AND friendID = "${request.body.friendID}"`;

@@ -4,7 +4,7 @@ const db = require('../../mysql.js');
 
 router.get('/articleDetail',(req,res) =>{
     let sqlAddView = ` UPDATE street SET view = view + 1  WHERE streetID = ${req.query.articleId}`;
-    let sqlDeatil = `SELECT street.topic,street.time,street.view,street.replyCount,user.nickName,user.level,user.avatar,user.sign,street.replyCount,street.img,street.content
+    let sqlDeatil = `SELECT street.topic,street.time,street.view,street.replyCount,user.userID,user.nickName,user.level,user.avatar,user.sign,street.replyCount,street.img,street.content
     FROM street,USER
     WHERE street.userID = user.userID AND
     streetID = ${req.query.articleId}`;

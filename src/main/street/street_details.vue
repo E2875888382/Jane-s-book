@@ -80,11 +80,6 @@ export default {
             }
         }
     },
-    mounted(){
-        this.addStreetView();
-        this.getStreetDetails();
-        this.getStreetReply();
-    },
     methods:{
         // 查看是否已经收藏
         checkStreetCollection(){
@@ -111,12 +106,6 @@ export default {
                     }
                 })
             }
-        },
-        //增加帖子浏览量
-        addStreetView(){
-            this.get("addStreetView",{ streetID:this.id }).then((result) =>{
-
-            })
         },
         // 增加回复量
         addStreetReply(){
@@ -154,25 +143,6 @@ export default {
         // 重置评论表单
         resetForm(formName) {
             this.$refs[formName].resetFields();
-        },
-        // 获取帖子详情
-        getStreetDetails(){
-            this.get('getStreetDetails',{ streetID:this.id }).then((result)=>{
-                if(result.data.code == 200){
-                    this.streetDetails = result.data.streetDetails[0];
-                    if(this.$store.state.loginFlag){
-                        this.checkStreetCollection();
-                    }
-                }
-            })
-        },
-        // 获取评论列表
-        getStreetReply(){
-            this.get('getStreetReply',{ streetID:this.id }).then((result)=>{
-                if(result.data.code == 200){
-                    this.streetReply = result.data.streetReply;
-                }
-            })
         },
         // 点亮某条评论
         addStreetReplyPraise(streetReplyID,event){

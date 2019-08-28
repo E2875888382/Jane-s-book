@@ -41,7 +41,7 @@ exports.install = function(Vue,options){
         })
     }
 
-
+    // 查询用户信息
     Vue.prototype.userIfo = function(){
         return new Promise((resolve)=>{
             if(localStorage.getItem('token')){
@@ -69,8 +69,20 @@ exports.install = function(Vue,options){
             this.jsp('out',{token:user}).then(()=>{
                 localStorage.clear();
                 this.$store.commit('userStatus',false);
-                this.$router.push('/')
+                this.$router.push('/');
             })
         }
-    };
+    }
+    Vue.prototype.follow = function(friend){
+        let user = localStorage.getItem('token');
+        this.jsp('follow',{token:user,friend:friend}).then(()=>{
+            this.userIfo();
+        })
+    }
+    Vue.prototype.collect = function(articleId){
+        let user = localStorage.getItem('token');
+        this.jsp('collect',{token:user,article:articleId}).then(()=>{
+            this.userIfo();
+        })
+    }
 }
