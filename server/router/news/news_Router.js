@@ -1,12 +1,26 @@
-var express=require('express');
-var router=express.Router();
-var db = require('../../mysql.js');
+const express=require('express');
+const router=express.Router();
+const db = require('../../mysql.js');
 
-// 查询新闻详情
-router.get('/getNewsDetails',(request,response) =>{
-    var sql = `SELECT * FROM news WHERE newID = ${ request.query.newID }`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,newsList:result });
+router.get('/newsDetail',(req,res)=>{
+    let newId = req.query.newId;
+    let sqlAddView = `UPDATE news SET view = view + 1  WHERE newID = ${newId}`;
+    let sqlNewDetail = `SELECT * FROM news WHERE newID = ${ newId }`;
+    new Promise((resolve)=>{
+        db(sqlAddView,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        return new Promise((resolve)=>{
+            db(sqlNewDetail,(data)=>{
+                resolve(JSON.stringify(data))
+            })
+        })
+    }).then((data)=>{
+        res.type('text/javascript');
+        res.status(200).send(`${req.query.callback}(${data})`);
+    }).catch((err)=>{
+        console.log(err)
     })
 })
 
@@ -24,15 +38,4 @@ router.get('/news',(req,res)=>{
     })
 })
 
-// 增加新闻阅读量
-router.get('/addNewsRead',(request,response) =>{
-    var sql = ` UPDATE news SET view = view + 1  WHERE newID = ${request.query.newID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'阅读量增加' });
-    })
-})
-
-
-
-//导出router
 module.exports=router;

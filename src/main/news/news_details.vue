@@ -31,7 +31,6 @@ export default {
         }
     },
     mounted(){
-        this.addNewsRead();
         this.getNewsDetails();
     },
     methods:{
@@ -52,20 +51,12 @@ export default {
         },
         //获取新闻详情
         getNewsDetails(){
-            this.get("getNewsDetails",{ newID:this.id }).then((result) =>{
+            this.jsp('newsDetail',{newId:this.id}).then((data) =>{
                 this.imgContent = [];//防止前面的内容重叠
-                if(result.data.code == 200){
-                    this.newsDetails = result.data.newsList[0];
-                    if(this.newsDetails.imgContent){
-                        this.imgContent = this.newsDetails.imgContent.split(',')
-                    }
+                this.newsDetails = data[0];
+                if(this.newsDetails.imgContent){
+                    this.imgContent = this.newsDetails.imgContent.split(',')
                 }
-            })
-        },
-        //增加文章阅读量
-        addNewsRead(){
-            this.get("addNewsRead",{ newID:this.id }).then((result) =>{
-
             })
         },
     }
