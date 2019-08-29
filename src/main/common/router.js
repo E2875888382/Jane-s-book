@@ -32,7 +32,7 @@ var router=new VueRouter({
         { path:'/streetDetails/:id',component:Street_details },
         { path:'/street/new',component:Street_new },
         { path:'/photo',component:Photo_index },
-        { path:'/photoDetails/:id',component:Photo_details },
+        { path:'/photoDetails/:id',name:'photo',component:Photo_details },
         { path:'/photo/new',component:Photo_new },
         { path:'/searchResult',component:Search_result },
     ]

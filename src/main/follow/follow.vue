@@ -25,12 +25,14 @@
             </div>
         </div>
         <div class="follow_work">
-            <el-tabs v-model="activeName" @tab-click="change">
+            <el-tabs v-model="activeName">
                 <el-tab-pane name="article">
                     <span slot="label" class="tabs"><van-icon name="new" />最新发布</span>
                     <div class="article_item" v-for="item in followerWork.article" :key="item.streetID">
                         <div :class="{'short':item.img,'long':!item.img}">
-                            <p class="article_topic">{{item.topic}}</p>
+                            <p class="article_topic">
+                                <router-link :to="{name:'articleDetail',params:{articleId:item.streetID}}">{{ item.topic }}</router-link>
+                            </p>
                             <p class="article_ob">xaxsxaxsaxsax</p>
                             <div class="meta">
                                 <span><van-icon name="eye" color="#999"/>{{item.VIEW}}</span>
@@ -43,6 +45,19 @@
                 </el-tab-pane>
                 <el-tab-pane name="photo">
                     <span slot="label" class="tabs"><van-icon name="photo" />最新相簿</span>
+                    <div class="article_item" v-for="item in followerWork.photo" :key="item.photoID">
+                        <div class="short">
+                            <p class="article_topic">
+                                <router-link :to="{name:'photo',params:{id:item.photoID}}">{{ item.title }}</router-link>
+                            </p>
+                            <div class="meta">
+                                <span><van-icon name="eye" color="#999"/>{{item.VIEW}}</span>
+                                <span><van-icon name="good-job" color="#999"/>{{item.praise}}</span>
+                                <span>{{item.time}}</span>
+                            </div>
+                        </div>
+                        <el-image style="width:125px; height:100px" :src="item.src" fit="fill"></el-image>
+                    </div>
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -61,9 +76,6 @@ export default {
         }
     },
     methods:{
-        change(){
-            console.log(this.activeName)
-        },
         choose(item){
             this.follower = item;
             this.activeId = item.userID;
@@ -222,6 +234,9 @@ export default {
     font-weight: 700;
     line-height: 1.5;
     color: #333;
+}
+.article_topic a{
+    color:#333;
 }
 .article_ob{
     margin: 0 0 8px;
