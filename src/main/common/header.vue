@@ -1,5 +1,5 @@
 <template>
-<div class="header ">
+<div class="header">
     <router-link to="/"><div class="logo"></div></router-link>
     <div class="left_box col-9 m-auto">
         <ul>
@@ -45,6 +45,11 @@ export default {
 .header{
     border-bottom:1px solid #f0f0f0;
     height:58px;
+    position:fixed;
+    top:0;
+    width:100%;
+    background-color: #fff;
+    z-index: 999;
 }
 .new>>>.el-badge__content.is-fixed{
     top:8px;

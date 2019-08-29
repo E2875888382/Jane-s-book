@@ -67,6 +67,7 @@ export default {
 
 <style scoped>
 .bg{
+    margin-top:58px !important;
     padding-top:30px;
     display:flex;
     justify-content: space-between;

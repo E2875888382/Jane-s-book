@@ -7,7 +7,9 @@ const session=require('express-session');
 const Index = require('./router/index/index')
 const ArticleDeatil = require('./router/article/detail')
 const User = require('./router/user/user')
-const Login=require('./router/user/login')
+const Login = require('./router/user/login')
+const Follow = require('./router/follow/follow')
+
 
 const userPage_Router=require('./router/user/userPage_Router');//用户系统路由
 const news_Router=require('./router/news/news_Router');//新闻模块路由
@@ -55,6 +57,7 @@ app.use(Index);
 app.use(Login);
 app.use(ArticleDeatil);
 app.use(User)
+app.use(Follow)
 
 app.use(userPage_Router);
 app.use(news_Router);

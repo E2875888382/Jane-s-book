@@ -135,6 +135,7 @@ export default {
 
 <style scoped>
 .bg{
+    margin-top:58px;
     min-height:1000px;
     background-color: #F7F7F7;
     display:flex;
