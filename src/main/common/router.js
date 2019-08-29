@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Index from '../index/index.vue'
 import Login from '../login/login.vue'
 import ArticleDetail from '../article/articleDetail.vue'
+import Follow from '../follow/follow.vue'
 
 import UserPage from '../userPage/userPage.vue'// 用户页面
 import News_details from '../news/news_details.vue'// 新闻详细页
@@ -23,6 +24,7 @@ var router=new VueRouter({
         { path:'/',component:Index },
         { path:'/login',component:Login },
         { path:'/article/detail/:articleId',name:'articleDetail',component:ArticleDetail },
+        { path:'/follow',name:'follow',component:Follow },
 
         { path:'/userPage',component:UserPage },
         { path:'/newsDetails/:id',component:News_details },

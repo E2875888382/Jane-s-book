@@ -9,8 +9,8 @@
                 <p class="abstract">毁掉一个女生有多容易？ 接近她，对她好，让她爱上你，在你已经融入她的生活，看着她对你百般依赖后，毫不留情的踢开她，没个一两年她是走不出来的。 这...</p>
                 <div class="info">
                     <span>{{ item.nickName }}</span>
-                    <span>{{ item.replyCount }}</span>
-                    <span>{{ item.view }}</span>
+                    <span><van-icon name="comment" color="#999"/>{{ item.replyCount }}</span>
+                    <span><van-icon name="eye" color="#999"/>{{ item.view }}</span>
                 </div>
             </div>
             <el-image style="width:150px; height:100px" src="https://upload-images.jianshu.io/upload_images/17156415-a8a471fe304a0942.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240" fit="fill"></el-image>
@@ -18,7 +18,10 @@
         <el-button type="info" round @click="load" v-if="!finished">阅读更多</el-button>
         <p class="tips" v-if="finished">没有更多了</p>
     </div>
-    <news></news>
+    <div>
+        <div class="photo_link" @click="function(){$router.push('/photo')}"></div>
+        <news></news>
+    </div>
     <el-backtop></el-backtop>
 </div>
 </template>
@@ -116,6 +119,11 @@ export default {
 }
 .info span{
     margin-right:10px;
+    display:flex;
+    align-items: center;
+}
+.info span .van-icon{
+    margin-right:4px;
 }
 .el-image{
     border-radius: 4px;
@@ -129,5 +137,12 @@ export default {
     color:#999;
     margin:20px 0;
     font-size: 13px;
+}
+.photo_link{
+    width:280px;
+    height:50px;
+    margin-bottom:10px;
+    background: url('https://cdn2.jianshu.io/assets/web/banner-s-6-c4d6335bfd688f2ca1115b42b04c28a7.png') no-repeat;
+    background-size: 280px 50px ;
 }
 </style>

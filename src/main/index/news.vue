@@ -1,5 +1,5 @@
 <template>
-<div style="width:300px;min-height:400px">
+<div style="width:280px;min-height:400px">
     <p class="ranking_head">
         <span>24小时新闻</span>
         <span class="change" @click="getTenNews"><van-icon name="replay" />换一批</span>
