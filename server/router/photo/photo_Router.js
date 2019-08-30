@@ -39,48 +39,6 @@ router.get('/getPhotoDetails',(request,response) => {
         response.status(200).json({ code:200,photoDetails:result });
     })
 })
-// 查询评论
-router.get('/getPhotoReplyByTime',(request,response)=>{
-    var begin = (request.query.currentPage -1)*5;
-    var sql = `SELECT user.nickName,photoreply.time,photoreply.content,photoreply.praise,user.avatar,photoreply.down,photoreply.photoReplyID
-    FROM USER,photoreply
-    WHERE user.userID = photoreply.userID
-    AND photoID = ${request.query.photoID} ORDER BY time DESC LIMIT ${begin},5`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photoReplyByTime:result });
-    })
-})
-// 查询评论
-router.get('/getPhotoReply',(request,response)=>{
-    var begin = (request.query.currentPage -1)*5;
-    var sql = `SELECT user.nickName,photoreply.time,photoreply.content,photoreply.praise,user.avatar,photoreply.down,photoreply.photoReplyID
-    FROM USER,photoreply
-    WHERE user.userID = photoreply.userID
-    AND photoID = ${request.query.photoID} ORDER BY praise DESC LIMIT ${begin},5`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photoReply:result });
-    })
-})
-// 查询评论数量
-router.get('/getPhotoReplyCount',(request,response) => {
-    var sql = `SELECT  COUNT(*)
-    FROM photoreply
-    WHERE  photoID = ${request.query.photoID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photoCount:result });
-    })
-})
-
-
-
-// 增加评论
-router.post('/addPhotoReply',(request,response)=>{
-    var sql = `INSERT INTO photoreply(photoID,userID,TIME,content)
-    VALUES (${request.body.photoID},${request.session.user},'${request.body.time}','${request.body.content}')`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'评论成功' });
-    })
-})
 // 增加点赞量
 router.get('/photoPraise',(request,response)=>{
     var sql = `UPDATE photo SET praise = praise + 1 WHERE photoID = ${request.query.photoID}`;
@@ -93,20 +51,6 @@ router.get('/addPhotoView',(request,response) =>{
     var sql = `UPDATE photo SET view = view + 1  WHERE photoID =${request.query.photoID} `;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'阅读量增加' });
-    })
-})
-// 增加评论点赞量
-router.get('/photoReplyPraise',(request,response)=>{
-    var sql = `UPDATE photoreply SET praise = praise + 1 WHERE photoReplyID = ${request.query.photoReplyID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'success'});
-    })
-})
-// 增加评论踩
-router.get('/photoReplyDown',(request,response)=>{
-    var sql = `UPDATE photoreply SET down = down + 1 WHERE photoReplyID = ${request.query.photoReplyID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'success'});
     })
 })
 // 增加相簿
@@ -127,9 +71,6 @@ router.post('/photoCollection',(request,response)=>{
         response.status(200).json({ code:200,message:'收藏成功'});
     })
 })
-
-
-
 // 修改点赞量
 router.get('/cancelPhotoPraise',(request,response)=>{
     var sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${request.query.photoID}`;
@@ -137,9 +78,6 @@ router.get('/cancelPhotoPraise',(request,response)=>{
         response.status(200).json({ code:200,message:'success'});
     })
 })
-
-
-
 // 删除关注某个相簿
 router.get('/unlikePhoto',(request,response)=>{
     var sql = `DELETE FROM photocollection

@@ -19,4 +19,5 @@ router.post('/avatar', (req,res) =>{
     })
 
 })
+
 module.exports=router;

@@ -6,8 +6,23 @@
             <van-button type="primary" plain round size="small">更换头像</van-button>
         </van-uploader>
     </div>
-    <div class="nickName"></div>
-    <div></div>
+    <div class="item">
+        <span class="label">昵称</span>
+        <el-input v-model="nickName"></el-input>
+    </div>
+    <div class="item">
+        <span class="label">电子邮件</span>
+        <span>{{email}}</span>
+    </div>
+    <div class="item">
+        <span class="label">手机</span>
+        <span>{{telephone}}</span>
+    </div>
+    <div class="item">
+        <span class="label">QQ</span>
+        <span>{{qq}}</span>
+    </div>
+    <el-button type="success" round size="small">保存</el-button>
 </div>
 </template>
 
@@ -15,7 +30,11 @@
 export default {
     data(){
         return {
+            nickName:'',
+            email:'',
+            telephone:'',
             avatar:'',
+            qq:'',
             img:[],
         }
     },
@@ -25,6 +44,10 @@ export default {
     methods:{
         init(){
             this.avatar = this.$store.state.userIfo.avatar;
+            this.email = this.$store.state.userIfo.email;
+            this.nickName = this.$store.state.userIfo.nickName;
+            this.telephone = this.$store.state.userIfo.telephone;
+            this.qq = this.$store.state.userIfo.qq;
         },
         afterRead(){
             this.avatar = this.img[0].content;
@@ -59,5 +82,29 @@ div>>>.van-uploader__upload,div>>>.van-uploader__preview,.user_img{
     justify-content: center;
     overflow: hidden;
     cursor: pointer;
+}
+.item{
+    height:73px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items:center;
+}
+.label{
+    font-size: 15px;
+    color: #969696;
+    display: inline-block;
+    width:150px;
+}
+.el-input{
+    width:214px;
+    height:33px;
+}
+.el-input>>>.el-input__inner{
+    background-color: whitesmoke;
+    height:33px;
+}
+.el-button{
+    margin-top:30px;
+    width:100px;
 }
 </style>

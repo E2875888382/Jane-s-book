@@ -86,5 +86,6 @@ export default {
     width:625px;
     margin-right:15px;
     min-height:500px;
+    margin-top:20px;
 }
 </style>

@@ -2,30 +2,6 @@
     <div class="content col-11" >
         <el-tabs tab-position="left" style="height: 1000px;"  type="border-card"  v-if="$store.state.loginFlag">
 
-            <!-- 个人主页 -->
-            <el-tab-pane>
-                <span slot="label">
-                    <i class="el-icon-user"></i> 个人主页
-                </span>
-                <userIfo></userIfo>
-            </el-tab-pane>
-
-            <!-- 我的信息 -->
-            <el-tab-pane>
-                 <span slot="label">
-                    <i class="el-icon-edit"></i> 编辑信息
-                </span>
-                <edit></edit>
-            </el-tab-pane>
-
-            <!-- 我的头像 -->
-            <el-tab-pane>
-                <span slot="label">
-                    <i class="el-icon-picture-outline-round"></i> 我的头像
-                </span>
-                <avatar></avatar>
-            </el-tab-pane>
-
             <!-- 账号安全 -->
             <el-tab-pane>
                 <span slot="label">
@@ -59,17 +35,11 @@
 
 <script>
 import sendMessage from './sendMessage.vue'
-import avatar from './avatar.vue'
 import safe from './safe.vue'
-import edit from './edit.vue'
-import userIfo from './userIfo.vue'
 import readMessage from './readMessage.vue'
 
 export default {
     components:{
-        avatar,
-        edit,
-        userIfo,
         readMessage,
         safe,
         sendMessage,
