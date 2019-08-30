@@ -20,7 +20,7 @@
                 </div>
                 <div class="btn_box">
                     <van-button plain type="primary" round>发简信</van-button>
-                    <van-button plain type="primary" round>取消关注</van-button>
+                    <van-button plain type="primary" round @click="unFollow(follower.userID)">取消关注</van-button>
                 </div>
             </div>
         </div>
@@ -82,6 +82,11 @@ export default {
             this.jsp('followerWork',{userID:item.userID}).then((data)=>{
                 this.followerWork = data;
             })
+        },
+        unFollow(friend){
+            this.unfollow(friend);
+            this.follower = null;
+            this.followerWork = {};
         }
     }
 }

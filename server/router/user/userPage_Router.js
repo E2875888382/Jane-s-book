@@ -58,15 +58,6 @@ router.post('/changeQQ',(request,response) =>{
         response.status(200).json({message:"修改成功",code:200});
     })
 })
-//删除好友
-router.post('/deleteFriend', (request,response) =>{
-    var sql = `DELETE FROM friend WHERE userID = "${request.session.user}" AND friendID = "${request.body.friendID}"`;
-    db(sql,(result)=>{
-        response.status(200).json({message:'删除成功'});
-    })
-})
-
-
 
 //导出router
 module.exports=router;

@@ -79,6 +79,12 @@ exports.install = function(Vue,options){
             this.userIfo();
         })
     }
+    Vue.prototype.unfollow = function(friend){
+        let user = localStorage.getItem('token');
+        this.jsp('unfollow',{token:user,friend:friend}).then(()=>{
+            this.userIfo();
+        })
+    }
     Vue.prototype.collect = function(articleId){
         let user = localStorage.getItem('token');
         this.jsp('collect',{token:user,article:articleId}).then(()=>{

@@ -98,6 +98,21 @@ router.get('/follow',(req,res)=>{
     })
 })
 
+router.get('/unfollow',(req,res)=>{
+    let token = Number(req.query.token);
+    let current = global.users.get(token);
+    let friend = req.query.friend;
+    let sqlUnFollow = `DELETE FROM friend WHERE userID = "${current}" AND friendID = "${friend}"`;
+    new Promise((resolve)=>{
+        db(sqlUnFollow,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.type('text/javascript');
+        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+    })
+})
+
 router.get('/collect',(req,res)=>{
     let token = Number(req.query.token);
     let current = global.users.get(token);
