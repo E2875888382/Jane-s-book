@@ -52,14 +52,6 @@
                 <sendMessage></sendMessage>
             </el-tab-pane>
 
-            <!-- 我的收藏 -->
-            <el-tab-pane>
-                <span slot="label">
-                    <i class="el-icon-star-off"></i> 我的收藏
-                </span>
-                <collection></collection>
-            </el-tab-pane>
-
         </el-tabs>
     </div>
 </template>
@@ -69,7 +61,6 @@
 import sendMessage from './sendMessage.vue'
 import avatar from './avatar.vue'
 import safe from './safe.vue'
-import collection from './collection.vue'
 import edit from './edit.vue'
 import userIfo from './userIfo.vue'
 import readMessage from './readMessage.vue'
@@ -77,7 +68,6 @@ import readMessage from './readMessage.vue'
 export default {
     components:{
         avatar,
-        collection,
         edit,
         userIfo,
         readMessage,

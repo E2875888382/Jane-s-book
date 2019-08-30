@@ -28,66 +28,6 @@
                     :preview-src-list="previewList">
                 </el-image>
             </div>
-            <div class="reply_box col-12">
-                <el-tabs v-model="activeName" @tab-click="handleClick"> 
-                    <el-tab-pane label="按热度排序" name="first">
-                        <div class="reply_input" v-if="$store.state.loginFlag">
-                            <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
-                            <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none" maxlength="50" show-word-limit></el-input>
-                            <el-button type="primary" @click="addReply">发表评论</el-button>
-                        </div>
-                        <div class="reply_item col-12" v-for="(item) in reply" :key="item.photoReplyID">
-                            <van-image width="48" height="48" class="avatar_reply" :src="item.avatar"/>
-                            <div class="col-10 reply_details">
-                                <p class="user_name">{{ item.nickName }}</p>
-                                <p class="reply_content">{{ item.content }}</p>
-                                <div class="ifo">
-                                    <span>来自PC客户端</span>
-                                    <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise" @click.once="addPhotoReplyPraiseHot(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down" @click.once="addPhotoReplyDownHot(item.photoReplyID,$event)"></i>{{ item.down }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <el-pagination
-                            background
-                            @current-change="handleCurrentChange"
-                            :current-page="currentPage"
-                            :page-size="5"
-                            layout="total,prev, pager, next, jumper"
-                            :total="replyCount">
-                        </el-pagination>
-                    </el-tab-pane>
-                    <el-tab-pane label="按时间排序" name="second">
-                        <div class="reply_input" v-if="$store.state.loginFlag">
-                            <van-image width="48" height="48" class="avatar_reply" :src="$store.state.userIfo.avatar"/>
-                            <el-input placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" v-model="input" clearable class="col-9" type="textarea" resize="none" maxlength="50" show-word-limit></el-input>
-                            <el-button type="primary" @click="addReply">发表评论</el-button>
-                        </div>
-                        <div class="reply_item col-12" v-for="(item) in replyByTime" :key="item.photoReplyID">
-                            <van-image width="48" height="48" class="avatar_reply" :src="item.avatar"/>
-                            <div class="col-10 reply_details">
-                                <p class="user_name">{{ item.nickName }}</p>
-                                <p class="reply_content">{{ item.content }}</p>
-                                <div class="ifo">
-                                    <span>来自PC客户端</span>
-                                    <span>{{ item.time }}</span>
-                                    <span><i class="icon_praise" @click.once="addPhotoReplyPraiseTime(item.photoReplyID,$event)"></i>{{ item.praise }}</span>
-                                    <span><i class="icon_down" @click.once="addPhotoReplyDownTime(item.photoReplyID,$event)"></i>{{ item.down }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <el-pagination
-                            background
-                            @current-change="handleCurrentChangeByTime"
-                            :current-page="currentPage"
-                            :page-size="5"
-                            layout="total,prev, pager, next, jumper"
-                            :total="replyCount">
-                        </el-pagination>
-                    </el-tab-pane>
-                </el-tabs>
-            </div>
         </div>
         <div class="right_box col-3">
             <div class="author_ifo col-12">
@@ -127,38 +67,19 @@ export default {
     data(){
         return {
             id:this.$route.params.id,// 路由传过来的当前相簿的photoID
-            input:'',// 评论输入框
-            currentPage:1,// 当前评论页
             photoDetails:{},// 相簿详细信息
             previewList:[],// 图片预览
             tags:[],// 相簿标签
-            reply:[],// 评论数组
-            replyCount:0,// 评论数目，用于分页
             isFriend:false,// 当前作者是否是好友
             isMe:false,// 当前作者是否是用户
             isCollection:false,// 当前相簿是否已收藏
-            replyByTime:[],// 按回复时间排序的评论数组
-            activeName:'first',// tabs活动页参数
         }
     },
     mounted(){
         this.addView();// 浏览量加1
         this.getPhotoDetails();// 获取相簿详情
-        this.getPhotoReply();// 获取按点赞排序的评论
-        this.getPhotoReplyCount();// 获取评论数量
-        this.getPhotoReplyByTime();// 获取按时间排序的评论
     },
     methods: {
-        // tabs页切换时刷新评论
-        handleClick(tab, event) {
-            if(this.activeName == 'first'){
-                this.getPhotoReplyCount();
-                this.getPhotoReply();
-            }else{
-                this.getPhotoReplyCount();
-                this.getPhotoReplyByTime();
-            }
-        },
         // 检查是否被收藏过
         checkPhotoCollection(){
             this.get("checkPhotoCollection" ,{photoID:this.id}).then( (result) =>{
@@ -234,9 +155,9 @@ export default {
                 if(result.data.code == 200){
                     this.photoDetails = result.data.photoDetails[0];
                     if(this.$store.state.loginFlag){// 如果已经登录，检查各种状态
-                        this.checkFriend();
-                        this.isMyPhoto();
-                        this.checkPhotoCollection();
+                        // this.checkFriend();
+                        // this.isMyPhoto();
+                        // this.checkPhotoCollection();
                     }
                     if(this.photoDetails.photo !== null){// 如果相簿不为空，根据标志符分割图片数组，因为数据库存放的是几个图片组合的字符串，彼此用一个标志符分割
                         this.previewList = this.photoDetails.photo.split('@')
@@ -246,40 +167,6 @@ export default {
                     }
                 }
             })
-        },
-        // 获取相簿按点赞排序的评论
-        getPhotoReply(){
-            this.get('getPhotoReply',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
-                result.data.photoReply.map(function(i){
-                    i.flag = true;// 一开始把flag置为true，用于控制点赞和踩的行为
-                })
-                this.reply = result.data.photoReply;
-            })
-        },
-        // 获取相簿按时间排序的评论
-        getPhotoReplyByTime(){
-            this.get('getPhotoReplyByTime',{photoID:this.id,currentPage:this.currentPage}).then((result)=>{
-                result.data.photoReplyByTime.map(function(i){
-                    i.flag = true;
-                })
-                this.replyByTime = result.data.photoReplyByTime;
-            })
-        },
-        // 获取评论数量
-        getPhotoReplyCount(){
-            this.get('getPhotoReplyCount',{photoID:this.id}).then((result)=>{
-                this.replyCount = result.data.photoCount[0]['COUNT(*)'];
-            })
-        },
-        // 获取一组评论
-        handleCurrentChange(val) {
-            this.currentPage = val;
-            this.getPhotoReply();
-        },
-        // 获取一组评论
-        handleCurrentChangeByTime(val) {
-            this.currentPage = val;
-            this.getPhotoReplyByTime();
         },
         // 点赞
         praise(event){
@@ -300,87 +187,6 @@ export default {
             this.get('addPhotoView',{photoID:this.id}).then((result)=>{
             })
         },
-        // 增加回复量
-        addReply(){
-            if(this.input!==''){
-                this.post('addPhotoReply',{photoID:this.id,time:new Date().toLocaleString(),content:this.input}).then((result)=>{
-                    this.$message({
-                        message:'评论成功',
-                        type:'success'
-                    });
-                    this.getPhotoDetails();
-                    this.getPhotoReply();
-                    this.getPhotoReplyByTime();
-                    this.getPhotoReplyCount();
-                })
-            }
-        },
-        // 增加评论的点赞量
-        addPhotoReplyPraiseHot(photoReplyID,event){
-            // 点赞之后控制无法点踩
-            this.reply.forEach(element => {
-                if(element.photoReplyID == photoReplyID){
-                    if(!element.flag){
-                        return;
-                    }else{
-                        event.target.classList.add('goldenPraise');
-                        element.flag = false;
-                        element.praise++;
-                        this.get('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
-                        })
-                    }
-                }
-            });
-        },
-        // 增加评论的点赞量
-        addPhotoReplyPraiseTime(photoReplyID,event){
-            // 点赞之后控制无法点踩
-            this.replyByTime.forEach(element => {
-                if(element.photoReplyID == photoReplyID){
-                    if(!element.flag){
-                        return;
-                    }else{
-                        event.target.classList.add('goldenPraise');
-                        element.flag = false;
-                        element.praise++;
-                        this.get('photoReplyPraise',{photoReplyID:photoReplyID}).then((result)=>{
-                        })
-                    }
-                }
-            });
-        },
-        // 增加评论的踩
-        addPhotoReplyDownHot(photoReplyID,event){
-            this.reply.forEach(element => {
-                if(element.photoReplyID == photoReplyID){
-                    if(!element.flag){
-                        return;
-                    }else{
-                        event.target.classList.add('goldenDown');
-                        element.flag = false;
-                        element.down++;
-                        this.get('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
-                        })
-                    }
-                }
-            });
-        },
-        // 增加评论的踩
-        addPhotoReplyDownTime(photoReplyID,event){
-            this.replyByTime.forEach(element => {
-                if(element.photoReplyID == photoReplyID){
-                    if(!element.flag){
-                        return;
-                    }else{
-                        event.target.classList.add('goldenDown');
-                        element.flag = false;
-                        element.down++;
-                        this.get('photoReplyDown',{photoReplyID:photoReplyID}).then((result)=>{
-                        })
-                    }
-                }
-            });
-        }
     },
 }
 </script>
@@ -404,26 +210,6 @@ export default {
     border-radius: 12px;
     min-height:300px;
     padding:30px;
-}
-.reply_box{
-    background-color: #fff;
-    border: 1px solid #e3e8ec;
-    border-radius: 12px;
-    min-height:300px;
-    margin-top:20px;
-    padding:30px;
-}
-.reply_input{
-    height:65px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.reply_input button{
-    height:54px;
-    width:70px;
-    padding:4px 15px;
-    white-space: normal;
 }
 .avatar_reply{
     background-color: #f0f8ff;
@@ -474,6 +260,7 @@ export default {
     margin:25px 0 10px 0;
 }
 .bg{
+    margin-top:58px;
     padding:30px 0;
     background-color: #f2f3f5;
 }
@@ -487,7 +274,7 @@ export default {
 .right_box{
     height:341px;
     position:fixed;
-    top:200px;
+    top:120px;
     right:20px;
 }
 .author_ifo{
@@ -617,33 +404,12 @@ export default {
 .praise_box i:hover{
     background-position: 0em -41em;
 }
-.reply_item{
-    height:110px;
-    display:flex;
-    padding: 0;
-    align-items: center;
-}
-.reply_details{
-    height:110px;
-    padding: 22px 0 14px;
-    border-top: 1px solid #e5e9ef;
-}
 .user_name{
     font-size: 12px;
     font-weight: 700;
     line-height: 18px;
     padding-bottom: 4px;
     word-wrap: break-word;
-    margin:0;
-}
-.reply_content{
-    line-height: 20px;
-    padding: 2px 0;
-    font-size: 14px;
-    text-shadow: none;
-    overflow: hidden;
-    word-wrap: break-word;
-    word-break: break-word;
     margin:0;
 }
 .ifo{
@@ -653,25 +419,5 @@ export default {
 }
 .ifo span{
     margin-right: 20px;
-}
-.icon_praise{
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    vertical-align: text-top;
-    margin-right: 5px;
-    background: url(https://static.hdslb.com/phoenix/dist/images/icons-comment.png) no-repeat;
-    background-position: -153px -25px;
-    cursor: pointer;
-}
-.icon_down{
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    vertical-align: text-top;
-    margin-right: 5px;
-    background: url(https://static.hdslb.com/phoenix/dist/images/icons-comment.png) no-repeat;
-    background-position: -153px -153px;
-    cursor: pointer;
 }
 </style>

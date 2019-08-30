@@ -2,6 +2,7 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:8000';
 
 exports.install = function(Vue,options){
+    // jsonp请求
     Vue.prototype.jsp = function(method,data){
         // baseUrl就是服务器地址
         const baseUrl = 'http://localhost:8000/';
@@ -12,6 +13,7 @@ exports.install = function(Vue,options){
         }
         return this.$jsonp(url);
     };
+    // get请求
     Vue.prototype.get = function(url,params){
         return new Promise((resolve,reject)=>{
             axios({
@@ -26,6 +28,7 @@ exports.install = function(Vue,options){
             })
         })
     };
+    // post请求
     Vue.prototype.post = function(url,data){
         return new Promise((resolve,reject)=>{
             axios({
@@ -40,8 +43,7 @@ exports.install = function(Vue,options){
             })
         })
     }
-
-    // 查询用户信息
+    // 查用户信息
     Vue.prototype.userIfo = function(){
         return new Promise((resolve)=>{
             if(localStorage.getItem('token')){
@@ -64,30 +66,38 @@ exports.install = function(Vue,options){
     }
     // 退出登录
     Vue.prototype.logOut = function(){
-        if(localStorage.getItem('token')){
-            let user = localStorage.getItem('token')
-            this.jsp('out',{token:user}).then(()=>{
-                localStorage.clear();
-                this.$store.commit('userStatus',false);
-                this.$router.push('/');
-            })
-        }
+        let user = localStorage.getItem('token');
+        this.jsp('out',{token:user}).then(()=>{
+            localStorage.clear();
+            this.$store.commit('userStatus',false);
+            this.$router.push('/');
+        })
     }
+    // 关注
     Vue.prototype.follow = function(friend){
         let user = localStorage.getItem('token');
         this.jsp('follow',{token:user,friend:friend}).then(()=>{
             this.userIfo();
         })
     }
+    // 取消关注
     Vue.prototype.unfollow = function(friend){
         let user = localStorage.getItem('token');
         this.jsp('unfollow',{token:user,friend:friend}).then(()=>{
             this.userIfo();
         })
     }
+    // 收藏
     Vue.prototype.collect = function(articleId){
         let user = localStorage.getItem('token');
         this.jsp('collect',{token:user,article:articleId}).then(()=>{
+            this.userIfo();
+        })
+    }
+    // 取消收藏
+    Vue.prototype.uncollect = function(articleId){
+        let user = localStorage.getItem('token');
+        this.jsp('uncollect',{token:user,article:articleId}).then(()=>{
             this.userIfo();
         })
     }

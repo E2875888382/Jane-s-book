@@ -12,10 +12,37 @@
     <div class="right_box col-2">
         <!-- 登录后状态框 -->
         <div class="new" v-if="$store.state.loginFlag">
-            <el-badge :is-dot="Boolean($store.state.messageCount)" >
-                <van-image @click="function(){$router.push({ path:'/userPage'})}" width="32" height="32" class="user_img" :src="$store.state.userIfo.avatar"/>
-            </el-badge>
-            <el-button type="warning" plain icon="el-icon-switch-button" circle size="mini" @click="logOut()"></el-button>
+            <el-dropdown placement="bottom-start">
+                <el-badge :is-dot="Boolean($store.state.messageCount)" >
+                    <van-image @click="function(){$router.push({ path:'/userPage'})}" width="40" height="40" class="user_img" :src="$store.state.userIfo.avatar"/>
+                </el-badge>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>
+                        <div class="dropdown">
+                            <van-icon name="manager" color="#ea6f5a"/>
+                            <span>我的主页</span>
+                        </div>
+                    </el-dropdown-item>
+                    <el-dropdown-item>
+                        <div class="dropdown" @click="function(){$router.push({ name:'collect'})}">
+                            <van-icon name="label" color="#ea6f5a"/>
+                            <span>我的收藏</span>
+                        </div>
+                    </el-dropdown-item>
+                    <el-dropdown-item>
+                        <div class="dropdown">
+                            <van-icon name="setting" color="#ea6f5a"/>
+                            <span>设置</span>
+                        </div>
+                    </el-dropdown-item>
+                    <el-dropdown-item>
+                        <div class="dropdown" @click="out">
+                            <van-icon name="clear" color="#ea6f5a"/>
+                            <span>退出</span>
+                        </div>
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
         <!-- 登录按钮 -->
         <div class="login_btn" v-if="!$store.state.loginFlag">
@@ -38,6 +65,11 @@ export default {
     created(){
         this.userIfo();
     },
+    methods:{
+        out(){
+            this.logOut();
+        }
+    }
 }
 </script>
 
@@ -118,5 +150,9 @@ export default {
     left:0;
     background: url('https://cdn2.jianshu.io/assets/web/nav-logo-4c7bbafe27adc892f3046e6978459bac.png') no-repeat;
     background-size: 100px 56px;
+}
+.dropdown{
+    display: flex;
+    align-items: center;
 }
 </style>

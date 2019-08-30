@@ -16,7 +16,7 @@ router.get('/userIfo',(req,res) =>{
         let sqlHisMsg = `SELECT message.time,message.content,user.nickName,message.messageID
         FROM message,USER
         WHERE message.userID = user.userID AND message.receiverID = ${current} AND message.isRead = 1`;
-        let articleCol = `SELECT street.streetID,streetcollection.time,street.topic
+        let articleCol = `SELECT street.streetID,streetcollection.time,street.topic,street.view,street.replyCount
         FROM street,streetcollection
         WHERE street.streetID = streetcollection.streetID
         AND streetcollection.userID = ${current}`;
@@ -117,11 +117,27 @@ router.get('/collect',(req,res)=>{
     let token = Number(req.query.token);
     let current = global.users.get(token);
     let article = req.query.article;
-    let time = new Date().toLocaleString;
+    let time = new Date().toLocaleString();
     let sqlCollect = `INSERT INTO streetcollection (userID,streetID,TIME)
     VALUES (${current},${article},'${time}')`;
     new Promise((resolve)=>{
         db(sqlCollect,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.type('text/javascript');
+        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+    })
+})
+
+router.get('/uncollect',(req,res)=>{
+    let token = Number(req.query.token);
+    let current = global.users.get(token);
+    let article = req.query.article;
+    let sqlUnCollect = `DELETE FROM streetcollection
+    WHERE userID = ${current} AND streetID = ${article}`;
+    new Promise((resolve)=>{
+        db(sqlUnCollect,()=>{
             resolve()
         })
     }).then(()=>{

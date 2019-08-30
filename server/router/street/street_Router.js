@@ -41,14 +41,5 @@ router.get('/streetReplyPraise',(request,response)=>{
     })
 })
 
-// 删除关注某个帖子
-router.get('/unlikeStreet',(request,response)=>{
-    var sql = `DELETE FROM streetcollection
-    WHERE userID = ${request.session.user} AND streetID = ${request.query.streetID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'取消收藏成功'});
-    })
-})
-
 //导出router
 module.exports=router;
