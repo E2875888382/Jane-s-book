@@ -30,7 +30,7 @@
                         </div>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                        <div class="dropdown">
+                        <div class="dropdown" @click="function(){$router.push({ name:'set'})}">
                             <van-icon name="setting" color="#ea6f5a"/>
                             <span>设置</span>
                         </div>

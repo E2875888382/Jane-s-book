@@ -6,6 +6,12 @@ import Login from '../login/login.vue'
 import ArticleDetail from '../article/articleDetail.vue'
 import Follow from '../follow/follow.vue'
 import Collect from '../collect/collect.vue'
+import Setting from '../set/set.vue'
+import baseset from '../set/baseSet.vue'
+import userset from '../set/userSet.vue'
+import safeset from '../set/safeSet.vue'
+
+
 
 import UserPage from '../userPage/userPage.vue'// 用户页面
 import News_details from '../news/news_details.vue'// 新闻详细页
@@ -27,6 +33,23 @@ var router=new VueRouter({
         { path:'/article/detail/:articleId',name:'articleDetail',component:ArticleDetail },
         { path:'/follow',name:'follow',component:Follow },
         { path:'/collect',name:'collect',component:Collect },
+        { path:'/set',name:'set',component:Setting,
+            children:[
+                {
+                    path:'baseset',
+                    component:baseset
+                },
+                {
+                    path:'userset',
+                    component:userset
+                },
+                {
+                    path:'safeset',
+                    component:safeset
+                }
+            ]
+        },
+
 
         { path:'/userPage',component:UserPage },
         { path:'/newsDetails/:id',component:News_details },

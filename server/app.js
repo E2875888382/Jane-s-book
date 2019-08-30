@@ -9,7 +9,7 @@ const ArticleDeatil = require('./router/article/detail')
 const User = require('./router/user/user')
 const Login = require('./router/user/login')
 const Follow = require('./router/follow/follow')
-
+const BaseSet = require('./router/set/baseSet')
 
 const userPage_Router=require('./router/user/userPage_Router');//用户系统路由
 const news_Router=require('./router/news/news_Router');//新闻模块路由
@@ -58,6 +58,7 @@ app.use(Login);
 app.use(ArticleDeatil);
 app.use(User)
 app.use(Follow)
+app.use(BaseSet)
 
 app.use(userPage_Router);
 app.use(news_Router);

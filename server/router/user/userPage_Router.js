@@ -23,20 +23,6 @@ router.post('/updateUserInfo', (request,response) =>{
         response.status(200).json({ message:"修改成功",code:200 });
     })
 })
-// 修改头像
-router.post('/uploadAvatar', (request,response) =>{
-    var sql=`UPDATE USER SET avatar = "${request.body.img.content}" WHERE userID = "${request.session.user}"`;
-    db(sql,(result)=>{
-        response.status(200).json({message:"上传成功",code:200});
-    })
-})
-// 修改头像
-router.post('/uploadAvatarT', (request,response) =>{
-    var sql=`UPDATE USER SET avatar = "${request.body.src}" WHERE userID = "${request.session.user}"`;
-    db(sql,(result)=>{
-        response.status(200).json({message:"上传成功",code:200});
-    })
-})
 // 修改密码
 router.post('/changePassword',(request,response) =>{
     var sql=`UPDATE USER SET PASSWORD = '${request.body.new }' WHERE userID = '${request.session.user }'`;
