@@ -11,12 +11,11 @@
 <script>
 import top from './common/header.vue'
 import bottom from './common/footer.vue'
-import userPage from './userPage/userPage.vue'
+
 export default{
      components:{
           top,
           bottom,
-          userPage,
      },
 }
 </script>

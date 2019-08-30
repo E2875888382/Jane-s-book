@@ -10,8 +10,8 @@ const User = require('./router/user/user')
 const Login = require('./router/user/login')
 const Follow = require('./router/follow/follow')
 const BaseSet = require('./router/set/baseSet')
+const UserSet = require('./router/set/userSet')
 
-const userPage_Router=require('./router/user/userPage_Router');//用户系统路由
 const news_Router=require('./router/news/news_Router');//新闻模块路由
 const developer_Router=require('./router/developer/developer_Router');//开发者模块路由
 const street_Router=require('./router/street/street_Router');//步行街模块路由
@@ -53,14 +53,14 @@ app.use(session({
 }));
 
 //挂载router
-app.use(Index);
-app.use(Login);
-app.use(ArticleDeatil);
+app.use(Index)
+app.use(Login)
+app.use(ArticleDeatil)
 app.use(User)
 app.use(Follow)
 app.use(BaseSet)
+app.use(UserSet)
 
-app.use(userPage_Router);
 app.use(news_Router);
 app.use(developer_Router);
 app.use(street_Router);

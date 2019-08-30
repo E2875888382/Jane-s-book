@@ -1,6 +1,6 @@
-var express=require('express');
-var router=express.Router();
-var db = require('../../mysql.js');
+const express=require('express');
+const router=express.Router();
+const db = require('../../mysql.js');
 
 // 查询developer
 router.get('/getDeveloper',(request,response)=>{

@@ -1,6 +1,6 @@
-var express=require('express');
-var router=express.Router();
-var db = require('../../mysql.js');
+const express=require('express');
+const router=express.Router();
+const db = require('../../mysql.js');
 
 // 增加回复
 router.post('/addReply',(request,response) => {
@@ -10,6 +10,7 @@ router.post('/addReply',(request,response) => {
         response.status(200).json({ code:200 });
     })
 })
+
 // 增加帖子
 router.post('/uploadNewStreet', (request,response) =>{
     var newStreet = request.body.new;
@@ -41,5 +42,4 @@ router.get('/streetReplyPraise',(request,response)=>{
     })
 })
 
-//导出router
 module.exports=router;

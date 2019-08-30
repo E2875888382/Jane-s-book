@@ -35,7 +35,14 @@ router.post('/login', (request,response) =>{
           response.status(200).json({  message:"登录成功",code:1,token:key });
         }
     })
-});
+})
 
-//导出router
+// 退出登录
+router.get('/out',(req,res)=>{
+    let token = Number(req.query.token);
+    global.users.delete(token);
+    res.type('text/javascript');
+    res.status(200).send(`${req.query.callback}()`);
+})
+
 module.exports=router;

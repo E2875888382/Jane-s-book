@@ -1,6 +1,6 @@
-var express=require('express');
-var router=express.Router();
-var db = require('../../mysql.js');
+const express=require('express');
+const router=express.Router();
+const db = require('../../mysql.js');
 
 // 查询帖子
 router.get('/searchForStreet',(request,response)=>{
@@ -12,6 +12,7 @@ router.get('/searchForStreet',(request,response)=>{
         response.status(200).json({ code:200,street:result});
     })
 })
+
 // 查询相簿
 router.get('/searchForPhoto',(request,response)=>{
     var sql = `SELECT photo.photoID,photo.src,user.nickName,photo.title
@@ -22,6 +23,7 @@ router.get('/searchForPhoto',(request,response)=>{
         response.status(200).json({ code:200,photo:result});
     })
 })
+
 // 查询用户
 router.get('/searchForUser',(request,response)=>{
     var sql = `SELECT userID,nickName,avatar,email,birthday,level,gender,sign
@@ -31,6 +33,7 @@ router.get('/searchForUser',(request,response)=>{
         response.status(200).json({ code:200,user:result});
     })
 })
+
 // 查询新闻
 router.get('/searchForNews',(request,response)=>{
     var sql = `SELECT title,TIME,newID,source
@@ -41,5 +44,4 @@ router.get('/searchForNews',(request,response)=>{
     })
 })
 
-//导出router
 module.exports=router;

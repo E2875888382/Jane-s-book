@@ -14,7 +14,7 @@
         <div class="new" v-if="$store.state.loginFlag">
             <el-dropdown placement="bottom-start">
                 <el-badge :is-dot="Boolean($store.state.messageCount)" >
-                    <van-image @click="function(){$router.push({ path:'/userPage'})}" width="40" height="40" class="user_img" :src="$store.state.userIfo.avatar"/>
+                    <van-image width="40" height="40" class="user_img" :src="$store.state.userIfo.avatar"/>
                 </el-badge>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>

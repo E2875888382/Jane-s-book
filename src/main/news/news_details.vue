@@ -65,7 +65,7 @@ export default {
 
 <style scoped>
 .content{
-    margin: 40px auto;
+    margin: 70px auto;
 }
 .time_read_box{
     display: flex;

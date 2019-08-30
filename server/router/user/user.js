@@ -2,6 +2,7 @@ const express=require('express');
 const router=express.Router();
 const db = require('../../mysql.js');
 
+// 查用户信息
 router.get('/userIfo',(req,res) =>{
     let token = Number(req.query.token)
     let current = global.users.get(token);
@@ -76,43 +77,7 @@ router.get('/userIfo',(req,res) =>{
     }
 })
 
-router.get('/out',(req,res)=>{
-    let token = Number(req.query.token);
-    global.users.delete(token);
-    res.type('text/javascript');
-    res.status(200).send(`${req.query.callback}()`);
-})
-
-router.get('/follow',(req,res)=>{
-    let token = Number(req.query.token);
-    let current = global.users.get(token);
-    let friend = req.query.friend;
-    let sqlFollow = `INSERT  INTO friend(userID,friendID) VALUES ("${ current } ","${ friend }")`;
-    new Promise((resolve)=>{
-        db(sqlFollow,()=>{
-            resolve()
-        })
-    }).then(()=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
-    })
-})
-
-router.get('/unfollow',(req,res)=>{
-    let token = Number(req.query.token);
-    let current = global.users.get(token);
-    let friend = req.query.friend;
-    let sqlUnFollow = `DELETE FROM friend WHERE userID = "${current}" AND friendID = "${friend}"`;
-    new Promise((resolve)=>{
-        db(sqlUnFollow,()=>{
-            resolve()
-        })
-    }).then(()=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
-    })
-})
-
+// 收藏
 router.get('/collect',(req,res)=>{
     let token = Number(req.query.token);
     let current = global.users.get(token);
@@ -130,6 +95,7 @@ router.get('/collect',(req,res)=>{
     })
 })
 
+// 取消收藏
 router.get('/uncollect',(req,res)=>{
     let token = Number(req.query.token);
     let current = global.users.get(token);
@@ -145,4 +111,5 @@ router.get('/uncollect',(req,res)=>{
         res.status(200).send(`${req.query.callback}({msg:'ok'})`);
     })
 })
+
 module.exports=router;
