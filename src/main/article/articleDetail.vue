@@ -20,6 +20,7 @@
                 <p class="text">{{ detail.content }}</p>
                 <el-image v-if="detail.img" style="width:682px; height: 400px" :src="detail.img" fit="fill"></el-image>
             </div>
+            <Comment v-if="isLogin" :article="current"></Comment>
             <div class="comment">
                 <h3 class="comment_header">
                     <span>全部评论 {{ comments.length }}</span>
@@ -71,6 +72,7 @@
 </template>
 
 <script>
+import Comment from './articleComment.vue'
 export default {
     data(){
         return {
@@ -83,6 +85,9 @@ export default {
             isCollected:false,
             isMe:false,
         }
+    },
+    components:{
+        Comment
     },
     mounted(){
         this.load();

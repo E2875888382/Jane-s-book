@@ -5,7 +5,7 @@
         <ul>
             <li><router-link to="/">发现</router-link></li>
             <li v-if="$store.state.loginFlag"><router-link to="/follow">关注</router-link></li>
-            <li v-if="$store.state.loginFlag"><router-link to="/developer">消息</router-link></li>
+            <li v-if="$store.state.loginFlag"><router-link to="/">消息</router-link></li>
         </ul>
         <search></search>
     </div>
@@ -43,10 +43,11 @@
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
+            <el-button type="danger" round icon="el-icon-edit" @click="function(){$router.push({name:'articleNew'})}">写文章</el-button>
         </div>
         <!-- 登录按钮 -->
         <div class="login_btn" v-if="!$store.state.loginFlag">
-            <el-link :underline="false"  @click="function(){$router.push({ path:'/login'})}">登录</el-link>
+            <el-link :underline="false" @click="function(){$router.push({ path:'/login'})}">登录</el-link>
         </div>
         <!-- 注册按钮  -->
         <div class="new_btn"  v-if="!$store.state.loginFlag">

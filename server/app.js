@@ -6,6 +6,7 @@ const session=require('express-session');
 //导入路由
 const Index = require('./router/index/index')
 const ArticleDeatil = require('./router/article/detail')
+const ArticleNew = require('./router/article/new')
 const User = require('./router/user/user')
 const Login = require('./router/user/login')
 const Follow = require('./router/follow/follow')
@@ -13,8 +14,6 @@ const BaseSet = require('./router/set/baseSet')
 const UserSet = require('./router/set/userSet')
 
 const news_Router=require('./router/news/news_Router');//新闻模块路由
-const developer_Router=require('./router/developer/developer_Router');//开发者模块路由
-const street_Router=require('./router/street/street_Router');//步行街模块路由
 const photo_Router=require('./router/photo/photo_Router');//相簿模块路由
 const search_Router=require('./router/search/search_Router');//搜索模块路由(主页搜索框)
 
@@ -56,14 +55,13 @@ app.use(session({
 app.use(Index)
 app.use(Login)
 app.use(ArticleDeatil)
+app.use(ArticleNew)
 app.use(User)
 app.use(Follow)
 app.use(BaseSet)
 app.use(UserSet)
 
 app.use(news_Router);
-app.use(developer_Router);
-app.use(street_Router);
 app.use(photo_Router);
 app.use(search_Router);
 

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Index from '../index/index.vue'
 import Login from '../login/login.vue'
 import ArticleDetail from '../article/articleDetail.vue'
+import ArticleNew from '../article/articleNew.vue'
 import Follow from '../follow/follow.vue'
 import Collect from '../collect/collect.vue'
 import Setting from '../set/set.vue'
@@ -14,9 +15,6 @@ import safeset from '../set/safeSet.vue'
 
 
 import News_details from '../news/news_details.vue'// 新闻详细页
-import Developer from '../developer/developer_index.vue'// 开发者页面
-import Street_details from '../street/street_details.vue'// 步行街详细页
-import Street_new from '../street/street_new.vue'// 步行街发表页
 import Photo_index from '../photo/photo_index.vue'// 相簿主页
 import Photo_details from '../photo/photo_details.vue'// 相簿详细页
 import Photo_new from '../photo/photo_new.vue'// 相簿发表页
@@ -30,6 +28,7 @@ var router=new VueRouter({
         { path:'/',component:Index },
         { path:'/login',component:Login },
         { path:'/article/detail/:articleId',name:'articleDetail',component:ArticleDetail },
+        { path:'/article/new',name:'articleNew',component:ArticleNew },
         { path:'/follow',name:'follow',component:Follow },
         { path:'/collect',name:'collect',component:Collect },
         { path:'/set',name:'set',component:Setting,
@@ -50,9 +49,6 @@ var router=new VueRouter({
         },
 
         { path:'/newsDetails/:id',component:News_details },
-        { path:'/developer',component:Developer },
-        { path:'/streetDetails/:id',component:Street_details },
-        { path:'/street/new',component:Street_new },
         { path:'/photo',component:Photo_index },
         { path:'/photoDetails/:id',name:'photo',component:Photo_details },
         { path:'/photo/new',component:Photo_new },

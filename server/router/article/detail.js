@@ -39,4 +39,34 @@ router.get('/articleDetail',(req,res) =>{
     })
 })
 
+router.post('/comment',(req,res)=>{
+    let token = Number(req.body.token);
+    let current = global.users.get(token);
+    let article = req.body.article;
+    let content = req.body.content;
+    let time = new Date().toLocaleString();
+    let sqlAddCommentCount = `UPDATE street SET replyCount = replyCount + 1  WHERE streetID = ${article}`;
+    let sqlAddComment = `INSERT INTO streetReply(streetID,userID,TIME,content) VALUES (${article},
+    '${current}','${time}','${content}')`;
+    new Promise((resolve)=>{
+        db(sqlAddCommentCount,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        db(sqlAddComment,()=>{
+            res.status(200).json({ code:200 });
+        })
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+// 评论点赞
+router.get('/streetReplyPraise',(request,response)=>{
+    var sql = `UPDATE streetreply SET praise = praise + 1 WHERE streetReplyID = ${request.query.streetReplyID}`;
+    db(sql,(result)=>{
+        response.status(200).json({ code:200,message:'success'});
+    })
+})
+
 module.exports=router;
