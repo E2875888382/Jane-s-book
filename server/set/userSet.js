@@ -2,15 +2,19 @@ const express=require('express');
 const router=express.Router();
 const db = require('../mysql.js');
 
-// 增加私信
+// 写私信
 router.post('/sendMsg', (request,response) =>{
-    var sql=  `INSERT INTO message (userID,receiverID,content,time) VALUES ("${ request.session.user }","${ request.body.receiverID }","${ request.body.content}","${request.body.time}")`;
-    db(sql,(result)=>{
+    let token = Number(req.body.token);
+    let current = global.users.get(token);
+    let time = new Date().toLocaleString();
+    var sql=  `INSERT INTO message (userID,receiverID,content,time)
+     VALUES ("${current}","${ request.body.receiverID }","${ request.body.content}","${time}")`;
+    db(sql,()=>{
         response.status(200).json({ message:'ok', code:200 });
     })
 })
 
-// 修改已读状态
+// 消息已读
 router.get('/isRead', (request,response) =>{
     var sql= `UPDATE message SET isRead = 1 WHERE messageID = "${ request.query.id }"`;
     db(sql,(result)=>{
@@ -19,24 +23,31 @@ router.get('/isRead', (request,response) =>{
 })
 
 // 修改用户信息
-router.post('/updateUserInfo', (request,response) =>{
-    var sql= `UPDATE user SET nickName ="${request.body.update.nickName}",gender ="${request.body.update.gender}",birthday ="${request.body.update.birth}",sign ="${request.body.update.sign}" WHERE userID ="${request.session.user}"`;
-    db(sql,(result)=>{
-        response.status(200).json({ message:"修改成功",code:200 });
-    })
-})
-
-// 修改密码
-router.post('/changePassword',(request,response) =>{
-    var sql=`UPDATE USER SET PASSWORD = '${request.body.new }' WHERE userID = '${request.session.user }'`;
-    db(sql,(result)=>{
-        response.status(200).json({message:"修改成功",code:200});
+router.post('/updateUserInfo', (req,res) =>{
+    let token = Number(req.body.token);
+    let current = global.users.get(token);
+    let nickName = req.body.ifo.nickName;
+    let birth = req.body.ifo.birth;
+    let gender = req.body.ifo.gender;
+    let sign = req.body.ifo.sign;
+    let sql= `UPDATE user SET gender ="${gender}",birthday ="${birth}",sign ="${sign}",nickName ="${nickName}"
+    WHERE userID ="${current}"`;
+    new Promise((resolve)=>{
+        db(sql,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.status(200).json({ code:200 });
+    }).catch((err)=>{
+        console.log(err)
     })
 })
 
 // 修改手机号
 router.post('/changeTelephone',(request,response) =>{
-    var sql=`UPDATE USER SET telephone = '${request.body.new }' WHERE userID = '${request.session.user }'`;
+    let token = Number(req.body.token);
+    let current = global.users.get(token);
+    var sql=`UPDATE USER SET telephone = '${request.body.new }' WHERE userID = '${current}'`;
     db(sql,(result)=>{
         response.status(200).json({message:"修改成功",code:200});
     })
@@ -44,7 +55,9 @@ router.post('/changeTelephone',(request,response) =>{
 
 // 修改QQ号
 router.post('/changeQQ',(request,response) =>{
-    var sql=`UPDATE USER SET qq = '${request.body.new }' WHERE userID = '${request.session.user}'`;
+    let token = Number(req.body.token);
+    let current = global.users.get(token);
+    var sql=`UPDATE USER SET qq = '${request.body.new }' WHERE userID = '${current}'`;
     db(sql,(result)=>{
         response.status(200).json({message:"修改成功",code:200});
     })

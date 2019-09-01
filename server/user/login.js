@@ -28,8 +28,6 @@ router.post('/login', (request,response) =>{
             response.status(200).json({  message:"账号或密码错误" ,code:0 });
         }
         else {
-          //使用session记录登录状态
-          request.session.user=result[0].userID;
           let key = Number(result[0].userID)+new Date().getTime();
           global.users.set(key,result[0].userID);
           response.status(200).json({  message:"登录成功",code:1,token:key });

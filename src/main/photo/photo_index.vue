@@ -56,30 +56,30 @@ export default {
         vueWaterfallEasy
     },
     mounted(){
-        this.getCount();// mounted阶段获取图片最多能有多少组
+        this.init(this.group);// mounted阶段获取图片最多能有多少组
     },
     methods:{
-        // 获取图片组数
-        getCount(){
-            this.get('getPhotoCount').then((result)=>{
-                this.maxGroup = Math.ceil(result.data.photoCount / 10);
-                this.load();// 获取到最大组数后开始加载第一组图片
+        // 加载图片组
+        init(n){
+            this.jsp('photo',{page:n}).then((data)=>{
+                this.imgs = this.imgs.concat(data.list);// 增量添加图片
+                this.maxGroup = Math.ceil(data.count[0]['COUNT(*)'] / 10);
+                this.boxheight += 600;// 容器高度增加，不然没法容纳图片
+                this.group++;// 记载完1组图片当前组数增加1
+            }).catch((err)=>{
+                console.log(err);
             })
         },
-        // 加载图片组
         load(){
-            // 如果当前组数大于最大组数，就停止触发无限加载
+                // 如果当前组数大于最大组数，就停止触发无限加载
             if(this.group > this.maxGroup){
                 this.$refs.waterfall.waterfallOver()
                 return 
             }else{
-                this.get('getPhoto',{group:this.group}).then((result)=>{
-                    this.imgs = this.imgs.concat(result.data.photo);// 增量添加图片
-                    this.boxheight += 600;// 容器高度增加，不然没法容纳图片
-                    this.group++;// 记载完1组图片当前组数增加1
-                })
+                this.init(this.group)
             }
         },
+ 
         // 点击图片跳转到相簿详情
         clickFn(event, { index, value }) {
             // 阻止a标签跳转

@@ -1,6 +1,10 @@
 <template>
 <div>
     <div class="item">
+        <span class="label">昵称</span>
+        <el-input v-model="nickName"></el-input>
+    </div>
+    <div class="item">
         <span class="label">出生日期</span>
         <el-date-picker
         v-model="birthday"
@@ -24,7 +28,7 @@
             v-model="sign">
         </el-input>
     </div>
-    <el-button type="success" round size="small">保存</el-button>
+    <el-button type="success" round size="small" @click="save">保存</el-button>
 </div>
 </template>
 
@@ -32,6 +36,7 @@
 export default {
     data(){
         return {
+            nickName:'',
             sign:'',
             gender:'',
             birthday:'',
@@ -45,7 +50,26 @@ export default {
             this.sign = this.$store.state.userIfo.sign;
             this.gender = this.$store.state.userIfo.gender;
             this.birthday = this.$store.state.userIfo.birthday;
+            this.nickName = this.$store.state.userIfo.nickName;
         },
+        save(){
+            if(this.nickName.trim().length !== 0&&this.birthday!==null){
+                let ifo = {
+                    birth:this.birthday,
+                    sign:this.sign.trim().length == 0 ? '无':this.sign.trim(),
+                    gender:this.gender,
+                    nickName:this.nickName,
+                }
+                let user = localStorage.getItem('token');
+                this.post('updateUserInfo',{token:user,ifo:ifo}).then(()=>{
+                    this.$message({
+                        message:'已保存',
+                        type:'success'
+                    })
+                    this.userIfo();
+                })
+            }
+        }
     }
 }
 </script>
@@ -72,5 +96,13 @@ export default {
 }
 .el-textarea>>>.el-textarea__inner{
     background-color: whitesmoke;
+}
+.el-input{
+    width:214px;
+    height:33px;
+}
+.el-input>>>.el-input__inner{
+    background-color: whitesmoke;
+    height:33px;
 }
 </style>

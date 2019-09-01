@@ -2,25 +2,37 @@ const express=require('express');
 const router=express.Router();
 const db = require('../mysql.js');
 
-// 查询一组相簿
-router.get('/getPhoto',(request,response) => {
-    var begin = (request.query.group -1)*10;
-    var sql = `SELECT photo.src,photo.title,photo.photoID,user.avatar,user.nickName
+// 分组相册
+router.get('/photo',(req,res) =>{
+    let begin = (req.query.page -1)*10;
+    let sqlCount = `SELECT COUNT(*) FROM photo`;
+    let sqlList = `SELECT photo.src,photo.title,photo.photoID,user.avatar,user.nickName
     FROM USER,photo
     WHERE user.userID = photo.userID
     LIMIT ${begin},10`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photo:result });
-    })
-})
-// 查询相簿的数量
-router.get('/getPhotoCount',(request,response) => {
-    var sql = `SELECT COUNT(*) FROM photo`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photoCount:result[0]["COUNT(*)"] });
+    new Promise((resolve)=>{
+        db(sqlCount,(count)=>{
+            resolve(count);
+        })
+    }).then((count)=>{
+        return new Promise((resolve)=>{
+            db(sqlList,(data)=>{
+                let result = {
+                    count:count,
+                    list:data,
+                };
+                resolve(JSON.stringify(result));
+            })
+        })
+    }).then((result)=>{
+        res.type('text/javascript');
+        res.status(200).send(`${req.query.callback}(${result})`);
+    }).catch((err)=>{
+        console.log(err);
     })
 })
 
+// 详情
 router.get('/photoDetail',(req,res)=>{
     let photoID = req.query.photoID;
     let sqlAddView = `UPDATE photo SET view = view + 1  WHERE photoID =${photoID} `;
@@ -53,6 +65,7 @@ router.get('/photoPraise',(request,response)=>{
         response.status(200).json({ code:200,message:'success'});
     })
 })
+
 // 取消点赞
 router.get('/cancelPhotoPraise',(request,response)=>{
     var sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${request.query.photoID}`;
@@ -83,8 +96,10 @@ router.get('/photoCollect',(req,res)=>{
 
 // 取消收藏
 router.get('/unlikePhoto',(request,response)=>{
+    let token = Number(req.query.token);
+    let current = global.users.get(token);
     var sql = `DELETE FROM photocollection
-    WHERE userID = ${request.session.user} AND photoID = ${request.query.photoID}`;
+    WHERE userID = ${current} AND photoID = ${request.query.photoID}`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'取消收藏成功'});
     })
@@ -92,12 +107,15 @@ router.get('/unlikePhoto',(request,response)=>{
 
 // 增加相簿
 router.post('/addNewPhoto',(request,response)=>{
+    let token = Number(req.body.token);
+    let current = global.users.get(token);
     var sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
-    VALUES(${request.session.user},'${request.body.tags}',
+    VALUES(${current},'${request.body.tags}',
     '${request.body.src}','${request.body.title}','${request.body.time}',
     '${request.body.photo}')`;
     db(sql,(result)=>{
         response.status(200).json({ code:200,message:'success'});
     })
 })
+
 module.exports=router;

@@ -68,7 +68,7 @@ export default {
             id:this.$route.params.id,
             photoDetails:{},// 相簿详细信息
             previewList:[],// 图片预览
-            tags:[],// 标签
+            tags:[],
             isFollowed:false,
             isCollected:false,
             isMe:false,
@@ -117,9 +117,9 @@ export default {
         sendMsg(){
             if(this.isFollowed){
                 this.$router.push({ path:'/follow'});
-            }else if(this.isMe){// 如果是自己，触发提示
+            }else if(this.isMe){
                 this.$message({
-                    message: '请不要自言自语！',
+                    message: '你是作者哦！',
                 });
             }else{// 如果没有成为好友，无法发消息
                 this.$message({
