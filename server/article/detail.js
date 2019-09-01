@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const db = require('../../mysql.js');
+const db = require('../mysql.js');
 
 router.get('/articleDetail',(req,res) =>{
     let sqlAddView = ` UPDATE street SET view = view + 1  WHERE streetID = ${req.query.articleId}`;

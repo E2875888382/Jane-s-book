@@ -5,7 +5,6 @@
             <div class="main_box col-12">
                 <div class="title_box">
                     <span>{{ photoDetails.title }}</span>
-                    <span><i class="el-icon-warning-outline"></i>举报</span>
                 </div>
                 <div>
                     <el-tag size="mini" type="danger" effect="plain" >摄影扶持计划</el-tag>
@@ -38,8 +37,8 @@
                 </div>
                 <div class="btn" v-if="$store.state.loginFlag">
                     <el-button size="mini" type="danger" v-if="isMe" disabled>我</el-button>
-                    <el-button size="mini" type="danger" v-if="!isFriend&&!isMe" @click="addFriend">关注</el-button>
-                    <el-button size="mini" type="danger" v-if="isFriend" disabled>已关注</el-button>
+                    <el-button size="mini" type="danger" v-if="!isFollowed&&!isMe" @click="followed">关注</el-button>
+                    <el-button size="mini" type="danger" v-if="isFollowed" disabled>已关注</el-button>
                     <el-button size="mini" type="danger" plain @click="sendMsg">发消息</el-button>
                 </div>
             </div>
@@ -49,11 +48,11 @@
                     <i @click="praise($event)"></i>
                     <span class="praise">{{ photoDetails.praise }}</span>
                 </div>
-                <div class="other_box">
-                    <span v-if="!isCollection">收藏</span>
-                    <span v-if="isCollection">已收藏</span>
-                    <i @click="photoCollection" v-if="!isCollection"></i>
-                    <i v-if="isCollection" class="goldCollection"></i>
+                <div class="other_box" v-if="$store.state.loginFlag">
+                    <span v-if="!isCollected">收藏</span>
+                    <span v-if="isCollected">已收藏</span>
+                    <i @click="photoCollection" v-if="!isCollected"></i>
+                    <i class="goldCollection" v-if="isCollected"></i>
                 </div>
             </div>
         </div>
@@ -66,50 +65,58 @@
 export default {
     data(){
         return {
-            id:this.$route.params.id,// 路由传过来的当前相簿的photoID
+            id:this.$route.params.id,
             photoDetails:{},// 相簿详细信息
             previewList:[],// 图片预览
-            tags:[],// 相簿标签
-            isFriend:false,// 当前作者是否是好友
-            isMe:false,// 当前作者是否是用户
-            isCollection:false,// 当前相簿是否已收藏
+            tags:[],// 标签
+            isFollowed:false,
+            isCollected:false,
+            isMe:false,
         }
     },
     mounted(){
-        this.addView();// 浏览量加1
-        this.getPhotoDetails();// 获取相簿详情
+        this.getPhotoDetails();
     },
     methods: {
-        // 检查是否被收藏过
-        checkPhotoCollection(){
-            this.get("checkPhotoCollection" ,{photoID:this.id}).then( (result) =>{
-                if(result.data.code==200){
-                    if(result.data.isCollection[0]["COUNT(*)"] > 0){
-                        this.isCollection = true;
-                    }
+        // 查询详情
+        getPhotoDetails(){
+            this.jsp("photoDetail",{ photoID:this.id }).then((result) =>{
+                this.photoDetails = result[0];
+                if(this.$store.state.loginFlag){// 如果已经登录，检查各种状态
+                    this.statusCheck();
+                }
+                if(this.photoDetails.photo !== null){// 如果相簿不为空，根据标志符分割图片数组，因为数据库存放的是几个图片组合的字符串，彼此用一个标志符分割
+                    this.previewList = this.photoDetails.photo.split('@')
+                }
+                if(this.photoDetails.tags){// 如果标签不为空，分割标签数组
+                    this.tags = this.photoDetails.tags.split(',');
                 }
             })
         },
-        // 收藏当前相簿
-        photoCollection(){
-            if(this.$store.state.loginFlag){
-                this.post("photoCollection" ,{photoID:this.id,time:new Date().toLocaleString()}).then( (result) =>{
-                    if(result.data.code==200){
-                        this.$message({
-                            message: '添加收藏成功',
-                            type: 'success'
-                        });
-                        this.checkPhotoCollection();// 收藏完要更新是否已收藏，防止重复收藏
-                        this.getPhotoCollection();
-                    }
-                })
+        // 检查状态
+        statusCheck(){
+            let author = this.photoDetails.userID;
+            let photoCollection = this.$store.state.photoCollection;
+            let friend = this.$store.state.friendsList;
+            photoCollection.forEach(e=>{
+                if(e.photoID == this.id){
+                   this.isCollected = true;
+                }
+            });
+            friend.forEach(e=>{
+                if(e.userID == author){
+                    this.isFollowed = true;
+                }
+            })
+            if(author == this.$store.state.userIfo.userID){
+                this.isMe = true;
+                this.isFollowed = false;
             }
         },
         // 发送信息
         sendMsg(){
-            // 如果已经是好友，跳转到用户页
-            if(this.isFriend){
-                this.$router.push({ path:'/userPage'});
+            if(this.isFollowed){
+                this.$router.push({ path:'/follow'});
             }else if(this.isMe){// 如果是自己，触发提示
                 this.$message({
                     message: '请不要自言自语！',
@@ -120,53 +127,11 @@ export default {
                 });
             }
         },
-        // 关注当前作者
-        addFriend(){
-            this.post("addFriend" ,{friendID:this.photoDetails.userID}).then( (result) =>{
-                if(result.data.code==200){
-                    this.$message({
-                        message: '添加好友成功',
-                        type: 'success'
-                    });
-                    this.getPhotoDetails();// 添加好友后刷新状态
-                    this.getFriends();
-                }
-            })
-        },
-        // 检查作者是否是自己
-        isMyPhoto(){
-            if(this.$store.state.userIfo.userID == this.photoDetails.userID){
-                this.isMe = true;
-            }
-        },
-        // 检查作者与用户是否为好友关系
-        checkFriend(){
-            this.post('checkFriend',{friendID:this.photoDetails.userID}).then((result)=>{
-                if(result.data.code == 200){
-                    if(result.data.isFriend[0]['COUNT(*)'] == 1){
-                        this.isFriend = true;
-                    }
-                }
-            })
-        },
-        // 获取相簿详情
-        getPhotoDetails(){
-            this.get("getPhotoDetails",{ photoID:this.id }).then((result) =>{
-                if(result.data.code == 200){
-                    this.photoDetails = result.data.photoDetails[0];
-                    if(this.$store.state.loginFlag){// 如果已经登录，检查各种状态
-                        // this.checkFriend();
-                        // this.isMyPhoto();
-                        // this.checkPhotoCollection();
-                    }
-                    if(this.photoDetails.photo !== null){// 如果相簿不为空，根据标志符分割图片数组，因为数据库存放的是几个图片组合的字符串，彼此用一个标志符分割
-                        this.previewList = this.photoDetails.photo.split('@')
-                    }
-                    if(this.photoDetails.tags){// 如果标签不为空，分割标签数组
-                        this.tags = this.photoDetails.tags.split(',');
-                    }
-                }
-            })
+        // 关注作者
+        followed(){
+            let author = this.photoDetails.userID;
+            this.follow(author);
+            this.isFollowed = true;
         },
         // 点赞
         praise(event){
@@ -182,10 +147,14 @@ export default {
                 })
             }
         },
-        // 增加浏览量
-        addView(){
-            this.get('addPhotoView',{photoID:this.id}).then((result)=>{
-            })
+        // 收藏
+        photoCollection(){
+            this.collectPhoto(this.id);
+            this.$message({
+                message: '添加收藏成功',
+                type: 'success'
+            });
+            this.isCollected = true;
         },
     },
 }

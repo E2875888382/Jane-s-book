@@ -111,6 +111,7 @@ export default {
     min-height:2000px;
     padding:30px 0;
     background-color: #f2f3f5;
+    margin-top:58px;
 }
 .banner_img{
     width:100%;

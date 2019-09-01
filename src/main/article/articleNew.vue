@@ -3,7 +3,6 @@
         <div class="bread col-12">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                <el-breadcrumb-item :to="{ path:'/street' }">步行街</el-breadcrumb-item>
                 <el-breadcrumb-item>发新帖（仅限图文）</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -77,7 +76,7 @@ export default {
 
 <style scoped>
 .container{
-    margin-top:40px;
+    margin-top:80px;
     margin-bottom: 40px;
     min-height:1000px;
 }

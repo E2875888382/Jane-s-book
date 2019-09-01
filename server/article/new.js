@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const db = require('../../mysql.js');
+const db = require('../mysql.js');
 
 // 增加帖子
 router.post('/uploadNewStreet', (request,response) =>{

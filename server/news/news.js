@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const db = require('../../mysql.js');
+const db = require('../mysql.js');
 
 // 获取详情
 router.get('/newsDetail',(req,res)=>{

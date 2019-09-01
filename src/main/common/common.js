@@ -101,4 +101,11 @@ exports.install = function(Vue,options){
             this.userIfo();
         })
     }
+    // 收藏相册
+    Vue.prototype.collectPhoto = function(photoId){
+        let user = localStorage.getItem('token');
+        this.jsp('photoCollect',{token:user,photoID:photoId}).then(()=>{
+            this.userIfo();
+        })
+    }
 }

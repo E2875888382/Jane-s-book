@@ -4,18 +4,18 @@ const path=require('path');
 const session=require('express-session');
 
 //导入路由
-const Index = require('./router/index/index')
-const ArticleDeatil = require('./router/article/detail')
-const ArticleNew = require('./router/article/new')
-const User = require('./router/user/user')
-const Login = require('./router/user/login')
-const Follow = require('./router/follow/follow')
-const BaseSet = require('./router/set/baseSet')
-const UserSet = require('./router/set/userSet')
+const Index = require('./index/index')
+const ArticleDeatil = require('./article/detail')
+const ArticleNew = require('./article/new')
+const User = require('./user/user')
+const Login = require('./user/login')
+const Follow = require('./follow/follow')
+const BaseSet = require('./set/baseSet')
+const UserSet = require('./set/userSet')
 
-const news_Router=require('./router/news/news_Router');//新闻模块路由
-const photo_Router=require('./router/photo/photo_Router');//相簿模块路由
-const search_Router=require('./router/search/search_Router');//搜索模块路由(主页搜索框)
+const news_Router=require('./news/news')
+const photo_Router=require('./photo/photo')
+const search_Router=require('./search/search')
 
 //解决控制台的内存溢出提示
 require('events').EventEmitter.defaultMaxListeners = 0;
@@ -51,7 +51,6 @@ app.use(session({
     }
 }));
 
-//挂载router
 app.use(Index)
 app.use(Login)
 app.use(ArticleDeatil)
@@ -65,7 +64,6 @@ app.use(news_Router);
 app.use(photo_Router);
 app.use(search_Router);
 
-//设置服务器端口
 app.listen(8000,function(){
     console.log('----- server on -----');
 });
