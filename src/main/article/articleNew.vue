@@ -1,5 +1,5 @@
 <template>
-    <div class="container col-10">
+    <div class="container col-8">
         <div class="bread col-12">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -48,8 +48,6 @@ export default {
                         topic:this.Form.topic,
                         content:this.Form.text,
                         img:this.Form.img,
-                        userID:this.$store.state.userIfo.userID,
-                        time:new Date().toLocaleString(),
                     }
                     this.post('uploadNewStreet',{ new:newStreet }).then((result)=>{
                         if(result.data.code == 200){

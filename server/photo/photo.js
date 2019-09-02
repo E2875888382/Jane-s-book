@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const db = require('../mysql.js');
 
-// 分组相册
+// 获取一组相册
 router.get('/photo',(req,res) =>{
     let begin = (req.query.page -1)*10;
     let sqlCount = `SELECT COUNT(*) FROM photo`;
@@ -31,7 +31,7 @@ router.get('/photo',(req,res) =>{
     })
 })
 
-// 详情
+// 相册详情
 router.get('/photoDetail',(req,res)=>{
     let photoID = req.query.photoID;
     let sqlAddView = `UPDATE photo SET view = view + 1  WHERE photoID =${photoID} `;
@@ -56,32 +56,43 @@ router.get('/photoDetail',(req,res)=>{
     })
 })
 
-// 点赞
-router.get('/photoPraise',(request,response)=>{
-    var sql = `UPDATE photo SET praise = praise + 1 WHERE photoID = ${request.query.photoID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'success'});
+// 点赞/取消点赞
+router.get('/photoPraise',(req,res)=>{
+    let photoID = req.query.photo;
+    let status = req.query.status;
+    let sql = ``;
+    if(status == 'true'){
+        sql = `UPDATE photo SET praise = praise + 1 WHERE photoID = ${photoID}`;
+    }else{
+        sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${photoID}`;
+    }
+    new Promise((resolve)=>{
+        db(sql,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.status(200).json({ code:200 });
+    }).catch((err)=>{
+        console.log(err);
     })
 })
 
-// 取消点赞
-router.get('/cancelPhotoPraise',(request,response)=>{
-    var sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${request.query.photoID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'success'});
-    })
-})
-
-// 增加相簿
-router.post('/addNewPhoto',(request,response)=>{
+// 发布相簿
+router.post('/addNewPhoto',(req,res)=>{
     let token = Number(req.headers.token);
     let current = global.users.get(token);
     var sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
-    VALUES(${current},'${request.body.tags}',
-    '${request.body.src}','${request.body.title}','${request.body.time}',
-    '${request.body.photo}')`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'success'});
+    VALUES(${current},'${req.body.tags}',
+    '${req.body.src}','${req.body.title}','${req.body.time}',
+    '${req.body.photo}')`;
+    new Promise((resolve)=>{
+        db(sql,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.status(200).json({ code:200 });
+    }).catch((err)=>{
+        console.log(err);
     })
 })
 

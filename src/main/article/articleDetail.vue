@@ -2,8 +2,9 @@
 <div class="bg">
     <div class="oper">
         <div>
-            <div class="like"><van-icon name="good-job" color="#999"/></div>
-            <p>128赞</p>
+            <div class="like" v-if="!isPraised" @click="praised"><van-icon name="good-job" color="#999"/></div>
+            <div class="like" v-if="isPraised" @click="cancelPraised"><van-icon name="good-job" color="gold"/></div>
+            <p>{{ detail.praise }}赞</p>
         </div>
         <div v-if="isLogin">
             <div class="col">
@@ -64,7 +65,6 @@
                     <p class="sign">{{ detail.sign }}</p>
                 </div>
             </div>
-            <hr>
         </div>
     </div>
     <el-backtop></el-backtop>
@@ -84,6 +84,7 @@ export default {
             isFollowed:false,
             isCollected:false,
             isMe:false,
+            isPraised:false,
         }
     },
     components:{
@@ -127,12 +128,22 @@ export default {
         },
         followed(){
             let author = this.detail.userID;
-            this.follow(author);
+            this.follow(author,true);
             this.isFollowed = true;
         },
         collected(){
-            this.collect(this.current);
+            this.collect(this.current,true);
             this.isCollected = true;
+        },
+        praised(){
+            this.praise(this.current,true);
+            this.isPraised = true;
+            this.detail.praise++;
+        },
+        cancelPraised(){
+            this.praise(this.current,false);
+            this.isPraised = false;
+            this.detail.praise--;
         }
     }
 }
@@ -161,7 +172,7 @@ export default {
     border-radius: 4px;
     margin-bottom: 10px;
     box-shadow: 0 1px 3px rgba(26,26,26,.1);
-    height:300px;
+    height:80px;
     padding:16px;
 }
 .content{

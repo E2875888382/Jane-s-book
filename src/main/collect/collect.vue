@@ -40,7 +40,7 @@ export default {
         },
         unCollect(streetID){
             new Promise((resolve)=>{
-                this.uncollect(streetID);
+                this.collect(streetID,false);
                 resolve()
             }).then(()=>{
                 setTimeout(()=>{

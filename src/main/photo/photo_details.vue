@@ -130,26 +130,24 @@ export default {
         // 关注作者
         followed(){
             let author = this.photoDetails.userID;
-            this.follow(author);
+            this.follow(author,true);
             this.isFollowed = true;
         },
         // 点赞
         praise(event){
             if(!event.target.classList.contains("gold")){
-                this.get('photoPraise',{photoID:this.id}).then((result)=>{
-                    event.target.classList.add('gold');
-                    this.photoDetails.praise++;
-                })
+                this.praisePhoto(this.id,true);
+                event.target.classList.add('gold');
+                this.photoDetails.praise++;
             }else{
-                this.get('cancelPhotoPraise',{photoID:this.id}).then((result)=>{
-                    event.target.classList.remove('gold');
-                    this.photoDetails.praise--;
-                })
+                this.praisePhoto(this.id,false);
+                event.target.classList.remove('gold');
+                this.photoDetails.praise--;
             }
         },
         // 收藏
         photoCollection(){
-            this.collectPhoto(this.id);
+            this.collectPhoto(this.id,true);
             this.$message({
                 message: '添加收藏成功',
                 type: 'success'

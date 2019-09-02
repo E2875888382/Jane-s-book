@@ -71,7 +71,7 @@ export default {
             })
         },
         load(){
-                // 如果当前组数大于最大组数，就停止触发无限加载
+            // 如果当前组数大于最大组数，就停止触发无限加载
             if(this.group > this.maxGroup){
                 this.$refs.waterfall.waterfallOver()
                 return 
@@ -79,7 +79,6 @@ export default {
                 this.init(this.group)
             }
         },
- 
         // 点击图片跳转到相簿详情
         clickFn(event, { index, value }) {
             // 阻止a标签跳转
@@ -93,13 +92,11 @@ export default {
         praise(id,event){
             // 如果当前事件目标没有praise样式，说明没有点赞过，触发点赞
             if(!event.target.classList.contains("praise")){
-                this.get('photoPraise',{photoID:id}).then((result)=>{
-                    event.target.classList.add('praise');
-                })
+                this.praisePhoto(id,true);
+                event.target.classList.add('praise');
             }else{// 否则就是点赞过了，触发取消点赞
-                this.get('cancelPhotoPraise',{photoID:id}).then((result)=>{
-                    event.target.classList.remove('praise');
-                })
+                this.praisePhoto(id,false);
+                event.target.classList.remove('praise');
             }
         }
     }

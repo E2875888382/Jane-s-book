@@ -84,7 +84,7 @@ export default {
             })
         },
         unFollow(friend){
-            this.unfollow(friend);
+            this.follow(friend,false);
             this.follower = null;
             this.followerWork = {};
         }

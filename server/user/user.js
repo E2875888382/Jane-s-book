@@ -76,16 +76,23 @@ router.get('/user',(req,res) =>{
     }
 })
 
-// 收藏
+// 文章收藏/取消收藏
 router.get('/collect',(req,res)=>{
     let token = Number(req.headers.token);
     let current = global.users.get(token);
     let article = req.query.article;
     let time = new Date().toLocaleString();
-    let sqlCollect = `INSERT INTO streetcollection (userID,streetID,TIME)
-    VALUES (${current},${article},'${time}')`;
+    let status = req.query.status;
+    let sql = ``;
+    if(status == 'true'){
+        sql = `INSERT INTO streetcollection (userID,streetID,TIME)
+        VALUES (${current},${article},'${time}')`;
+    }else{
+        sql = `DELETE FROM streetcollection
+        WHERE userID = ${current} AND streetID = ${article}`;
+    }
     new Promise((resolve)=>{
-        db(sqlCollect,()=>{
+        db(sql,()=>{
             resolve()
         })
     }).then(()=>{
@@ -93,56 +100,27 @@ router.get('/collect',(req,res)=>{
     })
 })
 
-// 取消收藏
-router.get('/uncollect',(req,res)=>{
-    let token = Number(req.headers.token);
-    let current = global.users.get(token);
-    let article = req.query.article;
-    let sqlUnCollect = `DELETE FROM streetcollection
-    WHERE userID = ${current} AND streetID = ${article}`;
-    new Promise((resolve)=>{
-        db(sqlUnCollect,()=>{
-            resolve()
-        })
-    }).then(()=>{
-        res.status(200).send(`ok`);
-    })
-})
-
-// 收藏相册
+// 相册收藏/取消收藏
 router.get('/photoCollect',(req,res)=>{
     let time = new Date().toLocaleString();
     let token = Number(req.headers.token);
     let current = global.users.get(token);
     let photo = req.query.photoID;
-    let sqlPhotoCol = `INSERT INTO photocollection (userID,photoID,TIME)
-    VALUES (${current},${photo},'${time}')`;
+    let status = req.query.status;
+    let sql = ``;
+    if(status == 'true'){
+        sql = `INSERT INTO photocollection (userID,photoID,TIME)
+        VALUES (${current},${photo},'${time}')`;
+    }else{
+        sql = `DELETE FROM photocollection
+        WHERE userID = ${current} AND photoID = ${photo}`;
+    }
     new Promise((resolve)=>{
-        db(sqlPhotoCol,()=>{
+        db(sql,()=>{
             resolve()
         })
     }).then(()=>{
         res.status(200).send(`ok`);
-    }).catch((err)=>{
-        console.log(err);
-    })
-})
-
-// 取消收藏相册
-router.get('/unPhotoCollect',(req,res)=>{
-    let token = Number(req.headers.token);
-    let current = global.users.get(token);
-    let photo = req.query.photoID;
-    var sqlUnphotoCol = `DELETE FROM photocollection
-    WHERE userID = ${current} AND photoID = ${photo}`;
-    new Promise((resolve)=>{
-        db(sqlUnphotoCol,()=>{
-            resolve()
-        })
-    }).then(()=>{
-        res.status(200).send(`ok`);
-    }).catch((err)=>{
-        console.log(err);
     })
 })
 

@@ -66,40 +66,34 @@ exports.install = function(Vue,options){
             this.$router.push('/');
         })
     }
-    // 关注
-    Vue.prototype.follow = function(friend){
-        this.get('follow',{friend:friend}).then(()=>{
+    // 关注/取消关注
+    Vue.prototype.follow = function(friend,status){
+        this.get('follow',{friend:friend,status:status}).then(()=>{
             this.userIfo();
         })
     }
-    // 取消关注
-    Vue.prototype.unfollow = function(friend){
-        this.get('unfollow',{friend:friend}).then(()=>{
+    // 文章收藏/取消收藏
+    Vue.prototype.collect = function(articleId,status){
+        this.get('collect',{article:articleId,status:status}).then(()=>{
             this.userIfo();
         })
     }
-    // 收藏
-    Vue.prototype.collect = function(articleId){
-        this.get('collect',{article:articleId}).then(()=>{
+    // 相册收藏/取消收藏
+    Vue.prototype.collectPhoto = function(photoId,status){
+        this.get('photoCollect',{photoID:photoId,status:status}).then(()=>{
             this.userIfo();
         })
     }
-    // 取消收藏
-    Vue.prototype.uncollect = function(articleId){
-        this.get('uncollect',{article:articleId}).then(()=>{
-            this.userIfo();
+    // 文章点赞/取消点赞
+    Vue.prototype.praise = function(articleId,status){
+        this.get('praise',{article:articleId,status:status}).then(()=>{
+
         })
     }
-    // 收藏相册
-    Vue.prototype.collectPhoto = function(photoId){
-        this.get('photoCollect',{photoID:photoId}).then(()=>{
-            this.userIfo();
-        })
-    }
-    // 取消收藏相册
-    Vue.prototype.unCollectPhoto = function(photoId){
-        this.get('unPhotoCollect',{photoID:photoId}).then(()=>{
-            this.userIfo();
+    // 相册点赞/取消点赞
+    Vue.prototype.praisePhoto = function(photoId,status){
+        this.get('photoPraise',{photo:photoId,status:status}).then(()=>{
+            
         })
     }
 }
