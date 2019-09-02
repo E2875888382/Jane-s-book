@@ -23,9 +23,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 //导入全局函数
 
 import store from './main/common/store.js'
-import VueJsonp from 'vue-jsonp'
 import Common from './main/common/common.js';
-Vue.use(VueJsonp)
 Vue.use(ElementUI)
 Vue.use(infiniteScroll);
 Vue.use(Common);

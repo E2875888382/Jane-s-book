@@ -45,9 +45,9 @@ export default {
     },
     methods:{
         article(n){
-            this.jsp('article',{page:n}).then((data)=>{
-                this.articleList = this.articleList.concat(data.list);
-                this.count = data.count[0]['COUNT(*)'];
+            this.get('article',{page:n}).then((result)=>{
+                this.articleList = this.articleList.concat(result.data.list);
+                this.count = result.data.count[0]['COUNT(*)'];
                 this.currentPage++;
             }).catch((err)=>{
                 console.log(err);

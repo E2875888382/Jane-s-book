@@ -10,7 +10,6 @@ import Collect from '../collect/collect.vue'
 import Setting from '../set/set.vue'
 import baseset from '../set/baseSet.vue'
 import userset from '../set/userSet.vue'
-import safeset from '../set/safeSet.vue'
 
 
 
@@ -41,10 +40,6 @@ var router=new VueRouter({
                     path:'userset',
                     component:userset
                 },
-                {
-                    path:'safeset',
-                    component:safeset
-                }
             ]
         },
 

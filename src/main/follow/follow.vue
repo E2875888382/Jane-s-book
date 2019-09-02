@@ -79,8 +79,8 @@ export default {
         choose(item){
             this.follower = item;
             this.activeId = item.userID;
-            this.jsp('followerWork',{userID:item.userID}).then((data)=>{
-                this.followerWork = data;
+            this.get('followerWork',{userID:item.userID}).then((result)=>{
+                this.followerWork = result.data;
             })
         },
         unFollow(friend){

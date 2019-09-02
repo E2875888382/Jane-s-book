@@ -94,9 +94,9 @@ export default {
     },
     methods:{
         load(){
-            this.jsp('articleDetail',{articleId:this.current}).then((data)=>{
-                this.detail = data.detail[0];
-                this.comments = data.comments;
+            this.get('articleDetail',{articleId:this.current}).then((result)=>{
+                this.detail = result.data.detail[0];
+                this.comments = result.data.comments;
                 this.onePage(1);
                 this.statusCheck();
             }).catch((err)=>{

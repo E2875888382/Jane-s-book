@@ -13,13 +13,12 @@ router.get('/newsDetail',(req,res)=>{
         })
     }).then(()=>{
         return new Promise((resolve)=>{
-            db(sqlNewDetail,(data)=>{
-                resolve(JSON.stringify(data))
+            db(sqlNewDetail,(result)=>{
+                resolve(result)
             })
         })
-    }).then((data)=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}(${data})`);
+    }).then((result)=>{
+        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err)
     })
@@ -29,12 +28,11 @@ router.get('/newsDetail',(req,res)=>{
 router.get('/news',(req,res)=>{
     let sqlNews = `SELECT title,newID FROM news ORDER BY RAND() LIMIT 10`;
     new Promise((resolve)=>{
-        db(sqlNews,(data)=>{
-            resolve(JSON.stringify(data))
+        db(sqlNews,(result)=>{
+            resolve(result)
         })
-    }).then((data)=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}(${data})`);
+    }).then((result)=>{
+        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err)
     })

@@ -17,14 +17,6 @@
                 <span>个人资料</span>
             </router-link>
         </div>
-        <div>
-            <router-link to="/set/safeset">
-                <div class="icon">
-                    <i class="el-icon-lock"></i>
-                </div>
-                <span>账号安全</span>
-            </router-link>
-        </div>
     </div>
     <div class="content">
         <router-view></router-view>

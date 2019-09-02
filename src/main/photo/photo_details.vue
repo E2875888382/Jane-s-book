@@ -80,8 +80,8 @@ export default {
     methods: {
         // 查询详情
         getPhotoDetails(){
-            this.jsp("photoDetail",{ photoID:this.id }).then((result) =>{
-                this.photoDetails = result[0];
+            this.get("photoDetail",{ photoID:this.id }).then((result) =>{
+                this.photoDetails = result.data[0];
                 if(this.$store.state.loginFlag){// 如果已经登录，检查各种状态
                     this.statusCheck();
                 }

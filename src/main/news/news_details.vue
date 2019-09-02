@@ -51,9 +51,9 @@ export default {
         },
         //获取新闻详情
         getNewsDetails(){
-            this.jsp('newsDetail',{newId:this.id}).then((data) =>{
+            this.get('newsDetail',{newId:this.id}).then((result) =>{
                 this.imgContent = [];//防止前面的内容重叠
-                this.newsDetails = data[0];
+                this.newsDetails = result.data[0];
                 if(this.newsDetails.imgContent){
                     this.imgContent = this.newsDetails.imgContent.split(',')
                 }

@@ -22,8 +22,8 @@ export default {
     },
     methods:{
         getTenNews(){
-            this.jsp('news').then((data)=>{
-                this.tenNews = data;
+            this.get('news').then((result)=>{
+                this.tenNews = result.data;
             })
         }
     }

@@ -21,12 +21,11 @@ router.get('/photo',(req,res) =>{
                     count:count,
                     list:data,
                 };
-                resolve(JSON.stringify(result));
+                resolve(result);
             })
         })
     }).then((result)=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}(${result})`);
+        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err);
     })
@@ -46,13 +45,12 @@ router.get('/photoDetail',(req,res)=>{
         })
     }).then(()=>{
         return new Promise((resolve)=>{
-            db(sqlDetail,(data)=>{
-                resolve(JSON.stringify(data));
+            db(sqlDetail,(result)=>{
+                resolve(result);
             })
         })
     }).then((result)=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}(${result})`);
+        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err);
     })

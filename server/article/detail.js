@@ -28,12 +28,11 @@ router.get('/articleDetail',(req,res) =>{
                     detail:detail,
                     comments:data,
                 };
-                resolve(JSON.stringify(result));
+                resolve(result);
             })
         })
     }).then((result)=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}(${result})`);
+        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err);
     })
