@@ -13,13 +13,9 @@ const News = require('./news/news')
 const Photo = require('./photo/photo')
 const Search = require('./search/search')
 
-//解决控制台的内存溢出提示
-// require('events').EventEmitter.defaultMaxListeners = 0;
-
 const app=express();
 
 //配置body-parser
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
