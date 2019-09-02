@@ -2,46 +2,56 @@ const express=require('express');
 const router=express.Router();
 const db = require('../mysql.js');
 
-// 查询帖子
-router.get('/searchForStreet',(request,response)=>{
-    var sql = `SELECT street.topic,street.time,user.nickName,street.streetID
+router.get('/search',(req,res)=>{
+    let search = req.query.search;
+    let sqlArticle = `SELECT street.topic,street.time,user.nickName,street.streetID
     FROM street,USER
-    WHERE street.topic LIKE '%${request.query.content}%'
+    WHERE street.topic LIKE '%${search}%'
     AND user.userID = street.userID`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,street:result});
-    })
-})
-
-// 查询相簿
-router.get('/searchForPhoto',(request,response)=>{
-    var sql = `SELECT photo.photoID,photo.src,user.nickName,photo.title
+    let sqlPhoto = `SELECT photo.photoID,photo.src,user.nickName,photo.title
     FROM photo,USER
-    WHERE photo.title LIKE '%${request.query.content}%'
+    WHERE photo.title LIKE '%${search}%'
     AND user.userID = photo.userID`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,photo:result});
-    })
-})
-
-// 查询用户
-router.get('/searchForUser',(request,response)=>{
-    var sql = `SELECT userID,nickName,avatar,email,birthday,level,gender,sign
+    let sqlUser = `SELECT userID,nickName,avatar,email,birthday,gender,sign
     FROM USER
-    WHERE nickName LIKE '%${request.query.content}%'`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,user:result});
+    WHERE nickName LIKE '%${search}%'`;
+    let sqlNews = `SELECT title,TIME,newID,source
+    FROM news
+    WHERE title LIKE '%${search}%'`;
+    new Promise((resolve)=>{
+        db(sqlArticle,(data)=>{
+            let result = {
+                article:data,
+            }
+            resolve(result)
+        })
+    }).then((result)=>{
+        return new Promise((resolve)=>{
+            db(sqlPhoto,(data)=>{
+                result.photo = data;
+                resolve(result)
+            })
+        })
+    }).then((result)=>{
+        return new Promise((resolve)=>{
+            db(sqlUser,(data)=>{
+                result.user = data;
+                resolve(result)
+            })
+        })
+    }).then((result)=>{
+        return new Promise((resolve)=>{
+            db(sqlNews,(data)=>{
+                result.news = data;
+                resolve(result)
+            })
+        })
+    }).then((result)=>{
+        res.status(200).json(result);
+    }).catch((err)=>{
+        console.log(err);
     })
 })
 
-// 查询新闻
-router.get('/searchForNews',(request,response)=>{
-    var sql = `SELECT title,TIME,newID,source
-    FROM news
-    WHERE title LIKE '%${request.query.content}%'`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,news:result});
-    })
-})
 
 module.exports=router;

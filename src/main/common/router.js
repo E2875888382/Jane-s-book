@@ -7,17 +7,22 @@ import ArticleDetail from '../article/articleDetail.vue'
 import ArticleNew from '../article/articleNew.vue'
 import Follow from '../follow/follow.vue'
 import Collect from '../collect/collect.vue'
+
 import Setting from '../set/set.vue'
 import baseset from '../set/baseSet.vue'
 import userset from '../set/userSet.vue'
 
-
+import Search from '../search/result.vue'
+import searcharticle from '../search/article.vue'
+import searchnews from '../search/news.vue'
+import searchphoto from '../search/photo.vue'
+import searchuser from '../search/user.vue'
 
 import News_details from '../news/news_details.vue'// 新闻详细页
 import Photo_index from '../photo/photo_index.vue'// 相簿主页
 import Photo_details from '../photo/photo_details.vue'// 相簿详细页
 import Photo_new from '../photo/photo_new.vue'// 相簿发表页
-import Search_result from '../search/search_result.vue'// 搜索结果页
+
 
 Vue.use(VueRouter)
 
@@ -42,12 +47,31 @@ var router=new VueRouter({
                 },
             ]
         },
-
+        { path:'/search',name:'search',component:Search,
+            children:[
+                {
+                    path:'article',
+                    component:searcharticle
+                },
+                {
+                    path:'news',
+                    component:searchnews
+                },
+                {
+                    path:'user',
+                    component:searchuser
+                },
+                {
+                    path:'photo',
+                    component:searchphoto
+                },
+            ]
+        },
         { path:'/newsDetails/:id',component:News_details },
         { path:'/photo',component:Photo_index },
         { path:'/photoDetails/:id',name:'photo',component:Photo_details },
         { path:'/photo/new',component:Photo_new },
-        { path:'/searchResult',component:Search_result },
+
     ]
 })
 

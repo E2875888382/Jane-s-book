@@ -50,26 +50,9 @@ export default {
         search(){
             if(this.input.trim()!==''){// 去除空格后判断是否为空
                 this.$store.commit('searchContent',this.input);
-                this.$router.push({ path:'/searchResult'});// 跳转到搜索结果页
-                this.get('searchForStreet', {content:this.input}).then((result)=>{
-                    if(result.data.code == 200){
-                        this.$store.commit('searchStreet',result.data.street)
-                    }
-                })
-                this.get('searchForPhoto', {content:this.input}).then((result)=>{
-                    if(result.data.code == 200){
-                        this.$store.commit('searchPhoto',result.data.photo)
-                    }
-                })
-                this.get('searchForUser', {content:this.input}).then((result)=>{
-                    if(result.data.code == 200){
-                        this.$store.commit('searchUser',result.data.user)
-                    }
-                })
-                this.get('searchForNews',{content:this.input}).then((result)=>{
-                    if(result.data.code == 200){
-                        this.$store.commit('searchNews',result.data.news)
-                    }
+                this.$router.push({ path:'/search'});// 跳转到搜索结果页
+                this.get('search', {search:this.input}).then((result)=>{
+                    this.$store.commit('searchResult',result.data)
                 })
             }
         }
