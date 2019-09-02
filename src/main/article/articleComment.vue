@@ -29,7 +29,7 @@ export default {
     methods:{
         submit(){
             let user = localStorage.getItem('token');
-            this.post('comment',{token:user,article:this.article,content:this.comment}).then((data)=>{
+            this.post('comment',{article:this.article,content:this.comment}).then((data)=>{
                 this.$message({
                     message:'评论成功',
                     type:'success'

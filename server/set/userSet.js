@@ -4,7 +4,7 @@ const db = require('../mysql.js');
 
 // 写私信
 router.post('/sendMsg', (request,response) =>{
-    let token = Number(req.body.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     let time = new Date().toLocaleString();
     var sql=  `INSERT INTO message (userID,receiverID,content,time)
@@ -24,7 +24,7 @@ router.get('/isRead', (request,response) =>{
 
 // 修改用户信息
 router.post('/updateUserInfo', (req,res) =>{
-    let token = Number(req.body.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     let nickName = req.body.ifo.nickName;
     let birth = req.body.ifo.birth;
@@ -45,7 +45,7 @@ router.post('/updateUserInfo', (req,res) =>{
 
 // 修改手机号
 router.post('/changeTelephone',(request,response) =>{
-    let token = Number(req.body.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     var sql=`UPDATE USER SET telephone = '${request.body.new }' WHERE userID = '${current}'`;
     db(sql,(result)=>{
@@ -55,7 +55,7 @@ router.post('/changeTelephone',(request,response) =>{
 
 // 修改QQ号
 router.post('/changeQQ',(request,response) =>{
-    let token = Number(req.body.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     var sql=`UPDATE USER SET qq = '${request.body.new }' WHERE userID = '${current}'`;
     db(sql,(result)=>{

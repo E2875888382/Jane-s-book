@@ -61,7 +61,7 @@ export default {
                     nickName:this.nickName,
                 }
                 let user = localStorage.getItem('token');
-                this.post('updateUserInfo',{token:user,ifo:ifo}).then(()=>{
+                this.post('updateUserInfo',{ifo:ifo}).then(()=>{
                     this.$message({
                         message:'已保存',
                         type:'success'

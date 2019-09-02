@@ -45,7 +45,7 @@ export default {
         afterRead(){
             this.avatar = this.img[0].content;
             let user = localStorage.getItem('token');
-            this.post("avatar",{token:user,avatar:this.img[0].content}).then((result)=>{
+            this.post("avatar",{avatar:this.img[0].content}).then((result)=>{
                 if(result.data.code == 200){
                     this.$message({
                         message:' 切换头像成功',

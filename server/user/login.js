@@ -37,10 +37,9 @@ router.post('/login', (request,response) =>{
 
 // 退出登录
 router.get('/out',(req,res)=>{
-    let token = Number(req.query.token);
+    let token = Number(req.headers.token);
     global.users.delete(token);
-    res.type('text/javascript');
-    res.status(200).send(`${req.query.callback}()`);
+    res.status(200).send(`ok`);
 })
 
 module.exports=router;

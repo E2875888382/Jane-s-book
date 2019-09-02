@@ -29,26 +29,14 @@ export default new Vuex.Store({
         userStatus(state,loginFlag){// 获取登录状态
             state.loginFlag = loginFlag;
         },
-        userIfo(state,userIfo){// 获取用户信息
-            state.userIfo = userIfo;
-        },
-        getMessageCount(state,count){// 获取未读消息数量
-            state.messageCount = count;
-        },
-        getMessage(state,message){// 获取消息列表
-            state.message = message;
-        },
-        getHistoryMessage(state,message){// 获取已读消息列表
-            state.historyMessage = message;
-        },
-        getFriends(state,friends){// 获取好友列表
-            state.friendsList = friends;
-        },
-        getPhotoCollection(state,photoCollection){// 获取收藏相簿列表
-            state.photoCollection = photoCollection;
-        },
-        getStreetCollection(state,streetCollection){// 获取收藏的帖子列表
-            state.streetCollection = streetCollection;
+        userIfo(state,data){// 获取用户信息
+            state.userIfo = data.userIfo;
+            state.friendsList = data.friend;
+            state.photoCollection = data.photoCol;
+            state.streetCollection = data.articleCol;
+            state.message = data.newMsg;
+            state.historyMessage = data.hisMsg;
+            state.messageCount = data.newMsg.length;
         },
         searchStreet(state,street){// 获取搜索帖子结果
             state.searchStreet = street;

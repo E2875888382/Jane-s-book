@@ -1,5 +1,5 @@
 <template>
-    <div class="container col-10">
+    <div class="container col-8">
         <div class="bread col-12">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -129,7 +129,7 @@ export default {
 
 <style scoped>
 .container{
-    margin-top:40px;
+    margin-top:70px;
     margin-bottom: 40px;
     min-height:1000px;
 }

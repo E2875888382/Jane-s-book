@@ -74,40 +74,9 @@ router.get('/cancelPhotoPraise',(request,response)=>{
     })
 })
 
-// 收藏
-router.get('/photoCollect',(req,res)=>{
-    let time = new Date().toLocaleString();
-    let token = Number(req.query.token);
-    let current = global.users.get(token);
-    let photo = req.query.photoID;
-    let sqlPhotoCol = `INSERT INTO photocollection (userID,photoID,TIME)
-    VALUES (${current},${photo},'${time}')`;
-    new Promise((resolve)=>{
-        db(sqlPhotoCol,()=>{
-            resolve()
-        })
-    }).then(()=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}()`);
-    }).catch((err)=>{
-        console.log(err);
-    })
-})
-
-// 取消收藏
-router.get('/unlikePhoto',(request,response)=>{
-    let token = Number(req.query.token);
-    let current = global.users.get(token);
-    var sql = `DELETE FROM photocollection
-    WHERE userID = ${current} AND photoID = ${request.query.photoID}`;
-    db(sql,(result)=>{
-        response.status(200).json({ code:200,message:'取消收藏成功'});
-    })
-})
-
 // 增加相簿
 router.post('/addNewPhoto',(request,response)=>{
-    let token = Number(req.body.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     var sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
     VALUES(${current},'${request.body.tags}',

@@ -16,11 +16,17 @@ exports.install = function(Vue,options){
     // get请求
     Vue.prototype.get = function(url,params){
         return new Promise((resolve,reject)=>{
+            let user = '';
+            if(localStorage.hasOwnProperty('token')){
+                user = localStorage.getItem('token');
+            }
             axios({
                 method:'get',
                 url:url,
                 params:params,
-                withCredentials: true,
+                headers:{
+                    'token':user
+                }
             }).then((result)=>{
                 resolve(result);
             },(err)=>{
@@ -31,11 +37,17 @@ exports.install = function(Vue,options){
     // post请求
     Vue.prototype.post = function(url,data){
         return new Promise((resolve,reject)=>{
+            let user = '';
+            if(localStorage.hasOwnProperty('token')){
+                user = localStorage.getItem('token');
+            }
             axios({
                 method:'post',
                 url:url,
                 data:data,
-                withCredentials: true,
+                headers:{
+                    'token':user
+                }
             }).then((result)=>{
                 resolve(result);
             },(err)=>{
@@ -47,16 +59,9 @@ exports.install = function(Vue,options){
     Vue.prototype.userIfo = function(){
         return new Promise((resolve)=>{
             if(localStorage.getItem('token')){
-                let user = localStorage.getItem('token')
-                this.jsp('userIfo',{token:user}).then((result)=>{
+                this.get('user').then((result)=>{
                     this.$store.commit('userStatus',true);
-                    this.$store.commit('userIfo',result.userIfo[0]);
-                    this.$store.commit('getFriends',result.friend);
-                    this.$store.commit('getPhotoCollection',result.photoCol);
-                    this.$store.commit('getStreetCollection',result.articleCol);
-                    this.$store.commit('getMessage',result.newMsg);
-                    this.$store.commit('getMessageCount',result.newMsg.length);
-                    this.$store.commit('getHistoryMessage',result.hisMsg);
+                    this.$store.commit('userIfo',result.data);
                     resolve();
                 })
             }else{
@@ -66,8 +71,7 @@ exports.install = function(Vue,options){
     }
     // 退出登录
     Vue.prototype.logOut = function(){
-        let user = localStorage.getItem('token');
-        this.jsp('out',{token:user}).then(()=>{
+        this.get('out').then(()=>{
             localStorage.clear();
             this.$store.commit('userStatus',false);
             this.$router.push('/');
@@ -75,36 +79,37 @@ exports.install = function(Vue,options){
     }
     // 关注
     Vue.prototype.follow = function(friend){
-        let user = localStorage.getItem('token');
-        this.jsp('follow',{token:user,friend:friend}).then(()=>{
+        this.get('follow',{friend:friend}).then(()=>{
             this.userIfo();
         })
     }
     // 取消关注
     Vue.prototype.unfollow = function(friend){
-        let user = localStorage.getItem('token');
-        this.jsp('unfollow',{token:user,friend:friend}).then(()=>{
+        this.get('unfollow',{friend:friend}).then(()=>{
             this.userIfo();
         })
     }
     // 收藏
     Vue.prototype.collect = function(articleId){
-        let user = localStorage.getItem('token');
-        this.jsp('collect',{token:user,article:articleId}).then(()=>{
+        this.get('collect',{article:articleId}).then(()=>{
             this.userIfo();
         })
     }
     // 取消收藏
     Vue.prototype.uncollect = function(articleId){
-        let user = localStorage.getItem('token');
-        this.jsp('uncollect',{token:user,article:articleId}).then(()=>{
+        this.get('uncollect',{article:articleId}).then(()=>{
             this.userIfo();
         })
     }
     // 收藏相册
     Vue.prototype.collectPhoto = function(photoId){
-        let user = localStorage.getItem('token');
-        this.jsp('photoCollect',{token:user,photoID:photoId}).then(()=>{
+        this.get('photoCollect',{photoID:photoId}).then(()=>{
+            this.userIfo();
+        })
+    }
+    // 取消收藏相册
+    Vue.prototype.unCollectPhoto = function(photoId){
+        this.get('unPhotoCollect',{photoID:photoId}).then(()=>{
             this.userIfo();
         })
     }

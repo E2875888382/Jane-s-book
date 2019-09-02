@@ -40,7 +40,7 @@ router.get('/articleDetail',(req,res) =>{
 })
 
 router.post('/comment',(req,res)=>{
-    let token = Number(req.body.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     let article = req.body.article;
     let content = req.body.content;

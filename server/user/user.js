@@ -3,8 +3,8 @@ const router=express.Router();
 const db = require('../mysql.js');
 
 // 查用户信息
-router.get('/userIfo',(req,res) =>{
-    let token = Number(req.query.token)
+router.get('/user',(req,res) =>{
+    let token = Number(req.headers.token)
     let current = global.users.get(token);
     if(current){
         let sqlUserIfo = `SELECT * FROM user WHERE userID = "${current}"`;
@@ -28,7 +28,7 @@ router.get('/userIfo',(req,res) =>{
         new Promise((resolve)=>{
             let result = {};
             db(sqlUserIfo,(data)=>{
-                result.userIfo = data;
+                result.userIfo = data[0];
                 resolve(result);
             })
         }).then((result)=>{
@@ -63,23 +63,22 @@ router.get('/userIfo',(req,res) =>{
             return new Promise((resolve)=>{
                 db(photoCol,(data)=>{
                     result.photoCol = data;
-                    resolve(JSON.stringify(result));
+                    resolve(result);
                 })
             })
         }).then((result)=>{
-            res.type('text/javascript');
-            res.status(200).send(`${req.query.callback}(${result})`);
+            res.status(200).json(result);
         }).catch((err)=>{
             console.log(err);
         })
     }else{
-        res.status(200).send(`${req.query.callback}()`);
+        res.status(200).json({code:200});
     }
 })
 
 // 收藏
 router.get('/collect',(req,res)=>{
-    let token = Number(req.query.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     let article = req.query.article;
     let time = new Date().toLocaleString();
@@ -90,14 +89,13 @@ router.get('/collect',(req,res)=>{
             resolve()
         })
     }).then(()=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+        res.status(200).send(`ok`);
     })
 })
 
 // 取消收藏
 router.get('/uncollect',(req,res)=>{
-    let token = Number(req.query.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     let article = req.query.article;
     let sqlUnCollect = `DELETE FROM streetcollection
@@ -107,8 +105,44 @@ router.get('/uncollect',(req,res)=>{
             resolve()
         })
     }).then(()=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+        res.status(200).send(`ok`);
+    })
+})
+
+// 收藏相册
+router.get('/photoCollect',(req,res)=>{
+    let time = new Date().toLocaleString();
+    let token = Number(req.headers.token);
+    let current = global.users.get(token);
+    let photo = req.query.photoID;
+    let sqlPhotoCol = `INSERT INTO photocollection (userID,photoID,TIME)
+    VALUES (${current},${photo},'${time}')`;
+    new Promise((resolve)=>{
+        db(sqlPhotoCol,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.status(200).send(`ok`);
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+
+// 取消收藏相册
+router.get('/unPhotoCollect',(req,res)=>{
+    let token = Number(req.headers.token);
+    let current = global.users.get(token);
+    let photo = req.query.photoID;
+    var sqlUnphotoCol = `DELETE FROM photocollection
+    WHERE userID = ${current} AND photoID = ${photo}`;
+    new Promise((resolve)=>{
+        db(sqlUnphotoCol,()=>{
+            resolve()
+        })
+    }).then(()=>{
+        res.status(200).send(`ok`);
+    }).catch((err)=>{
+        console.log(err);
     })
 })
 

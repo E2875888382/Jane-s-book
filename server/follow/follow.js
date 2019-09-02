@@ -31,7 +31,7 @@ router.get('/followerWork',(req,res)=>{
 
 // 关注
 router.get('/follow',(req,res)=>{
-    let token = Number(req.query.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     let friend = req.query.friend;
     let sqlFollow = `INSERT  INTO friend(userID,friendID) VALUES ("${ current } ","${ friend }")`;
@@ -40,14 +40,13 @@ router.get('/follow',(req,res)=>{
             resolve()
         })
     }).then(()=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+        res.status(200).send(`ok`);
     })
 })
 
 // 取消关注
 router.get('/unfollow',(req,res)=>{
-    let token = Number(req.query.token);
+    let token = Number(req.headers.token);
     let current = global.users.get(token);
     let friend = req.query.friend;
     let sqlUnFollow = `DELETE FROM friend WHERE userID = "${current}" AND friendID = "${friend}"`;
@@ -56,8 +55,7 @@ router.get('/unfollow',(req,res)=>{
             resolve()
         })
     }).then(()=>{
-        res.type('text/javascript');
-        res.status(200).send(`${req.query.callback}({msg:'ok'})`);
+        res.status(200).send(`ok`);
     })
 })
 
