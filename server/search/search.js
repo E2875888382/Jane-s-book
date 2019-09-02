@@ -4,7 +4,7 @@ const db = require('../mysql.js');
 
 router.get('/search',(req,res)=>{
     let search = req.query.search;
-    let sqlArticle = `SELECT street.topic,street.time,user.nickName,street.streetID
+    let sqlArticle = `SELECT street.topic,street.time,user.nickName,user.avatar,street.streetID,street.view,street.replyCount,street.praise
     FROM street,USER
     WHERE street.topic LIKE '%${search}%'
     AND user.userID = street.userID`;

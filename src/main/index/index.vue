@@ -11,6 +11,7 @@
                     <span>{{ item.nickName }}</span>
                     <span><van-icon name="comment" color="#999"/>{{ item.replyCount }}</span>
                     <span><van-icon name="eye" color="#999"/>{{ item.view }}</span>
+                    <span><van-icon name="good-job" color="#999"/>{{ item.praise }}</span>
                 </div>
             </div>
             <el-image style="width:150px; height:100px" src="https://upload-images.jianshu.io/upload_images/17156415-a8a471fe304a0942.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240" fit="fill"></el-image>

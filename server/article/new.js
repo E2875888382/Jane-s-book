@@ -6,7 +6,7 @@ const db = require('../mysql.js');
 router.post('/uploadNewStreet', (req,res) =>{
     let token = Number(req.headers.token);
     let current = global.users.get(token);
-    let time = new Date().toLocaleString();
+    let time = new Date().toLocaleDateString();
     var newStreet = req.body.new;
     if(req.body.new.img[0]){
         newStreet.img = req.body.new.img[0].content;

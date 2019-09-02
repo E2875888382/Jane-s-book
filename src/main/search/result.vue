@@ -42,14 +42,7 @@
 
 <script>
 export default {
-    methods:{
-        highLight:function(value){
-            // 1.从vuex中取出搜索的内容
-            let search = this.$store.state.search;
-            value = value.split(search).join(`<em style="color:gold;font-style:normal">${search}</em>`)
-            return value;
-        }
-    }
+
 }
 </script>
 
