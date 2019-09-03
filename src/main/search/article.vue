@@ -2,14 +2,16 @@
 <div>
     <div class="top">
         <div class="sortBy">
-            <span>最新发布</span> ·
-            <span>最多评论</span> ·
-            <span>最多浏览</span> ·
-            <span>最多喜欢</span>
+            <span @click="function(){sortBy(item.value);active = item.value}"
+            v-for="item in sortOption"
+            :key="item.value"
+            :class="{'active':active == item.value}">
+            {{item.name}}
+            </span>
         </div>
         <span>{{$store.state.result.article.length}} 个结果</span>
     </div>
-    <div class="article_item" v-for="item in $store.state.result.article" :key="item.streetID">
+    <div class="article_item" v-for="item in article" :key="item.streetID">
         <div class="author">
             <van-image width="24" height="24" class="user_img" :src="item.avatar"/>
             <span class="nick">{{item.nickName}}</span>
@@ -30,7 +32,33 @@
 
 <script>
 export default {
+    data(){
+        return {
+            sortOption:[
+                {name:'最新发布',value:'time'},
+                {name:'最多评论',value:'replyCount'},
+                {name:'最多浏览',value:'view'},
+                {name:'最多喜欢',value:'praise'},
+            ],
+            active:'time',
+            article:this.$store.state.result.article,
+        }
+    },
+    mounted(){
+        this.sortBy('time');
+    },
     methods:{
+        sortBy(type){
+            if(type == 'time'){
+                this.article.sort((a,b)=>{
+                    return new Date(b.time) - new Date(a.time);
+                })
+            }else{
+                this.article.sort((a,b)=>{
+                    return b[type] - a[type];
+                })
+            }
+        },
         highLight:function(value){
             let search = this.$store.state.search;
             value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
@@ -48,6 +76,9 @@ export default {
 </script>
 
 <style scoped>
+.active,.sortBy span:hover{
+    color:#ea6f5a;
+}
 .top{
     width:625px;
     display:flex;
@@ -60,6 +91,7 @@ export default {
 }
 .sortBy span{
     cursor: pointer;
+    margin-right:10px;
 }
 .user_img{
     display: flex;
