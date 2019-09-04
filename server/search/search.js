@@ -15,7 +15,7 @@ router.get('/search',(req,res)=>{
     let sqlUser = `SELECT userID,nickName,avatar,email,birthday,gender,sign
     FROM USER
     WHERE nickName LIKE '%${search}%'`;
-    let sqlNews = `SELECT title,TIME,newID,source
+    let sqlNews = `SELECT title,TIME,newID,source,view
     FROM news
     WHERE title LIKE '%${search}%'`;
     new Promise((resolve)=>{
