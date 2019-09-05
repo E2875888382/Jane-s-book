@@ -7,6 +7,7 @@ import ArticleDetail from '../article/articleDetail.vue'
 import ArticleNew from '../article/articleNew.vue'
 import Follow from '../follow/follow.vue'
 import Collect from '../collect/collect.vue'
+import MyPage from '../mypage/mypage.vue'
 
 import Setting from '../set/set.vue'
 import baseset from '../set/baseSet.vue'
@@ -18,10 +19,11 @@ import searchnews from '../search/news.vue'
 import searchphoto from '../search/photo.vue'
 import searchuser from '../search/user.vue'
 
-import News_details from '../news/news_details.vue'// 新闻详细页
-import Photo_index from '../photo/photo_index.vue'// 相簿主页
-import Photo_details from '../photo/photo_details.vue'// 相簿详细页
-import Photo_new from '../photo/photo_new.vue'// 相簿发表页
+import News_details from '../news/news_details.vue'
+
+import Photo_index from '../photo/photo_index.vue'
+import Photo_details from '../photo/photo_details.vue'
+import Photo_new from '../photo/photo_new.vue'
 
 
 Vue.use(VueRouter)
@@ -71,6 +73,7 @@ var router=new VueRouter({
         { path:'/photo',component:Photo_index },
         { path:'/photoDetails/:id',name:'photoDetails',component:Photo_details },
         { path:'/photo/new',component:Photo_new },
+        { path:'/mypage',name:'mypage',component:MyPage },
 
     ]
 })

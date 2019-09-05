@@ -48,7 +48,7 @@
                     <div class="article_item" v-for="item in followerWork.photo" :key="item.photoID">
                         <div class="short">
                             <p class="article_topic">
-                                <router-link :to="{name:'photo',params:{id:item.photoID}}">{{ item.title }}</router-link>
+                                <router-link :to="{name:'photoDetails',params:{id:item.photoID}}">{{ item.title }}</router-link>
                             </p>
                             <div class="meta">
                                 <span><van-icon name="eye" color="#999"/>{{item.VIEW}}</span>

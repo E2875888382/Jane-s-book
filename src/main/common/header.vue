@@ -18,7 +18,7 @@
                 </el-badge>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
-                        <div class="dropdown">
+                        <div class="dropdown" @click="function(){$router.push({ name:'mypage'})}">
                             <van-icon name="manager" color="#ea6f5a"/>
                             <span>我的主页</span>
                         </div>
