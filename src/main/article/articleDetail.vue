@@ -26,15 +26,19 @@
                 <h3 class="comment_header">
                     <span>全部评论 {{ comments.length }}</span>
                     <div class="sort">
-                        <span>按时间倒序</span>
-                        <span>按时间正序</span>
+                        <span @click="function(){sortBy(item.value);active = item.value}"
+                        v-for="item in sortOption"
+                        :key="item.value"
+                        :class="{'active':active == item.value}">
+                        {{item.name}}
+                        </span>
                     </div>
                 </h3>
                 <div class="comment_item" v-for="item in currentComments" :key="item.streetReplyID">
                     <van-image width="40" height="40" class="avatar" :src="item.avatar"/>
                     <div class="comment_content">
                         <p>{{ item.nickName }}</p>
-                        <p>{{ item.time }}</p>
+                        <p>{{ item.time | dateFormat }}天前</p>
                         <p>{{ item.content }}</p>
                         <div>
                             <span v-if="!item.isPraised"><van-icon name="good-job" color="#999" @click="reply(item)"/>赞{{ item.praise }}</span>
@@ -77,6 +81,11 @@ import Comment from './articleComment.vue'
 export default {
     data(){
         return {
+            sortOption:[
+                {name:'按时间正序',value:'time'},
+                {name:'按时间倒序',value:'timereverse'},
+            ],
+            active:'time',
             isLogin:this.$store.state.loginFlag,
             current:this.$route.params.articleId,
             comments:[],
@@ -95,6 +104,19 @@ export default {
         this.load();
     },
     methods:{
+        sortBy(type){
+            if(type == 'time'){
+                this.comments.sort((a,b)=>{
+                    return new Date(b.time).getTime() - new Date(a.time).getTime();
+                })
+                this.onePage(1);
+            }else{
+                this.comments.sort((a,b)=>{
+                    return new Date(a.time).getTime() - new Date(b.time).getTime();
+                })
+                this.onePage(1);
+            }
+        },
         load(){
             this.get('articleDetail',{articleId:this.current}).then((result)=>{
                 this.detail = result.data.detail[0];
@@ -106,6 +128,7 @@ export default {
                 }
                 this.onePage(1);
                 this.statusCheck();
+                this.sortBy('time');
             }).catch((err)=>{
                 console.log(err);
             })
@@ -161,11 +184,22 @@ export default {
             item.isPraised = false;
             item.praise--;
         }
+    },
+    filters:{
+        dateFormat:function(value){
+            let time = new Date(value);
+            let now = new Date();
+            return Math.floor((now.getTime() - time.getTime()) / (1000 * 60 * 60 * 24));
+        }
     }
 }
 </script>
 
 <style scoped>
+.active,.sortBy span:hover{
+    color:#ea6f5a;
+    cursor: pointer;
+}
 .bg{
     margin-top:58px;
     min-height:1000px;
