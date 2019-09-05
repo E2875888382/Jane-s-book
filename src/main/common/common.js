@@ -96,4 +96,10 @@ exports.install = function(Vue,options){
             
         })
     }
+    // 评论点赞/取消点赞
+    Vue.prototype.replyPraise = function(streetReplyID,status){
+        this.get('streetReplyPraise',{streetReplyID:streetReplyID,status:status}).then(()=>{
+            
+        })
+    }
 }

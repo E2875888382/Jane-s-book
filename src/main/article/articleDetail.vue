@@ -37,7 +37,8 @@
                         <p>{{ item.time }}</p>
                         <p>{{ item.content }}</p>
                         <div>
-                            <span><van-icon name="good-job" color="#999"/>赞{{ item.praise }}</span>
+                            <span v-if="!item.isPraised"><van-icon name="good-job" color="#999" @click="reply(item)"/>赞{{ item.praise }}</span>
+                            <span v-if="item.isPraised"><van-icon name="good-job" color="gold" @click="cancelreply(item)"/>赞{{ item.praise }}</span>
                         </div>
                     </div>
                 </div>
@@ -98,6 +99,11 @@ export default {
             this.get('articleDetail',{articleId:this.current}).then((result)=>{
                 this.detail = result.data.detail[0];
                 this.comments = result.data.comments;
+                for(let value of this.comments){
+                    Object.assign(value,{
+                        isPraised:false,
+                    });
+                }
                 this.onePage(1);
                 this.statusCheck();
             }).catch((err)=>{
@@ -144,6 +150,16 @@ export default {
             this.praise(this.current,false);
             this.isPraised = false;
             this.detail.praise--;
+        },
+        reply(item){
+            this.replyPraise(item.streetReplyID,true);
+            item.isPraised = true;
+            item.praise++;
+        },
+        cancelreply(item){
+            this.replyPraise(item.streetReplyID,false);
+            item.isPraised = false;
+            item.praise--;
         }
     }
 }

@@ -35,7 +35,7 @@ var router=new VueRouter({
         { path:'/article/new',name:'articleNew',component:ArticleNew },
         { path:'/follow',name:'follow',component:Follow },
         { path:'/collect',name:'collect',component:Collect },
-        { path:'/set',name:'set',component:Setting,
+        { path:'/set',name:'set',component:Setting,redirect:'/set/baseset',
             children:[
                 {
                     path:'baseset',
@@ -47,7 +47,7 @@ var router=new VueRouter({
                 },
             ]
         },
-        { path:'/search',name:'search',component:Search,
+        { path:'/search',name:'search',component:Search,redirect:'/search/article',
             children:[
                 {
                     path:'article',
