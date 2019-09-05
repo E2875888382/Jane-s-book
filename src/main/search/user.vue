@@ -9,7 +9,7 @@
             <div>
                 <van-image width="52" height="52" class="user_img" :src="item.avatar"></van-image>
                 <div>
-                    <div class="name">{{item.nickName}}</div>
+                    <div class="name" v-html="highLight(item.nickName)"></div>
                     <p class="sign">{{item.sign}}</p>
                 </div>
             </div>

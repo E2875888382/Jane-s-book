@@ -69,7 +69,7 @@ var router=new VueRouter({
         },
         { path:'/newsDetails/:id',name:'newsDetails',component:News_details },
         { path:'/photo',component:Photo_index },
-        { path:'/photoDetails/:id',name:'photo',component:Photo_details },
+        { path:'/photoDetails/:id',name:'photoDetails',component:Photo_details },
         { path:'/photo/new',component:Photo_new },
 
     ]

@@ -8,7 +8,7 @@ router.get('/search',(req,res)=>{
     FROM street,USER
     WHERE street.topic LIKE '%${search}%'
     AND user.userID = street.userID`;
-    let sqlPhoto = `SELECT photo.photoID,photo.src,user.nickName,photo.title
+    let sqlPhoto = `SELECT photo.photoID,photo.src,user.nickName,photo.title,photo.time,photo.view
     FROM photo,USER
     WHERE photo.title LIKE '%${search}%'
     AND user.userID = photo.userID`;
