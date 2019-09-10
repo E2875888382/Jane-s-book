@@ -1,39 +1,22 @@
-import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:8000';
+import req from './request.js'
 
 export default{
-    get(url,params){
-        let user = '';
-        if(localStorage.hasOwnProperty('token')){
-            user = localStorage.getItem('token');
-        }
-        return  axios({
-                    method:'get',
-                    url:url,
-                    params:params,
-                    headers:{
-                        'token':user
-                    }
-                })
-    },
-    post(url,data){
-        let user = '';
-        if(localStorage.hasOwnProperty('token')){
-            user = localStorage.getItem('token');
-        }
-        return  axios({
-                    method:'post',
-                    url:url,
-                    data:data,
-                    headers:{
-                        'token':user
-                    }
-                })
-    },
     praise(articleId,status){
-        return this.get('praise',{article:articleId,status:status});
+        return req.get('praise',{article:articleId,status:status});
     },
     replyPraise(streetReplyID,status){
-        return this.get('streetReplyPraise',{streetReplyID:streetReplyID,status:status});
+        return req.get('streetReplyPraise',{streetReplyID:streetReplyID,status:status});
+    },
+    detail(id){
+        return req.get('articleDetail',{articleId:id});
+    },
+    get(n){
+        return req.get('article',{page:n});
+    },
+    comment(article,content){
+        return req.post('comment',{article:article,content:content});
+    },
+    newArticle(article){
+        return req.post('uploadNewStreet',{ new: article});
     }
 }

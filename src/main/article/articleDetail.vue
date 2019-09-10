@@ -120,7 +120,7 @@ export default {
             }
         },
         load(){
-            this.get('articleDetail',{articleId:this.current}).then((result)=>{
+            article.detail(this.current).then((result)=>{
                 this.detail = result.data.detail[0];
                 this.comments = result.data.comments;
                 for(let value of this.comments){

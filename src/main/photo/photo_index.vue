@@ -62,7 +62,7 @@ export default {
     methods:{
         // 加载图片组
         init(n){
-            this.get('photo',{page:n}).then((result)=>{
+            photo.get(n).then((result)=>{
                 this.imgs = this.imgs.concat(result.data.list);// 增量添加图片
                 this.maxGroup = Math.ceil(result.data.count[0]['COUNT(*)'] / 10);
                 this.boxheight += 600;// 容器高度增加，不然没法容纳图片

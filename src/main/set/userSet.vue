@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import user from '../common/user.js'
 export default {
     data(){
         return {
@@ -60,8 +61,7 @@ export default {
                     gender:this.gender,
                     nickName:this.nickName,
                 }
-                let user = localStorage.getItem('token');
-                this.post('updateUserInfo',{ifo:ifo}).then(()=>{
+                user.update(ifo).then(()=>{
                     this.$message({
                         message:'已保存',
                         type:'success'

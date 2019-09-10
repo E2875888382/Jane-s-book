@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import user from '../common/user.js'
 export default {
     data(){
         return {
@@ -86,8 +87,8 @@ export default {
     },
     methods:{
         init(){
-            let user = this.$store.state.userIfo.userID;
-            this.get('followerWork',{userID:user}).then((result)=>{
+            let current = this.$store.state.userIfo.userID;
+            user.followerWork(current).then((result)=>{
                 this.article = result.data.article;
                 this.photo = result.data.photo;
             })

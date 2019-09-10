@@ -43,6 +43,7 @@
 <script>
 import md5 from 'js-md5';
 import canvasCode from './canvasCode.vue'
+import user from '../common/user.js'
 export default {
     data(){
         let checkEmail = (rule, value, callback) => {
@@ -136,7 +137,7 @@ export default {
                         password:md5(this.newForm.password),
                     }
                     //注册新用户，提交表单并获取返回的登录信息
-                    this.post('newUser',newForm).then((result)=>{
+                    user.register(newForm).then((result)=>{
                         if(result.data.code == 0){
                             this.$message({
                                 message:'该邮箱已被注册',
@@ -148,7 +149,7 @@ export default {
                                 message:'注册成功',
                                 type:'success'
                             });
-                            this.post('login',newForm).then((result)=>{
+                            user.login(newForm).then((result)=>{
                                 if(result.data.code == 1){
                                     this.$router.push({ path:'/'});// 登录后重定向到首页
                                 }else{
@@ -173,17 +174,17 @@ export default {
                         email:this.loginForm.email,
                         password:md5(this.loginForm.password),
                     }
-                    this.post('login',form).then((result)=>{
+                    user.login(form).then((result)=>{
                         return new Promise((resolve,reject)=>{
                             if(result.data.code == 1){
                                 localStorage.setItem('token',result.data.token);
-                                resolve(result.data.token);
+                                resolve();
                             }else{
                                 reject();
                             }
                         })
-                    }).then((token)=>{
-                        this.userIfo(token)
+                    }).then(()=>{
+                        this.userIfo();
                     }).then(()=>{
                         this.$router.push({ path:'/'});
                     }).catch(()=>{

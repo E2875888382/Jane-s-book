@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import photo from '../common/photo.js'
 export default {
     data() {
         return {
@@ -106,8 +107,8 @@ export default {
                 for(let i = 0;i<this.photo.length;i++){
                     temp.push(this.photo[i].content)
                 };
-                let photo = temp.join('@');
-                this.post('addNewPhoto',{tags:tags,src:src,title:this.title,time:time,photo:photo}).then((result)=>{
+                let photos = temp.join('@');
+                photo.newPhoto(tags,src,this.title,time,photos).then((result)=>{
                     if(result.data.code == 200){
                         this.$message({
                             message:'发表成功',

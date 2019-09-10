@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import article from '../common/article.js'
 export default {
     props: ['article'],
     data(){
@@ -28,8 +29,7 @@ export default {
     },
     methods:{
         submit(){
-            let user = localStorage.getItem('token');
-            this.post('comment',{article:this.article,content:this.comment}).then((data)=>{
+            article.comment(this.article,this.comment).then((data)=>{
                 this.$message({
                     message:'评论成功',
                     type:'success'

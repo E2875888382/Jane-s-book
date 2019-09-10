@@ -28,7 +28,9 @@
 </template>
 
 <script>
-import news from './news.vue'
+import news from './news.vue';
+import article from '../common/article.js';
+
 export default {
     data(){
         return {
@@ -46,7 +48,7 @@ export default {
     },
     methods:{
         article(n){
-            this.get('article',{page:n}).then((result)=>{
+            article.get(n).then((result)=>{
                 this.articleList = this.articleList.concat(result.data.list);
                 this.count = result.data.count[0]['COUNT(*)'];
                 this.currentPage++;

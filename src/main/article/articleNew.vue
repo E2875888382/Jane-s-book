@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import article from '../common/article.js'
 export default {
     data() {
       return {
@@ -49,7 +50,7 @@ export default {
                         content:this.Form.text,
                         img:this.Form.img,
                     }
-                    this.post('uploadNewStreet',{ new:newStreet }).then((result)=>{
+                    article.newArticle(newStreet).then((result)=>{
                         if(result.data.code == 200){
                             this.$message.success('发帖成功，快去步行街看看吧');
                         }

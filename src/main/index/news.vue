@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import news from '../common/news.js'
 export default {
     data(){
         return {
@@ -22,7 +23,7 @@ export default {
     },
     methods:{
         getTenNews(){
-            this.get('news').then((result)=>{
+            news.getNews().then((result)=>{
                 this.tenNews = result.data;
             })
         }

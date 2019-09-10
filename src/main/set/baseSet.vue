@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import user from '../common/user.js'
 export default {
     data(){
         return {
@@ -44,8 +45,7 @@ export default {
         },
         afterRead(){
             this.avatar = this.img[0].content;
-            let user = localStorage.getItem('token');
-            this.post("avatar",{avatar:this.img[0].content}).then((result)=>{
+            user.avatar(this.avatar).then((result)=>{
                 if(result.data.code == 200){
                     this.$message({
                         message:' 切换头像成功',

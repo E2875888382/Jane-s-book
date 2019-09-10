@@ -1,48 +1,34 @@
-import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:8000';
+import req from './request.js'
 
 export default{
-    get(url,params){
-        let user = '';
-        if(localStorage.hasOwnProperty('token')){
-            user = localStorage.getItem('token');
-        }
-        return  axios({
-                    method:'get',
-                    url:url,
-                    params:params,
-                    headers:{
-                        'token':user
-                    }
-                })
+    login(form){
+        return req.post('login',form);
     },
-    post(url,data){
-        let user = '';
-        if(localStorage.hasOwnProperty('token')){
-            user = localStorage.getItem('token');
-        }
-        return  axios({
-                    method:'post',
-                    url:url,
-                    data:data,
-                    headers:{
-                        'token':user
-                    }
-                })
+    register(form){
+        return req.post('newUser',form);
     },
     logOut(){
-        return this.get('out');
+        return req.get('out');
     },
     userIfo(){
-        return this.get('user');
+        return req.get('user');
     },
     follow(friend,status){
-        return this.get('follow',{friend:friend,status:status});
+        return req.get('follow',{friend:friend,status:status});
+    },
+    followerWork(id){
+        return req.get('followerWork',{userID:id});
     },
     collect(articleId,status){
-        return this.get('collect',{article:articleId,status:status});
+        return req.get('collect',{article:articleId,status:status});
     },
     collectPhoto(photoId,status){
-        return this.get('photoCollect',{photoID:photoId,status:status});
+        return req.get('photoCollect',{photoID:photoId,status:status});
     },
+    avatar(img){
+        return req.post("avatar",{avatar:img});
+    },
+    update(ifo){
+        return req.post('updateUserInfo',{ifo:ifo});
+    }
 }

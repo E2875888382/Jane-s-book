@@ -1,36 +1,16 @@
-import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:8000';
+import req from './request.js'
 
 export default{
-    get(url,params){
-        let user = '';
-        if(localStorage.hasOwnProperty('token')){
-            user = localStorage.getItem('token');
-        }
-        return  axios({
-                    method:'get',
-                    url:url,
-                    params:params,
-                    headers:{
-                        'token':user
-                    }
-                })
-    },
-    post(url,data){
-        let user = '';
-        if(localStorage.hasOwnProperty('token')){
-            user = localStorage.getItem('token');
-        }
-        return  axios({
-                    method:'post',
-                    url:url,
-                    data:data,
-                    headers:{
-                        'token':user
-                    }
-                })
-    },
     praisePhoto(photoId,status){
-        return this.get('photoPraise',{photo:photoId,status:status});
+        return req.get('photoPraise',{photo:photoId,status:status});
     },
+    detail(id){
+        return req.get("photoDetail",{ photoID:id });
+    },
+    get(n){
+        return req.get('photo',{page:n});
+    },
+    newPhoto(tags,src,title,time,photo){
+        return req.post('addNewPhoto',{tags:tags,src:src,title:title,time:time,photo:photo});
+    }
 }

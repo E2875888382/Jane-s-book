@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import news from '../common/news.js'
 export default {
     data(){
         return {
@@ -51,7 +52,7 @@ export default {
         },
         //获取新闻详情
         getNewsDetails(){
-            this.get('newsDetail',{newId:this.id}).then((result) =>{
+            news.detail(this.id).then((result) =>{
                 this.imgContent = [];//防止前面的内容重叠
                 this.newsDetails = result.data[0];
                 if(this.newsDetails.imgContent){

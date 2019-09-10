@@ -25,11 +25,9 @@ import Photo_index from '../photo/photo_index.vue'
 import Photo_details from '../photo/photo_details.vue'
 import Photo_new from '../photo/photo_new.vue'
 
-
 Vue.use(VueRouter)
 
-//创建vue-router对象
-var router=new VueRouter({
+export default new VueRouter({
     routes:[
         { path:'/',component:Index },
         { path:'/login',component:Login },
@@ -77,5 +75,3 @@ var router=new VueRouter({
 
     ]
 })
-
-export default router

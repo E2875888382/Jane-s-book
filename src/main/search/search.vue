@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import req from '../common/request.js'
 export default {
     data(){
         return {
@@ -51,7 +52,7 @@ export default {
             if(this.input.trim()!==''){// 去除空格后判断是否为空
                 this.$store.commit('searchContent',this.input);
                 this.$router.push({ path:'/search'});// 跳转到搜索结果页
-                this.get('search', {search:this.input}).then((result)=>{
+                req.get('search', {search:this.input}).then((result)=>{
                     this.$store.commit('searchResult',result.data)
                 })
             }
