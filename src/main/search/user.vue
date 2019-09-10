@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import user from '../common/user.js'
 export default {
     data(){
         return {
@@ -53,7 +54,9 @@ export default {
             return value;
         },
         followed(item){
-            this.follow(item.userID,true);
+            user.follow(item.userID,true).then(()=>{
+                this.userIfo();
+            })
             Object.assign(item,{
                 isFollowed:true,
             })

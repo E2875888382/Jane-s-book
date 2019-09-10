@@ -59,6 +59,7 @@
 
 <script>
 import search from '../search/search.vue'
+import user from '../common/user.js'
 export default {
     components:{
         search,
@@ -68,7 +69,11 @@ export default {
     },
     methods:{
         out(){
-            this.logOut();
+            user.logOut().then(()=>{
+                localStorage.clear();
+                this.$store.commit('userStatus',false);
+                this.$router.push('/');
+            })
         }
     }
 }

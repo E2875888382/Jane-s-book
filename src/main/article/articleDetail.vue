@@ -78,6 +78,8 @@
 
 <script>
 import Comment from './articleComment.vue'
+import user from '../common/user.js'
+import article from '../common/article.js'
 export default {
     data(){
         return {
@@ -157,30 +159,34 @@ export default {
         },
         followed(){
             let author = this.detail.userID;
-            this.follow(author,true);
+            user.follow(author,true).then(()=>{
+                this.userIfo();
+            })
             this.isFollowed = true;
         },
         collected(){
-            this.collect(this.current,true);
+            user.collect(this.current,true).then(()=>{
+                this.userIfo();
+            })
             this.isCollected = true;
         },
         praised(){
-            this.praise(this.current,true);
+            article.praise(this.current,true);
             this.isPraised = true;
             this.detail.praise++;
         },
         cancelPraised(){
-            this.praise(this.current,false);
+            article.praise(this.current,false);
             this.isPraised = false;
             this.detail.praise--;
         },
         reply(item){
-            this.replyPraise(item.streetReplyID,true);
+            article.replyPraise(item.streetReplyID,true);
             item.isPraised = true;
             item.praise++;
         },
         cancelreply(item){
-            this.replyPraise(item.streetReplyID,false);
+            article.replyPraise(item.streetReplyID,false);
             item.isPraised = false;
             item.praise--;
         }

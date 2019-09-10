@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import user from '../common/user.js'
 export default {
     data(){
         return {
@@ -40,7 +41,9 @@ export default {
         },
         unCollect(streetID){
             new Promise((resolve)=>{
-                this.collect(streetID,false);
+                user.collect(streetID,false).then(()=>{
+                    this.userIfo();
+                })
                 resolve()
             }).then(()=>{
                 setTimeout(()=>{

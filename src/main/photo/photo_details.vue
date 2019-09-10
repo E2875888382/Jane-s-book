@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import user from '../common/user.js'
+import photo from '../common/photo.js'
 export default {
     data(){
         return {
@@ -130,24 +132,28 @@ export default {
         // 关注作者
         followed(){
             let author = this.photoDetails.userID;
-            this.follow(author,true);
+            user.follow(author,true).then(()=>{
+                this.userIfo();
+            })
             this.isFollowed = true;
         },
         // 点赞
         praise(event){
             if(!event.target.classList.contains("gold")){
-                this.praisePhoto(this.id,true);
+                photo.praisePhoto(this.id,true);
                 event.target.classList.add('gold');
                 this.photoDetails.praise++;
             }else{
-                this.praisePhoto(this.id,false);
+                photo.praisePhoto(this.id,false);
                 event.target.classList.remove('gold');
                 this.photoDetails.praise--;
             }
         },
         // 收藏
         photoCollection(){
-            this.collectPhoto(this.id,true);
+            user.collectPhoto(this.id,true).then(()=>{
+                this.userIfo();
+            })
             this.$message({
                 message: '添加收藏成功',
                 type: 'success'

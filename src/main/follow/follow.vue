@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import user from '../common/user.js'
 export default {
     data(){
         return {
@@ -84,7 +85,9 @@ export default {
             })
         },
         unFollow(friend){
-            this.follow(friend,false);
+            user.follow(friend,false).then(()=>{
+                this.userIfo();
+            })
             this.follower = null;
             this.followerWork = {};
         }
