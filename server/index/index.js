@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 // 首页文章
@@ -15,20 +15,16 @@ router.get('/article',(req,res) =>{
             resolve(count);
         })
     }).then((count)=>{
-        return new Promise((resolve)=>{
-            db(sqlList,(data)=>{
-                let result = {
-                    count:count,
-                    list:data,
-                };
-                resolve(result);
-            })
+        db(sqlList,(data)=>{
+            let result = {
+                count:count,
+                list:data,
+            };
+            res.status(200).json(result);
         })
-    }).then((result)=>{
-        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err);
     })
 })
 
-module.exports=router;
+module.exports = router;

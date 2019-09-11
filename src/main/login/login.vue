@@ -128,6 +128,22 @@ export default {
             this.$store.commit('closeHeader',true);
             this.$store.commit('closeFooter',true);
         },
+        log(form){
+            user.login(form).then((result)=>{
+                if(result.data.code == 1){
+                    localStorage.setItem('token',result.data.token);
+                }
+            }).then(()=>{
+                this.userIfo();
+            }).then(()=>{
+                this.$router.push({ path:'/'});
+            }).catch(()=>{
+                this.$message({
+                    message:'账号或密码错误',
+                    type:'warning'
+                })
+            })
+        },
         // 注册
         newUser(){
             this.$refs['newForm'].validate((valid) => {
@@ -136,7 +152,6 @@ export default {
                         email:this.newForm.email,
                         password:md5(this.newForm.password),
                     }
-                    //注册新用户，提交表单并获取返回的登录信息
                     user.register(newForm).then((result)=>{
                         if(result.data.code == 0){
                             this.$message({
@@ -149,16 +164,7 @@ export default {
                                 message:'注册成功',
                                 type:'success'
                             });
-                            user.login(newForm).then((result)=>{
-                                if(result.data.code == 1){
-                                    this.$router.push({ path:'/'});// 登录后重定向到首页
-                                }else{
-                                    this.$message({
-                                        message:'账号或密码错误',
-                                        type:'warning'
-                                    })
-                                }
-                            })
+                            this.log(newForm);
                         }
                     })
                 }else{
@@ -174,25 +180,7 @@ export default {
                         email:this.loginForm.email,
                         password:md5(this.loginForm.password),
                     }
-                    user.login(form).then((result)=>{
-                        return new Promise((resolve,reject)=>{
-                            if(result.data.code == 1){
-                                localStorage.setItem('token',result.data.token);
-                                resolve();
-                            }else{
-                                reject();
-                            }
-                        })
-                    }).then(()=>{
-                        this.userIfo();
-                    }).then(()=>{
-                        this.$router.push({ path:'/'});
-                    }).catch(()=>{
-                        this.$message({
-                            message:'账号或密码错误',
-                            type:'warning'
-                        })
-                    })
+                    this.log(form);
                 }else{
                     return false;
                 }

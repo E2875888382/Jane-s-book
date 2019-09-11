@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 // 获取详情
@@ -12,13 +12,9 @@ router.get('/newsDetail',(req,res)=>{
             resolve()
         })
     }).then(()=>{
-        return new Promise((resolve)=>{
-            db(sqlNewDetail,(result)=>{
-                resolve(result)
-            })
+        db(sqlNewDetail,(result)=>{
+            res.status(200).json(result);
         })
-    }).then((result)=>{
-        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err)
     })
@@ -27,15 +23,13 @@ router.get('/newsDetail',(req,res)=>{
 // 获取最新新闻
 router.get('/news',(req,res)=>{
     let sqlNews = `SELECT title,newID FROM news ORDER BY RAND() LIMIT 10`;
-    new Promise((resolve)=>{
+    try{
         db(sqlNews,(result)=>{
-            resolve(result)
+            res.status(200).json(result);
         })
-    }).then((result)=>{
-        res.status(200).json(result);
-    }).catch((err)=>{
-        console.log(err)
-    })
+    }catch(err){
+        console.log(err);
+    }
 })
 
-module.exports=router;
+module.exports = router;

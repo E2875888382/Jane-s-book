@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <el-tabs v-model="activeName" @tab-click="change">
+        <el-tabs v-model="activeName">
             <el-tab-pane name="article">
                 <span slot="label" class="label"><i class="el-icon-s-order"></i>文章</span>
                 <div class="article_item" v-for="item in article" :key="item.streetID">
@@ -95,9 +95,6 @@ export default {
             this.follow = this.$store.state.friendsList.length;
             this.user = this.$store.state.userIfo;
         },
-        change(){
-            console.log(this.activeName);
-        }
     }
 }
 </script>

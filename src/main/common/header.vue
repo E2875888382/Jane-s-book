@@ -64,9 +64,6 @@ export default {
     components:{
         search,
     },
-    created(){
-        this.userIfo();
-    },
     methods:{
         out(){
             user.logOut().then(()=>{
