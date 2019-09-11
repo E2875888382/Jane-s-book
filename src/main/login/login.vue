@@ -134,8 +134,6 @@ export default {
                     localStorage.setItem('token',result.data.token);
                 }
             }).then(()=>{
-                this.userIfo();
-            }).then(()=>{
                 this.$router.push({ path:'/'});
             }).catch(()=>{
                 this.$message({

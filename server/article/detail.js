@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 // 获取详情
@@ -23,17 +23,13 @@ router.get('/articleDetail',(req,res) =>{
             })
         })
     }).then((detail)=>{
-        return new Promise((resolve)=>{
-            db(sqlComments,(data)=>{
-                let result = {
-                    detail:detail,
-                    comments:data,
-                };
-                resolve(result);
-            })
+        db(sqlComments,(data)=>{
+            let result = {
+                detail:detail,
+                comments:data,
+            };
+            res.status(200).json(result);
         })
-    }).then((result)=>{
-        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err);
     })
@@ -74,10 +70,8 @@ router.get('/praise',(req,res)=>{
     }
     new Promise((resolve)=>{
         db(sql,()=>{
-            resolve()
+            res.status(200).json({ code:200 });
         })
-    }).then(()=>{
-        res.status(200).json({ code:200 });
     }).catch((err)=>{
         console.log(err);
     })
@@ -95,10 +89,8 @@ router.get('/streetReplyPraise',(req,res)=>{
     }
     new Promise((resolve)=>{
         db(sql,()=>{
-            resolve()
+            res.status(200).json({ code:200 });
         })
-    }).then(()=>{
-        res.status(200).json({ code:200 });
     }).catch((err)=>{
         console.log(err);
     })

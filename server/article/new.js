@@ -17,10 +17,8 @@ router.post('/uploadNewStreet', (req,res) =>{
     VALUES('${newStreet.topic}','${current}','${time}','${newStreet.content}','${newStreet.img}')`;
     new Promise((resolve)=>{
         db(sql,()=>{
-            resolve()
+            res.status(200).json({code:200});
         })
-    }).then(()=>{
-        res.status(200).json({code:200});
     }).catch((err)=>{
         console.log(err);
     })

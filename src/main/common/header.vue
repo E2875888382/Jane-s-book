@@ -64,6 +64,9 @@ export default {
     components:{
         search,
     },
+    mounted(){
+        this.userIfo();
+    },
     methods:{
         out(){
             user.logOut().then(()=>{

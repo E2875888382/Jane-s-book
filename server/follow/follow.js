@@ -12,17 +12,13 @@ router.get('/followerWork',(req,res)=>{
             resolve(data)
         })
     }).then((article)=>{
-        return new Promise((resolve)=>{
-            db(sqlPhoto,(data)=>{
-                let result = {
-                    article:article,
-                    photo:data,
-                };
-                resolve(result)
-            })
+        db(sqlPhoto,(data)=>{
+            let result = {
+                article:article,
+                photo:data,
+            };
+            res.status(200).json(result);
         })
-    }).then((result)=>{
-        res.status(200).json(result);
     }).catch((err)=>{
         console.log(err);
     })
@@ -40,13 +36,10 @@ router.get('/follow',(req,res)=>{
     }else{
         sql = `DELETE FROM friend WHERE userID = "${current}" AND friendID = "${friend}"`;
     }
-    new Promise((resolve)=>{
-        db(sql,()=>{
-            resolve()
-        })
-    }).then(()=>{
+    db(sql,()=>{
         res.status(200).send(`ok`);
     })
+
 })
 
 module.exports=router;
