@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 // 发布文章
@@ -7,7 +7,7 @@ router.post('/uploadNewStreet', (req,res) =>{
     let token = Number(req.headers.token);
     let current = global.users.get(token);
     let time = new Date().toLocaleDateString();
-    var newStreet = req.body.new;
+    let newStreet = req.body.new;
     if(req.body.new.img[0]){
         newStreet.img = req.body.new.img[0].content;
     }else{
@@ -24,4 +24,4 @@ router.post('/uploadNewStreet', (req,res) =>{
     })
 })
 
-module.exports=router;
+module.exports = router;

@@ -1,6 +1,6 @@
-const express=require('express');
-const bodyParser=require('body-parser');
-const path=require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
 const Index = require('./index/index')
 const ArticleDeatil = require('./article/detail')
 const ArticleNew = require('./article/new')
@@ -13,7 +13,7 @@ const News = require('./news/news')
 const Photo = require('./photo/photo')
 const Search = require('./search/search')
 
-const app=express();
+const app = express();
 
 //配置body-parser
 app.use(bodyParser.json({limit: '50mb'}));

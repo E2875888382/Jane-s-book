@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 // 获取关注者的作品
@@ -39,7 +39,6 @@ router.get('/follow',(req,res)=>{
     db(sql,()=>{
         res.status(200).send(`ok`);
     })
-
 })
 
-module.exports=router;
+module.exports = router;

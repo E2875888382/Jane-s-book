@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 router.get('/search',(req,res)=>{
@@ -18,40 +18,26 @@ router.get('/search',(req,res)=>{
     let sqlNews = `SELECT title,TIME,newID,source,view
     FROM news
     WHERE title LIKE '%${search}%'`;
-    new Promise((resolve)=>{
-        db(sqlArticle,(data)=>{
-            let result = {
-                article:data,
-            }
-            resolve(result)
-        })
-    }).then((result)=>{
+    function sql(result,sql,prop){
         return new Promise((resolve)=>{
-            db(sqlPhoto,(data)=>{
-                result.photo = data;
+            db(sql,(data)=>{
+                result[prop] = data;
                 resolve(result)
             })
         })
-    }).then((result)=>{
-        return new Promise((resolve)=>{
-            db(sqlUser,(data)=>{
-                result.user = data;
-                resolve(result)
-            })
-        })
-    }).then((result)=>{
-        return new Promise((resolve)=>{
-            db(sqlNews,(data)=>{
-                result.news = data;
-                resolve(result)
-            })
-        })
-    }).then((result)=>{
-        res.status(200).json(result);
-    }).catch((err)=>{
-        console.log(err);
-    })
+    }
+    (async function search(){
+        try{
+            let result = {};
+            let result1 = await sql(result,sqlArticle,'article');
+            let result2 = await sql(result1,sqlPhoto,'photo');
+            let result3 = await sql(result2,sqlUser,'user');
+            let result4 = await sql(result3,sqlNews,'news');
+            res.status(200).json(result4);
+        }catch(e){
+            console.log(e);
+        }
+    })()
 })
 
-
-module.exports=router;
+module.exports = router;

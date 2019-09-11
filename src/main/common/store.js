@@ -32,7 +32,7 @@ export default new Vuex.Store({
             state.loginFlag = loginFlag;
         },
         userIfo(state,data){
-            state.userIfo = data.userIfo;
+            state.userIfo = data.userIfo[0];
             state.friendsList = data.friend;
             state.photoCollection = data.photoCol;
             state.streetCollection = data.articleCol;

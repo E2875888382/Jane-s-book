@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 // 获取一组相册
@@ -81,7 +81,7 @@ router.get('/photoPraise',(req,res)=>{
 router.post('/addNewPhoto',(req,res)=>{
     let token = Number(req.headers.token);
     let current = global.users.get(token);
-    var sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
+    let sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
     VALUES(${current},'${req.body.tags}',
     '${req.body.src}','${req.body.title}','${req.body.time}',
     '${req.body.photo}')`;
@@ -96,4 +96,4 @@ router.post('/addNewPhoto',(req,res)=>{
     })
 })
 
-module.exports=router;
+module.exports = router;

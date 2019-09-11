@@ -7,7 +7,7 @@ router.post('/avatar', (req,res) =>{
     let token = Number(req.headers.token);
     let current = global.users.get(token);
     let avatar = req.body.avatar;
-    var sqlAvatar = `UPDATE USER SET avatar = "${avatar}" WHERE userID = "${current}"`;
+    let sqlAvatar = `UPDATE USER SET avatar = "${avatar}" WHERE userID = "${current}"`;
     db(sqlAvatar,()=>{
         res.status(200).json({ code:200 });
     })

@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../mysql.js');
 
 // 查用户信息
@@ -25,52 +25,28 @@ router.get('/user',(req,res) =>{
         FROM photo,photocollection
         WHERE photo.photoID = photocollection.photoID
         AND photocollection.userID = ${current}`;
-        new Promise((resolve)=>{
-            let result = {};
-            db(sqlUserIfo,(data)=>{
-                result.userIfo = data[0];
-                resolve(result);
-            })
-        }).then((result)=>{
+        function ifo(result,sql,prop){
             return new Promise((resolve)=>{
-                db(sqlFriend,(data)=>{
-                    result.friend = data;
+                db(sql,(data)=>{
+                    result[prop] = data;
                     resolve(result);
                 })
             })
-        }).then((result)=>{
-            return new Promise((resolve)=>{
-                db(sqlNewMsg,(data)=>{
-                    result.newMsg = data;
-                    resolve(result);
-                })
-            })
-        }).then((result)=>{
-            return new Promise((resolve)=>{
-                db(sqlHisMsg,(data)=>{
-                    result.hisMsg = data;
-                    resolve(result);
-                })
-            })
-        }).then((result)=>{
-            return new Promise((resolve)=>{
-                db(articleCol,(data)=>{
-                    result.articleCol = data;
-                    resolve(result);
-                })
-            })
-        }).then((result)=>{
-            return new Promise((resolve)=>{
-                db(photoCol,(data)=>{
-                    result.photoCol = data;
-                    resolve(result);
-                })
-            })
-        }).then((result)=>{
-            res.status(200).json(result);
-        }).catch((err)=>{
-            console.log(err);
-        })
+        }
+        (async function user(){
+            try{
+                let result = {};
+                let result1 = await ifo(result,sqlUserIfo,'userIfo');
+                let result2 = await ifo(result1,sqlFriend,'friend');
+                let result3 = await ifo(result2,sqlNewMsg,'newMsg');
+                let result4 = await ifo(result3,sqlHisMsg,'hisMsg');
+                let result5 = await ifo(result4,articleCol,'articleCol');
+                let result6 = await ifo(result5,photoCol,'photoCol');
+                res.status(200).json(result6);
+            }catch(e){
+                console.log(e);
+            }
+        })()
     }else{
         res.status(200).json({code:200});
     }
@@ -91,11 +67,7 @@ router.get('/collect',(req,res)=>{
         sql = `DELETE FROM streetcollection
         WHERE userID = ${current} AND streetID = ${article}`;
     }
-    new Promise((resolve)=>{
-        db(sql,()=>{
-            resolve()
-        })
-    }).then(()=>{
+    db(sql,()=>{
         res.status(200).send(`ok`);
     })
 })
@@ -115,13 +87,9 @@ router.get('/photoCollect',(req,res)=>{
         sql = `DELETE FROM photocollection
         WHERE userID = ${current} AND photoID = ${photo}`;
     }
-    new Promise((resolve)=>{
-        db(sql,()=>{
-            resolve()
-        })
-    }).then(()=>{
+    db(sql,()=>{
         res.status(200).send(`ok`);
     })
 })
 
-module.exports=router;
+module.exports = router;
