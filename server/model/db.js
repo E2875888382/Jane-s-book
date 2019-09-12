@@ -1,13 +1,7 @@
 const mysql = require('mysql');
+const config = require('./db.config');
 
-const pool = mysql.createPool({
-    host:'localhost',
-    user:'root',
-    password:'12345',
-    port: '3306', 
-    database:'videos',
-    multipleStatements: true // 支持执行多条 sql 语句
-})
+const pool = mysql.createPool(config);
 
 module.exports = function(sql,callback){
     pool.getConnection((error,connection)=>{
