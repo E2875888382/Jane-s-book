@@ -62,13 +62,13 @@ module.exports = {
         }else{
             sql = `UPDATE street SET praise = praise - 1 WHERE streetId = ${article}`;
         }
-        new Promise((resolve)=>{
+        try{
             db(sql,()=>{
                 res.status(200).json({ code:200 });
             })
-        }).catch((err)=>{
-            console.log(err);
-        })
+        }catch(e){
+            console.log(e);
+        }
     },
     replyPraise(req,res){
         let streetReplyID = req.query.streetReplyID;
@@ -79,13 +79,13 @@ module.exports = {
         }else{
             sql = `UPDATE streetreply SET praise = praise - 1 WHERE streetReplyID = ${streetReplyID}`;
         }
-        new Promise((resolve)=>{
+        try{
             db(sql,()=>{
                 res.status(200).json({ code:200 });
             })
-        }).catch((err)=>{
-            console.log(err);
-        })
+        }catch(e){
+            console.log(e);
+        }
     },
     new(req,res){
         let token = Number(req.headers.token);
@@ -99,13 +99,13 @@ module.exports = {
         }
         let sql=`INSERT INTO street(topic,userID,TIME,content,img)
         VALUES('${newStreet.topic}','${current}','${time}','${newStreet.content}','${newStreet.img}')`;
-        new Promise((resolve)=>{
+        try{
             db(sql,()=>{
                 res.status(200).json({code:200});
             })
-        }).catch((err)=>{
-            console.log(err);
-        })
+        }catch(e){
+            console.log(e);
+        }
     },
     article(req,res){
         let begin = (req.query.page -1)*10;

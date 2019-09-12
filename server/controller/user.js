@@ -34,34 +34,50 @@ module.exports = {
         }else{
             sql = `DELETE FROM friend WHERE userID = "${current}" AND friendID = "${friend}"`;
         }
-        db(sql,()=>{
-            res.status(200).send(`ok`);
-        })
+        try{
+            db(sql,()=>{
+                res.status(200).send(`ok`);
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     avatar(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let avatar = req.body.avatar;
         let sqlAvatar = `UPDATE USER SET avatar = "${avatar}" WHERE userID = "${current}"`;
-        db(sqlAvatar,()=>{
-            res.status(200).json({ code:200 });
-        })
+        try{
+            db(sqlAvatar,()=>{
+                res.status(200).json({ code:200 });
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     msg(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let time = new Date().toLocaleString();
         let sql = `INSERT INTO message (userID,receiverID,content,time)
-         VALUES ("${current}","${ req.body.receiverID }","${ req.body.content}","${time}")`;
-        db(sql,()=>{
-            res.status(200).json({ code:200 });
-        })
+        VALUES ("${current}","${ req.body.receiverID }","${ req.body.content}","${time}")`;
+        try{
+            db(sql,()=>{
+                res.status(200).json({ code:200 });
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     isRead(req,res){
         let sql = `UPDATE message SET isRead = 1 WHERE messageID = "${ req.query.id }"`;
-        db(sql,()=>{
-            res.status(200).json({ code:200 });
-        })
+        try{
+            db(sql,()=>{
+                res.status(200).json({ code:200 });
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     update(req,res){
         let token = Number(req.headers.token);
@@ -72,28 +88,40 @@ module.exports = {
         let sign = req.body.ifo.sign;
         let sql = `UPDATE user SET gender ="${gender}",birthday ="${birth}",sign ="${sign}",nickName ="${nickName}"
         WHERE userID ="${current}"`;
-        db(sql,()=>{
-            res.status(200).json({ code:200 });
-        })
+        try{
+            db(sql,()=>{
+                res.status(200).json({ code:200 });
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     changePhone(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let sql=`UPDATE USER SET telephone = '${req.body.new }' WHERE userID = '${current}'`;
-        db(sql,()=>{
-            res.status(200).json({ code:200 });
-        })
+        try{
+            db(sql,()=>{
+                res.status(200).json({ code:200 });
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     changeQQ(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let sql=`UPDATE USER SET qq = '${req.body.new }' WHERE userID = '${current}'`;
-        db(sql,()=>{
-            res.status(200).json({ code:200 });
-        })
+        try{
+            db(sql,()=>{
+                res.status(200).json({ code:200 });
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     ifo(req,res){
-        let token = Number(req.headers.token)
+        let token = Number(req.headers.token);
         let current = global.users.get(token);
         if(current){
             let sqlUserIfo = `SELECT * FROM user WHERE userID = "${current}"`;
@@ -154,9 +182,13 @@ module.exports = {
             sql = `DELETE FROM streetcollection
             WHERE userID = ${current} AND streetID = ${article}`;
         }
-        db(sql,()=>{
-            res.status(200).send(`ok`);
-        })
+        try{
+            db(sql,()=>{
+                res.status(200).send(`ok`);
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     photoCollect(req,res){
         let time = new Date().toLocaleString();
@@ -172,36 +204,48 @@ module.exports = {
             sql = `DELETE FROM photocollection
             WHERE userID = ${current} AND photoID = ${photo}`;
         }
-        db(sql,()=>{
-            res.status(200).send(`ok`);
-        })
+        try{
+            db(sql,()=>{
+                res.status(200).send(`ok`);
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     new(req,res){
         let sql=`SELECT * FROM user WHERE email = "${req.body.email}"`;
-        db(sql,(result)=>{
-            if(result.length!==0){
-                res.status(200).json({ code:0 });
-            }
-            else {
-                let sql1=`INSERT INTO user (email,password) VALUES ("${req.body.email}","${req.body.password}")`;
-                db(sql1,(result)=>{
-                    res.status(200).json({ code:1 });
-                })
-            }
-        })
+        try{
+            db(sql,(result)=>{
+                if(result.length!==0){
+                    res.status(200).json({ code:0 });
+                }
+                else {
+                    let sql1=`INSERT INTO user (email,password) VALUES ("${req.body.email}","${req.body.password}")`;
+                    db(sql1,(result)=>{
+                        res.status(200).json({ code:1 });
+                    })
+                }
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     login(req,res){
         let sql=`SELECT * FROM user WHERE email ="${req.body.email}"AND password = "${req.body.password }"`;
-        db(sql,(result)=>{
-            if(result.length==0){
-                res.status(200).json({ code:0 });
-            }
-            else {
-              let key = Number(result[0].userID)+new Date().getTime();
-              global.users.set(key,result[0].userID);
-              res.status(200).json({ code:1,token:key });
-            }
-        })
+        try{
+            db(sql,(result)=>{
+                if(result.length==0){
+                    res.status(200).json({ code:0 });
+                }
+                else {
+                  let key = Number(result[0].userID)+new Date().getTime();
+                  global.users.set(key,result[0].userID);
+                  res.status(200).json({ code:1,token:key });
+                }
+            })
+        }catch(e){
+            console.log(e);
+        }
     },
     loginOut(req,res){
         let token = Number(req.headers.token);

@@ -13,17 +13,13 @@ module.exports = {
                 resolve(count);
             })
         }).then((count)=>{
-            return new Promise((resolve)=>{
-                db(sqlList,(data)=>{
-                    let result = {
-                        count:count,
-                        list:data,
-                    };
-                    resolve(result);
-                })
+            db(sqlList,(data)=>{
+                let result = {
+                    count:count,
+                    list:data,
+                };
+                res.status(200).json(result);
             })
-        }).then((result)=>{
-            res.status(200).json(result);
         }).catch((err)=>{
             console.log(err);
         })
@@ -40,13 +36,9 @@ module.exports = {
                 resolve()
             })
         }).then(()=>{
-            return new Promise((resolve)=>{
-                db(sqlDetail,(result)=>{
-                    resolve(result);
-                })
+            db(sqlDetail,(result)=>{
+                res.status(200).json(result);
             })
-        }).then((result)=>{
-            res.status(200).json(result);
         }).catch((err)=>{
             console.log(err);
         })
@@ -60,15 +52,13 @@ module.exports = {
         }else{
             sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${photoID}`;
         }
-        new Promise((resolve)=>{
+        try{
             db(sql,()=>{
-                resolve()
+                res.status(200).json({ code:200 });
             })
-        }).then(()=>{
-            res.status(200).json({ code:200 });
-        }).catch((err)=>{
-            console.log(err);
-        })
+        }catch(e){
+            console.log(e);
+        }
     },
     new(req,res){
         let token = Number(req.headers.token);
@@ -77,14 +67,12 @@ module.exports = {
         VALUES(${current},'${req.body.tags}',
         '${req.body.src}','${req.body.title}','${req.body.time}',
         '${req.body.photo}')`;
-        new Promise((resolve)=>{
+        try{
             db(sql,()=>{
-                resolve()
+                res.status(200).json({ code:200 });
             })
-        }).then(()=>{
-            res.status(200).json({ code:200 });
-        }).catch((err)=>{
-            console.log(err);
-        })
+        }catch(e){
+            console.log(e);
+        }
     }
 }

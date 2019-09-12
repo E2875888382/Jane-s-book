@@ -23,8 +23,8 @@ module.exports = {
             db(sqlNews,(result)=>{
                 res.status(200).json(result);
             })
-        }catch(err){
-            console.log(err);
+        }catch(e){
+            console.log(e);
         }
     }
 }

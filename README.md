@@ -1,38 +1,45 @@
+- 功能：
+	- [x] 浏览文章
+	- [x] 浏览新闻
+	- [x] 浏览相册
+	- [x] 新闻随机更换
+	- [x] 关注用户
+	- [x] 用户信息设置、个人主页
+	- [x] 关注者主页
+	- [x] 评论、点赞
+	- [x] 收藏文章、相册
+	- [x] 搜索
+
 - 技术栈：
-  - vue.js、vuex、vue-router
-  - jsonp、axios
-  - webpack
-  - express
-  - vue-infinite-scroll（无限加载插件）
-  - vue-waterfall-easy（瀑布流布局插件）
-  - elementUI、vant、bootstrap
+	- vue.js、vuex、vue-router
+	- jsonp、axios
+	- webpack
+	- express
+	- vue-infinite-scroll（无限加载插件）
+	- vue-waterfall-easy（瀑布流布局插件）
+	- elementUI、vant、bootstrap
+
 - 运行方式
-  - 1.安装依赖
-    - ```npm i  ```
-  - 2.创建本地数据库（MySQL）
-    - 使用server文件夹下database.sql创建数据库结构，修改mysql.js下的数据库配置
-  - 3.开启后台服务器（app.js），端口号：8000
-    - ```node app.js ```
-  - 4.在根目录下开启webpack-dev-server，端口号：3000
-    - ```npm run dev ```
-- webpack打包完成会自动打开浏览器（loaclhost:3000/）
+	- 1.安装依赖
+		- ```npm i  ```
+	- 2.创建本地数据库（MySQL）
+		- 修改model下db.config.js配置
+	- 3.开启后台服务器（app.js），端口号：8000
+		- ```node app.js ```
+	- 4.在根目录下开启webpack-dev-server，端口号：3000
+		- ```npm run dev ```
+	- 5.webpack打包完成自动打开浏览器（loaclhost:3000/）
+
 - 踩过的坑：
-  - 1.vue-router的router-link如果跳转的是同一个组件，会发生地址栏改变数据却没有更新的情况
-    - 原因：两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效
-    - 复用机制导致数据没有重新渲染
-    - 新闻组件是通过:newID来跳转页面的，同组件时新闻数据没法更新
-    - 解决：使用watch监听路由变化，
-    ```
-    watch:{
-            '$route':function(){
-              this.id = this.$route.params.id;
-              this.addNewsRead();
-              this.getNewsDetails();
-              this.getTenNews();
-            }
-          },
-    ```
-  - 2.已经登录用户刷新页面后，nodejs报错：Cannot set headers after they are sent to the client
-    - 原因：header组件和collection组件在mounted阶段都调用了请求收藏列表的方法，浏览器发出同名的请求，服务器返回了2次及2次以上的响应
-    - 解决：collection去掉请求就行了，只要header请求到就可以了，因为收藏列表数据保存在vuex中，子组件可以随时调用，没有必要重复请求
+  	- 1.vue-router的router-link如果跳转的是同一个组件，数据不更新
+    	- 原因：两个路由都渲染同个组件，复用机制导致数据没有重新渲染
+    	- 解决：使用watch监听路由变化，
+		```
+		watch:{
+				'$route':function(){
+				this.id = this.$route.params.id;
+				}
+			},
+		```
+
 
