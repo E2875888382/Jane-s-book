@@ -108,18 +108,6 @@ module.exports = {
             console.log(e);
         }
     },
-    changeQQ(req,res){
-        let token = Number(req.headers.token);
-        let current = global.users.get(token);
-        let sql=`UPDATE USER SET qq = '${req.body.new }' WHERE userID = '${current}'`;
-        try{
-            db(sql,()=>{
-                res.status(200).json({ code:200 });
-            })
-        }catch(e){
-            console.log(e);
-        }
-    },
     ifo(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);

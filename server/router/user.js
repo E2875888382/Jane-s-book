@@ -32,9 +32,6 @@ router.post('/updateUserInfo',controller.update);
 // 修改手机号
 router.post('/changeTelephone',controller.changePhone);
 
-// 修改QQ号
-router.post('/changeQQ',controller.changeQQ);
-
 // 修改头像
 router.post('/avatar',controller.avatar);
 

@@ -71,7 +71,6 @@ export default new VueRouter({
         { path:'/photo',component:Photo_index },
         { path:'/photoDetails/:id',name:'photoDetails',component:Photo_details },
         { path:'/photo/new',component:Photo_new },
-        { path:'/mypage',name:'mypage',component:MyPage },
-
+        { path:'/mypage',name:'mypage',component:MyPage,meta:{ keepAlive:true }},
     ]
 })

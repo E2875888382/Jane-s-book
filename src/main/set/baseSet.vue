@@ -1,22 +1,18 @@
 <template>
 <div>
     <div class="top">
-        <van-image width="100" height="100" class="user_img" :src="avatar" style="margin-right:50px"></van-image>
+        <van-image width="100" height="100" class="user_img" :src="ava" style="margin-right:50px"></van-image>
         <van-uploader v-model="img" :max-count="2" :after-read="afterRead" :preview-image="false">
             <van-button type="primary" plain round size="small">更换头像</van-button>
         </van-uploader>
     </div>
     <div class="item">
         <span class="label">电子邮件</span>
-        <span>{{email}}</span>
+        <span>{{$store.state.userIfo.email}}</span>
     </div>
     <div class="item">
         <span class="label">手机</span>
-        <span>{{telephone}}</span>
-    </div>
-    <div class="item">
-        <span class="label">QQ</span>
-        <span>{{qq}}</span>
+        <span>{{$store.state.userIfo.telephone}}</span>
     </div>
 </div>
 </template>
@@ -26,25 +22,24 @@ import user from '../common/user.js'
 export default {
     data(){
         return {
-            email:'',
-            telephone:'',
-            avatar:'',
-            qq:'',
             img:[],
+            avatar:'',
         }
     },
-    created(){
-        this.init();
+    computed:{
+        ava:{
+            get(){
+                this.avatar = this.$store.state.userIfo.avatar
+                return this.avatar;
+            },
+            set(value){
+                this.avatar = value;
+            }
+        }
     },
     methods:{
-        init(){
-            this.avatar = this.$store.state.userIfo.avatar;
-            this.email = this.$store.state.userIfo.email;
-            this.telephone = this.$store.state.userIfo.telephone;
-            this.qq = this.$store.state.userIfo.qq;
-        },
         afterRead(){
-            this.avatar = this.img[0].content;
+            this.ava = this.img[0].content;
             user.avatar(this.avatar).then((result)=>{
                 if(result.data.code == 200){
                     this.$message({

@@ -2,12 +2,12 @@
 <div class="content_box m-auto">
     <div class="left">
         <div class="top">
-            <van-image width="80" height="80" class="user_img" :src="user.avatar" style="margin-right:20px"></van-image>
+            <van-image width="80" height="80" class="user_img" :src="$store.state.userIfo.avatar" style="margin-right:20px"></van-image>
             <div class="info">
-                <p class="name">{{user.nickName}}</p>
+                <p class="name">{{$store.state.userIfo.nickName}}</p>
                 <div class="meta">
                     <div>
-                        <span>{{follow}}</span>
+                        <span>{{$store.state.friendsList.length}}</span>
                         <router-link to="/follow" class="text">关注</router-link>
                     </div>
                     <div>
@@ -59,7 +59,7 @@
     </div>
     <div class="right">
         <p style="color:#969696">个人介绍</p>
-        <p>{{user.sign}}</p>
+        <p>{{$store.state.userIfo.sign}}</p>
         <hr>
         <p class="link">
             <van-icon name="like-o"/>
@@ -77,13 +77,11 @@ export default {
         return {
             article:[],
             photo:[],
-            follow:[],
-            user:{},
             activeName:'article'
         }
     },
-    mounted(){
-        this.init();
+    created(){
+        this.init();     
     },
     methods:{
         init(){
@@ -92,8 +90,6 @@ export default {
                 this.article = result.data.article;
                 this.photo = result.data.photo;
             })
-            this.follow = this.$store.state.friendsList.length;
-            this.user = this.$store.state.userIfo;
         },
     }
 }
