@@ -22,7 +22,7 @@ Vue.use(infiniteScroll);
 Vue.use(Common);
 Vue.use(Vant);
 
-var vm=new Vue({
+new Vue({
     el:'#app',
     store,
     render:c => c(App),

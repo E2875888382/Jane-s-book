@@ -15,7 +15,11 @@
             <van-image width="80" height="80" class="user_img" :src="follower.avatar"/>
             <div>
                 <div class="follow_ifo">
-                    <p class="nickName">{{follower.nickName}}<i class="el-icon-male"></i><i class="el-icon-female"></i></p>
+                    <p class="nickName">
+                        {{follower.nickName}}
+                        <i class="el-icon-male" v-if="follower.gender == '男'"></i>
+                        <i class="el-icon-female" v-if="follower.gender == '女'"></i>
+                    </p>
                     <p class="sign">{{follower.sign}}</p>
                 </div>
                 <div class="btn_box">

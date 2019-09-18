@@ -113,7 +113,7 @@ module.exports = {
         let current = global.users.get(token);
         if(current){
             let sqlUserIfo = `SELECT * FROM user WHERE userID = "${current}"`;
-            let sqlFriend = `SELECT user.userID,user.nickName,user.avatar,user.sign
+            let sqlFriend = `SELECT user.userID,user.nickName,user.avatar,user.sign,user.gender
             FROM USER,friend
             WHERE user.userID = friend.friendID AND friend.userID =${current}`;
             let sqlNewMsg = `SELECT message.time,message.content,user.nickName,message.messageID
