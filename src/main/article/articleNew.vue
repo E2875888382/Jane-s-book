@@ -57,17 +57,17 @@ export default {
         },
         // 提交表单
         submit() {
-            console.log(this.html)
-            // var newStreet = {
-            //     topic:this.Form.topic,
-            //     content:this.Form.text,
-            //     img:this.Form.img,
-            // }
-            // article.newArticle(newStreet).then((result)=>{
-            //     if(result.data.code == 200){
-            //         this.$message.success('发帖成功，快去步行街看看吧');
-            //     }
-            // })
+            let newArticle = {
+                title:this.title,
+                html:this.html,
+                // img:this.Form.img,
+                img:[],
+            }
+            article.newArticle(newArticle).then((result)=>{
+                if(result.data.code == 200){
+                    this.$message.success('发帖成功，快去步行街看看吧');
+                }
+            })
         },
 
     }

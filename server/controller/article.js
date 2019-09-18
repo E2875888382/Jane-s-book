@@ -91,14 +91,14 @@ module.exports = {
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let time = new Date().toLocaleDateString();
-        let newStreet = req.body.new;
+        let newArticle = req.body.new;
         if(req.body.new.img[0]){
-            newStreet.img = req.body.new.img[0].content;
+            newArticle.img = req.body.new.img[0].content;
         }else{
-            newStreet.img = '';
+            newArticle.img = '';
         }
-        let sql=`INSERT INTO street(topic,userID,TIME,content,img)
-        VALUES('${newStreet.topic}','${current}','${time}','${newStreet.content}','${newStreet.img}')`;
+        let sql=`INSERT INTO article(title,userID,TIME,html,img)
+        VALUES('${newArticle.title}','${current}','${time}','${newArticle.html}','${newArticle.img}')`;
         try{
             db(sql,()=>{
                 res.status(200).json({code:200});
