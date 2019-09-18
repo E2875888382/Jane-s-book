@@ -110,7 +110,7 @@ module.exports = {
     article(req,res){
         let begin = (req.query.page -1)*10;
         let sqlCount = `SELECT COUNT(*) FROM street`;
-        let sqlList = `SELECT street.topic,street.view,street.replyCount,user.nickName,street.streetID,street.praise
+        let sqlList = `SELECT street.topic,street.view,street.replyCount,user.nickName,street.streetID,street.praise,street.img
         FROM street,USER
         WHERE street.userID = user.userID
         LIMIT ${begin},10`;

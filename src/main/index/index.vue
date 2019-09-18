@@ -2,7 +2,7 @@
 <div class="col-9 m-auto bg">
     <div class="list">
         <div class="list_item" v-for="(item,index) in articleList" :key="index">
-            <div class="list_item_left">
+            <div :class="{'list_item_left':item.img,'long':!item.img}">
                 <p class="title">
                     <router-link :to="{name:'articleDetail',params:{articleId:item.streetID}}">{{ item.topic }}</router-link>
                 </p>
@@ -14,7 +14,7 @@
                     <span><van-icon name="good-job" color="#999"/>{{ item.praise }}</span>
                 </div>
             </div>
-            <el-image style="width:150px; height:100px" src="https://upload-images.jianshu.io/upload_images/17156415-a8a471fe304a0942.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240" fit="fill"></el-image>
+            <el-image style="width:150px; height:100px" v-if="item.img" :src="item.img" fit="fill"></el-image>
         </div>
         <el-button type="info" round @click="load" v-if="!finished">阅读更多</el-button>
         <p class="tips" v-if="finished">没有更多了</p>
@@ -91,6 +91,10 @@ export default {
 }
 .list_item_left{
     width:458px;
+    height:131px;
+}
+.long{
+    width:625px;
     height:131px;
 }
 .title{
