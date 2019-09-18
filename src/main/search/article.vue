@@ -11,14 +11,14 @@
         </div>
         <span>{{$store.state.result.article.length}} 个结果</span>
     </div>
-    <div class="article_item" v-for="item in article" :key="item.streetID">
+    <div class="article_item" v-for="item in article" :key="item.articleID">
         <div class="author">
             <van-image width="24" height="24" class="user_img" :src="item.avatar"/>
             <span class="nick">{{item.nickName}}</span>
             <span class="time">{{ item.time | dateFormat }}天前</span>
         </div>
         <p class="title">
-            <router-link :to="{name:'articleDetail',params:{articleId:item.streetID}}" v-html="highLight(item.topic)"></router-link>
+            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}" v-html="highLight(item.topic)"></router-link>
         </p>
         <div class="info">
             <span><van-icon name="comment" color="#999"/>{{ item.replyCount }}</span>

@@ -32,10 +32,10 @@
             <el-tabs v-model="activeName">
                 <el-tab-pane name="article">
                     <span slot="label" class="tabs"><van-icon name="new" />最新发布</span>
-                    <div class="article_item" v-for="item in followerWork.article" :key="item.streetID">
+                    <div class="article_item" v-for="item in followerWork.article" :key="item.articleID">
                         <div :class="{'short':item.img,'long':!item.img}">
                             <p class="article_topic">
-                                <router-link :to="{name:'articleDetail',params:{articleId:item.streetID}}">{{ item.topic }}</router-link>
+                                <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">{{ item.title }}</router-link>
                             </p>
                             <p class="article_ob">xaxsxaxsaxsax</p>
                             <div class="meta">

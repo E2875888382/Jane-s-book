@@ -2,14 +2,14 @@ const db = require('../model/db.js');
 
 module.exports = {
     detail(req,res){
-        let sqlAddView = ` UPDATE street SET view = view + 1  WHERE streetID = ${req.query.articleId}`;
-        let sqlDeatil = `SELECT user.userID,user.nickName,user.avatar,user.sign,street.*
-        FROM street,USER
-        WHERE street.userID = user.userID AND
-        streetID = ${req.query.articleId}`;
-        let sqlComments = ` SELECT user.avatar,user.nickName,streetReply.*
-        FROM USER,streetReply
-        WHERE user.userID = streetReply.userID AND streetID = ${req.query.articleId}`;
+        let sqlAddView = `UPDATE article SET view = view + 1  WHERE articleID = ${req.query.articleId}`;
+        let sqlDeatil = `SELECT user.userID,user.nickName,user.avatar,user.sign,article.*
+        FROM article,USER
+        WHERE article.userID = user.userID AND
+        articleID = ${req.query.articleId}`;
+        let sqlComments = `SELECT user.avatar,user.nickName,reply.*
+        FROM USER,reply
+        WHERE user.userID = reply.userID AND articleID = ${req.query.articleId}`;
         new Promise((resolve)=>{
             db(sqlAddView,()=>{
                 resolve();
@@ -38,8 +38,8 @@ module.exports = {
         let article = req.body.article;
         let content = req.body.content;
         let time = new Date().toLocaleString();
-        let sqlAddCommentCount = `UPDATE street SET replyCount = replyCount + 1  WHERE streetID = ${article}`;
-        let sqlAddComment = `INSERT INTO streetReply(streetID,userID,TIME,content) VALUES (${article},
+        let sqlAddCommentCount = `UPDATE article SET replyCount = replyCount + 1  WHERE articleID = ${article}`;
+        let sqlAddComment = `INSERT INTO reply(articleID,userID,TIME,content) VALUES (${article},
         '${current}','${time}','${content}')`;
         new Promise((resolve)=>{
             db(sqlAddCommentCount,()=>{
@@ -58,9 +58,9 @@ module.exports = {
         let article = req.query.article;
         let sql = ``;
         if(status == 'true'){
-            sql = `UPDATE street SET praise = praise + 1 WHERE streetId = ${article}`;
+            sql = `UPDATE article SET praise = praise + 1 WHERE articleID = ${article}`;
         }else{
-            sql = `UPDATE street SET praise = praise - 1 WHERE streetId = ${article}`;
+            sql = `UPDATE article SET praise = praise - 1 WHERE articleID = ${article}`;
         }
         try{
             db(sql,()=>{
@@ -75,9 +75,9 @@ module.exports = {
         let status = req.query.status;
         let sql = ``;
         if(status == 'true'){
-            sql = `UPDATE streetreply SET praise = praise + 1 WHERE streetReplyID = ${streetReplyID}`;
+            sql = `UPDATE reply SET praise = praise + 1 WHERE replyID = ${streetReplyID}`;
         }else{
-            sql = `UPDATE streetreply SET praise = praise - 1 WHERE streetReplyID = ${streetReplyID}`;
+            sql = `UPDATE reply SET praise = praise - 1 WHERE replyID = ${streetReplyID}`;
         }
         try{
             db(sql,()=>{
@@ -109,10 +109,10 @@ module.exports = {
     },
     article(req,res){
         let begin = (req.query.page -1)*10;
-        let sqlCount = `SELECT COUNT(*) FROM street`;
-        let sqlList = `SELECT street.topic,street.view,street.replyCount,user.nickName,street.streetID,street.praise,street.img
-        FROM street,USER
-        WHERE street.userID = user.userID
+        let sqlCount = `SELECT COUNT(*) FROM article`;
+        let sqlList = `SELECT article.title,article.view,article.replyCount,user.nickName,article.articleID,article.praise,article.img
+        FROM article,USER
+        WHERE article.userID = user.userID
         LIMIT ${begin},10`;
         new Promise((resolve)=>{
             db(sqlCount,(count)=>{

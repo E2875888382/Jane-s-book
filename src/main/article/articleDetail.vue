@@ -16,9 +16,9 @@
     <div class="main">
         <div class="left">
             <div class="content">
-                <h1 class="topic">{{ detail.topic }}</h1>
+                <h1 class="topic">{{ detail.title }}</h1>
                 <p class="info">{{ detail.time }} 阅读{{ detail.view }} 评论{{ detail.replyCount }}</p>
-                <p class="text">{{ detail.content }}</p>
+                <p class="text">{{ detail.html }}</p>
                 <el-image v-if="detail.img" style="width:682px; height: 400px" :src="detail.img" fit="fill"></el-image>
             </div>
             <Comment v-if="isLogin" :article="current"></Comment>
@@ -34,7 +34,7 @@
                         </span>
                     </div>
                 </h3>
-                <div class="comment_item" v-for="item in currentComments" :key="item.streetReplyID">
+                <div class="comment_item" v-for="item in currentComments" :key="item.replyID">
                     <van-image width="40" height="40" class="avatar" :src="item.avatar"/>
                     <div class="comment_content">
                         <p>{{ item.nickName }}</p>
@@ -181,12 +181,12 @@ export default {
             this.detail.praise--;
         },
         reply(item){
-            article.replyPraise(item.streetReplyID,true);
+            article.replyPraise(item.replyID,true);
             item.isPraised = true;
             item.praise++;
         },
         cancelreply(item){
-            article.replyPraise(item.streetReplyID,false);
+            article.replyPraise(item.replyID,false);
             item.isPraised = false;
             item.praise--;
         }

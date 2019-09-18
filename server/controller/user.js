@@ -5,7 +5,7 @@ global.users = new Map();
 module.exports = {
     followerWork(req,res){
         let follower = req.query.userID;
-        let sqlArticle = `SELECT TIME,streetID,VIEW,replyCount,topic,img FROM street WHERE userID = '${follower}'`;
+        let sqlArticle = `SELECT TIME,articleID,VIEW,replyCount,title,img FROM article WHERE userID = '${follower}'`;
         let sqlPhoto = `SELECT src,photoID,title,praise,time,VIEW FROM photo WHERE userID = '${follower}'`;
         new Promise((resolve)=>{
             db(sqlArticle,(data)=>{
@@ -122,14 +122,14 @@ module.exports = {
             let sqlHisMsg = `SELECT message.time,message.content,user.nickName,message.messageID
             FROM message,USER
             WHERE message.userID = user.userID AND message.receiverID = ${current} AND message.isRead = 1`;
-            let articleCol = `SELECT street.streetID,streetcollection.time,street.topic,street.view,street.replyCount
-            FROM street,streetcollection
-            WHERE street.streetID = streetcollection.streetID
-            AND streetcollection.userID = ${current}`;
-            let photoCol = `SELECT photo.userID,photo.src,photocollection.time,photocollection.photoID,photo.title
-            FROM photo,photocollection
-            WHERE photo.photoID = photocollection.photoID
-            AND photocollection.userID = ${current}`;
+            let articleCol = `SELECT article.articleID,articlecol.time,article.title,article.view,article.replyCount
+            FROM article,articlecol
+            WHERE article.articleID = articlecol.articleID
+            AND articlecol.userID = ${current}`;
+            let photoCol = `SELECT photo.userID,photo.src,photocol.time,photocol.photoID,photo.title
+            FROM photo,photocol
+            WHERE photo.photoID = photocol.photoID
+            AND photocol.userID = ${current}`;
             function ifo(result,sql,prop){
                 return new Promise((resolve)=>{
                     db(sql,(data)=>{
@@ -164,11 +164,11 @@ module.exports = {
         let status = req.query.status;
         let sql = ``;
         if(status == 'true'){
-            sql = `INSERT INTO streetcollection (userID,streetID,TIME)
+            sql = `INSERT INTO articlecol (userID,articleID,TIME)
             VALUES (${current},${article},'${time}')`;
         }else{
-            sql = `DELETE FROM streetcollection
-            WHERE userID = ${current} AND streetID = ${article}`;
+            sql = `DELETE FROM articlecol
+            WHERE userID = ${current} AND articleID = ${article}`;
         }
         try{
             db(sql,()=>{
@@ -186,10 +186,10 @@ module.exports = {
         let status = req.query.status;
         let sql = ``;
         if(status == 'true'){
-            sql = `INSERT INTO photocollection (userID,photoID,TIME)
+            sql = `INSERT INTO photocol (userID,photoID,TIME)
             VALUES (${current},${photo},'${time}')`;
         }else{
-            sql = `DELETE FROM photocollection
+            sql = `DELETE FROM photocol
             WHERE userID = ${current} AND photoID = ${photo}`;
         }
         try{
@@ -208,7 +208,7 @@ module.exports = {
                     res.status(200).json({ code:0 });
                 }
                 else {
-                    let sql1=`INSERT INTO user (email,password) VALUES ("${req.body.email}","${req.body.password}")`;
+                    let sql1=`INSERT INTO user (email,pwd) VALUES ("${req.body.email}","${req.body.password}")`;
                     db(sql1,(result)=>{
                         res.status(200).json({ code:1 });
                     })
@@ -219,7 +219,7 @@ module.exports = {
         }
     },
     login(req,res){
-        let sql=`SELECT * FROM user WHERE email ="${req.body.email}"AND password = "${req.body.password }"`;
+        let sql=`SELECT * FROM user WHERE email ="${req.body.email}"AND pwd = "${req.body.password }"`;
         try{
             db(sql,(result)=>{
                 if(result.length==0){

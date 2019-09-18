@@ -3,15 +3,16 @@ const db = require('../model/db.js');
 module.exports = {
     search(req,res){
         let search = req.query.search;
-        let sqlArticle = `SELECT street.topic,street.time,user.nickName,user.avatar,street.streetID,street.view,street.replyCount,street.praise
-        FROM street,USER
-        WHERE street.topic LIKE '%${search}%'
-        AND user.userID = street.userID`;
+        let sqlArticle = `SELECT article.title,article.time,user.nickName,user.avatar,
+        article.articleID,article.view,article.replyCount,article.praise
+        FROM article,USER
+        WHERE article.title LIKE '%${search}%'
+        AND user.userID = article.userID`;
         let sqlPhoto = `SELECT photo.photoID,photo.src,user.nickName,photo.title,photo.time,photo.view
         FROM photo,USER
         WHERE photo.title LIKE '%${search}%'
         AND user.userID = photo.userID`;
-        let sqlUser = `SELECT userID,nickName,avatar,email,birthday,gender,sign
+        let sqlUser = `SELECT userID,nickName,avatar,email,birth,gender,sign
         FROM USER
         WHERE nickName LIKE '%${search}%'`;
         let sqlNews = `SELECT title,TIME,newID,source,view

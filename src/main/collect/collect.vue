@@ -1,9 +1,9 @@
 <template>
 <div class="container m-auto">
     <div class="top"></div>
-    <div class="collect_item" v-for="item in article" :key="item.streetID">
+    <div class="collect_item" v-for="item in article" :key="item.articleID">
         <p class="article_topic">
-            <router-link :to="{name:'articleDetail',params:{articleId:item.streetID}}">{{ item.topic }}</router-link>
+            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">{{ item.title }}</router-link>
         </p>
         <p class="article_content">xxxxxx</p>
         <div class="meta">
@@ -18,7 +18,7 @@
             <span class="article_time">
                 {{item.time}}
             </span>
-            <span class="article_cancel" @click="unCollect(item.streetID)">取消收藏</span>
+            <span class="article_cancel" @click="unCollect(item.articleID)">取消收藏</span>
         </div>
     </div>
 </div>
@@ -39,9 +39,9 @@ export default {
         load(){
             this.article = this.$store.state.streetCollection;
         },
-        unCollect(streetID){
+        unCollect(articleID){
             new Promise((resolve)=>{
-                user.collect(streetID,false).then(()=>{
+                user.collect(articleID,false).then(()=>{
                     this.userIfo();
                 })
                 resolve()

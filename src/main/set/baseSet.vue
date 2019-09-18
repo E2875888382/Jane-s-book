@@ -12,7 +12,7 @@
     </div>
     <div class="item">
         <span class="label">手机</span>
-        <span>{{$store.state.userIfo.telephone}}</span>
+        <span>{{$store.state.userIfo.tel}}</span>
     </div>
 </div>
 </template>

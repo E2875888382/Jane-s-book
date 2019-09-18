@@ -50,7 +50,7 @@ export default {
         init(){
             this.sign = this.$store.state.userIfo.sign;
             this.gender = this.$store.state.userIfo.gender;
-            this.birthday = this.$store.state.userIfo.birthday;
+            this.birthday = this.$store.state.userIfo.birth;
             this.nickName = this.$store.state.userIfo.nickName;
         },
         save(){
