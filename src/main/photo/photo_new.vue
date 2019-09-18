@@ -68,7 +68,11 @@ export default {
     methods: {
         // oversize触发
         oversize(){
-            this.$message( '请上传小于1M的图片');
+            this.$message({
+                    message:'请上传小于1M的图片',
+                    type:'warning',
+                    offset:100,
+                });
         },
         // tag关闭触发
         handleClose(tag) {
@@ -112,14 +116,16 @@ export default {
                     if(result.data.code == 200){
                         this.$message({
                             message:'发表成功',
-                            type:'success'
+                            type:'success',
+                            offset:100,
                         })
                     }
                 })
             }else{
                 this.$message({
                     message:'请把相簿内容填写完整！',
-                    type:'warning'
+                    type:'warning',
+                    offset:100,
                 })
             }
 

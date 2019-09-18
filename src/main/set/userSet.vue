@@ -64,7 +64,8 @@ export default {
                 user.update(ifo).then(()=>{
                     this.$message({
                         message:'已保存',
-                        type:'success'
+                        type:'success',
+                        offset:100,
                     })
                     this.userIfo();
                 })

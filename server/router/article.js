@@ -15,9 +15,9 @@ router.post('/comment',controller.comment);
 router.get('/praise',controller.praise);
 
 // 评论点赞/取消点赞
-router.get('/streetReplyPraise',controller.replyPraise);
+router.get('/replyPraise',controller.replyPraise);
 
 // 发布文章
-router.post('/uploadNewStreet',controller.new);
+router.post('/newArticle',controller.new);
 
 module.exports = router;

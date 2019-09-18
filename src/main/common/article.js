@@ -5,7 +5,7 @@ export default{
         return req.get('praise',{article:articleId,status:status});
     },
     replyPraise(streetReplyID,status){
-        return req.get('streetReplyPraise',{streetReplyID:streetReplyID,status:status});
+        return req.get('replyPraise',{streetReplyID:streetReplyID,status:status});
     },
     detail(id){
         return req.get('articleDetail',{articleId:id});
@@ -17,6 +17,6 @@ export default{
         return req.post('comment',{article:article,content:content});
     },
     newArticle(article){
-        return req.post('uploadNewStreet',{ new: article});
+        return req.post('newArticle',{ new: article});
     }
 }

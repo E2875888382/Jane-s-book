@@ -44,7 +44,8 @@ export default {
                 if(result.data.code == 200){
                     this.$message({
                         message:' 切换头像成功',
-                        type:'success'
+                        type:'success',
+                        offset:100,
                     });
                     this.userIfo();
                     this.img = [];

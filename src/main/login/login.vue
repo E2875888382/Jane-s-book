@@ -138,7 +138,8 @@ export default {
             }).catch(()=>{
                 this.$message({
                     message:'账号或密码错误',
-                    type:'warning'
+                    type:'warning',
+                    offset:100,
                 })
             })
         },
@@ -154,13 +155,15 @@ export default {
                         if(result.data.code == 0){
                             this.$message({
                                 message:'该邮箱已被注册',
-                                type:'warning'
+                                type:'warning',
+                                offset:100,
                             })
                         }else{
                             this.dialogNewVisible = false;
                             this.$message({
                                 message:'注册成功',
-                                type:'success'
+                                type:'success',
+                                offset:100,
                             });
                             this.log(newForm);
                         }

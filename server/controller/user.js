@@ -86,7 +86,7 @@ module.exports = {
         let birth = req.body.ifo.birth;
         let gender = req.body.ifo.gender;
         let sign = req.body.ifo.sign;
-        let sql = `UPDATE user SET gender ="${gender}",birthday ="${birth}",sign ="${sign}",nickName ="${nickName}"
+        let sql = `UPDATE user SET gender ="${gender}",birth ="${birth}",sign ="${sign}",nickName ="${nickName}"
         WHERE userID ="${current}"`;
         try{
             db(sql,()=>{

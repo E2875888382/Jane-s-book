@@ -18,7 +18,7 @@
             <span class="time">{{ item.time | dateFormat }}天前</span>
         </div>
         <p class="title">
-            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}" v-html="highLight(item.topic)"></router-link>
+            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}" v-html="highLight(item.title)"></router-link>
         </p>
         <div class="info">
             <span><van-icon name="comment" color="#999"/>{{ item.replyCount }}</span>

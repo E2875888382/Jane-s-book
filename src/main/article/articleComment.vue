@@ -32,7 +32,8 @@ export default {
             article.comment(this.article,this.comment).then((data)=>{
                 this.$message({
                     message:'评论成功',
-                    type:'success'
+                    type:'success',
+                    offset:100,
                 })
             })
         }

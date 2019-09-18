@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controller/user.js');
 
 // 增加用户
-router.post('/newUser',controller.new);
+router.post('/register',controller.new);
 
 // 查询登录
 router.post('/login',controller.login);

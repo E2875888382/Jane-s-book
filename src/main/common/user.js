@@ -5,7 +5,7 @@ export default{
         return req.post('login',form);
     },
     register(form){
-        return req.post('newUser',form);
+        return req.post('register',form);
     },
     logOut(){
         return req.get('out');

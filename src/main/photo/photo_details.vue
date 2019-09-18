@@ -122,10 +122,12 @@ export default {
             }else if(this.isMe){
                 this.$message({
                     message: '你是作者哦！',
+                    offset:100,
                 });
             }else{// 如果没有成为好友，无法发消息
                 this.$message({
                     message: '你和他/她还没有成为好友哦！',
+                    offset:100,
                 });
             }
         },
@@ -156,7 +158,8 @@ export default {
             })
             this.$message({
                 message: '添加收藏成功',
-                type: 'success'
+                type: 'success',
+                offset:100,
             });
             this.isCollected = true;
         },
