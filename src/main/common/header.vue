@@ -87,7 +87,7 @@ export default {
     top:0;
     width:100%;
     background-color: #fff;
-    z-index: 999;
+    z-index: 9999;
 }
 .new>>>.el-badge__content.is-fixed{
     top:8px;

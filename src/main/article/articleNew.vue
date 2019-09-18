@@ -1,74 +1,75 @@
 <template>
-    <div class="container col-8">
-        <div class="bread col-12">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                <el-breadcrumb-item>发新帖（仅限图文）</el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
-        <el-form :model="Form" :rules="rules" ref="Form"  class="demo-ruleForm col-12">
-            <el-form-item prop="topic" label="主题">
-                <el-input v-model="Form.topic" maxlength="40" show-word-limit></el-input>
-            </el-form-item>
-            <el-form-item prop="text" label="文字描述">
-                <el-input type="textarea" v-model="Form.text" :rows="8" resize="none" maxlength="500" show-word-limit></el-input>
-            </el-form-item>
-            <van-uploader @oversize="oversize" v-model="Form.img" multiple  :max-count="1" :max-size="1000000" preview-size="200"/>
-            <el-form-item>
-                <el-button type="primary" @click="submitForm('Form')">发帖</el-button>
-                <el-button @click="resetForm('Form')">重置</el-button>
-            </el-form-item>
-        </el-form>
+    <div class="container col-10">
+        <el-input v-model="title" maxlength="40" clearable>
+            <el-button slot="append" @click="submit">发帖</el-button>
+        </el-input>
+        <mavon-editor 
+            v-model="content" 
+            ref="md"
+            @change="change" 
+            @save="save"
+            :toolbars="toolbars"
+            placeholder=" " 
+            style="min-height: 600px"
+        />      
         <el-backtop></el-backtop>
     </div>
 </template>
 
 <script>
 import article from '../common/article.js'
+import { mavonEditor } from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 export default {
+    components: {
+        mavonEditor,
+    },
     data() {
       return {
-        Form:{
-            topic:'',
-            text:'',
-            img:[],
+        toolbars: {
+            imagelink: true, // 图片链接
+            code: true, // code
+            table: true, // 表格
+            help: true, // 帮助
+            undo: true, // 上一步
+            redo: true, // 下一步
+            trash: true, // 清空
+            save: true, // 保存（触发events中的save事件）
+            alignleft: true, // 左对齐
+            aligncenter: true, // 居中
+            alignright: true, // 右对齐
+            subfield: true, // 单双栏模式
+            preview: true, // 预览
         },
-        rules:{
-            topic: [
-                { required: true, message: '请填写主题', trigger: 'blur' }
-            ]
-        }
+        content:'', // 输入的markdown
+        html:'',    // 及时转的html
+        title:'',
       };
     },
     methods: {
+        change(value, render){
+            // render 为 markdown 解析后的结果[html]
+            this.html = render;
+        },
+        // 暂时保存
+        save(){
+            console.log(this.title,this.html)
+        },
         // 提交表单
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    var newStreet = {
-                        topic:this.Form.topic,
-                        content:this.Form.text,
-                        img:this.Form.img,
-                    }
-                    article.newArticle(newStreet).then((result)=>{
-                        if(result.data.code == 200){
-                            this.$message.success('发帖成功，快去步行街看看吧');
-                        }
-                    })
-                } else {
-                    this.$message.error('服务器错误，请稍后再试');
-                    return false;
-                }
-            });
+        submit() {
+            console.log(this.html)
+            // var newStreet = {
+            //     topic:this.Form.topic,
+            //     content:this.Form.text,
+            //     img:this.Form.img,
+            // }
+            // article.newArticle(newStreet).then((result)=>{
+            //     if(result.data.code == 200){
+            //         this.$message.success('发帖成功，快去步行街看看吧');
+            //     }
+            // })
         },
-        // 重置表单
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
-        },
-        // 图片oversize处理
-        oversize(){
-            this.$message( '请上传小于1M的图片');
-        },
+
     }
 }
 </script>
@@ -77,12 +78,11 @@ export default {
 .container{
     margin-top:80px;
     margin-bottom: 40px;
-    min-height:1000px;
+    min-height:700px;
 }
 .bread{
     height:30px;
     display: flex;
     align-items: center;
 }
- 
 </style>
