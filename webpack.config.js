@@ -1,7 +1,7 @@
-var path=require('path');
-var webpack=require('webpack');
-var htmlWebpackPlugin=require('html-webpack-plugin');
-var VueLoaderPlugin=require('vue-loader/lib/plugin');
+const path=require('path');
+const webpack=require('webpack');
+const htmlWebpackPlugin=require('html-webpack-plugin');
+const VueLoaderPlugin=require('vue-loader/lib/plugin');
 
 module.exports={
     entry:path.join(__dirname,'./src/main.js'),
@@ -31,8 +31,7 @@ module.exports={
             template:path.join(__dirname,'./src/index.html'),
             filename:'index.html'
         }),
-        new VueLoaderPlugin()
-        
+        new VueLoaderPlugin()       
     ],
     module:{
         rules:[
@@ -46,14 +45,11 @@ module.exports={
             { test:/\.js$/,use:'babel-loader',exclude:/node_modules/},
             //这是加载vue组件的配置
             { test:/\.vue$/,use:'vue-loader'}
-        ],
-        
+        ],     
     },
     resolve:{
         alias:{
             "vue$":"vue/dist/vue.js"
         }
     }  
-      
-
 }

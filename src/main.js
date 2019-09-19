@@ -22,6 +22,8 @@ Vue.use(infiniteScroll);
 Vue.use(Common);
 Vue.use(Vant);
 
+Vue.config.productionTip = false;
+
 new Vue({
     el:'#app',
     store,
