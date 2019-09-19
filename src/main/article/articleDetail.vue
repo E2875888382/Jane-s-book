@@ -90,8 +90,6 @@ export default {
                 {name:'按时间倒序',value:'timereverse'},
             ],
             active:'time',
-            isLogin:this.$store.state.loginFlag,
-            current:this.$route.params.articleId,
             comments:[],
             detail:{},
             currentComments:[],
@@ -101,10 +99,18 @@ export default {
             isPraised:false,
         }
     },
+    computed:{
+        current:function(){
+            return this.$route.params.articleId;
+        },
+        isLogin:function(){
+            return this.$store.state.loginFlag;
+        }
+    },
     components:{
         Comment
     },
-    mounted(){
+    activated(){
         this.load();
     },
     methods:{
@@ -168,13 +174,13 @@ export default {
         followed(){
             let author = this.detail.userID;
             user.follow(author,true).then(()=>{
-                this.userIfo();
+                this.$store.dispatch('userIfo');
             })
             this.isFollowed = true;
         },
         collected(){
             user.collect(this.current,true).then(()=>{
-                this.userIfo();
+                this.$store.dispatch('userIfo');
             })
             this.isCollected = true;
         },

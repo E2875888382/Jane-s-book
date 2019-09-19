@@ -26,12 +26,16 @@ import news from '../common/news.js'
 export default {
     data(){
         return {
-            id:this.$route.params.id,
             newsDetails:{},
             imgContent:[],
         }
     },
-    mounted(){
+    computed:{
+        id:function(){
+            return this.$route.params.id
+        }
+    },
+    activated(){
         this.getNewsDetails();
     },
     methods:{

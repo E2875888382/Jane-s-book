@@ -15,11 +15,8 @@ import router from './main/common/router.js'
 
 import store from './main/common/store.js'
 
-import Common from './main/common/common.js';
-
 Vue.use(ElementUI)
 Vue.use(infiniteScroll);
-Vue.use(Common);
 Vue.use(Vant);
 
 Vue.config.productionTip = false;

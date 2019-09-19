@@ -47,7 +47,7 @@ export default {
                         type:'success',
                         offset:100,
                     });
-                    this.userIfo();
+                    this.$store.dispatch('userIfo');
                     this.img = [];
                 }
             })

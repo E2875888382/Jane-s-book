@@ -90,7 +90,7 @@ export default {
         },
         unFollow(friend){
             user.follow(friend,false).then(()=>{
-                this.userIfo();
+                this.$store.dispatch('userIfo');
             })
             this.follower = null;
             this.followerWork = {};

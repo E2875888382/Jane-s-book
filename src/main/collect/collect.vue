@@ -42,7 +42,7 @@ export default {
         unCollect(articleID){
             new Promise((resolve)=>{
                 user.collect(articleID,false).then(()=>{
-                    this.userIfo();
+                    this.$store.dispatch('userIfo');
                 })
                 resolve()
             }).then(()=>{

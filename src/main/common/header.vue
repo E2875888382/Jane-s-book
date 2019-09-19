@@ -65,7 +65,7 @@ export default {
         search,
     },
     mounted(){
-        this.userIfo();
+        this.$store.dispatch('userIfo');
     },
     methods:{
         out(){

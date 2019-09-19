@@ -55,7 +55,7 @@ export default {
         },
         followed(item){
             user.follow(item.userID,true).then(()=>{
-                this.userIfo();
+                this.$store.dispatch('userIfo');
             })
             Object.assign(item,{
                 isFollowed:true,

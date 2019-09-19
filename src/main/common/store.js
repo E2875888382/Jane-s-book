@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import user from './user.js'
 Vue.use(Vuex);
 export default new Vuex.Store({
     state:{
         showHeader:true,
         showFooter:true,
         loginFlag:false,//登录状态标记
-        messageCount:0,//好友消息数目
-        userIfo:{},//用户信息
-        message:[],//好友信息
+        messageCount:0,//消息数目
+        userIfo:{},
+        message:[],//未读消息
         historyMessage:[],//已读消息
         friendsList:[],//好友列表
         photoCollection:[],//收藏相簿
@@ -19,7 +20,7 @@ export default new Vuex.Store({
             user:[],
             news:[],
         },
-        search:''//搜索的内容，用于格式化搜索结果
+        search:''//搜索的内容
     },
     mutations:{
         closeHeader(state,show){
@@ -48,6 +49,16 @@ export default new Vuex.Store({
         },
         searchContent(state,search){// 获取搜索框内容
             state.search = search;
+        }
+    },
+    actions:{
+        userIfo(context){
+            if(localStorage.getItem('token')){
+                user.userIfo().then((result)=>{
+                    context.commit('userStatus',true);
+                    context.commit('userIfo',result.data);
+                })
+            }
         }
     }
 })

@@ -135,7 +135,7 @@ export default {
         followed(){
             let author = this.photoDetails.userID;
             user.follow(author,true).then(()=>{
-                this.userIfo();
+                this.$store.dispatch('userIfo');
             })
             this.isFollowed = true;
         },
@@ -154,7 +154,7 @@ export default {
         // 收藏
         photoCollection(){
             user.collectPhoto(this.id,true).then(()=>{
-                this.userIfo();
+                this.$store.dispatch('userIfo');
             })
             this.$message({
                 message: '添加收藏成功',
