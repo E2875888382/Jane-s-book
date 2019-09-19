@@ -13,7 +13,7 @@ import App from './main/app.vue'
 
 import router from './main/common/router.js'
 
-import store from './main/common/store.js'
+import store from './main/store/index.js'
 
 Vue.use(ElementUI)
 Vue.use(infiniteScroll);

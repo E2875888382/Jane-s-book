@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import top from './common/header.vue'
-import bottom from './common/footer.vue'
+import top from './commonComponents/header.vue'
+import bottom from './commonComponents/footer.vue'
 
 export default{
      components:{
