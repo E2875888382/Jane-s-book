@@ -1,9 +1,19 @@
 <template>
 <div>
      <top v-if="$store.state.showHeader"></top>
+
      <transition mode="out-in">
-          <router-view></router-view>
+          <keep-alive>
+               <router-view v-if="$route.meta.keepAlive"/>
+          </keep-alive>
      </transition>
+
+     <transition mode="out-in">
+          <keep-alive>
+               <router-view v-if="!$route.meta.keepAlive"/>
+          </keep-alive>  
+     </transition> 
+     
      <bottom v-if="$store.state.showFooter"></bottom>
 </div>
 </template>
