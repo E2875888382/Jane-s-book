@@ -60,14 +60,25 @@ export default {
             let newArticle = {
                 title:this.title,
                 html:this.html,
-                // img:this.Form.img,
                 img:[],
             }
-            article.newArticle(newArticle).then((result)=>{
-                if(result.data.code == 200){
-                    this.$message.success('发帖成功，快去步行街看看吧');
-                }
-            })
+            if(this.title.trim() !== '' && this.html.trim() !== ''){
+                article.newArticle(newArticle).then((result)=>{
+                    if(result.data.code == 200){
+                        this.$message({
+                                message:'发帖成功，快去步行街看看吧',
+                                type:'success',
+                                offset:100,
+                            });
+                    }
+                })
+            }else{
+                this.$message({
+                    message:'标题或内容不能为空',
+                    type:'warning',
+                    offset:100,
+                });               
+            }
         },
 
     }

@@ -18,7 +18,7 @@
             <div class="content">
                 <h1 class="topic">{{ detail.title }}</h1>
                 <p class="info">{{ detail.time }} 阅读{{ detail.view }} 评论{{ detail.replyCount }}</p>
-                <p class="text">{{ detail.html }}</p>
+                <div class="text markdown-body" v-html="detail.html"></div>
                 <el-image v-if="detail.img" style="width:682px; height: 400px" :src="detail.img" fit="fill"></el-image>
             </div>
             <Comment v-if="isLogin" :article="current"></Comment>
@@ -80,6 +80,8 @@
 import Comment from './articleComment.vue'
 import user from '../common/user.js'
 import article from '../common/article.js'
+import 'mavon-editor/dist/css/index.css'
+import 'mavon-editor/dist/markdown/github-markdown.min.css'
 export default {
     data(){
         return {
@@ -122,6 +124,12 @@ export default {
         load(){
             article.detail(this.current).then((result)=>{
                 this.detail = result.data.detail[0];
+                this.detail.html = this.detail.html.replace(/&amp;/g, "&");
+                this.detail.html = this.detail.html.replace(/&lt;/g, "<");
+                this.detail.html = this.detail.html.replace(/&gt;/g, ">");
+                this.detail.html = this.detail.html.replace(/&nbsp;/g, " ");
+                this.detail.html = this.detail.html.replace(/&#39;/g, "\'");
+                this.detail.html = this.detail.html.replace(/&quot;/g, "\"");
                 this.comments = result.data.comments;
                 for(let value of this.comments){
                     Object.assign(value,{
@@ -189,7 +197,7 @@ export default {
             article.replyPraise(item.replyID,false);
             item.isPraised = false;
             item.praise--;
-        }
+        },
     },
     filters:{
         dateFormat:function(value){

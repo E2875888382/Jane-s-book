@@ -97,8 +97,14 @@ module.exports = {
         }else{
             newArticle.img = '';
         }
+        let html = newArticle.html;      
+        html = html.replace(/&/g, "&amp;");
+        html = html.replace(/</g, "&lt;");
+        html = html.replace(/>/g, "&gt;");
+        html = html.replace(/ /g, "&nbsp;");
+        html = html.replace(/\'/g, "&#39;");
         let sql=`INSERT INTO article(title,userID,TIME,html,img)
-        VALUES('${newArticle.title}','${current}','${time}','${newArticle.html}','${newArticle.img}')`;
+        VALUES('${newArticle.title}','${current}','${time}','${html}','${newArticle.img}')`;
         try{
             db(sql,()=>{
                 res.status(200).json({code:200});
