@@ -1,76 +1,101 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Index from '../index/index.vue'
-import Login from '../login/login.vue'
-import ArticleDetail from '../article/articleDetail.vue'
-import ArticleNew from '../article/articleNew.vue'
-import Follow from '../follow/follow.vue'
-import Collect from '../collect/collect.vue'
-import MyPage from '../mypage/mypage.vue'
-
-import Setting from '../set/set.vue'
-import baseset from '../set/baseSet.vue'
-import userset from '../set/userSet.vue'
-
-import Search from '../search/result.vue'
-import searcharticle from '../search/article.vue'
-import searchnews from '../search/news.vue'
-import searchphoto from '../search/photo.vue'
-import searchuser from '../search/user.vue'
-
-import News_details from '../news/news_details.vue'
-
-import Photo_index from '../photo/photo_index.vue'
-import Photo_details from '../photo/photo_details.vue'
-import Photo_new from '../photo/photo_new.vue'
-
 Vue.use(VueRouter)
 
 export default new VueRouter({
     routes:[
-        { path:'/',component:Index },
-        { path:'/login',component:Login },
-        { path:'/article/detail/:articleId',name:'articleDetail',component:ArticleDetail },
-        { path:'/article/new',name:'articleNew',component:ArticleNew },
-        { path:'/follow',name:'follow',component:Follow },
-        { path:'/collect',name:'collect',component:Collect },
-        { path:'/set',name:'set',component:Setting,redirect:'/set/baseset',
+        { 
+            path:'/',
+            component:() => import('../index/index.vue') 
+        },
+        { 
+            path:'/login',
+            component:() => import('../login/login.vue') 
+        },
+        { 
+            path:'/article/detail/:articleId',
+            name:'articleDetail',
+            component:() => import('../article/articleDetail.vue')
+        },
+        { 
+            path:'/article/new',
+            name:'articleNew',
+            component:() => import('../article/articleNew.vue')
+        },
+        { 
+            path:'/follow',
+            name:'follow',
+            component:() => import('../follow/follow.vue')
+        },
+        { 
+            path:'/collect',
+            name:'collect',
+            component:() => import('../collect/collect.vue')
+        },
+        { 
+            path:'/set',
+            name:'set',
+            component:() => import('../set/set.vue'),
+            redirect:'/set/baseset',
             children:[
                 {
                     path:'baseset',
-                    component:baseset
+                    component:() => import('../set/baseSet.vue')
                 },
                 {
                     path:'userset',
-                    component:userset
+                    component:() => import('../set/userSet.vue')
                 },
             ]
         },
-        { path:'/search',name:'search',component:Search,redirect:'/search/article',
+        { 
+            path:'/search',
+            name:'search',
+            component:() => import('../search/result.vue'),
+            redirect:'/search/article',
             children:[
                 {
                     path:'article',
-                    component:searcharticle
+                    component:() => import('../search/article.vue')
                 },
                 {
                     path:'news',
-                    component:searchnews
+                    component:() => import('../search/news.vue')
                 },
                 {
                     path:'user',
-                    component:searchuser
+                    component:() => import('../search/user.vue')
                 },
                 {
                     path:'photo',
-                    component:searchphoto
+                    component:() => import('../search/photo.vue')
                 },
             ]
         },
-        { path:'/newsDetails/:id',name:'newsDetails',component:News_details },
-        { path:'/photo',component:Photo_index },
-        { path:'/photoDetails/:id',name:'photoDetails',component:Photo_details },
-        { path:'/photo/new',component:Photo_new },
-        { path:'/mypage',name:'mypage',component:MyPage,meta:{ keepAlive:true }},
+        { 
+            path:'/newsDetails/:id',
+            name:'newsDetails',
+            component:() => import('../news/news_details.vue')
+        },
+        { 
+            path:'/photo',
+            component:() => import('../photo/photo_index.vue') 
+        },
+        { 
+            path:'/photoDetails/:id',
+            name:'photoDetails',
+            component:() => import('../photo/photo_details.vue')
+        },
+        { 
+            path:'/photo/new',
+            component:() => import('../photo/photo_new.vue')
+        },
+        { 
+            path:'/mypage',
+            name:'mypage',
+            component:() => import('../mypage/mypage.vue'),
+            meta:{ keepAlive:true }
+        },
     ]
 })
