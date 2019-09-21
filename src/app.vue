@@ -36,7 +36,7 @@ export default{
      transform: translate3d(100px,0,100px);
 } 
 .v-enter-active,.v-leave-active{
-     transition: all 0.2s;
+     transition: all 0.1s;
 }
 .el-popover--plain {
      padding: 10px !important;
