@@ -29,7 +29,7 @@ module.exports={
     plugins:[
         new webpack.HotModuleReplacementPlugin(),
         new htmlWebpackPlugin({
-            template:path.join(__dirname,'./src/index.html'),
+            template:path.join(__dirname,'./index.html'),
             filename:'index.html'
         }),
         new VueLoaderPlugin()       

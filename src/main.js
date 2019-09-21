@@ -9,11 +9,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 import infiniteScroll from 'vue-infinite-scroll';
 
 import Vue from 'vue'
-import App from './main/app.vue'
+import App from './app.vue'
 
-import router from './main/common/router.js'
+import router from './router/index.js'
 
-import store from './main/store/index.js'
+import store from './store/index.js'
 
 Vue.use(ElementUI)
 Vue.use(infiniteScroll);
