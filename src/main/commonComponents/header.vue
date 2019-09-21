@@ -18,19 +18,19 @@
                 </el-badge>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
-                        <div class="dropdown" @click="function(){$router.push({ name:'mypage'})}">
+                        <div class="dropdown" @click="jump('mypage')">
                             <van-icon name="manager" color="#ea6f5a"/>
                             <span>我的主页</span>
                         </div>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                        <div class="dropdown" @click="function(){$router.push({ name:'collect'})}">
+                        <div class="dropdown" @click="jump('collect')">
                             <van-icon name="label" color="#ea6f5a"/>
                             <span>我的收藏</span>
                         </div>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                        <div class="dropdown" @click="function(){$router.push({ name:'set'})}">
+                        <div class="dropdown" @click="jump('set')">
                             <van-icon name="setting" color="#ea6f5a"/>
                             <span>设置</span>
                         </div>
@@ -43,15 +43,15 @@
                     </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
-            <el-button type="danger" round icon="el-icon-edit" @click="function(){$router.push({name:'articleNew'})}">写文章</el-button>
+            <el-button type="danger" round icon="el-icon-edit" @click="jump('articleNew')">写文章</el-button>
         </div>
         <!-- 登录按钮 -->
         <div class="login_btn" v-if="!$store.state.loginFlag">
-            <el-link :underline="false" @click="function(){$router.push({ path:'/login'})}">登录</el-link>
+            <el-link :underline="false" @click="jump('login')">登录</el-link>
         </div>
         <!-- 注册按钮  -->
         <div class="new_btn"  v-if="!$store.state.loginFlag">
-            <el-link :underline="false"  @click="function(){$router.push({ path:'/login'})}">注册</el-link>
+            <el-link :underline="false"  @click="jump('login')">注册</el-link>
         </div>
     </div>
 </div>
@@ -68,6 +68,9 @@ export default {
         this.$store.dispatch('userIfo');
     },
     methods:{
+        jump(name){
+            this.$router.push({name:name});
+        },
         out(){
             user.logOut().then(()=>{
                 localStorage.clear();

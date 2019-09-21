@@ -16,6 +16,7 @@ const router =  new VueRouter({
         },
         { 
             path:'/login',
+            name:'login',
             meta:{
                 title:`登录 - Jane's book`,
                 keepAlive:true,

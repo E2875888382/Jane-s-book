@@ -1,11 +1,16 @@
 <template>
-<div style="width:280px;min-height:400px">
+<div>
     <p class="ranking_head">
         <span>24小时新闻</span>
         <span class="change" @click="getTenNews"><van-icon name="replay" />换一批</span>
     </p>
     <p class="ranking_item" v-for="(item,index) in tenNews" :key="index">
-        <span :class="{ number:index<3 }">{{ index+1 }}</span><router-link :to="'/newsDetails/'+item.newID">{{ item.title }}</router-link>
+        <span :class="{ number:index<3 }">
+            {{ index+1 }}           
+        </span>
+        <router-link :to="'/newsDetails/'+item.newID">
+            {{ item.title }}
+        </router-link>
     </p>
 </div>
 </template>
@@ -48,6 +53,7 @@ export default {
     justify-content: space-between;
 }
 .ranking_item{
+    width:280px;
     line-height: 20px;
     font-size: 12px;
     padding:3px;

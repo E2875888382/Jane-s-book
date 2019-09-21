@@ -2,8 +2,8 @@
 <div class="bg">
     <div class="oper">
         <div>
-            <div class="like" v-if="!isPraised" @click="praised"><van-icon name="good-job" color="#999"/></div>
-            <div class="like" v-if="isPraised" @click="cancelPraised"><van-icon name="good-job" color="gold"/></div>
+            <div class="like" v-if="!isPraised" @click="praised(true)"><van-icon name="good-job" color="#999"/></div>
+            <div class="like" v-if="isPraised" @click="praised(false)"><van-icon name="good-job" color="gold"/></div>
             <p>{{ detail.praise }}赞</p>
         </div>
         <div v-if="isLogin">
@@ -41,8 +41,8 @@
                         <p>{{ item.time | dateFormat }}天前</p>
                         <p>{{ item.content }}</p>
                         <div>
-                            <span v-if="!item.isPraised"><van-icon name="good-job" color="#999" @click="reply(item)"/>赞{{ item.praise }}</span>
-                            <span v-if="item.isPraised"><van-icon name="good-job" color="gold" @click="cancelreply(item)"/>赞{{ item.praise }}</span>
+                            <span v-if="!item.isPraised"><van-icon name="good-job" color="#999" @click="reply(item,true)"/>赞{{ item.praise }}</span>
+                            <span v-if="item.isPraised"><van-icon name="good-job" color="gold" @click="reply(item,false)"/>赞{{ item.praise }}</span>
                         </div>
                     </div>
                 </div>
@@ -184,25 +184,23 @@ export default {
             })
             this.isCollected = true;
         },
-        praised(){
-            article.praise(this.current,true);
-            this.isPraised = true;
-            this.detail.praise++;
+        praised(status){
+            article.praise(this.current,status);
+            this.isPraised = status;
+            if(status){
+                this.detail.praise++;
+            }else{
+                this.detail.praise--;
+            }      
         },
-        cancelPraised(){
-            article.praise(this.current,false);
-            this.isPraised = false;
-            this.detail.praise--;
-        },
-        reply(item){
-            article.replyPraise(item.replyID,true);
-            item.isPraised = true;
-            item.praise++;
-        },
-        cancelreply(item){
-            article.replyPraise(item.replyID,false);
-            item.isPraised = false;
-            item.praise--;
+        reply(item,status){
+            article.replyPraise(item.replyID,status);
+            item.isPraised = status;
+            if(status){
+                item.praise++;
+            }else{
+                item.praise--;
+            }          
         },
     },
     filters:{

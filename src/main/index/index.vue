@@ -20,7 +20,7 @@
         <p class="tips" v-if="finished">没有更多了</p>
     </div>
     <div>
-        <div class="photo_link" @click="function(){$router.push('/photo')}"></div>
+        <div class="photo_link" @click="$router.push('/photo')"></div>
         <news></news>
     </div>
     <el-backtop></el-backtop>
