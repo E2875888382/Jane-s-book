@@ -116,7 +116,7 @@ export default {
     mounted(){
         this.close();
     },
-    beforeDestroy(){
+    deactivated(){
         this.show();
     },
     methods:{
