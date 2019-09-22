@@ -1,5 +1,13 @@
 const db = require('../model/db.js');
 
+function sql(sql){
+    return new Promise((resolve)=>{
+        db(sql,(data)=>{
+            resolve(data);
+        })
+    })
+}
+
 module.exports = {
     detail(req,res){
         let sqlAddView = `UPDATE article SET view = view + 1  WHERE articleID = ${req.query.articleId}`;
@@ -10,27 +18,19 @@ module.exports = {
         let sqlComments = `SELECT user.avatar,user.nickName,reply.*
         FROM USER,reply
         WHERE user.userID = reply.userID AND articleID = ${req.query.articleId}`;
-        new Promise((resolve)=>{
-            db(sqlAddView,()=>{
-                resolve();
-            })
-        }).then(()=>{
-            return new Promise((resolve)=>{
-                db(sqlDeatil,(detail)=>{
-                    resolve(detail);
-                })
-            })
-        }).then((detail)=>{
-            db(sqlComments,(data)=>{
-                let result = {
+        (async ()=>{
+            try{
+                let addview = await sql(sqlAddView);
+                let detail = await sql(sqlDeatil);        
+                let comments = await sql(sqlComments);
+                res.status(200).json({
                     detail:detail,
-                    comments:data,
-                };
-                res.status(200).json(result);
-            })
-        }).catch((err)=>{
-            console.log(err);
-        })
+                    comments:comments,                 
+                });
+            }catch(e){
+                console.log(e);
+            }         
+        })()
     },
     comment(req,res){
         let token = Number(req.headers.token);
@@ -41,17 +41,15 @@ module.exports = {
         let sqlAddCommentCount = `UPDATE article SET replyCount = replyCount + 1  WHERE articleID = ${article}`;
         let sqlAddComment = `INSERT INTO reply(articleID,userID,TIME,content) VALUES (${article},
         '${current}','${time}','${content}')`;
-        new Promise((resolve)=>{
-            db(sqlAddCommentCount,()=>{
-                resolve()
-            })
-        }).then(()=>{
-            db(sqlAddComment,()=>{
+        (async ()=>{
+            try{
+                let count = await sql(sqlAddCommentCount);
+                let list = await sql(sqlAddComment);
                 res.status(200).json({ code:200 });
-            })
-        }).catch((err)=>{
-            console.log(err)
-        })
+            }catch(e){
+                console.log(e);
+            }
+        })()
     },
     praise(req,res){
         let status = req.query.status;
@@ -120,20 +118,17 @@ module.exports = {
         FROM article,USER
         WHERE article.userID = user.userID
         LIMIT ${begin},10`;
-        new Promise((resolve)=>{
-            db(sqlCount,(count)=>{
-                resolve(count);
-            })
-        }).then((count)=>{
-            db(sqlList,(data)=>{
-                let result = {
+        (async ()=>{
+            try{
+                let count = await sql(sqlCount);
+                let list = await sql(sqlList);
+                res.status(200).json({
                     count:count,
-                    list:data,
-                };
-                res.status(200).json(result);
-            })
-        }).catch((err)=>{
-            console.log(err);
-        })
+                    list:list,
+                });
+            }catch(e){
+                console.log(e);
+            }
+        })()
     }
 }

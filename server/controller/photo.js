@@ -1,5 +1,13 @@
 const db = require('../model/db.js');
 
+function sql(sql){
+    return new Promise((resolve)=>{
+        db(sql,(data)=>{
+            resolve(data);
+        })
+    })
+}
+
 module.exports = {
     photo(req,res){
         let begin = (req.query.page -1)*10;
@@ -8,21 +16,18 @@ module.exports = {
         FROM USER,photo
         WHERE user.userID = photo.userID
         LIMIT ${begin},10`;
-        new Promise((resolve)=>{
-            db(sqlCount,(count)=>{
-                resolve(count);
-            })
-        }).then((count)=>{
-            db(sqlList,(data)=>{
-                let result = {
+        (async ()=>{
+            try{
+                let count = await sql(sqlCount);
+                let list = await sql(sqlList);
+                res.status(200).json({
                     count:count,
-                    list:data,
-                };
-                res.status(200).json(result);
-            })
-        }).catch((err)=>{
-            console.log(err);
-        })
+                    list:list,
+                });
+            }catch(e){
+                console.log(e);
+            }
+        })()
     },
     detail(req,res){
         let photoID = req.query.photoID;
@@ -31,17 +36,15 @@ module.exports = {
         FROM USER,photo
         WHERE user.userID = photo.userID
         AND photoID = ${photoID}`;
-        new Promise((resolve)=>{
-            db(sqlAddView,()=>{
-                resolve()
-            })
-        }).then(()=>{
-            db(sqlDetail,(result)=>{
-                res.status(200).json(result);
-            })
-        }).catch((err)=>{
-            console.log(err);
-        })
+        (async ()=>{
+            try{
+                let addView = await sql(sqlAddView);
+                let detail = await sql(sqlDetail);
+                res.status(200).json(detail);
+            }catch(e){
+                console.log(e);
+            }
+        })()
     },
     praise(req,res){
         let photoID = req.query.photo;
