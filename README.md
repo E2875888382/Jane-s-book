@@ -27,20 +27,13 @@
 	- express
 
 - 运行方式：
-	1.
-		```
-		npm i 
-		```
+	1. ``` npm i ```
 	2. 创建MySQL数据库并修改db.config.js配置
-	3. 开启后台服务器，端口号：8000
-		```
-		cd server
-		node app.js 
-		```
-	4. 在根目录下开启webpack-dev-server，端口号：3000
-		```
-		npm run dev 
-		```
+	3. 开启后台服务器，端口(8000)
+		``` cd server ```
+		``` node app.js ```		
+	4. 在根目录下开启webpack-dev-server，端口(3000)
+		``` npm run dev ```
 	5. 打包完成自动打开loaclhost:3000/
 
 
