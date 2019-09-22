@@ -1,13 +1,13 @@
 <template>
 <div class="bg col-12">
-    <el-carousel height="264px" class="col-11 m-auto">
+    <el-carousel height="264px" class="m-auto" style="width:960px">
         <el-carousel-item v-for="item in banner" :key="item">
             <el-image class="banner_img" :src="item" fit="fill">
             </el-image>
         </el-carousel-item>
     </el-carousel>
 
-    <div class="col-11 m-auto leader">
+    <div class="m-auto leader">
         <el-page-header   content="全部相簿">
         </el-page-header>
         <div v-if="this.$store.state.loginFlag">
@@ -17,7 +17,7 @@
     </div>
 
 
-    <ul class="col-11 box m-auto" :style="{height:boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
+    <ul class="box m-auto" :style="{height:boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
         <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn">
             <div slot="waterfall-over">没有更多了</div>
             <div class="img-info" slot-scope="props">
@@ -44,10 +44,10 @@ export default {
     data(){
         return {
             boxheight:1000,// 容器初始高度
-            imgWidth:208,// 图片宽度
+            imgWidth:200,// 图片宽度
             imgs: [],// 图片数组
             group: 1,// 判断当前是第几组图片
-            maxcol:5,// 最大列数
+            maxcol:4,// 最大列数
             maxGroup:0,// 图片组最大组数
             banner:['https://i0.hdslb.com/bfs/vc/ef1b0509f201362abfc69e6a31e618323e07e73f.jpg@1376w_320h_1e.webp',
                     'https://i0.hdslb.com/bfs/vc/d5df1339b718ec50ef76726fab781c50aaf4b9ba.jpg@1376w_320h_1e.webp'],
@@ -108,7 +108,6 @@ export default {
 .bg{
     min-height:2000px;
     padding:30px 0;
-    background-color: #f2f3f5;
     margin-top:58px;
 }
 .banner_img{
@@ -117,6 +116,7 @@ export default {
     border-radius: 10px;
 }
 .box{
+    width:960px;
     padding-top: 40px;
 }
 .box>>>.vue-waterfall-easy-container .vue-waterfall-easy-scroll{
@@ -196,6 +196,7 @@ export default {
     justify-content: space-between;
     padding-top: 20px;
     height:40px;
+    width:960px;
 }
 .lead_link{
     color:#fd7e14 !important;

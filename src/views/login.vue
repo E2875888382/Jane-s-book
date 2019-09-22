@@ -114,34 +114,31 @@ export default {
         canvasCode,
     },
     mounted(){
-        this.close();
+        this.toggle(false);
     },
     deactivated(){
-        this.show();
+        this.toggle(true);
     },
     methods:{
-        close(){
-            this.$store.commit('closeHeader',false);
-            this.$store.commit('closeFooter',false);
-        },
-        show(){
-            this.$store.commit('closeHeader',true);
-            this.$store.commit('closeFooter',true);
+        toggle(status){
+            this.$store.commit('toggleHAF',status);
         },
         log(form){
-            user.login(form).then((result)=>{
-                if(result.data.code == 1){
-                    localStorage.setItem('token',result.data.token);
-                }
-            }).then(()=>{
-                this.$router.push({ path:'/'});
-            }).catch(()=>{
-                this.$message({
-                    message:'账号或密码错误',
-                    type:'warning',
-                    offset:100,
-                })
-            })
+            (async ()=>{
+                try{
+                    let result = await user.login(form);
+                    if(result.data.code == 1){
+                        localStorage.setItem('token',result.data.token);
+                    }
+                    this.$router.push({ path:'/'});
+                }catch(e){                 
+                    this.$message({
+                        message:'账号或密码错误',
+                        type:'warning',
+                        offset:100,
+                    })
+                }              
+            })()
         },
         // 注册
         newUser(){

@@ -66,6 +66,7 @@
                         {{ detail.nickName }}
                         <van-button plain type="danger" round size="mini" v-if="(isLogin&&!isFollowed)&&!isMe" @click="followed">关注</van-button>
                         <van-button plain type="info" round size="mini" v-if="(isLogin&&isFollowed)&&!isMe">已关注</van-button>
+                        <van-button plain type="info" round size="mini" v-if="isMe">我</van-button>
                     </div>
                     <p class="sign">{{ detail.sign }}</p>
                 </div>
@@ -97,14 +98,8 @@ export default {
             isCollected:false,
             isMe:false,
             isPraised:false,
-        }
-    },
-    computed:{
-        current:function(){
-            return this.$route.params.articleId;
-        },
-        isLogin:function(){
-            return this.$store.state.loginFlag;
+            isLogin:false,
+            current:'',
         }
     },
     components:{
@@ -112,6 +107,14 @@ export default {
     },
     activated(){
         this.load();
+        this.isLogin = this.$store.state.loginFlag;
+        this.current = this.$route.params.articleId;
+    },
+    deactivated(){
+        this.isFollowed = false;
+        this.isCollected = false;
+        this.isMe = false;
+        this.isPraised = false;
     },
     methods:{
         sortBy(type){
@@ -128,7 +131,7 @@ export default {
             }
         },
         load(){
-            article.detail(this.current).then((result)=>{
+            article.detail(this.$route.params.articleId).then((result)=>{
                 this.detail = result.data.detail[0];
                 this.detail.html = this.detail.html.replace(/&amp;/g, "&");
                 this.detail.html = this.detail.html.replace(/&lt;/g, "<");
@@ -157,7 +160,7 @@ export default {
             let articleCol = this.$store.state.streetCollection;
             let friend = this.$store.state.friendsList;
             articleCol.forEach(e=>{
-                if(e.streetID == this.current){
+                if(e.articleID == this.current){
                    this.isCollected = true;
                 }
             });

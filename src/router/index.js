@@ -28,7 +28,7 @@ const router =  new VueRouter({
             name:'articleDetail',
             meta:{
                 title:`Jane's book`,
-                keepAlive:false,
+                keepAlive:true,
             },
             component:() => import('../views/articleDetail.vue')
         },
@@ -46,7 +46,7 @@ const router =  new VueRouter({
             name:'follow',
             meta:{
                 title:`关注 - Jane's book`,
-                keepAlive:false,
+                keepAlive:true,
             },
             component:() => import('../views/follow.vue')
         },
@@ -55,7 +55,7 @@ const router =  new VueRouter({
             name:'collect',
             meta:{
                 title:`收藏 - Jane's book`,
-                keepAlive:false,
+                keepAlive:true,
             },
             component:() => import('../views/collect.vue')
         },

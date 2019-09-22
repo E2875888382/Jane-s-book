@@ -1,8 +1,6 @@
 export default{
-    closeHeader(state,show){
+    toggleHAF(state,show){
         state.showHeader = show;
-    },
-    closeFooter(state,show){
         state.showFooter = show;
     },
     userStatus(state,loginFlag){
