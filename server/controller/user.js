@@ -12,22 +12,17 @@ module.exports = {
                 resolve(data)
             })
         }).then((article)=>{
-            db(sqlPhoto,(data)=>{
-                let result = {
-                    article:article,
-                    photo:data,
-                };
-                res.status(200).json(result);
+            db(sqlPhoto,(photo)=>{
+                res.status(200).json({article,photo});
             })
-        }).catch((err)=>{
-            console.log(err);
+        }).catch((e)=>{
+            console.log(e);
         })
     },
     follow(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
-        let friend = req.query.friend;
-        let status = req.query.status;
+        let {friend,status} = req.query;
         let sql = ``;
         if(status == 'true'){
             sql = `INSERT  INTO friend(userID,friendID) VALUES ("${ current } ","${ friend }")`;
@@ -59,8 +54,9 @@ module.exports = {
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let time = new Date().toLocaleString();
+        let {receiverID,content} = req.body;
         let sql = `INSERT INTO message (userID,receiverID,content,time)
-        VALUES ("${current}","${ req.body.receiverID }","${ req.body.content}","${time}")`;
+        VALUES ("${current}","${receiverID}","${content}","${time}")`;
         try{
             db(sql,()=>{
                 res.status(200).json({ code:200 });
@@ -82,10 +78,7 @@ module.exports = {
     update(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
-        let nickName = req.body.ifo.nickName;
-        let birth = req.body.ifo.birth;
-        let gender = req.body.ifo.gender;
-        let sign = req.body.ifo.sign;
+        let {nickName,birth,gender,sign} = req.body.ifo;
         let sql = `UPDATE user SET gender ="${gender}",birth ="${birth}",sign ="${sign}",nickName ="${nickName}"
         WHERE userID ="${current}"`;
         try{
@@ -159,16 +152,13 @@ module.exports = {
     collect(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
-        let article = req.query.article;
         let time = new Date().toLocaleString();
-        let status = req.query.status;
-        let sql = ``;
+        let {article,status} = req.query;
+        let sql = `DELETE FROM articlecol
+        WHERE userID = ${current} AND articleID = ${article}`;
         if(status == 'true'){
             sql = `INSERT INTO articlecol (userID,articleID,TIME)
             VALUES (${current},${article},'${time}')`;
-        }else{
-            sql = `DELETE FROM articlecol
-            WHERE userID = ${current} AND articleID = ${article}`;
         }
         try{
             db(sql,()=>{
@@ -182,15 +172,12 @@ module.exports = {
         let time = new Date().toLocaleString();
         let token = Number(req.headers.token);
         let current = global.users.get(token);
-        let photo = req.query.photoID;
-        let status = req.query.status;
-        let sql = ``;
+        let {photoID,status} = req.query;
+        let sql = `DELETE FROM photocol
+        WHERE userID = ${current} AND photoID = ${photoID}`;
         if(status == 'true'){
             sql = `INSERT INTO photocol (userID,photoID,TIME)
-            VALUES (${current},${photo},'${time}')`;
-        }else{
-            sql = `DELETE FROM photocol
-            WHERE userID = ${current} AND photoID = ${photo}`;
+            VALUES (${current},${photoID},'${time}')`;
         }
         try{
             db(sql,()=>{
@@ -201,15 +188,16 @@ module.exports = {
         }
     },
     new(req,res){
-        let sql=`SELECT * FROM user WHERE email = "${req.body.email}"`;
+        let {email,password} = req.body;
+        let sql=`SELECT * FROM user WHERE email = "${email}"`;
         try{
             db(sql,(result)=>{
                 if(result.length!==0){
                     res.status(200).json({ code:0 });
                 }
                 else {
-                    let sql1=`INSERT INTO user (email,pwd) VALUES ("${req.body.email}","${req.body.password}")`;
-                    db(sql1,(result)=>{
+                    let sql1=`INSERT INTO user (email,pwd) VALUES ("${email}","${password}")`;
+                    db(sql1,()=>{
                         res.status(200).json({ code:1 });
                     })
                 }
@@ -219,7 +207,8 @@ module.exports = {
         }
     },
     login(req,res){
-        let sql=`SELECT * FROM user WHERE email ="${req.body.email}"AND pwd = "${req.body.password }"`;
+        let {email,password} = req.body; 
+        let sql=`SELECT * FROM user WHERE email ="${email}"AND pwd = "${password}"`;
         try{
             db(sql,(result)=>{
                 if(result.length==0){

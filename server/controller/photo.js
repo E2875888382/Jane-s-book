@@ -20,10 +20,7 @@ module.exports = {
             try{
                 let count = await sql(sqlCount);
                 let list = await sql(sqlList);
-                res.status(200).json({
-                    count:count,
-                    list:list,
-                });
+                res.status(200).json({count,list});
             }catch(e){
                 console.log(e);
             }
@@ -47,13 +44,10 @@ module.exports = {
         })()
     },
     praise(req,res){
-        let photoID = req.query.photo;
-        let status = req.query.status;
-        let sql = ``;
+        let {photo,status} = req.query;
+        let sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${photo}`;
         if(status == 'true'){
-            sql = `UPDATE photo SET praise = praise + 1 WHERE photoID = ${photoID}`;
-        }else{
-            sql = `UPDATE photo SET praise = praise - 1 WHERE photoID = ${photoID}`;
+            sql = `UPDATE photo SET praise = praise + 1 WHERE photoID = ${photo}`;
         }
         try{
             db(sql,()=>{
@@ -64,12 +58,11 @@ module.exports = {
         }
     },
     new(req,res){
+        let {tags,src,title,time,photo} = req.body;
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let sql = `INSERT INTO photo (userID,tags,src,title,TIME,photo)
-        VALUES(${current},'${req.body.tags}',
-        '${req.body.src}','${req.body.title}','${req.body.time}',
-        '${req.body.photo}')`;
+        VALUES(${current},'${tags}','${src}','${title}','${time}','${photo}')`;
         try{
             db(sql,()=>{
                 res.status(200).json({ code:200 });

@@ -10,33 +10,30 @@ function sql(sql){
 
 module.exports = {
     detail(req,res){
-        let sqlAddView = `UPDATE article SET view = view + 1  WHERE articleID = ${req.query.articleId}`;
+        let {articleId} = req.query;
+        let sqlAddView = `UPDATE article SET view = view + 1  WHERE articleID = ${articleId}`;
         let sqlDeatil = `SELECT user.userID,user.nickName,user.avatar,user.sign,article.*
         FROM article,USER
         WHERE article.userID = user.userID AND
-        articleID = ${req.query.articleId}`;
+        articleID = ${articleId}`;
         let sqlComments = `SELECT user.avatar,user.nickName,reply.*
         FROM USER,reply
-        WHERE user.userID = reply.userID AND articleID = ${req.query.articleId}`;
+        WHERE user.userID = reply.userID AND articleID = ${articleId}`;
         (async ()=>{
             try{
                 let addview = await sql(sqlAddView);
                 let detail = await sql(sqlDeatil);        
                 let comments = await sql(sqlComments);
-                res.status(200).json({
-                    detail:detail,
-                    comments:comments,                 
-                });
+                res.status(200).json({detail,comments});
             }catch(e){
                 console.log(e);
             }         
         })()
     },
     comment(req,res){
+        let {article,content} = req.body;
         let token = Number(req.headers.token);
         let current = global.users.get(token);
-        let article = req.body.article;
-        let content = req.body.content;
         let time = new Date().toLocaleString();
         let sqlAddCommentCount = `UPDATE article SET replyCount = replyCount + 1  WHERE articleID = ${article}`;
         let sqlAddComment = `INSERT INTO reply(articleID,userID,TIME,content) VALUES (${article},
@@ -52,13 +49,10 @@ module.exports = {
         })()
     },
     praise(req,res){
-        let status = req.query.status;
-        let article = req.query.article;
-        let sql = ``;
+        let {status,article} = req.query;
+        let sql = `UPDATE article SET praise = praise - 1 WHERE articleID = ${article}`;
         if(status == 'true'){
             sql = `UPDATE article SET praise = praise + 1 WHERE articleID = ${article}`;
-        }else{
-            sql = `UPDATE article SET praise = praise - 1 WHERE articleID = ${article}`;
         }
         try{
             db(sql,()=>{
@@ -69,13 +63,10 @@ module.exports = {
         }
     },
     replyPraise(req,res){
-        let streetReplyID = req.query.streetReplyID;
-        let status = req.query.status;
-        let sql = ``;
+        let {streetReplyID,status} = req.query;
+        let sql = `UPDATE reply SET praise = praise - 1 WHERE replyID = ${streetReplyID}`;
         if(status == 'true'){
             sql = `UPDATE reply SET praise = praise + 1 WHERE replyID = ${streetReplyID}`;
-        }else{
-            sql = `UPDATE reply SET praise = praise - 1 WHERE replyID = ${streetReplyID}`;
         }
         try{
             db(sql,()=>{
@@ -89,20 +80,19 @@ module.exports = {
         let token = Number(req.headers.token);
         let current = global.users.get(token);
         let time = new Date().toLocaleDateString();
-        let newArticle = req.body.new;
-        if(req.body.new.img[0]){
-            newArticle.img = req.body.new.img[0].content;
+        let {new:{img,html,title}} = req.body;
+        if(img[0]){
+            img = img[0].content;
         }else{
-            newArticle.img = '';
-        }
-        let html = newArticle.html;      
+            img = '';
+        }    
         html = html.replace(/&/g, "&amp;");
         html = html.replace(/</g, "&lt;");
         html = html.replace(/>/g, "&gt;");
         html = html.replace(/ /g, "&nbsp;");
         html = html.replace(/\'/g, "&#39;");
         let sql=`INSERT INTO article(title,userID,TIME,html,img)
-        VALUES('${newArticle.title}','${current}','${time}','${html}','${newArticle.img}')`;
+        VALUES('${title}','${current}','${time}','${html}','${img}')`;
         try{
             db(sql,()=>{
                 res.status(200).json({code:200});
@@ -122,10 +112,7 @@ module.exports = {
             try{
                 let count = await sql(sqlCount);
                 let list = await sql(sqlList);
-                res.status(200).json({
-                    count:count,
-                    list:list,
-                });
+                res.status(200).json({count,list});
             }catch(e){
                 console.log(e);
             }
