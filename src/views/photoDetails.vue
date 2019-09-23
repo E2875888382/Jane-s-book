@@ -98,14 +98,13 @@ export default {
         // 检查状态
         statusCheck(){
             let author = this.photoDetails.userID;
-            let photoCollection = this.$store.state.photoCollection;
-            let friend = this.$store.state.friendsList;
+            let {photoCollection,friendsList} = this.$store.state;
             photoCollection.forEach(e=>{
                 if(e.photoID == this.id){
                    this.isCollected = true;
                 }
             });
-            friend.forEach(e=>{
+            friendsList.forEach(e=>{
                 if(e.userID == author){
                     this.isFollowed = true;
                 }
@@ -124,7 +123,7 @@ export default {
                     message: '你是作者哦！',
                     offset:100,
                 });
-            }else{// 如果没有成为好友，无法发消息
+            }else{
                 this.$message({
                     message: '你和他/她还没有成为好友哦！',
                     offset:100,

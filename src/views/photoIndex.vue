@@ -43,12 +43,12 @@ import photo from '../api/photo.js'
 export default {
     data(){
         return {
-            boxheight:1000,// 容器初始高度
-            imgWidth:200,// 图片宽度
-            imgs: [],// 图片数组
-            group: 1,// 判断当前是第几组图片
-            maxcol:4,// 最大列数
-            maxGroup:0,// 图片组最大组数
+            boxheight:1000,
+            imgWidth:200,
+            imgs: [],
+            group: 1,
+            maxcol:4,
+            maxGroup:0,
             banner:['https://i0.hdslb.com/bfs/vc/ef1b0509f201362abfc69e6a31e618323e07e73f.jpg@1376w_320h_1e.webp',
                     'https://i0.hdslb.com/bfs/vc/d5df1339b718ec50ef76726fab781c50aaf4b9ba.jpg@1376w_320h_1e.webp'],
         }
@@ -63,10 +63,10 @@ export default {
         // 加载图片组
         init(n){
             photo.get(n).then(({ data:{ list,count } })=>{
-                this.imgs = this.imgs.concat(list);
+                this.imgs = [...this.imgs,...list];
                 this.maxGroup = Math.ceil(count[0]['COUNT(*)'] / 10);
-                this.boxheight += 600;// 容器高度增加
-                this.group++;// 当前组数增加1
+                this.boxheight += 600;
+                this.group++;
             }).catch((err)=>{
                 console.log(err);
             })
@@ -91,11 +91,11 @@ export default {
         },
         // 点赞相簿
         praise(id,event){
-            // 如果当前事件目标没有praise样式，说明没有点赞过，触发点赞
+            // 根据praise样式判断点赞状态
             if(!event.target.classList.contains("praise")){
                 photo.praisePhoto(id,true);
                 event.target.classList.add('praise');
-            }else{// 否则就是点赞过了，触发取消点赞
+            }else{
                 photo.praisePhoto(id,false);
                 event.target.classList.remove('praise');
             }

@@ -43,7 +43,7 @@ export default {
             birthday:'',
         }
     },
-    created(){
+    activated(){
         this.init();
     },
     methods:{

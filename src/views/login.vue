@@ -148,8 +148,8 @@ export default {
                         email:this.newForm.email,
                         password:md5(this.newForm.password),
                     }
-                    user.register(newForm).then((result)=>{
-                        if(result.data.code == 0){
+                    user.register(newForm).then(({data:{code}})=>{
+                        if(code == 0){
                             this.$message({
                                 message:'该邮箱已被注册',
                                 type:'warning',

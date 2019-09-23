@@ -157,14 +157,13 @@ export default {
         },
         statusCheck(){
             let author = this.detail.userID;
-            let articleCol = this.$store.state.streetCollection;
-            let friend = this.$store.state.friendsList;
-            articleCol.forEach(e=>{
+            let {streetCollection,friendsList} = this.$store.state;
+            streetCollection.forEach(e=>{
                 if(e.articleID == this.current){
                    this.isCollected = true;
                 }
             });
-            friend.forEach(e=>{
+            friendsList.forEach(e=>{
                 if(e.userID == author){
                     this.isFollowed = true;
                 }

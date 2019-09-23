@@ -32,7 +32,7 @@ export default {
             article:null,
         }
     },
-    mounted(){
+    activated(){
         this.load();
     },
     methods:{

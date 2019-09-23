@@ -63,8 +63,8 @@ export default {
                 img:[],
             }
             if(this.title.trim() !== '' && this.html.trim() !== ''){
-                article.newArticle(newArticle).then((result)=>{
-                    if(result.data.code == 200){
+                article.newArticle(newArticle).then(({data:{code}})=>{
+                    if(code == 200){
                         this.$message({
                                 message:'发帖成功，快去步行街看看吧',
                                 type:'success',
