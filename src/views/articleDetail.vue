@@ -131,15 +131,15 @@ export default {
             }
         },
         load(){
-            article.detail(this.$route.params.articleId).then((result)=>{
-                this.detail = result.data.detail[0];
+            article.detail(this.$route.params.articleId).then(({ data:{ detail,comments } })=>{
+                this.detail = detail[0];
                 this.detail.html = this.detail.html.replace(/&amp;/g, "&");
                 this.detail.html = this.detail.html.replace(/&lt;/g, "<");
                 this.detail.html = this.detail.html.replace(/&gt;/g, ">");
                 this.detail.html = this.detail.html.replace(/&nbsp;/g, " ");
                 this.detail.html = this.detail.html.replace(/&#39;/g, "\'");
                 this.detail.html = this.detail.html.replace(/&quot;/g, "\"");
-                this.comments = result.data.comments;
+                this.comments = comments;
                 for(let value of this.comments){
                     Object.assign(value,{
                         isPraised:false,

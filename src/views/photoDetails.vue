@@ -82,8 +82,8 @@ export default {
     methods: {
         // 查询详情
         getPhotoDetails(){
-            photo.detail(this.id).then((result) =>{
-                this.photoDetails = result.data[0];
+            photo.detail(this.id).then(({data}) =>{
+                this.photoDetails = data[0];
                 if(this.$store.state.loginFlag){// 如果已经登录，检查各种状态
                     this.statusCheck();
                 }

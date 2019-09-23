@@ -56,9 +56,9 @@ export default {
         },
         //获取新闻详情
         getNewsDetails(){
-            news.detail(this.id).then((result) =>{
+            news.detail(this.id).then(({data}) =>{
                 this.imgContent = [];//防止前面的内容重叠
-                this.newsDetails = result.data[0];
+                this.newsDetails = data[0];
                 if(this.newsDetails.imgContent){
                     this.imgContent = this.newsDetails.imgContent.split(',')
                 }

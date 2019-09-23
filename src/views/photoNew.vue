@@ -66,7 +66,6 @@ export default {
         }
     },
     methods: {
-        // oversize触发
         oversize(){
             this.$message({
                     message:'请上传小于1M的图片',
@@ -74,18 +73,15 @@ export default {
                     offset:100,
                 });
         },
-        // tag关闭触发
         handleClose(tag) {
             this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
         },
-
         showInput() {
             this.inputVisible = true;
             this.$nextTick(_ => {
                 this.$refs.saveTagInput.$refs.input.focus();
             });
         },
-
         handleInputConfirm() {
             let inputValue = this.inputValue;
             if (inputValue) {
@@ -94,14 +90,12 @@ export default {
             this.inputVisible = false;
             this.inputValue = '';
         },
-
         reset(){
             this.title = '';
             this.dynamicTags = ['私服', '生活'];
             this.src = [];
             this.photo = [];
         },
-
         addNewPhoto(){
             if((this.title.trim()!==''&&this.src.length !== 0)&&this.photo.length !== 0 ){
                 let tags = this.dynamicTags.join(',');
@@ -112,8 +106,8 @@ export default {
                     temp.push(this.photo[i].content)
                 };
                 let photos = temp.join('@');
-                photo.newPhoto(tags,src,this.title,time,photos).then((result)=>{
-                    if(result.data.code == 200){
+                photo.newPhoto(tags,src,this.title,time,photos).then(({data:{code}})=>{
+                    if(code == 200){
                         this.$message({
                             message:'发表成功',
                             type:'success',

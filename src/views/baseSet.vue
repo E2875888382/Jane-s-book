@@ -40,8 +40,8 @@ export default {
     methods:{
         afterRead(){
             this.ava = this.img[0].content;
-            user.avatar(this.avatar).then((result)=>{
-                if(result.data.code == 200){
+            user.avatar(this.avatar).then(({data:{code}})=>{
+                if(code == 200){
                     this.$message({
                         message:' 切换头像成功',
                         type:'success',

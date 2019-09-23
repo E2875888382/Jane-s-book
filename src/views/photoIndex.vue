@@ -56,17 +56,17 @@ export default {
     components: {
         vueWaterfallEasy
     },
-    mounted(){
-        this.init(this.group);// mounted阶段获取图片最多能有多少组
+    created(){
+        this.init(this.group);
     },
     methods:{
         // 加载图片组
         init(n){
-            photo.get(n).then((result)=>{
-                this.imgs = this.imgs.concat(result.data.list);// 增量添加图片
-                this.maxGroup = Math.ceil(result.data.count[0]['COUNT(*)'] / 10);
-                this.boxheight += 600;// 容器高度增加，不然没法容纳图片
-                this.group++;// 记载完1组图片当前组数增加1
+            photo.get(n).then(({ data:{ list,count } })=>{
+                this.imgs = this.imgs.concat(list);
+                this.maxGroup = Math.ceil(count[0]['COUNT(*)'] / 10);
+                this.boxheight += 600;// 容器高度增加
+                this.group++;// 当前组数增加1
             }).catch((err)=>{
                 console.log(err);
             })

@@ -86,9 +86,9 @@ export default {
     methods:{
         init(){
             let current = this.$store.state.userIfo.userID;
-            user.followerWork(current).then((result)=>{
-                this.article = result.data.article;
-                this.photo = result.data.photo;
+            user.followerWork(current).then(({ data:{ article,photo } })=>{
+                this.article = article;
+                this.photo = photo;
             })
         },
     }

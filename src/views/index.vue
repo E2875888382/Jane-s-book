@@ -48,9 +48,9 @@ export default {
     },
     methods:{
         article(n){
-            article.get(n).then((result)=>{
-                this.articleList = this.articleList.concat(result.data.list);
-                this.count = result.data.count[0]['COUNT(*)'];
+            article.get(n).then(({ data:{ list,count } })=>{
+                this.articleList = this.articleList.concat(list);
+                this.count = count[0]['COUNT(*)'];
                 this.currentPage++;
             }).catch((err)=>{
                 console.log(err);

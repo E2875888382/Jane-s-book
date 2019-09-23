@@ -28,8 +28,8 @@ export default {
     },
     methods:{
         getTenNews(){
-            news.getNews().then((result)=>{
-                this.tenNews = result.data;
+            news.getNews().then(({data})=>{
+                this.tenNews = data;
             })
         }
     }

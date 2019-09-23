@@ -52,8 +52,8 @@ export default {
             if(this.input.trim()!==''){// 去除空格后判断是否为空
                 this.$store.commit('searchContent',this.input);
                 this.$router.push({ path:'/search'});// 跳转到搜索结果页
-                req.get('search', {search:this.input}).then((result)=>{
-                    this.$store.commit('searchResult',result.data)
+                req.get('search', {search:this.input}).then(({data})=>{
+                    this.$store.commit('searchResult',data);
                 })
             }
         }

@@ -6,20 +6,20 @@ export default{
     userStatus(state,loginFlag){
         state.loginFlag = loginFlag;
     },
-    userIfo(state,data){
-        state.userIfo = data.userIfo[0];
-        state.friendsList = data.friend;
-        state.photoCollection = data.photoCol;
-        state.streetCollection = data.articleCol;
-        state.message = data.newMsg;
-        state.historyMessage = data.hisMsg;
-        state.messageCount = data.newMsg.length;
+    userIfo(state,{userIfo,friend,photoCol,articleCol,newMsg,hisMsg}){
+        state.userIfo = userIfo[0];
+        state.friendsList = friend;
+        state.photoCollection = photoCol;
+        state.streetCollection = articleCol;
+        state.message = newMsg;
+        state.historyMessage = hisMsg;
+        state.messageCount = newMsg.length;
     },
-    searchResult(state,data){// 获取搜索帖子结果
-        state.result.article = data.article;
-        state.result.photo = data.photo;
-        state.result.user = data.user;
-        state.result.news = data.news;
+    searchResult(state,{article,photo,user,news}){// 获取搜索帖子结果
+        state.result.article = article;
+        state.result.photo = photo;
+        state.result.user = user;
+        state.result.news = news;
     },
     searchContent(state,search){// 获取搜索框内容
         state.search = search;

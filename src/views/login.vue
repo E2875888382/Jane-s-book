@@ -126,9 +126,9 @@ export default {
         log(form){
             (async ()=>{
                 try{
-                    let result = await user.login(form);
-                    if(result.data.code == 1){
-                        localStorage.setItem('token',result.data.token);
+                    let {data:{code,token}} = await user.login(form);
+                    if(code == 1){
+                        localStorage.setItem('token',token);
                     }
                     this.$router.push({ path:'/'});
                 }catch(e){                 
@@ -174,11 +174,10 @@ export default {
         login(){
             this.$refs['loginForm'].validate((valid) => {
                 if(valid){
-                    let form = {
+                    this.log({
                         email:this.loginForm.email,
                         password:md5(this.loginForm.password),
-                    }
-                    this.log(form);
+                    });
                 }else{
                     return false;
                 }
