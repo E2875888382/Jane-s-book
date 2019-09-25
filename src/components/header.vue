@@ -5,7 +5,7 @@
         <ul>
             <li><router-link to="/">发现</router-link></li>
             <li v-if="$store.state.loginFlag"><router-link to="/follow">关注</router-link></li>
-            <li v-if="$store.state.loginFlag"><router-link to="/">消息</router-link></li>
+            <li v-if="$store.state.loginFlag"><router-link to="/chat">消息</router-link></li>
         </ul>
         <search></search>
     </div>

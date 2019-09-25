@@ -59,6 +59,15 @@ const router =  new VueRouter({
             },
             component:() => import('../views/collect.vue')
         },
+        {
+            path:'/chat',
+            name:'chat',
+            meta:{
+                title:`聊天 - Jane's book`,
+                keepAlive:false,
+            },
+            component:() => import('../views/chat.vue')
+        },
         { 
             path:'/set',
             name:'set',

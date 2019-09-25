@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const socketio = require('socket.io');
 
 const article = require('./router/article');
 const user = require('./router/user');
@@ -33,6 +34,23 @@ app.use(news);
 app.use(photo);
 app.use(search);
 
-app.listen(8000,function(){
+let map = new Map();
+
+const io = socketio(app.listen(8000,function(){
     console.log('----- server on -----');
-});
+}))
+
+io.on('connection',(client)=>{
+    client.on('login',({uid,name})=>{
+        map.set(uid,{name:name,id:client.id});
+        console.log(map)
+    })
+    client.on('sendMsg', function({uid,toUid,msg}) {
+        if(map.has(toUid)){
+            let socketid = map.get(toUid).id;
+            let toName = map.get(toUid).name;
+            let name = map.get(uid).name;
+            io.to(socketid).emit('getMsg',{uid,name,toName,toUid,msg});
+        }                    
+    });
+})
