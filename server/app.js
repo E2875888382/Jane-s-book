@@ -48,9 +48,7 @@ io.on('connection',(client)=>{
     client.on('sendMsg', function({uid,toUid,msg}) {
         if(map.has(toUid)){
             let socketid = map.get(toUid).id;
-            let toName = map.get(toUid).name;
-            let name = map.get(uid).name;
-            io.to(socketid).emit('getMsg',{uid,name,toName,toUid,msg});
+            io.to(socketid).emit('getMsg',{uid,toUid,msg});
         }                    
     });
 })
