@@ -19,7 +19,10 @@ const state = {
         user:[],
         news:[],
     },
-    search:''
+    search:'',
+    totalMsg:[],
+    unRead:0,
+    socket:null,
 };
 
 export default new Vuex.Store({

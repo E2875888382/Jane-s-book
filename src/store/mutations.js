@@ -1,4 +1,16 @@
 export default{
+    initSocket(state,newSocket){
+        state.socket = newSocket;
+    },
+    addMsg(state,newMsg){
+        state.totalMsg.push(newMsg);
+    },
+    newMsg(state){
+        state.unRead++;
+    },
+    allRead(state){
+        state.unRead = 0;
+    },
     toggleHAF(state,show){
         state.showHeader = show;
         state.showFooter = show;
@@ -6,7 +18,7 @@ export default{
     userStatus(state,loginFlag){
         state.loginFlag = loginFlag;
     },
-    userIfo(state,{userIfo,friend,photoCol,articleCol,newMsg,hisMsg}){
+    userIfo(state,{userIfo,friend,photoCol,articleCol}){
         state.userIfo = userIfo[0];
         state.friendsList = friend;
         state.photoCollection = photoCol;

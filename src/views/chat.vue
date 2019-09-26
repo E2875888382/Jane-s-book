@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import io from '../../node_modules/socket.io-client'
 export default {
     data(){
         return {
@@ -35,38 +34,23 @@ export default {
             userID:this.$store.state.userIfo.userID,
             name:this.$store.state.userIfo.nickName,        
             input:'',
-            totalMsg:[],
-            socket:null,
             activeName:'',
         }
     },
     computed:{
         cur:function(){
             let res = [];
-            for(let i = 0;i < this.totalMsg.length;i++){
-                if(this.totalMsg[i].uid == this.activeName|| this.totalMsg[i].toUid == this.activeName){
-                    res.push(this.totalMsg[i]);
+            let msg = this.$store.state.totalMsg;
+            for(let i = 0;i < msg.length;i++){
+                if(msg[i].uid == this.activeName|| msg[i].toUid == this.activeName){
+                    res.push(msg[i]);
                 }
             }
             return res;
         }
     },
     mounted(){
-        this.socket = io('http://localhost:8000');
-        this.socket.emit('login',{uid:this.userID,name:this.name});
-        this.socket.on('getMsg', (data)=>{
-            this.totalMsg.push({
-                index:new Date().getTime(),
-                time:new Date().toLocaleString(),
-                from:1,
-                uid:data.uid,
-                toUid:data.toUid,
-                msg:data.msg
-            })
-        });  
-        this.socket.on('disconnect', function() { 
-            console.log('Server socket has closed.'); 
-        }); 
+        this.$store.commit('allRead');
     },
     methods:{
         send(){
@@ -78,8 +62,8 @@ export default {
                 toUid:this.activeName,
                 msg:this.input
             };
-            this.totalMsg.push(msg);
-            this.socket.emit('sendMsg',msg);
+            this.$store.commit('addMsg',msg);
+            this.$store.state.socket.emit('sendMsg',msg);
         },
     }
 }

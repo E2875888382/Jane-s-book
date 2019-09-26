@@ -5,7 +5,13 @@
         <ul>
             <li><router-link to="/">发现</router-link></li>
             <li v-if="$store.state.loginFlag"><router-link to="/follow">关注</router-link></li>
-            <li v-if="$store.state.loginFlag"><router-link to="/chat">消息</router-link></li>
+            <li v-if="$store.state.loginFlag">
+                <el-badge :value="$store.state.unRead" :hidden="$store.state.unRead == 0" class="item">
+                    <router-link to="/chat">                      
+                            消息                      
+                    </router-link>
+                </el-badge>
+            </li>
         </ul>
         <search></search>
     </div>
@@ -90,8 +96,11 @@ export default {
     background-color: #fff;
     z-index: 9999;
 }
-.new>>>.el-badge__content.is-fixed{
-    top:8px;
+.el-badge{
+    vertical-align: top;
+}
+div>>>.el-badge__content.is-fixed{
+    top:15px;
 }
 .login_btn,.new_btn{
     height: 42px;
