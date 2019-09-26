@@ -13,9 +13,7 @@
         <!-- 登录后状态框 -->
         <div class="new" v-if="$store.state.loginFlag">
             <el-dropdown placement="bottom-start">
-                <el-badge :is-dot="Boolean($store.state.messageCount)" >
-                    <van-image width="40" height="40" class="user_img" :src="$store.state.userIfo.avatar"/>
-                </el-badge>
+                <van-image width="40" height="40" class="user_img" :src="$store.state.userIfo.avatar"/>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
                         <div class="dropdown" @click="jump('mypage')">

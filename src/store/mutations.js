@@ -11,9 +11,6 @@ export default{
         state.friendsList = friend;
         state.photoCollection = photoCol;
         state.streetCollection = articleCol;
-        state.message = newMsg;
-        state.historyMessage = hisMsg;
-        state.messageCount = newMsg.length;
     },
     searchResult(state,{article,photo,user,news}){// 获取搜索帖子结果
         state.result.article = article;

@@ -50,31 +50,6 @@ module.exports = {
             console.log(e);
         }
     },
-    msg(req,res){
-        let token = Number(req.headers.token);
-        let current = global.users.get(token);
-        let time = new Date().toLocaleString();
-        let {receiverID,content} = req.body;
-        let sql = `INSERT INTO message (userID,receiverID,content,time)
-        VALUES ("${current}","${receiverID}","${content}","${time}")`;
-        try{
-            db(sql,()=>{
-                res.status(200).json({ code:200 });
-            })
-        }catch(e){
-            console.log(e);
-        }
-    },
-    isRead(req,res){
-        let sql = `UPDATE message SET isRead = 1 WHERE messageID = "${ req.query.id }"`;
-        try{
-            db(sql,()=>{
-                res.status(200).json({ code:200 });
-            })
-        }catch(e){
-            console.log(e);
-        }
-    },
     update(req,res){
         let token = Number(req.headers.token);
         let current = global.users.get(token);
@@ -109,12 +84,6 @@ module.exports = {
             let sqlFriend = `SELECT user.userID,user.nickName,user.avatar,user.sign,user.gender
             FROM USER,friend
             WHERE user.userID = friend.friendID AND friend.userID =${current}`;
-            let sqlNewMsg = `SELECT message.time,message.content,user.nickName,message.messageID
-            FROM message,USER
-            WHERE message.userID = user.userID AND message.receiverID = ${current} AND message.isRead = 0`;
-            let sqlHisMsg = `SELECT message.time,message.content,user.nickName,message.messageID
-            FROM message,USER
-            WHERE message.userID = user.userID AND message.receiverID = ${current} AND message.isRead = 1`;
             let articleCol = `SELECT article.articleID,articlecol.time,article.title,article.view,article.replyCount
             FROM article,articlecol
             WHERE article.articleID = articlecol.articleID
@@ -136,11 +105,9 @@ module.exports = {
                     let result = {};
                     let result1 = await ifo(result,sqlUserIfo,'userIfo');
                     let result2 = await ifo(result1,sqlFriend,'friend');
-                    let result3 = await ifo(result2,sqlNewMsg,'newMsg');
-                    let result4 = await ifo(result3,sqlHisMsg,'hisMsg');
-                    let result5 = await ifo(result4,articleCol,'articleCol');
-                    let result6 = await ifo(result5,photoCol,'photoCol');
-                    res.status(200).json(result6);
+                    let result3 = await ifo(result2,articleCol,'articleCol');
+                    let result4 = await ifo(result3,photoCol,'photoCol');
+                    res.status(200).json(result4);
                 }catch(e){
                     console.log(e);
                 }

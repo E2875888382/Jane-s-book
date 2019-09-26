@@ -20,12 +20,6 @@ router.get('/collect',controller.collect);
 // 相册收藏/取消收藏
 router.get('/photoCollect',controller.photoCollect);
 
-// 写私信
-router.post('/sendMsg',controller.msg);
-
-// 消息已读
-router.get('/isRead',controller.isRead);
-
 // 修改用户信息
 router.post('/updateUserInfo',controller.update);
 

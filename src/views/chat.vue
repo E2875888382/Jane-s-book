@@ -1,7 +1,7 @@
 <template>
 <div class="container m-auto">
     <el-tabs tab-position="left" style="height: 500px;" v-model="activeName">
-        <el-tab-pane v-for="item in list" :key="item.userID" :name="item.userID" style="height: 400px;overflow:auto;padding:0 10px">
+        <el-tab-pane v-for="item in list" :key="item.userID" :name="item.userID" style="height: 425px;overflow:auto;padding:0 10px">
             <div slot="label" class="follow_item">
                 <van-image width="40" height="40" class="user_img" :src="item.avatar"/>
                 <span>{{ item.nickName }}</span>
@@ -19,8 +19,8 @@
             </div>
         </el-tab-pane>
         <div class="input_box">
-            <el-input type="textarea" :rows="3" v-model="input" class="col-10" resize="none" :autofocus="true"></el-input>
-            <el-button type="primary" @click="send">主要按钮</el-button>
+            <el-input type="textarea" :rows="3" v-model="input" class="input" resize="none" :autofocus="true"></el-input>
+            <el-button type="primary" @click="send">发送</el-button>
         </div> 
     </el-tabs>
 </div>
@@ -128,6 +128,7 @@ p{
     white-space:pre-wrap;
     word-wrap:break-word;
     margin: 0;
+    font-size: 14px;
 }
 .mymsg,.friendmsg{
     max-width: 400px;
@@ -171,5 +172,9 @@ p{
 }
 .input_box{
     display: flex;
+}
+.input{
+    width:625px;
+    padding:0;
 }
 </style>
