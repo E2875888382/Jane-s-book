@@ -134,6 +134,7 @@ div>>>.el-badge__content.is-fixed{
 }
 .left_box>ul{
     list-style: none;
+    margin:0;
 }
 .left_box>ul li{
     float: left;

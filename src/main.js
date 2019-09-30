@@ -1,8 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
 
-import Vant from 'vant';
-import 'vant/lib/index.css';
-
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -15,9 +12,17 @@ import router from './router/index.js'
 
 import store from './store/index.js'
 
+import { Icon } from 'vant';
+Vue.use(Icon);
+
+import { Button } from 'vant';
+Vue.use(Button);
+
+import { Uploader } from 'vant';
+Vue.use(Uploader);
+
 Vue.use(ElementUI)
 Vue.use(infiniteScroll);
-Vue.use(Vant);
 
 Vue.config.productionTip = false;
 
