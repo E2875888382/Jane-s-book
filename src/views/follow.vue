@@ -23,8 +23,8 @@
                     <p class="sign">{{follower.sign}}</p>
                 </div>
                 <div class="btn_box">
-                    <van-button plain type="primary" round>发简信</van-button>
-                    <van-button plain type="primary" round @click="unFollow(follower.userID)">取消关注</van-button>
+                    <el-button round size="medium">发简信</el-button>
+                    <el-button round size="medium" @click="unFollow(follower.userID)">取消关注</el-button>
                 </div>
             </div>
         </div>
@@ -160,6 +160,10 @@ export default {
     width:175px;
     display:flex;
     justify-content: space-between;
+}
+.btn_box .el-button{
+    border: 1px solid #93d232;
+    color:#93d232;
 }
 .follow_main{
     width:625px;

@@ -3,7 +3,7 @@
     <div class="top">
         <el-avatar shape="circle" :size="100" :src="ava" style="margin-right:50px"/>
         <van-uploader v-model="img" :max-count="2" :after-read="afterRead" :preview-image="false">
-            <van-button type="primary" plain round size="small">更换头像</van-button>
+            <el-button round size="small">更换头像</el-button>
         </van-uploader>
     </div>
     <div class="item">
@@ -83,5 +83,10 @@ div>>>.van-uploader__upload,div>>>.van-uploader__preview{
     color: #969696;
     display: inline-block;
     width:150px;
+}
+.el-button{
+    border:1px solid #91de1be0;
+    color:green;
+    cursor: pointer;
 }
 </style>

@@ -11,8 +11,8 @@
         v-model="comment">
         </el-input>
         <div class="btn_box">
-            <van-button type="default" round size="small" @click="comment = ''">取消</van-button>
-            <van-button type="danger" color="#ec7259" round size="small" @click="submit">发布</van-button>
+            <el-button round size="small" @click="comment = ''">取消</el-button>
+            <el-button type="danger" round size="small" @click="submit">发布</el-button>
         </div>
     </div>
 </div>
@@ -68,7 +68,7 @@ export default {
     align-items: center;
     flex-direction: row-reverse;
 }
-.van-button{
+.el-button{
     margin-right:8px;
 }
 </style>

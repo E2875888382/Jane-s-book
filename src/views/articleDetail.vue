@@ -64,9 +64,9 @@
                 <div>
                     <div class="author">
                         {{ detail.nickName }}
-                        <van-button plain type="danger" round size="mini" v-if="(isLogin&&!isFollowed)&&!isMe" @click="followed">关注</van-button>
-                        <van-button plain type="info" round size="mini" v-if="(isLogin&&isFollowed)&&!isMe">已关注</van-button>
-                        <van-button plain type="info" round size="mini" v-if="isMe">我</van-button>
+                        <el-button round size="mini" type="primary" v-if="(isLogin&&!isFollowed)&&!isMe" @click="followed">关注</el-button>
+                        <el-button round size="mini" type="success" v-if="(isLogin&&isFollowed)&&!isMe">已关注</el-button>
+                        <el-button round size="mini" type="info" v-if="isMe">我</el-button>
                     </div>
                     <p class="sign">{{ detail.sign }}</p>
                 </div>
@@ -302,6 +302,14 @@ export default {
     height:23px;
     margin-bottom:5px;
     padding-left:10px;
+    display:flex;
+    align-items: center;
+}
+.author .el-button{
+    height:20px;
+    font-size:7px;
+    padding:3px 10px; 
+    margin-left:5px;
 }
 .sign{
     margin:0;

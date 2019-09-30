@@ -13,9 +13,6 @@ import router from './router/index.js'
 
 import store from './store/index.js'
 
-import { Button } from 'vant';
-Vue.use(Button);
-
 import { Uploader } from 'vant';
 Vue.use(Uploader);
 
