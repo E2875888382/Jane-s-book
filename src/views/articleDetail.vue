@@ -2,14 +2,14 @@
 <div class="bg">
     <div class="oper">
         <div>
-            <div class="like" v-if="!isPraised" @click="praised(true)"><van-icon name="good-job" color="#999"/></div>
-            <div class="like" v-if="isPraised" @click="praised(false)"><van-icon name="good-job" color="gold"/></div>
+            <div class="like" v-if="!isPraised" @click="praised(true)"><i class="iconfont">&#xe60c;</i></div>
+            <div class="like" v-if="isPraised" @click="praised(false)"><i class="iconfont" style="color:gold">&#xe60c;</i></div>
             <p>{{ detail.praise }}赞</p>
         </div>
         <div v-if="isLogin">
             <div class="col">
-                <van-icon name="like" color="#999" v-if="!isCollected" @click="collected"/>
-                <van-icon name="like" color="red" v-if="isCollected"/>
+                <i class="iconfont" v-if="!isCollected" @click="collected">&#xe670;</i>
+                <i class="iconfont" style="color:gold" v-if="isCollected">&#xe670;</i>
             </div>
         </div>
     </div>
@@ -41,8 +41,8 @@
                         <p>{{ item.time | dateFormat }}天前</p>
                         <p>{{ item.content }}</p>
                         <div>
-                            <span v-if="!item.isPraised"><van-icon name="good-job" color="#999" @click="reply(item,true)"/>赞{{ item.praise }}</span>
-                            <span v-if="item.isPraised"><van-icon name="good-job" color="gold" @click="reply(item,false)"/>赞{{ item.praise }}</span>
+                            <span v-if="!item.isPraised"><i class="iconfont" @click="reply(item,true)">&#xe60c;</i>赞{{ item.praise }}</span>
+                            <span v-if="item.isPraised"><i class="iconfont" style="color:gold" @click="reply(item,false)">&#xe60c;</i>赞{{ item.praise }}</span>
                         </div>
                     </div>
                 </div>
@@ -369,6 +369,10 @@ export default {
 .comment_content div span{
     display: flex;
     align-items: center;
+}
+.comment_content i {
+    cursor: pointer;
+    margin-right:5px;
 }
 .page{
     display: flex;

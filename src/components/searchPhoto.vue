@@ -22,7 +22,7 @@
                     <router-link :to="{name:'photoDetails',params:{id:item.photoID}}" v-html="highLight(item.title)"></router-link>
                 </p>
                 <div class="info">
-                    <span><van-icon name="eye" color="#999"/>{{ item.view }}</span>
+                    <span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
                 </div>
             </div>
             <el-image style="width:125px; height:94px" :src="item.src" fit="fill"></el-image>
@@ -129,7 +129,7 @@ export default {
     display:flex;
     align-items: center;
 }
-.info span .van-icon{
+.info span i{
     margin-right:4px;
 }
 .content_box{

@@ -23,25 +23,25 @@
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
                         <div class="dropdown" @click="jump('mypage')">
-                            <van-icon name="manager" color="#ea6f5a"/>
+                            <i class="iconfont">&#xe7e9;</i>
                             <span>我的主页</span>
                         </div>
                     </el-dropdown-item>
                     <el-dropdown-item>
                         <div class="dropdown" @click="jump('collect')">
-                            <van-icon name="label" color="#ea6f5a"/>
+                            <i class="iconfont">&#xe670;</i>                            
                             <span>我的收藏</span>
                         </div>
                     </el-dropdown-item>
                     <el-dropdown-item>
                         <div class="dropdown" @click="jump('set')">
-                            <van-icon name="setting" color="#ea6f5a"/>
+                            <i class="iconfont">&#xe66f;</i>
                             <span>设置</span>
                         </div>
                     </el-dropdown-item>
                     <el-dropdown-item>
                         <div class="dropdown" @click="out">
-                            <van-icon name="clear" color="#ea6f5a"/>
+                            <i class="iconfont">&#xe609;</i>
                             <span>退出</span>
                         </div>
                     </el-dropdown-item>
@@ -87,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+i{
+    color:#F56C6C;
+}
 .header{
     border-bottom:1px solid #f0f0f0;
     height:58px;

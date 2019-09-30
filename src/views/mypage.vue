@@ -31,8 +31,8 @@
                         </p>
                         <p class="article_ob">xaxsxaxsaxsax</p>
                         <div class="metas">
-                            <span><van-icon name="eye" color="#999"/>{{item.VIEW}}</span>
-                            <span><van-icon name="comment" color="#999"/>{{item.replyCount}}</span>
+                            <span><i class="iconfont">&#xe640;</i>{{item.VIEW}}</span>
+                            <span><i class="iconfont">&#xe62b;</i>{{item.replyCount}}</span>
                             <span>{{item.TIME}}</span>
                         </div>
                     </div>
@@ -47,8 +47,8 @@
                             <router-link :to="{name:'photoDetails',params:{id:item.photoID}}">{{ item.title }}</router-link>
                         </p>
                         <div class="metas">
-                            <span><van-icon name="eye" color="#999"/>{{item.VIEW}}</span>
-                            <span><van-icon name="good-job" color="#999"/>{{item.praise}}</span>
+                            <span><i class="iconfont">&#xe640;</i>{{item.VIEW}}</span>
+                            <span><i class="iconfont">&#xe62b;</i>{{item.praise}}</span>
                             <span>{{item.time}}</span>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
         <p>{{$store.state.userIfo.sign}}</p>
         <hr>
         <p class="link">
-            <van-icon name="like-o"/>
+            <i class="iconfont" style="color:#F56C6C;margin-right:8px">&#xe670;</i>
             <router-link to="/collect">我收藏的文章/相册</router-link>
         </p>
         <hr>
@@ -154,9 +154,6 @@ a{
     display: flex;
     align-items: center;
 }
-.link .van-icon{
-    margin-right:10px;
-}
 .left>>>.el-tabs__item{
     width:120px;
     height:50px;
@@ -219,8 +216,8 @@ a{
     display: flex;
     align-items: center;
 }
-.metas span .van-icon{
-    margin-right:4px;
+i{
+    font-size:12px;
 }
 .el-image{
     border-radius: 4px;

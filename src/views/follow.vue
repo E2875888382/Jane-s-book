@@ -3,7 +3,7 @@
     <div class="aside">
         <p class="aside_top">
             <span>全部关注</span>
-            <span><van-icon name="add" class="add"/>添加关注</span>
+            <span><i class="iconfont">&#xe61d;</i>添加关注</span>
         </p>
         <div class="follow_item" :class="{'active':activeId == item.userID}" @click="choose(item)" v-for="item in $store.state.friendsList" :key="item.userID">
             <el-avatar shape="circle" :size="40" :src="item.avatar"/>
@@ -31,7 +31,7 @@
         <div class="follow_work">
             <el-tabs v-model="activeName">
                 <el-tab-pane name="article">
-                    <span slot="label" class="tabs"><van-icon name="new" />最新发布</span>
+                    <span slot="label" class="tabs"><i class="iconfont">&#xe681;</i>最新发布</span>
                     <div class="article_item" v-for="item in followerWork.article" :key="item.articleID">
                         <div :class="{'short':item.img,'long':!item.img}">
                             <p class="article_topic">
@@ -39,8 +39,8 @@
                             </p>
                             <p class="article_ob">xaxsxaxsaxsax</p>
                             <div class="meta">
-                                <span><van-icon name="eye" color="#999"/>{{item.VIEW}}</span>
-                                <span><van-icon name="comment" color="#999"/>{{item.replyCount}}</span>
+                                <span><i class="iconfont">&#xe640;</i>{{item.VIEW}}</span>
+                                <span><i class="iconfont">&#xe62b;</i>{{item.replyCount}}</span>
                                 <span>{{item.TIME}}</span>
                             </div>
                         </div>
@@ -48,15 +48,15 @@
                     </div>
                 </el-tab-pane>
                 <el-tab-pane name="photo">
-                    <span slot="label" class="tabs"><van-icon name="photo" />最新相簿</span>
+                    <span slot="label" class="tabs"><i class="iconfont">&#xe607;</i>最新相簿</span>
                     <div class="article_item" v-for="item in followerWork.photo" :key="item.photoID">
                         <div class="short">
                             <p class="article_topic">
                                 <router-link :to="{name:'photoDetails',params:{id:item.photoID}}">{{ item.title }}</router-link>
                             </p>
                             <div class="meta">
-                                <span><van-icon name="eye" color="#999"/>{{item.VIEW}}</span>
-                                <span><van-icon name="good-job" color="#999"/>{{item.praise}}</span>
+                                <span><i class="iconfont">&#xe640;</i>{{item.VIEW}}</span>
+                                <span><i class="iconfont">&#xe60c;</i>{{item.praise}}</span>
                                 <span>{{item.time}}</span>
                             </div>
                         </div>
@@ -260,8 +260,9 @@ export default {
     display: flex;
     align-items: center;
 }
-.meta span .van-icon{
-    margin-right:4px;
+.iconfont{
+    font-size:12px;
+    margin-right:5px;
 }
 .el-image{
     border-radius: 4px;

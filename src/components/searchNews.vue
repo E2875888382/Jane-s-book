@@ -20,7 +20,7 @@
             <router-link :to="{name:'newsDetails',params:{id:item.newID}}" v-html="highLight(item.title)"></router-link>
         </p>
         <div class="info">
-            <span><van-icon name="eye" color="#999"/>{{ item.view }}</span>
+            <span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
         </div>
         <hr>
     </div>
@@ -121,7 +121,7 @@ export default {
     display:flex;
     align-items: center;
 }
-.info span .van-icon{
+.info span i{
     margin-right:4px;
 }
 </style>

@@ -1,15 +1,13 @@
 <template>
 <div class="search_box">
-    <div class="search-form" >
-            <el-autocomplete
-            class="inline-input"
-            v-model="input"
-            :fetch-suggestions="querySearch"
-            placeholder="search for ..."
-            clearable
-            ></el-autocomplete>
-        <button class="form-btn" @click="search"></button>
-    </div>
+    <el-autocomplete
+        v-model="input"
+        :fetch-suggestions="querySearch"
+        prefix-icon="el-icon-search"
+        placeholder="搜索"
+        @keyup.enter.native="search"
+        >
+    </el-autocomplete>
 </div>
 </template>
 
@@ -64,57 +62,20 @@ export default {
 <style scoped>
 .search_box{
     width: 300px;
-    height: 32px;
-    background-color: rgba(0,0,0,.12);
+    height: 40px;
     border-radius: 20px;
     font-size: 12px;
     z-index: 10;
     display: flex;
     align-self: center;
 }
-.search-form{
-    width:300px;
-    height:32px;
-    padding:0;
-    margin:0;
-    background-color: hsla(0,0%,100%,.88);
-    border-radius: 20px;
-    transition: background-color 0.2s;
-    display: flex;
-    justify-content: space-between;
+div>>>.el-input__inner:focus{
+    width:250px;
 }
-.search-form:hover{
-    background-color: #fff;
-    cursor: pointer;
-}
-.inline-input{
-    width: 250px;
-    color: #222;
-    font-size: 12px;
-    overflow: hidden;
-    height: 32px;
-    line-height: 32px;
-    border: 0;
-    box-shadow: none;
-    background-color: transparent;
-}
-.inline-input>>>.el-input__inner{
-    height:32px;
-    padding:0 10px;
-    line-height: 32px;
-    font-size:13px;
-    border-radius: 20px 0 0 20px;
-}
-.form-btn{
-    display: block;
-    width: 50px;
-    min-width: 0;
-    cursor: pointer;
-    height: 32px;
-    background: url("../assets/img/icons.png") -653px -720px;
-    margin: 0;
-    padding: 0;
-    border: 1px solid #DCDFE6;
-    border-radius:0 20px 20px 0;
+div>>>.el-input__inner{
+    border-radius:50px;
+    border:none;
+    background: #eee;
+    transition:all 0.5s;
 }
 </style>

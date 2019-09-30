@@ -2,7 +2,7 @@
 <div>
     <p class="ranking_head">
         <span>24小时新闻</span>
-        <span class="change" @click="getTenNews"><van-icon name="replay" />换一批</span>
+        <span class="change" @click="getTenNews"><i class="iconfont">&#xe63a;</i>换一批</span>
     </p>
     <p class="ranking_item" v-for="(item,index) in tenNews" :key="index">
         <span :class="{ number:index<3 }">

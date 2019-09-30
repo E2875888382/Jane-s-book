@@ -4,7 +4,7 @@
         <div>
             <router-link to="/set/baseset">
                 <div class="icon">
-                    <van-icon name="bars" />
+                    <i class="iconfont">&#xe6aa;</i>
                 </div>
                 <span>基础设置</span>
             </router-link>
@@ -12,7 +12,7 @@
         <div>
             <router-link to="/set/userset">
                 <div class="icon">
-                    <van-icon name="manager" />
+                    <i class="iconfont">&#xe618;</i>
                 </div>
                 <span>个人资料</span>
             </router-link>

@@ -8,11 +8,11 @@
         <p class="article_content">xxxxxx</p>
         <div class="meta">
             <span class="article_view">
-                <van-icon name="eye" color="#999"/>
+                <i class="iconfont">&#xe640;</i>
                 {{item.view}}
             </span>
             <span class="article_replyCount">
-                <van-icon name="comment" color="#999"/>
+                <i class="iconfont">&#xe62b;</i>
                 {{item.replyCount}}
             </span>
             <span class="article_time">
@@ -86,6 +86,9 @@ export default {
 }
 .meta{
     display: flex;
+}
+i{
+    font-size:12px;
 }
 .article_view,.article_replyCount,.article_time,.article_cancel{
     display:flex;

@@ -21,9 +21,9 @@
             <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}" v-html="highLight(item.title)"></router-link>
         </p>
         <div class="info">
-            <span><van-icon name="comment" color="#999"/>{{ item.replyCount }}</span>
-            <span><van-icon name="eye" color="#999"/>{{ item.view }}</span>
-            <span><van-icon name="good-job" color="#999"/>{{ item.praise }}</span>
+            <span><i class="iconfont">&#xe62b;</i>{{ item.replyCount }}</span>
+            <span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
+            <span><i class="iconfont">&#xe60c;</i>{{ item.praise }}</span>
         </div>
         <hr>
     </div>
@@ -127,7 +127,8 @@ export default {
     display:flex;
     align-items: center;
 }
-.info span .van-icon{
+.info span i{
     margin-right:4px;
+    font-size:12px;
 }
 </style>

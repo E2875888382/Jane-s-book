@@ -4,7 +4,7 @@
         <div>
             <router-link to="/search/article">
                 <div class="icon">
-                    <van-icon name="orders-o" />
+                    <i class="iconfont">&#xe681;</i>
                 </div>
                 <span>文章</span>
             </router-link>
@@ -12,7 +12,7 @@
         <div>
             <router-link to="/search/news">
                 <div class="icon">
-                    <van-icon name="new-o" />
+                    <i class="iconfont">&#xe67b;</i>
                 </div>
                 <span>新闻</span>
             </router-link>
@@ -20,7 +20,7 @@
         <div>
             <router-link to="/search/photo">
                 <div class="icon">
-                    <van-icon name="photo-o" />
+                    <i class="iconfont">&#xe607;</i>
                 </div>
                 <span>相册</span>
             </router-link>
@@ -28,7 +28,7 @@
         <div>
             <router-link to="/search/user">
                 <div class="icon">
-                    <van-icon name="friends-o" />
+                    <i class="iconfont">&#xe7e9;</i>
                 </div>
                 <span>用户</span>
             </router-link>

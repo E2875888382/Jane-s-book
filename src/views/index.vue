@@ -9,9 +9,9 @@
                 <p class="abstract">毁掉一个女生有多容易？ 接近她，对她好，让她爱上你，在你已经融入她的生活，看着她对你百般依赖后，毫不留情的踢开她，没个一两年她是走不出来的。 这...</p>
                 <div class="info">
                     <span>{{ item.nickName }}</span>
-                    <span><van-icon name="comment" color="#999"/>{{ item.replyCount }}</span>
-                    <span><van-icon name="eye" color="#999"/>{{ item.view }}</span>
-                    <span><van-icon name="good-job" color="#999"/>{{ item.praise }}</span>
+                    <span><i class="iconfont">&#xe62b;</i>{{ item.replyCount }}</span>
+                    <span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
+                    <span><i class="iconfont">&#xe60c;</i>{{ item.praise }}</span>
                 </div>
             </div>
             <el-image style="width:150px; height:100px" v-if="item.img" :src="item.img" fit="fill"></el-image>
@@ -69,6 +69,10 @@ export default {
 </script>
 
 <style scoped>
+i{
+    font-size:12px;
+    margin-right:4px;
+}
 .bg{
     margin-top:58px !important;
     padding-top:30px;
@@ -129,9 +133,6 @@ export default {
     margin-right:10px;
     display:flex;
     align-items: center;
-}
-.info span .van-icon{
-    margin-right:4px;
 }
 .el-image{
     border-radius: 4px;
