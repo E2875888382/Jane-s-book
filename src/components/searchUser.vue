@@ -7,7 +7,7 @@
     <div class="user_item" v-for="item in check()" :key="item.userID">
         <div class="main">
             <div>
-                <van-image width="52" height="52" class="user_img" :src="item.avatar"></van-image>
+                <el-avatar shape="circle" :size="52" :src="item.avatar" style="margin-right:10px;"/>
                 <div>
                     <div class="name" v-html="highLight(item.nickName)"></div>
                     <p class="sign">{{item.sign}}</p>
@@ -75,15 +75,6 @@ export default {
     padding-bottom: 20px;
     color:#969696;
     font-size: 13px;
-}
-.user_img{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
-    margin-right:10px;
 }
 .main,.main>div{
     height: 57px;

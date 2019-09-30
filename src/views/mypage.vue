@@ -2,7 +2,7 @@
 <div class="content_box m-auto">
     <div class="left">
         <div class="top">
-            <van-image width="80" height="80" class="user_img" :src="$store.state.userIfo.avatar" style="margin-right:20px"></van-image>
+            <el-avatar shape="circle" :size="80" :src="$store.state.userIfo.avatar" style="margin-right:20px"/>
             <div class="info">
                 <p class="name">{{$store.state.userIfo.nickName}}</p>
                 <div class="meta">
@@ -107,14 +107,6 @@ export default {
 .left{
     width:640px;
     padding-left:15px;
-}
-.user_img{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 .top{
     height:80px;

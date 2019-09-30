@@ -1,6 +1,6 @@
 <template>
 <div class="comment_box">
-    <van-image width="40" height="40" class="avatar" :src="$store.state.userIfo.avatar"/>
+    <el-avatar shape="circle" :size="40" :src="$store.state.userIfo.avatar"/>
     <div class="comment_right">
         <el-input
         type="textarea"
@@ -53,14 +53,6 @@ export default {
     display:flex;
     margin-bottom: 10px;
     justify-content: space-between;
-}
-.avatar{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 .comment_right{
     width:632px;

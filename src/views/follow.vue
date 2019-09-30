@@ -6,13 +6,13 @@
             <span><van-icon name="add" class="add"/>添加关注</span>
         </p>
         <div class="follow_item" :class="{'active':activeId == item.userID}" @click="choose(item)" v-for="item in $store.state.friendsList" :key="item.userID">
-            <van-image width="40" height="40" class="user_img" :src="item.avatar"/>
+            <el-avatar shape="circle" :size="40" :src="item.avatar"/>
             <span>{{ item.nickName }}</span>
         </div>
     </div>
     <div class="follow_main" v-if="follower">
         <div class="follow_header">
-            <van-image width="80" height="80" class="user_img" :src="follower.avatar"/>
+            <el-avatar shape="circle" :size="80" :src="follower.avatar"/>
             <div>
                 <div class="follow_ifo">
                     <p class="nickName">
@@ -137,14 +137,6 @@ export default {
     display:flex;
     align-items:center;
     margin-right:10px;
-}
-.user_img{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 .follow_item{
     display:flex;

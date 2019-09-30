@@ -19,7 +19,7 @@
         <!-- 登录后状态框 -->
         <div class="new" v-if="$store.state.loginFlag">
             <el-dropdown placement="bottom-start">
-                <van-image width="40" height="40" class="user_img" :src="$store.state.userIfo.avatar"/>
+                <el-avatar shape="circle" :size="40" :src="$store.state.userIfo.avatar"/>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
                         <div class="dropdown" @click="jump('mypage')">
@@ -150,14 +150,6 @@ div>>>.el-badge__content.is-fixed{
 .left_box>ul li:hover{
     background-color:whitesmoke;
 }
-.user_img{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
-}
 .logo{
     width:100px;
     height:58px;
@@ -167,7 +159,7 @@ div>>>.el-badge__content.is-fixed{
     background: url('https://cdn2.jianshu.io/assets/web/nav-logo-4c7bbafe27adc892f3046e6978459bac.png') no-repeat;
     background-size: 100px 56px;
 }
-.dropdown{
+.el-dropdown{
     display: flex;
     align-items: center;
 }

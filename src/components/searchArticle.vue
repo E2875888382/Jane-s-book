@@ -13,7 +13,7 @@
     </div>
     <div class="article_item" v-for="item in article" :key="item.articleID">
         <div class="author">
-            <van-image width="24" height="24" class="user_img" :src="item.avatar"/>
+            <el-avatar shape="circle" :size="24" :src="item.avatar"/>
             <span class="nick">{{item.nickName}}</span>
             <span class="time">{{ item.time | dateFormat }}天前</span>
         </div>
@@ -92,14 +92,6 @@ export default {
 .sortBy span{
     cursor: pointer;
     margin-right:10px;
-}
-.user_img{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 .author{
     margin-bottom: 14px;

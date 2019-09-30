@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="top">
-        <van-image width="100" height="100" class="user_img" :src="ava" style="margin-right:50px"></van-image>
+        <el-avatar shape="circle" :size="100" :src="ava" style="margin-right:50px"/>
         <van-uploader v-model="img" :max-count="2" :after-read="afterRead" :preview-image="false">
             <van-button type="primary" plain round size="small">更换头像</van-button>
         </van-uploader>
@@ -64,7 +64,7 @@ export default {
     display: flex;
     align-items:center;
 }
-div>>>.van-uploader__upload,div>>>.van-uploader__preview,.user_img{
+div>>>.van-uploader__upload,div>>>.van-uploader__preview{
     display: flex;
     border-radius: 50%;
     align-items: center;

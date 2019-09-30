@@ -35,7 +35,7 @@
                     </div>
                 </h3>
                 <div class="comment_item" v-for="item in currentComments" :key="item.replyID">
-                    <van-image width="40" height="40" class="avatar" :src="item.avatar"/>
+                    <el-avatar shape="circle" :size="40" :src="item.avatar"/>
                     <div class="comment_content">
                         <p>{{ item.nickName }}</p>
                         <p>{{ item.time | dateFormat }}天前</p>
@@ -60,7 +60,7 @@
         </div>
         <div class="right">
             <div class="author_info">
-                <van-image width="45" height="45" class="avatar" :src="detail.avatar"/>
+                <el-avatar shape="circle" :size="45" :src="detail.avatar"/>
                 <div>
                     <div class="author">
                         {{ detail.nickName }}
@@ -272,14 +272,6 @@ export default {
     line-height: 1.7;
     font-size: 16px;
     word-break: break-word;
-}
-.avatar{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 .comment{
     background-color: #fff;

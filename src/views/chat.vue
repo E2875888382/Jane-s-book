@@ -3,17 +3,17 @@
     <el-tabs tab-position="left" style="height: 500px;" v-model="activeName">
         <el-tab-pane v-for="item in list" :key="item.userID" :name="item.userID" style="height: 425px;overflow:auto;padding:0 10px">
             <div slot="label" class="follow_item">
-                <van-image width="40" height="40" class="user_img" :src="item.avatar"/>
+                <el-avatar shape="circle" :size="40" :src="item.avatar"/>
                 <span>{{ item.nickName }}</span>
             </div>    
             <div v-for="i in cur" :key="i.index">
                 <p class="time">{{i.time}}</p>
                 <div v-if="i.from == 0" class="my">
                     <div class="mymsg"><p>{{i.msg}}</p></div>
-                    <van-image width="30" height="30" class="user_img" :src="$store.state.userIfo.avatar"/>                  
+                    <el-avatar shape="circle" :size="30" :src="$store.state.userIfo.avatar"/>                  
                 </div>
                 <div v-if="i.from == 1" class="friend">
-                    <van-image width="30" height="30" class="user_img" :src="item.avatar"/>
+                    <el-avatar shape="circle" :size="30" :src="item.avatar"/>
                     <div class="friendmsg"><p>{{i.msg}}</p></div>
                 </div>
             </div>
@@ -75,14 +75,6 @@ export default {
     margin-top:58px !important;
     padding:30px 15px;
     min-height:550px;
-}
-.user_img{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    cursor: pointer;
 }
 .container>>>.el-tabs__item{
     height:60px;

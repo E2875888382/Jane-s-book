@@ -23,7 +23,7 @@
             <div class="img-info" slot-scope="props">
                 <p class="some-info">{{props.value.title}}</p>
                 <div class="ifo">
-                    <van-image width="24" height="24" class="avatar" :src="props.value.avatar"/>
+                    <el-avatar shape="circle" :size="24" :src="props.value.avatar" style="margin-right:10px;"/>
                     <span class="user">{{props.value.nickName}}</span>
                     <el-popover placement="top" trigger="hover" content="支持一下" popper-class='tip'>
                         <i @click="praise(props.value.photoID,$event)" slot="reference"></i>
@@ -136,14 +136,6 @@ export default {
 .box>>>.vue-waterfall-easy-container .vue-waterfall-easy a.img-wraper > img:hover{
     transform: scale(1.2);
     cursor: pointer;
-}
-.avatar{
-    display: flex;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-right:10px;
 }
 .img-info{
     padding: 16px;

@@ -8,11 +8,11 @@
         <el-divider></el-divider>
         <div class="news_content col-12">
             <div style="width:660px">
-                <van-image width="660" :src="newsDetails.imgTop"/>
+                <el-image width="660" :src="newsDetails.imgTop"/>
                 <div class="content_box">
                     <p>{{ newsDetails.abstract }}。</p>
                     <div v-html="cut(newsDetails.content)"></div>
-                    <van-image width="660" v-for="(item,index) in imgContent" :key="index" :src="item"/>
+                    <el-image width="660" v-for="(item,index) in imgContent" :key="index" :src="item"/>
                 </div>
                 <p class="editor">{{ newsDetails.editor }}</p>
             </div>

@@ -30,7 +30,7 @@
         </div>
         <div class="right_box col-3">
             <div class="author_ifo col-12">
-                <van-image width="80" height="80" class="avatar" :src="photoDetails.avatar"/>
+                <el-avatar shape="circle" :size="80" :src="photoDetails.avatar" class="avatar"/>
                 <div class="author">
                     <span class="level">up {{ photoDetails.level }}</span>
                     <span class="name">{{ photoDetails.nickName }}</span>
