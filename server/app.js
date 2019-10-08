@@ -23,7 +23,6 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length,token');
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    // res.header('Access-Control-Allow-Credentials', 'true');
     res.header("Content-Type", "application/json;charset=utf-8");
     next();
 });
@@ -34,18 +33,18 @@ app.use(news);
 app.use(photo);
 app.use(search);
 
-let map = new Map();
-
-const io = socketio(app.listen(8000,function(){
+const io = socketio(app.listen(8000,()=>{
     console.log('----- server on -----');
 }))
+
+let map = new Map();
 
 io.on('connection',(client)=>{
     client.on('login',({uid,name})=>{
         map.set(uid,{name:name,id:client.id});
         console.log(map)
     })
-    client.on('sendMsg', function({uid,toUid,msg}) {
+    client.on('sendMsg',({uid,toUid,msg})=>{
         if(map.has(toUid)){
             let socketid = map.get(toUid).id;
             io.to(socketid).emit('getMsg',{uid,toUid,msg});

@@ -51,6 +51,7 @@ export default {
     },
     mounted(){
         this.$store.commit('allRead');
+        this.list[0] && (this.activeName = this.list[0].userID);
     },
     methods:{
         send(){

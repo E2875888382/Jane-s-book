@@ -17,8 +17,8 @@
     </div>
 
 
-    <ul class="box m-auto" :style="{height:boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
-        <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn">
+    <ul class="box m-auto" :style="{'height':boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
+        <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn" :reachBottomDistance='400'>
             <div slot="waterfall-over">没有更多了</div>
             <div class="img-info" slot-scope="props">
                 <p class="some-info">{{props.value.title}}</p>
@@ -43,7 +43,7 @@ import photo from '../api/photo.js'
 export default {
     data(){
         return {
-            boxheight:1000,
+            boxheight:800,
             imgWidth:200,
             imgs: [],
             group: 1,
@@ -65,7 +65,7 @@ export default {
             photo.get(n).then(({ data:{ list,count } })=>{
                 this.imgs = [...this.imgs,...list];
                 this.maxGroup = Math.ceil(count[0]['COUNT(*)'] / 10);
-                this.boxheight += 600;
+                this.boxheight += 500;
                 this.group++;
             }).catch((err)=>{
                 console.log(err);

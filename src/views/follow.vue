@@ -23,7 +23,7 @@
                     <p class="sign">{{follower.sign}}</p>
                 </div>
                 <div class="btn_box">
-                    <el-button round size="medium">发简信</el-button>
+                    <el-button round size="medium" @click="$router.push('/chat')">发简信</el-button>
                     <el-button round size="medium" @click="unFollow(follower.userID)">取消关注</el-button>
                 </div>
             </div>
