@@ -1,134 +1,134 @@
 <template>
 <div>
-    <div class="top">
-        <div class="sortBy">
-            <span @click="function(){sortBy(item.value);active = item.value}"
-            v-for="item in sortOption"
-            :key="item.value"
-            :class="{'active':active == item.value}">
-            {{item.name}}
-            </span>
-        </div>
-        <span>{{$store.state.result.article.length}} 个结果</span>
-    </div>
-    <div class="article_item" v-for="item in article" :key="item.articleID">
-        <div class="author">
-            <el-avatar shape="circle" :size="24" :src="item.avatar"/>
-            <span class="nick">{{item.nickName}}</span>
-            <span class="time">{{ item.time | dateFormat }}天前</span>
-        </div>
-        <p class="title">
-            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}" v-html="highLight(item.title)"></router-link>
-        </p>
-        <div class="info">
-            <span><i class="iconfont">&#xe62b;</i>{{ item.replyCount }}</span>
-            <span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
-            <span><i class="iconfont">&#xe60c;</i>{{ item.praise }}</span>
-        </div>
-        <hr>
-    </div>
+	<div class="top">
+			<div class="sortBy">
+					<span @click="function(){sortBy(item.value);active = item.value}"
+					v-for="item in sortOption"
+					:key="item.value"
+					:class="{'active':active == item.value}">
+					{{item.name}}
+					</span>
+			</div>
+			<span>{{$store.state.result.article.length}} 个结果</span>
+	</div>
+	<div class="article_item" v-for="item in article" :key="item.articleID">
+			<div class="author">
+					<el-avatar shape="circle" :size="24" :src="item.avatar"/>
+					<span class="nick">{{item.nickName}}</span>
+					<span class="time">{{ item.time | dateFormat }}天前</span>
+			</div>
+			<p class="title">
+					<router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}" v-html="highLight(item.title)"></router-link>
+			</p>
+			<div class="info">
+					<span><i class="iconfont">&#xe62b;</i>{{ item.replyCount }}</span>
+					<span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
+					<span><i class="iconfont">&#xe60c;</i>{{ item.praise }}</span>
+			</div>
+			<hr>
+	</div>
 </div>
 </template>
 
 <script>
 export default {
-    data(){
-        return {
-            sortOption:[
-                {name:'最新发布',value:'time'},
-                {name:'最多评论',value:'replyCount'},
-                {name:'最多浏览',value:'view'},
-                {name:'最多喜欢',value:'praise'},
-            ],
-            active:'time',
-            article:this.$store.state.result.article,
-        }
-    },
-    mounted(){
-        this.sortBy('time');
-    },
-    methods:{
-        sortBy(type){
-            if(type == 'time'){
-                this.article.sort((a,b)=>{
-                    return new Date(b.time) - new Date(a.time);
-                })
-            }else{
-                this.article.sort((a,b)=>{
-                    return b[type] - a[type];
-                })
-            }
-        },
-        highLight:function(value){
-            let search = this.$store.state.search;
-            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
-            return value;
-        },
-    },
-    filters:{
-        dateFormat:function(value){
-            let time = new Date(value);
-            let now = new Date();
-            return Math.floor((now.getTime() - time.getTime()) / (1000 * 60 * 60 * 24));
-        }
-    }
+		data(){
+				return {
+						sortOption:[
+								{name:'最新发布',value:'time'},
+								{name:'最多评论',value:'replyCount'},
+								{name:'最多浏览',value:'view'},
+								{name:'最多喜欢',value:'praise'},
+						],
+						active:'time',
+						article:this.$store.state.result.article,
+				}
+		},
+		mounted(){
+				this.sortBy('time');
+		},
+		methods:{
+				sortBy(type){
+						if(type == 'time'){
+								this.article.sort((a,b)=>{
+										return new Date(b.time) - new Date(a.time);
+								})
+						}else{
+								this.article.sort((a,b)=>{
+										return b[type] - a[type];
+								})
+						}
+				},
+				highLight:function(value){
+						let search = this.$store.state.search;
+						value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
+						return value;
+				},
+		},
+		filters:{
+				dateFormat:function(value){
+						let time = new Date(value);
+						let now = new Date();
+						return Math.floor((now.getTime() - time.getTime()) / (1000 * 60 * 60 * 24));
+				}
+		}
 }
 </script>
 
 <style scoped>
 .active,.sortBy span:hover{
-    color:#ea6f5a;
+		color:#ea6f5a;
 }
 .top{
-    width:625px;
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    height:40px;
-    padding-bottom: 20px;
-    color:#969696;
-    font-size: 13px;
+		width:625px;
+		display:flex;
+		justify-content: space-between;
+		align-items:center;
+		height:40px;
+		padding-bottom: 20px;
+		color:#969696;
+		font-size: 13px;
 }
 .sortBy span{
-    cursor: pointer;
-    margin-right:10px;
+		cursor: pointer;
+		margin-right:10px;
 }
 .author{
-    margin-bottom: 14px;
-    font-size: 13px;
-    display:flex;
+		margin-bottom: 14px;
+		font-size: 13px;
+		display:flex;
 }
 .nick{
-    margin:0 10px;
+		margin:0 10px;
 }
 .time{
-    color:#969696;
+		color:#969696;
 }
 .title{
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.5;
-    margin-bottom: 14px;
+		font-size: 18px;
+		font-weight: 700;
+		line-height: 1.5;
+		margin-bottom: 14px;
 }
 .title a{
-    color: #333;
+		color: #333;
 }
 .info{
-    height:20px;
-    display:flex;
-    align-items: center;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #999;
+		height:20px;
+		display:flex;
+		align-items: center;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 20px;
+		color: #999;
 }
 .info span{
-    margin-right:10px;
-    display:flex;
-    align-items: center;
+		margin-right:10px;
+		display:flex;
+		align-items: center;
 }
 .info span i{
-    margin-right:4px;
-    font-size:12px;
+		margin-right:4px;
+		font-size:12px;
 }
 </style>

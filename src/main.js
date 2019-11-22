@@ -22,8 +22,8 @@ Vue.use(infiniteScroll);
 Vue.config.productionTip = false;
 
 new Vue({
-    el:'#app',
-    store,
-    render:c => c(App),
-    router
+	el:'#app',
+	store,
+	render:c => c(App),
+	router
 })
