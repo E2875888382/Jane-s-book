@@ -1,6 +1,6 @@
 <template>
 <div>
-     <top v-if="$store.state.showHeader"></top>
+     <top v-if="$route.meta.needHeader"></top>
 
      <transition mode="out-in">
           <keep-alive>
@@ -12,7 +12,7 @@
           <router-view v-if="!$route.meta.keepAlive"/>
      </transition> 
      
-     <bottom v-if="$store.state.showFooter"></bottom>
+     <bottom v-if="$route.meta.needFooter"></bottom>
 </div>
 </template>
 

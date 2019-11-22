@@ -6,8 +6,6 @@ import actions from './actions.js'
 Vue.use(Vuex);
 
 const state = {
-    showHeader:true,
-    showFooter:true,
     loginFlag:false,
     userIfo:{},
     friendsList:[],

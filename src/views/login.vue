@@ -113,16 +113,7 @@ export default {
     components:{
         canvasCode,
     },
-    mounted(){
-        this.toggle(false);
-    },
-    deactivated(){
-        this.toggle(true);
-    },
     methods:{
-        toggle(status){
-            this.$store.commit('toggleHAF',status);
-        },
         log(form){
             (async ()=>{
                 try{

@@ -4,6 +4,7 @@
     <div class="left_box col-9 m-auto">
         <ul>
             <li><router-link to="/">发现</router-link></li>
+            <li><router-link to="/photo">相册</router-link></li>
             <li v-if="$store.state.loginFlag"><router-link to="/follow">关注</router-link></li>
             <li v-if="$store.state.loginFlag">
                 <el-badge :value="$store.state.unRead" :hidden="$store.state.unRead == 0" class="item">

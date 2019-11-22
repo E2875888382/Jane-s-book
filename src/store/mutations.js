@@ -11,10 +11,6 @@ export default{
     allRead(state){
         state.unRead = 0;
     },
-    toggleHAF(state,show){
-        state.showHeader = show;
-        state.showFooter = show;
-    },
     userStatus(state,loginFlag){
         state.loginFlag = loginFlag;
     },
