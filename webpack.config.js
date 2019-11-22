@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-module.exports={
+module.exports = {
+	mode:'development',
 	entry:path.join(__dirname,'./src/main.js'),
 	output:{
 		publicPath: '/',
@@ -11,12 +12,12 @@ module.exports={
 		filename:'bundle.js'
 	},
 	devServer: {
-		contentBase: "./src",//本地服务器所加载的页面所在的目录
-		historyApiFallback: true,//不跳转
-		inline: true,//实时刷新
+		contentBase:path.join(__dirname,'./src'), 
+		historyApiFallback: true,
+		inline: true,
 		open:true,
 		port:3000,
-		hot: true,//hot module replacement. Depends on HotModuleReplacementPlugin
+		hot: true,
 		proxy:{
 			'/api':{
 				target:'http://loaclhost:8000',
@@ -28,23 +29,23 @@ module.exports={
 	  },
 	plugins:[
 		new webpack.HotModuleReplacementPlugin(),
+		new VueLoaderPlugin(),
 		new htmlWebpackPlugin({
 			template:path.join(__dirname,'./index.html'),
-			filename:'index.html'
-		}),
-		new VueLoaderPlugin()       
+			filename:'index.html',
+			minify:{
+        collapseWhitespace: true,
+        minifyCSS: true,
+        removeComments: true,
+      }
+		}),	       
 	],
 	module:{
 		rules:[
-			//这是处理css文件的配置
 			{test:/\.css$/,use:['style-loader','css-loader']},
-			//这是处理字体文件的配置
 			{test:/\.(ttf|eot|svg|woff|woff2)$/,use:'url-loader'},
-			//这是处理图片url的配置
 			{test:/\.(jpg|png|webp|bmp|icon|gif|jpeg)$/,use:'url-loader?limit=6000&name=[hash:8]-[name].[ext]'},
-			//这是babel的配置
 			{ test:/\.js$/,use:'babel-loader',exclude:/node_modules/},
-			//这是加载vue组件的配置
 			{ test:/\.vue$/,use:'vue-loader'}
 		],     
 	},

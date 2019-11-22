@@ -1,11 +1,11 @@
 {
-	"presets":["env","stage-0"],
-	"plugins":[
-		"transform-runtime",
-		["import", {
-		"libraryName": "vant",
-		"libraryDirectory": "es",
-		"style": true
-		}]
-	]
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    ["import", {
+      "libraryName": "vant",
+      "libraryDirectory": "es",
+      "style": true
+    }],
+    "@babel/plugin-transform-runtime"
+  ]
 }
