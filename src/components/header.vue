@@ -1,89 +1,96 @@
 <template>
-<div class="header">
+  <div class="header">
     <router-link to="/"><div class="logo"></div></router-link>
     <div class="left_box col-9 m-auto">
-        <ul>
-            <li><router-link to="/">发现</router-link></li>
-            <li><router-link to="/photo">相册</router-link></li>
-            <li v-if="$store.state.loginFlag"><router-link to="/follow">关注</router-link></li>
-            <li v-if="$store.state.loginFlag">
-                <el-badge :value="$store.state.unRead" :hidden="$store.state.unRead == 0" class="item">
-                    <router-link to="/chat">                      
-                            消息                      
-                    </router-link>
-                </el-badge>
-            </li>
-        </ul>
-        <search></search>
+      <ul>
+        <li><router-link to="/">发现</router-link></li>
+        <li><router-link to="/photo">相册</router-link></li>
+        <li v-if="$store.state.loginFlag"><router-link to="/follow">关注</router-link></li>
+        <li v-if="$store.state.loginFlag">
+          <el-badge :value="$store.state.unRead" :hidden="$store.state.unRead == 0" class="item">
+            <router-link to="/chat">消息</router-link>
+          </el-badge>
+        </li>
+      </ul>
+      <search></search>
     </div>
     <div class="right_box col-2">
-        <!-- 登录后状态框 -->
-        <div class="new" v-if="$store.state.loginFlag">
-            <el-dropdown placement="bottom-start">
-                <el-avatar shape="circle" :size="40" :src="$store.state.userIfo.avatar"/>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
-                        <div class="dropdown" @click="jump('mypage')">
-                            <i class="iconfont">&#xe7e9;</i>
-                            <span>我的主页</span>
-                        </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="dropdown" @click="jump('collect')">
-                            <i class="iconfont">&#xe670;</i>                            
-                            <span>我的收藏</span>
-                        </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="dropdown" @click="jump('set')">
-                            <i class="iconfont">&#xe66f;</i>
-                            <span>设置</span>
-                        </div>
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                        <div class="dropdown" @click="out">
-                            <i class="iconfont">&#xe609;</i>
-                            <span>退出</span>
-                        </div>
-                    </el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-            <el-button type="danger" round icon="el-icon-edit" @click="jump('articleNew')">写文章</el-button>
-        </div>
-        <!-- 登录按钮 -->
-        <div class="login_btn" v-if="!$store.state.loginFlag">
-            <el-link :underline="false" @click="jump('login')">登录</el-link>
-        </div>
-        <!-- 注册按钮  -->
-        <div class="new_btn"  v-if="!$store.state.loginFlag">
-            <el-link :underline="false"  @click="jump('login')">注册</el-link>
-        </div>
+      <!-- 登录后状态框 -->
+      <div class="new" v-if="$store.state.loginFlag">
+        <el-dropdown placement="bottom-start">
+          <el-avatar shape="circle" :size="40" :src="$store.state.userIfo.avatar"/>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item v-for="item in list" :key="item.title">
+              <div class="dropdown" @click="jump(item.handle)">
+                <i class="iconfont" v-html="item.icon"/>
+                <span>{{item.title}}</span>
+              </div>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-button type="danger" round icon="el-icon-edit" @click="jump('articleNew')">写文章</el-button>
+      </div>
+      <!-- 登录按钮 -->
+      <div class="login_btn" v-if="!$store.state.loginFlag">
+        <el-link :underline="false" @click="jump('login')">登录</el-link>
+      </div>
+      <!-- 注册按钮  -->
+      <div class="new_btn"  v-if="!$store.state.loginFlag">
+        <el-link :underline="false" @click="jump('login')">注册</el-link>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 import search from './search.vue'
 import user from '../api/user.js'
 export default {
-    components:{
-        search,
-    },
-    mounted(){
-        this.$store.dispatch('userIfo');
-    },
-    methods:{
-        jump(name){
-            this.$router.push({name:name});
+  components:{
+    search
+  },
+  data(){
+    return {
+      list:[
+        {
+          title:'我的主页',
+          handle:'mypage',
+          icon:'&#xe7e9;',
         },
-        out(){
-            user.logOut().then(()=>{
-                localStorage.clear();
-                this.$store.commit('userStatus',false);
-                this.$router.push('/');
-            })
+        {
+          title:'我的收藏',
+          handle:'collect',
+          icon:'&#xe670;',
+        },
+        {
+          title:'设置',
+          handle:'set',
+          icon:'&#xe66f;',
+        },
+        {
+          title:'退出',
+          handle:'out',
+          icon:'&#xe609;',
         }
+      ]
     }
+  },
+  mounted(){
+    this.$store.dispatch('userIfo');
+  },
+  methods:{
+    jump(name){
+      if(name == 'out'){
+        user.logOut().then(()=>{
+          localStorage.clear();
+          this.$store.commit('userStatus',false);
+          this.$router.push('/');
+        })
+      }else{
+        this.$router.push({name:name});
+      }         
+    },
+  }
 }
 </script>
 

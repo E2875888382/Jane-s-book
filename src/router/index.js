@@ -22,8 +22,8 @@ const router =  new VueRouter({
             meta:{
                 title:`登录 - Jane's book`,
                 keepAlive:true,
-                needHeader:false,
-                needFooter:false
+                needHeader:true,
+                needFooter:true
             },
             component:() => import('../views/login.vue') 
         },
