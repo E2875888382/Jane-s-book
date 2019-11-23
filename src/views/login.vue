@@ -189,8 +189,8 @@ export default {
   justify-content: center;
 }
 .main{
-  width:400px;
-  height:400px;
+  width:300px;
+  height:350px;
   background-color: #fff;
   opacity: 0.8;
   border-radius: 4px;
