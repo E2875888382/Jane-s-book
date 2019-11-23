@@ -1,22 +1,26 @@
 <template>
-<div class="col-9 m-auto bg">
-	<div class="list">
-		<articleItem
-			v-for="(item,index) in articleList" :key="index"
-			:img="item.img"
-			:id="item.articleID"
-			:title="item.title"
-			:author="item.nickName"
-			:reply="item.replyCount"
-			:praise="item.praise"
-			:view="item.view"
-		/>
-		<el-button type="info" round @click="load" v-if="!finished">阅读更多</el-button>
-		<p class="tips" v-if="finished">没有更多了</p>
-	</div>
-	<news></news>
+<el-row type="flex" justify="center" class="bg">
+	<el-col :span="12">
+		<div class="list">
+			<articleItem
+				v-for="(item,index) in articleList" :key="index"
+				:img="item.img"
+				:id="item.articleID"
+				:title="item.title"
+				:author="item.nickName"
+				:reply="item.replyCount"
+				:praise="item.praise"
+				:view="item.view"
+			/>
+			<el-button type="info" round @click="load" v-if="!finished">阅读更多</el-button>
+			<p class="tips" v-if="finished">没有更多了</p>
+		</div>
+	</el-col>
+	<el-col :span="5">
+		<news></news>
+	</el-col>
 	<el-backtop></el-backtop>
-</div>
+</el-row>
 </template>
 
 <script>
@@ -66,8 +70,6 @@ export default {
 .bg{
 	margin-top:58px !important;
 	padding-top:30px;
-	display:flex;
-	justify-content: space-between;
 }
 .list{
 	padding-left:15px;

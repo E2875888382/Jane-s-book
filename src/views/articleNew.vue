@@ -1,5 +1,5 @@
 <template>
-	<div class="container col-10">
+	<div class="container">
 		<el-input v-model="title" maxlength="40" clearable>
 			<el-button slot="append" @click="submit">发帖</el-button>
 		</el-input>

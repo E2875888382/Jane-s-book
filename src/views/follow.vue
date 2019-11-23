@@ -1,5 +1,5 @@
 <template>
-<div class="container m-auto">
+<div class="container">
 	<div class="aside">
 		<p class="aside_top">
 			<span>全部关注</span>
@@ -105,6 +105,7 @@ export default {
 	margin-top:58px !important;
 	padding:30px 15px;
 	min-height:1000px;
+	margin:58px auto;
 }
 .aside{
 	position: fixed;

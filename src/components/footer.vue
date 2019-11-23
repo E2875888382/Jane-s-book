@@ -1,8 +1,10 @@
 <template>
-	<div class="bg col-9 m-auto">
+<el-row type="flex" justify="center">
+	<el-col class="bg" :span="18">
 	  <p>Copyright by Elric Tang</p>
 	  <p>GitHub:https://github.com/E2875888382</p>
-	</div>
+	</el-col>
+</el-row>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-<div class="container m-auto">
+<div class="container">
 	<el-tabs tab-position="left" style="height: 500px;" v-model="activeName">
 		<el-tab-pane v-for="item in list" :key="item.userID" :name="item.userID" style="height: 425px;overflow:auto;padding:0 10px">
 			<div slot="label" class="follow_item">
@@ -76,6 +76,7 @@ export default {
 	margin-top:58px !important;
 	padding:30px 15px;
 	min-height:550px;
+	margin: 58px auto;
 }
 .container>>>.el-tabs__item{
 	height:60px;

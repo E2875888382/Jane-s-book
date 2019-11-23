@@ -1,8 +1,8 @@
 <template>
-<div class="bg col-12">
-	<div class="content col-11 m-auto">
-		<div class="left_box col-9">
-			<div class="main_box col-12">
+<div class="bg">
+	<el-row type="flex">
+		<el-col :span="15" :offset="3" class="left_box">
+			<div class="main_box">
 				<div class="title_box">
 					<span>{{ photoDetails.title }}</span>
 				</div>
@@ -27,9 +27,9 @@
 					:preview-src-list="previewList">
 				</el-image>
 			</div>
-		</div>
-		<div class="right_box col-3">
-			<div class="author_ifo col-12">
+		</el-col>
+		<el-col :span="5" class="right_box">
+			<div class="author_ifo">
 				<el-avatar shape="circle" :size="80" :src="photoDetails.avatar" class="avatar"/>
 				<div class="author">
 					<span class="level">up {{ photoDetails.level }}</span>
@@ -42,7 +42,7 @@
 					<el-button size="mini" type="danger" plain @click="sendMsg">发消息</el-button>
 				</div>
 			</div>
-			<div class="dashboard col-12">
+			<div class="dashboard">
 				<div class="praise_box">
 					<span>点赞</span>
 					<i @click="praise($event)"></i>
@@ -55,8 +55,8 @@
 					<i class="goldCollection" v-if="isCollected"></i>
 				</div>
 			</div>
-		</div>
-	</div>
+		</el-col>
+	</el-row>
 	<el-backtop></el-backtop>
 </div>
 </template>
@@ -238,10 +238,7 @@ export default {
 	margin-top:58px;
 	padding:30px 0;
 	background-color: #f2f3f5;
-}
-.content{
 	min-height:1000px;
-	display:flex;
 }
 .left_box{
 	min-height:1000px;
@@ -260,6 +257,7 @@ export default {
 	background-color: #fff;
 	border: 1px solid #e3e8ec;
 	border-radius: 12px;
+	position: relative;
 }
 .author{
 	text-align: center;

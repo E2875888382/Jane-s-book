@@ -1,34 +1,39 @@
 <template>
-<div class="bg col-12">
-	<el-carousel height="264px" class="m-auto" style="width:960px">
-		<el-carousel-item v-for="item in banner" :key="item">
-			<el-image class="banner_img" :src="item" fit="fill"/>
-		</el-carousel-item>
-	</el-carousel>
+<div class="bg">
 
-	<div class="m-auto leader">
-		<el-page-header content="全部相簿"/>
-		<div v-if="this.$store.state.loginFlag">
+	<el-row type="flex" justify="center">
+		<el-carousel height="264px" style="width:960px">
+			<el-carousel-item v-for="item in banner" :key="item">
+				<el-image class="banner_img" :src="item" fit="fill"/>
+			</el-carousel-item>
+		</el-carousel>
+	</el-row>
+
+	<el-row type="flex" justify="center" class="leader">
+		<el-col :span="14"><el-page-header content="全部相簿"/></el-col>
+		<el-col :span="2" v-if="this.$store.state.loginFlag">
 			<i class="el-icon-edit"></i>
 			<router-link to="/photo/new" class="lead_link">发表我的相簿</router-link>
-		</div>
-	</div>
+		</el-col>
+	</el-row>
 
-	<ul class="box m-auto" :style="{'height':boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
-		<vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn" :reachBottomDistance='400'>
-			<div slot="waterfall-over">没有更多了</div>
-			<div class="img-info" slot-scope="props">
-				<p class="some-info">{{props.value.title}}</p>
-				<div class="ifo">
-					<el-avatar shape="circle" :size="24" :src="props.value.avatar" style="margin-right:10px;"/>
-					<span class="user">{{props.value.nickName}}</span>
-					<el-popover placement="top" trigger="hover" content="支持一下" popper-class='tip'>
-						<i @click="praise(props.value.photoID,$event)" slot="reference"></i>
-					</el-popover>
+	<el-row type="flex" justify="center">
+		<ul class="box" :style="{'height':boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
+			<vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn" :reachBottomDistance='400'>
+				<div slot="waterfall-over">没有更多了</div>
+				<div class="img-info" slot-scope="props">
+					<p class="some-info">{{props.value.title}}</p>
+					<div class="ifo">
+						<el-avatar shape="circle" :size="24" :src="props.value.avatar" style="margin-right:10px;"/>
+						<span class="user">{{props.value.nickName}}</span>
+						<el-popover placement="top" trigger="hover" content="支持一下" popper-class='tip'>
+							<i @click="praise(props.value.photoID,$event)" slot="reference"></i>
+						</el-popover>
+					</div>
 				</div>
-			</div>
-		</vue-waterfall-easy>
-	</ul>
+			</vue-waterfall-easy>
+		</ul>
+	</el-row>
 
 	<el-backtop></el-backtop>
 </div>
@@ -181,11 +186,9 @@ export default {
 	margin-bottom: 12px;
 }
 .leader{
-	display: flex;
-	justify-content: space-between;
 	padding-top: 20px;
 	height:40px;
-	width:960px;
+	/* width:960px; */
 }
 .lead_link{
 	color:#fd7e14 !important;

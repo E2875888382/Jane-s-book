@@ -1,18 +1,19 @@
 <template>
-  <div class="container col-8">
-    <div class="bread col-12">
+  <div class="container">
+
+    <el-row class="bread">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{ path:'/photo' }">相簿</el-breadcrumb-item>
         <el-breadcrumb-item>发表相簿</el-breadcrumb-item>
       </el-breadcrumb>
-    </div>
+    </el-row>
 
-    <el-input v-model="title" maxlength="10" show-word-limit style="margin-top:40px;" class="col-12" clearable>
+    <el-input v-model="title" maxlength="10" show-word-limit style="margin-top:40px;" clearable>
       <template slot="prepend">标题：</template>
     </el-input>
 
-    <div class="col-12 tags">
+    <el-row class="tags">
       <el-tag
       	:key="index"
       	v-for="(tag,index) in dynamicTags"
@@ -31,22 +32,22 @@
       	@blur="handleInputConfirm"
       />
       <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加新标签</el-button>
-    </div>
+    </el-row>
 
-    <div class="col-12">
+    <el-row>
       <p>添加封面：</p>
       <van-uploader @oversize="oversize" v-model="src" multiple  :max-count="1" :max-size="1000000" preview-size="200"/>
-    </div>
+    </el-row>
 
-    <div class="col-12">
+    <el-row>
       <p>添加相片(最多8张)：</p>
       <van-uploader @oversize="oversize" v-model="photo" multiple  :max-count="8" :max-size="1000000" preview-size="200"/>
-    </div>
+    </el-row>
 
-    <div class="col-12">
+    <el-row>
       <el-button type="primary" @click="addNewPhoto">发表</el-button>
       <el-button @click="reset">重置</el-button>
-    </div>
+    </el-row>
     <el-backtop></el-backtop>
   </div>
 </template>
@@ -130,7 +131,8 @@ export default {
 .container{
   margin-top:70px;
   margin-bottom: 40px;
-  min-height:1000px;
+  min-height:800px;
+  max-width: 900px;
 }
 .bread{
   height:30px;

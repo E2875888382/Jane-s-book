@@ -1,5 +1,5 @@
 <template>
-<div class="container m-auto">
+<div class="container">
 	<div class="top"></div>
 	<div class="collect_item" v-for="item in article" :key="item.articleID">
 		<p class="article_topic">
@@ -61,6 +61,7 @@ export default {
 	min-height:600px;
 	width:720px;
 	padding:30px 15px;
+	margin:58px auto;
 }
 .top{
 	width:690px;

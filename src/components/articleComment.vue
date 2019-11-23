@@ -43,7 +43,6 @@ export default {
 
 <style scoped>
 .comment_box{
-	width:730px;
 	background-color: #fff;
 	border-radius: 4px;
 	box-shadow: 0 1px 3px rgba(26,26,26,.1);

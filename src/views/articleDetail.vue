@@ -13,8 +13,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="main">
-		<div class="left">
+	<el-row type="flex" justify="center">
+		<el-col :span="13" class="left">
 			<div class="content">
 				<h1 class="topic">{{ detail.title }}</h1>
 				<p class="info">{{ detail.time }} 阅读{{ detail.view }} 评论{{ detail.replyCount }}</p>
@@ -57,8 +57,8 @@
 					</el-pagination>
 				</div>
 			</div>
-		</div>
-		<div class="right">
+		</el-col>
+		<el-col :span="4" class="right">
 			<div class="author_info">
 				<el-avatar shape="circle" :size="45" :src="detail.avatar"/>
 				<div>
@@ -71,8 +71,8 @@
 					<p class="sign">{{ detail.sign }}</p>
 				</div>
 			</div>
-		</div>
-	</div>
+		</el-col>
+	</el-row>
 	<el-backtop></el-backtop>
 </div>
 </template>
@@ -231,16 +231,10 @@ export default {
 	justify-content: center;
 	padding-top:10px;
 }
-.main{
-	width:1000px;
-	display: flex;
-}
 .left{
-	width:730px;
 	margin:0 10px 24px 0;
 }
 .right{
-	width:260px;
 	background-color: #fff;
 	border-radius: 4px;
 	margin-bottom: 10px;
@@ -254,7 +248,6 @@ export default {
 	margin-bottom: 10px;
 	box-shadow: 0 1px 3px rgba(26,26,26,.1);
 	min-height:500px;
-	width:730px;
 	padding:24px;
 }
 .topic{
@@ -282,7 +275,6 @@ export default {
 	margin-bottom: 10px;
 	box-shadow: 0 1px 3px rgba(26,26,26,.1);
 	min-height:400px;
-	width:730px;
 	padding:24px;
 }
 .author_info{

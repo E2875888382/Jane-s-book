@@ -1,7 +1,7 @@
 <template>
-  <div class="header">
-    <router-link to="/"><div class="logo"></div></router-link>
-    <div class="left_box col-9 m-auto">
+<el-row type="flex" justify="center" class="header">
+  <router-link to="/"><div class="logo"></div></router-link>
+  <el-col :span="18" class="left_box">
       <ul>
         <li><router-link to="/">发现</router-link></li>
         <li><router-link to="/photo">相册</router-link></li>
@@ -13,8 +13,8 @@
         </li>
       </ul>
       <search></search>
-    </div>
-    <div class="right_box col-2">
+  </el-col>
+  <el-col :span="4" class="right_box">
       <!-- 登录后状态框 -->
       <div class="new" v-if="$store.state.loginFlag">
         <el-dropdown placement="bottom-start">
@@ -38,8 +38,8 @@
       <div class="new_btn"  v-if="!$store.state.loginFlag">
         <el-link :underline="false" @click="jump('login')">注册</el-link>
       </div>
-    </div>
-  </div>
+  </el-col>
+</el-row>
 </template>
 
 <script>

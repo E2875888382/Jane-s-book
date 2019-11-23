@@ -1,5 +1,5 @@
 <template>
-<div class="container m-auto">
+<div class="container">
 	<div class="aside">
 		<div v-for="item in list" :key="item.title">
 			<router-link :to="item.link">
