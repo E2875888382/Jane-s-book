@@ -49,7 +49,7 @@ export default {
 
 <style scoped>
 .container{
-	margin-top:58px !important;
+	margin:58px auto;
 	width:960px;
 	min-height:800px;
 	padding:30px 0;

@@ -56,7 +56,7 @@ const router =  new VueRouter({
 				title:`关注 - Jane's book`,
 				keepAlive:true,
 				needHeader:true,
-				needFooter:true
+				needFooter:false
 			},
 			component:() => import('../views/follow.vue')
 		},

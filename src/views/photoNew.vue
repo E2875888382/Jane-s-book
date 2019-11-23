@@ -129,10 +129,9 @@ export default {
 
 <style scoped>
 .container{
-  margin-top:70px;
-  margin-bottom: 40px;
   min-height:800px;
   max-width: 900px;
+  margin: 60px auto;
 }
 .bread{
   height:30px;

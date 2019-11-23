@@ -102,7 +102,6 @@ export default {
 <style scoped>
 .container{
 	width:960px;
-	margin-top:58px !important;
 	padding:30px 15px;
 	min-height:1000px;
 	margin:58px auto;
@@ -144,7 +143,7 @@ export default {
 	align-items: center;
 	height:60px;
 	padding:10px 13px;
-	width:279px;
+	width:230px;
 }
 .follow_item span{
 	margin-left:5px;

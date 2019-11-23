@@ -80,16 +80,15 @@ export default {
 				});               
 			}
 		},
-
 	}
 }
 </script>
 
 <style scoped>
 .container{
-	margin-top:80px;
-	margin-bottom: 40px;
+	margin: 70px auto;
 	min-height:700px;
+	max-width: 900px;
 }
 .bread{
 	height:30px;
