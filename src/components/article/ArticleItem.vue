@@ -12,7 +12,7 @@
             <span><i class="iconfont">&#xe60c;</i>{{ praise }}</span>
         </div>
     </div>
-    <el-image style="width:150px; height:100px" v-if="img" :src="img" fit="fill"></el-image>
+    <el-image style="width:150px; height:100px" v-if="img" :src="img" fit="fill"/>
 </div>
 </template>
 
@@ -26,21 +26,16 @@ export default {
         reply:Number,
         view:Number,
         praise:Number
-    },
-    data(){
-        return {
-
-        }
     }
 }
 </script>
 
 <style scoped>
-i{
+i {
     font-size:12px;
     margin-right:4px;
 }
-.list_item{
+.list_item {
     height:160px;
     padding:15px 2px 20px 0;
     border-bottom: 1px solid #f0f0f0;
@@ -49,15 +44,15 @@ i{
     justify-content: space-between;
     align-items: center;
 }
-.list_item_left{
+.list_item_left {
     width:458px;
     height:131px;
 }
-.long{
+.long {
     width:625px;
     height:131px;
 }
-.title{
+.title {
     margin: -7px 0 4px;
     display: inherit;
     font-size: 18px;
@@ -67,16 +62,16 @@ i{
     overflow: hidden;
     white-space: nowrap;
 }
-.title a{
+.title a {
     color:black;
 }
-.abstract{
+.abstract {
     margin: 0 0 8px;
     font-size: 13px;
     line-height: 24px;
     color: #999;
 }
-.info{
+.info {
     height:20px;
     display:flex;
     align-items: center;
@@ -85,12 +80,12 @@ i{
     line-height: 20px;
     color: #999;
 }
-.info span{
+.info span {
     margin-right:10px;
     display:flex;
     align-items: center;
 }
-.el-image{
+.el-image {
     border-radius: 4px;
 }
 </style>

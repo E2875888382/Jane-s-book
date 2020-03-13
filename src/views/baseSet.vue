@@ -57,14 +57,14 @@ export default {
 </script>
 
 <style scoped>
-.top{
+.top {
     width:625px;
     height:120px;
     padding-bottom: 20px;
     display: flex;
     align-items:center;
 }
-div>>>.van-uploader__upload,div>>>.van-uploader__preview{
+div>>>.van-uploader__upload,div>>>.van-uploader__preview {
     display: flex;
     border-radius: 50%;
     align-items: center;
@@ -72,19 +72,19 @@ div>>>.van-uploader__upload,div>>>.van-uploader__preview{
     overflow: hidden;
     cursor: pointer;
 }
-.item{
+.item {
     height:73px;
     border-bottom: 1px solid #f0f0f0;
     display: flex;
     align-items:center;
 }
-.label{
+.label {
     font-size: 15px;
     color: #969696;
     display: inline-block;
     width:150px;
 }
-.el-button{
+.el-button {
     border:1px solid #91de1be0;
     color:green;
     cursor: pointer;

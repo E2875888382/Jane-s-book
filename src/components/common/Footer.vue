@@ -14,10 +14,10 @@ export default {
 </script>
 
 <style scoped>
-.bg{
+.bg {
     height:60px;
 }
-p{
+p {
     font-size:12px;
     color:#999;
     line-height:24px;

@@ -3,16 +3,16 @@
         <el-input v-model="title" maxlength="40" clearable>
             <el-button slot="append" @click="submit">发帖</el-button>
         </el-input>
-        <mavon-editor 
-            v-model="content" 
+        <mavon-editor
+            v-model="content"
             ref="md"
-            @change="change" 
+            @change="change"
             @save="save"
             :toolbars="toolbars"
-            placeholder=" " 
+            placeholder=" "
             style="min-height: 600px"
-        />      
-        <el-backtop></el-backtop>
+        />
+        <el-backtop/>
     </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
             preview: true, // 预览
         },
         content:'', // 输入的markdown
-        html:'',    // 及时转的html
+        html:'', // 及时转的html
         title:'',
       };
     },
@@ -66,10 +66,10 @@ export default {
                 article.newArticle(newArticle).then(({data:{code}})=>{
                     if(code == 200){
                         this.$message({
-                                message:'发帖成功，快去步行街看看吧',
-                                type:'success',
-                                offset:100,
-                            });
+                            message:'发帖成功，快去步行街看看吧',
+                            type:'success',
+                            offset:100,
+                        });
                     }
                 })
             }else{
@@ -77,7 +77,7 @@ export default {
                     message:'标题或内容不能为空',
                     type:'warning',
                     offset:100,
-                });               
+                });
             }
         },
     }

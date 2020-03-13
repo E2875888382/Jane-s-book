@@ -24,8 +24,8 @@
                 <el-image v-for="item in previewList" :key="item"
                     style="min-width: 100%; height:auto;margin-bottom: 32px;cursor: zoom-in;"
                     :src="item" 
-                    :preview-src-list="previewList">
-                </el-image>
+                    :preview-src-list="previewList"
+                />
             </div>
         </el-col>
         <el-col :span="5" class="right_box">
@@ -57,7 +57,7 @@
             </div>
         </el-col>
     </el-row>
-    <el-backtop></el-backtop>
+    <el-backtop/>
 </div>
 </template>
 
@@ -167,26 +167,26 @@ export default {
 </script>
 
 <style scoped>
-.goldCollection{
+.goldCollection {
     background-position: 0em -12em !important;
 }
-.gold{
+.gold {
     background-position: 0em -40em !important;
 }
-.goldenPraise{
+.goldenPraise {
     background-position: -154px -89px !important;
 }
-.goldenDown{
+.goldenDown {
     background-position: -153px -216px !important;
 }
-.main_box{
+.main_box {
     background-color: #fff;
     border: 1px solid #e3e8ec;
     border-radius: 12px;
     min-height:300px;
     padding:30px;
 }
-.avatar_reply{
+.avatar_reply {
     background-color: #f0f8ff;
     display: flex;
     border-radius: 50%;
@@ -195,12 +195,12 @@ export default {
     overflow: hidden;
     margin:0 25px 0 10px;
 }
-.title_box{
+.title_box {
     display: flex;
     justify-content: space-between;
     margin-bottom: 14px;
 }
-.title_box span:nth-child(1){
+.title_box span:nth-child(1) {
     margin: 0;
     margin-right: 10px;
     font-size: 16px;
@@ -209,18 +209,18 @@ export default {
     display: inline-block;
     vertical-align: middle;
 }
-.title_box span:nth-child(2){
+.title_box span:nth-child(2) {
     font-size: 12px;
     vertical-align: middle;
     color: #b0b0b0;
     cursor: pointer;
 }
-.el-tag{
+.el-tag {
     border-radius: 25px;
     padding: 1px 14px;
     margin-left: 5px;
 }
-.flex_box{
+.flex_box {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
@@ -228,28 +228,28 @@ export default {
     color: #999;
     cursor: pointer;
 }
-.flex_box span{
+.flex_box span {
     margin: 0 15px 0 0;
 }
-.details{
+.details {
     margin:25px 0 10px 0;
 }
-.bg{
+.bg {
     margin-top:58px;
     padding:30px 0;
     background-color: #f2f3f5;
     min-height:1000px;
 }
-.left_box{
+.left_box {
     min-height:1000px;
 }
-.right_box{
+.right_box {
     height:341px;
     position:fixed;
     top:120px;
     right:20px;
 }
-.author_ifo{
+.author_ifo {
     height: 183px;
     padding: 50px 0 0 0;
     margin-top: 40px;
@@ -259,14 +259,14 @@ export default {
     border-radius: 12px;
     position: relative;
 }
-.author{
+.author {
     text-align: center;
     width:100%;
     height:18px;
     display: flex;
     justify-content: center;
 }
-.level{
+.level {
     color: #61c05a;
     border-color: #61c05a;
     width: 40px;
@@ -283,7 +283,7 @@ export default {
     font-weight: normal;
     margin-right:5px;
 }
-.name{
+.name {
     font-size: 14px;
     line-height: 16px;
     font-weight: 400;
@@ -291,21 +291,21 @@ export default {
     word-break: keep-all;
     white-space: nowrap;
 }
-.btn{
+.btn {
     display: flex;
     justify-content: center;
     margin-top:40px;
 }
-.btn>button{
+.btn>button {
     width:72px;
 }
-.btn>button:nth-child(1){
+.btn>button:nth-child(1) {
     background-color: #fb7299;
 }
-.btn>button:nth-child(2):hover{
+.btn>button:nth-child(2):hover {
     background-color: #fb7299;
 }
-.avatar{
+.avatar {
     position:absolute;
     top: -40px;
     left: 50%;
@@ -318,7 +318,7 @@ export default {
     overflow: hidden;
     margin-right:10px;
 }
-.dashboard{
+.dashboard {
     height: 70px;
     background-color: #fff;
     border: 1px solid #e3e8ec;
@@ -327,21 +327,21 @@ export default {
     box-sizing: border-box;
     display: flex;
 }
-.dashboard span{
+.dashboard span {
     font-size: 14px;
     vertical-align: middle;
     margin-left: 10px;
     margin-right: 10px;
 }
-.praise{
+.praise {
     color: #ff8e29;
 }
-.other_box{
+.other_box {
     width:110px;
     height:32px;
     padding-left: 5px;
 }
-.other_box i{
+.other_box i {
     display: inline-block;
     cursor: pointer;
     font-size: 32px;
@@ -354,15 +354,15 @@ export default {
     background-repeat: no-repeat;
     background-size: 1em 116em;
 }
-.other_box i:hover{
+.other_box i:hover {
     background-position: 0em -13em;
 }
-.praise_box{
+.praise_box {
     width:130px;
     height:32px;
     border-right: 1px solid #e0dede;
 }
-.praise_box i{
+.praise_box i {
     display: inline-block;
     font-size: 32px;
     color: #9a9999;
@@ -374,10 +374,10 @@ export default {
     background-repeat: no-repeat;
     background-size: 1em 116em;
 }
-.praise_box i:hover{
+.praise_box i:hover {
     background-position: 0em -41em;
 }
-.user_name{
+.user_name {
     font-size: 12px;
     font-weight: 700;
     line-height: 18px;
@@ -385,12 +385,12 @@ export default {
     word-wrap: break-word;
     margin:0;
 }
-.ifo{
+.ifo {
     color: #99a2aa;
     line-height: 26px;
     font-size: 12px;
 }
-.ifo span{
+.ifo span {
     margin-right: 20px;
 }
 </style>

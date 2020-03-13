@@ -4,12 +4,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import infiniteScroll from 'vue-infinite-scroll';
 import '@icon/iconfont.css'
 
-import { Uploader } from 'vant'
+import { Uploader } from 'vant';
 
-import Vue from 'vue'
-import App from '@views/app.vue'
-import router from '@router/index.js'
-import store from '@store/index.js'
+import Vue from 'vue';
+import App from '@views/app.vue';
+import router from '@router/index.js';
+import store from '@store/index.js';
 
 Vue.use(Uploader);
 Vue.use(ElementUI);

@@ -1,6 +1,6 @@
 <template>
     <div style="width:100px;height:40px;float:right">
-        <canvas id="s-canvas" @click="refreshCode" width="100px" height="40px"></canvas>
+        <canvas id="s-canvas" @click="refreshCode" width="100px" height="40px"/>
     </div>
 </template>
 

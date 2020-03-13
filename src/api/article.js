@@ -1,4 +1,4 @@
-import req from './request.js'
+import req from './request.js';
 
 export default{
     praise(articleId,status){

@@ -6,8 +6,7 @@
         prefix-icon="el-icon-search"
         placeholder="搜索"
         @keyup.enter.native="search"
-        >
-    </el-autocomplete>
+    />
 </div>
 </template>
 
@@ -60,7 +59,7 @@ export default {
 </script>
 
 <style scoped>
-.search_box{
+.search_box {
     width: 300px;
     height: 40px;
     border-radius: 20px;
@@ -69,10 +68,10 @@ export default {
     display: flex;
     align-self: center;
 }
-div>>>.el-input__inner:focus{
+div>>>.el-input__inner:focus {
     width:250px;
 }
-div>>>.el-input__inner{
+div>>>.el-input__inner {
     border-radius:50px;
     border:none;
     background: #eee;

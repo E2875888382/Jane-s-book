@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="top"></div>
+    <div class="top"/>
     <div class="collect_item" v-for="item in article" :key="item.articleID">
         <p class="article_topic">
             <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">{{ item.title }}</router-link>
@@ -27,19 +27,19 @@
 <script>
 import user from '@api/user.js'
 export default {
-    data(){
+    data() {
         return {
             article:null,
         }
     },
-    activated(){
+    activated() {
         this.load();
     },
-    methods:{
-        load(){
+    methods: {
+        load() {
             this.article = this.$store.state.streetCollection;
         },
-        unCollect(articleID){
+        unCollect(articleID) {
             new Promise((resolve)=>{
                 user.collect(articleID,false).then(()=>{
                     this.$store.dispatch('userIfo');
@@ -56,42 +56,45 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.container {
     margin-top:58px !important;
     min-height:600px;
     width:720px;
     padding:30px 15px;
     margin:58px auto;
 }
-.top{
+.top {
     width:690px;
     height:110px;
     margin-bottom: 30px;
     background: url('https://cdn2.jianshu.io/assets/web/collect-note-955d8c71641a360924390da9da4b0151.png') no-repeat;
     background-size: 690px 110px;
 }
-.collect_item{
+.collect_item {
     margin: 0 0 15px;
     padding: 15px 2px 20px 0;
     border-bottom: 1px solid #f0f0f0;
     height:136px;
 }
-.article_topic{
+.article_topic {
     margin: -7px 0 4px;
     font-size: 18px;
     font-weight: 700;
     line-height: 1.5;
 }
-.article_topic a{
+.article_topic a {
     color: #969696;
 }
-.meta{
+.meta {
     display: flex;
 }
-i{
+i {
     font-size:12px;
 }
-.article_view,.article_replyCount,.article_time,.article_cancel{
+.article_view,
+.article_replyCount,
+.article_time,
+.article_cancel {
     display:flex;
     align-items: center;
     margin-right: 10px;
@@ -100,7 +103,7 @@ i{
     font-weight: 400;
     line-height: 20px;
 }
-.article_content{
+.article_content {
     margin: 0 0 8px;
     font-size: 13px;
     line-height: 24px;

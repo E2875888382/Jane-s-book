@@ -6,7 +6,7 @@
             <span>{{ newsDetails.source }} 发布时间：{{ newsDetails.time }}</span>
             <span>阅读：{{ newsDetails.view }}</span>
         </div>
-        <el-divider></el-divider>
+        <el-divider/>
         <div class="news_content">
             <div style="width:660px">
                 <el-image width="660" :src="newsDetails.imgTop"/>
@@ -18,7 +18,7 @@
                 <p class="editor">{{ newsDetails.editor }}</p>
             </div>
         </div>
-        <el-backtop></el-backtop>
+        <el-backtop/>
     </el-col>
 </el-row>
 </template>

@@ -20,13 +20,13 @@ export default{
         state.photoCollection = photoCol;
         state.streetCollection = articleCol;
     },
-    searchResult(state,{article,photo,user,news}){// 获取搜索帖子结果
+    searchResult(state,{article,photo,user,news}){
         state.result.article = article;
         state.result.photo = photo;
         state.result.user = user;
         state.result.news = news;
     },
-    searchContent(state,search){// 获取搜索框内容
+    searchContent(state,search){
         state.search = search;
     }
 }
