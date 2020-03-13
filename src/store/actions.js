@@ -1,16 +1,19 @@
-import user from '../api/user.js'
-import io from '../../node_modules/socket.io-client'
+import user from '@api/user.js';
+import io from '../../node_modules/socket.io-client';
 import { Message } from 'element-ui';
 
 export default{
-    userIfo(context){
+    userIfo(context) {
         if(localStorage.getItem('token')){
             user.userIfo().then((result)=>{
-                context.commit('userStatus',true);
-                context.commit('userIfo',result.data);
-                context.commit('initSocket',io('http://localhost:8000'));
-                context.state.socket.emit('login',{uid:result.data.userIfo[0].userID,name:result.data.userIfo[0].nickName});
-                context.state.socket.on('getMsg', (data)=>{
+                context.commit('userStatus', true);
+                context.commit('userIfo', result.data);
+                context.commit('initSocket', io('http://localhost:8000'));
+                context.state.socket.emit('login', {
+                    uid:result.data.userIfo[0].userID,
+                    name:result.data.userIfo[0].nickName
+                });
+                context.state.socket.on('getMsg', (data)=> {
                     context.commit('addMsg',{
                         index:new Date().getTime(),
                         time:new Date().toLocaleString(),
@@ -19,12 +22,12 @@ export default{
                         toUid:data.toUid,
                         msg:data.msg
                     });
-                    context.commit('newMsg'); 
+                    context.commit('newMsg');
                     Message({
                         offset:100,
                         message:'收到一条新消息'
-                    });                   
-                }); 
+                    });
+                });
             })
         }
     }

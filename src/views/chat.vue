@@ -1,16 +1,16 @@
 <template>
-<div class="container m-auto">
+<div class="container">
     <el-tabs tab-position="left" style="height: 500px;" v-model="activeName">
         <el-tab-pane v-for="item in list" :key="item.userID" :name="item.userID" style="height: 425px;overflow:auto;padding:0 10px">
             <div slot="label" class="follow_item">
                 <el-avatar shape="circle" :size="40" :src="item.avatar"/>
                 <span>{{ item.nickName }}</span>
-            </div>    
+            </div>
             <div v-for="i in cur" :key="i.index">
                 <p class="time">{{i.time}}</p>
                 <div v-if="i.from == 0" class="my">
                     <div class="mymsg"><p>{{i.msg}}</p></div>
-                    <el-avatar shape="circle" :size="30" :src="$store.state.userIfo.avatar"/>                  
+                    <el-avatar shape="circle" :size="30" :src="$store.state.userIfo.avatar"/>
                 </div>
                 <div v-if="i.from == 1" class="friend">
                     <el-avatar shape="circle" :size="30" :src="item.avatar"/>
@@ -21,24 +21,24 @@
         <div class="input_box">
             <el-input type="textarea" :rows="3" v-model="input" class="input" resize="none" :autofocus="true"></el-input>
             <el-button type="primary" @click="send">发送</el-button>
-        </div> 
+        </div>
     </el-tabs>
 </div>
 </template>
 
 <script>
 export default {
-    data(){
+    data() {
         return {
             list:this.$store.state.friendsList,
             userID:this.$store.state.userIfo.userID,
-            name:this.$store.state.userIfo.nickName,        
+            name:this.$store.state.userIfo.nickName,
             input:'',
             activeName:'',
         }
     },
     computed:{
-        cur:function(){
+        cur:function() {
             let res = [];
             let msg = this.$store.state.totalMsg;
             for(let i = 0;i < msg.length;i++){
@@ -49,12 +49,12 @@ export default {
             return res;
         }
     },
-    mounted(){
+    mounted() {
         this.$store.commit('allRead');
         this.list[0] && (this.activeName = this.list[0].userID);
     },
-    methods:{
-        send(){
+    methods: {
+        send() {
             let msg = {
                 index:new Date().getTime(),
                 time:new Date().toLocaleString(),
@@ -71,54 +71,55 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.container {
     width:960px;
     margin-top:58px !important;
     padding:30px 15px;
     min-height:550px;
+    margin: 58px auto;
 }
-.container>>>.el-tabs__item{
+.container>>>.el-tabs__item {
     height:60px;
 }
-.follow_item{
+.follow_item {
     display:flex;
     align-items: center;
     height:60px;
     padding:10px 13px;
     width:180px;
 }
-.follow_item span{
+.follow_item span {
     margin-left:5px;
     font-size:14px;
 }
-.my{
+.my {
     display: flex;
     justify-content: flex-end;
     margin: 10px 0;
 }
-.friend{
+.friend {
     display: flex;
     margin: 10px 0;
 }
-p{  
+p {
     word-break:normal;
     white-space:pre-wrap;
     word-wrap:break-word;
     margin: 0;
     font-size: 14px;
 }
-.mymsg,.friendmsg{
+.mymsg,.friendmsg {
     max-width: 400px;
     margin:0 20px;
     background-color: deepskyblue;
     border-radius: 10px;
     padding:10px;
-    position:relative;  
+    position:relative;
 }
-.friendmsg{
-    background-color: gainsboro;   
+.friendmsg {
+    background-color: gainsboro;
 }
-.mymsg:before{
+.mymsg:before {
     display:block;
     content:'';
     position: absolute;
@@ -130,7 +131,7 @@ p{
     border-right: 10px solid transparent;
     right:-20px;
 }
-.friendmsg:before{
+.friendmsg:before {
     display:block;
     content:'';
     position: absolute;
@@ -142,15 +143,15 @@ p{
     border-right: 10px solid gainsboro;
     left:-20px;
 }
-.time{
+.time {
     text-align:center;
     font-size:12px;
     color:#999;
 }
-.input_box{
+.input_box {
     display: flex;
 }
-.input{
+.input {
     width:625px;
     padding:0;
 }

@@ -1,5 +1,5 @@
 <template>
-<div class="container m-auto">
+<div class="container">
     <div class="aside">
         <div>
             <router-link to="/set/baseset">
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="content">
-        <router-view></router-view>
+        <router-view/>
     </div>
 </div>
 </template>
@@ -36,6 +36,7 @@ export default {
     width:960px;
     min-height:800px;
     padding:30px 0;
+    margin:58px auto;
 }
 .aside{
     position:fixed;

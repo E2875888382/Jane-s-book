@@ -1,59 +1,53 @@
 <template>
-    <div class="container col-8">
-        <div class="bread col-12">
+    <div class="container">
+        <el-row class="bread">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item :to="{ path:'/photo' }">相簿</el-breadcrumb-item>
                 <el-breadcrumb-item>发表相簿</el-breadcrumb-item>
             </el-breadcrumb>
-        </div>
-
-        <el-input v-model="title" maxlength="10" show-word-limit style="margin-top:40px;" class="col-12" clearable>
+        </el-row>
+        <el-input v-model="title" maxlength="10" show-word-limit style="margin-top:40px;" clearable>
             <template slot="prepend">标题：</template>
         </el-input>
-
-        <div class="col-12 tags">
+        <el-row class="tags">
             <el-tag
-            :key="index"
-            v-for="(tag,index) in dynamicTags"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)">
-            {{tag}}
+                :key="index"
+                v-for="(tag,index) in dynamicTags"
+                closable
+                :disable-transitions="false"
+                @close="handleClose(tag)">
+                {{tag}}
             </el-tag>
             <el-input
-            class="input-new-tag"
-            v-if="inputVisible"
-            v-model="inputValue"
-            ref="saveTagInput"
-            size="small"
-            @keyup.enter.native="handleInputConfirm"
-            @blur="handleInputConfirm"
-            >
-            </el-input>
+                class="input-new-tag"
+                v-if="inputVisible"
+                v-model="inputValue"
+                ref="saveTagInput"
+                size="small"
+                @keyup.enter.native="handleInputConfirm"
+                @blur="handleInputConfirm"
+            />
             <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加新标签</el-button>
-        </div>
-
-        <div class="col-12">
+        </el-row>
+        <el-row>
             <p>添加封面：</p>
             <van-uploader @oversize="oversize" v-model="src" multiple  :max-count="1" :max-size="1000000" preview-size="200"/>
-        </div>
-
-        <div class="col-12">
+        </el-row>
+        <el-row>
             <p>添加相片(最多8张)：</p>
             <van-uploader @oversize="oversize" v-model="photo" multiple  :max-count="8" :max-size="1000000" preview-size="200"/>
-        </div>
-
-        <div class="col-12">
+        </el-row>
+        <el-row>
             <el-button type="primary" @click="addNewPhoto">发表</el-button>
             <el-button @click="reset">重置</el-button>
-        </div>
-        <el-backtop></el-backtop>
+        </el-row>
+        <el-backtop/>
     </div>
 </template>
 
 <script>
-import photo from '../api/photo.js'
+import photo from '@api/photo.js'
 export default {
     data() {
         return {
@@ -68,10 +62,10 @@ export default {
     methods: {
         oversize(){
             this.$message({
-                    message:'请上传小于1M的图片',
-                    type:'warning',
-                    offset:100,
-                });
+                message:'请上传小于1M的图片',
+                type:'warning',
+                offset:100,
+            });
         },
         handleClose(tag) {
             this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
@@ -103,15 +97,15 @@ export default {
                 let time = new Date().toLocaleString();
                 let temp = [];
                 for(let i = 0;i<this.photo.length;i++){
-                    temp.push(this.photo[i].content)
-                };
-                let photos = temp.join('@');
-                photo.newPhoto(tags,src,this.title,time,photos).then(({data:{code}})=>{
-                    if(code == 200){
-                        this.$message({
-                            message:'发表成功',
-                            type:'success',
-                            offset:100,
+                temp.push(this.photo[i].content)
+            };
+            let photos = temp.join('@');
+            photo.newPhoto(tags,src,this.title,time,photos).then(({data:{code}})=>{
+                if(code == 200){
+                    this.$message({
+                        message:'发表成功',
+                        type:'success',
+                        offset:100,
                         })
                     }
                 })
@@ -122,19 +116,18 @@ export default {
                     offset:100,
                 })
             }
-
         }
     }
 }
 </script>
 
 <style scoped>
-.container{
-    margin-top:70px;
-    margin-bottom: 40px;
-    min-height:1000px;
+.container {
+    min-height:800px;
+    max-width: 900px;
+    margin: 60px auto;
 }
-.bread{
+.bread {
     height:30px;
     display: flex;
     align-items: center;
@@ -154,7 +147,7 @@ export default {
     margin-left: 10px;
     vertical-align: bottom;
 }
-.tags{
+.tags {
     margin:40px 0;
 }
 </style>

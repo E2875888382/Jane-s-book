@@ -7,12 +7,12 @@
     <div class="item">
         <span class="label">出生日期</span>
         <el-date-picker
-        v-model="birthday"
-        type="date"
-        format="yyyy 年 MM 月 dd 日"
-        value-format="yyyy-MM-dd"
-        placeholder="选择日期">
-        </el-date-picker>
+            v-model="birthday"
+            type="date"
+            format="yyyy 年 MM 月 dd 日"
+            value-format="yyyy-MM-dd"
+            placeholder="选择日期"
+        />
     </div>
     <div class="item">
         <span class="label">性别</span>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import user from '../api/user.js'
+import user from '@api/user.js'
 export default {
     data(){
         return {

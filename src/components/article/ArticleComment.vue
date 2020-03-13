@@ -3,13 +3,13 @@
     <el-avatar shape="circle" :size="40" :src="$store.state.userIfo.avatar"/>
     <div class="comment_right">
         <el-input
-        type="textarea"
-        resize="none"
-        rows="4"
-        maxlength="100"
-        placeholder="写下你的评论..."
-        v-model="comment">
-        </el-input>
+            type="textarea"
+            resize="none"
+            rows="4"
+            maxlength="100"
+            placeholder="写下你的评论..."
+            v-model="comment"
+        />
         <div class="btn_box">
             <el-button round size="small" @click="comment = ''">取消</el-button>
             <el-button type="danger" round size="small" @click="submit">发布</el-button>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import article from '../api/article.js'
+import article from '@api/article.js'
 export default {
     props: ['article'],
     data(){
@@ -42,8 +42,7 @@ export default {
 </script>
 
 <style scoped>
-.comment_box{
-    width:730px;
+.comment_box {
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(26,26,26,.1);
@@ -54,21 +53,21 @@ export default {
     margin-bottom: 10px;
     justify-content: space-between;
 }
-.comment_right{
+.comment_right {
     width:632px;
     height:151px;
 }
-.comment_box>>>.el-textarea__inner{
+.comment_box>>>.el-textarea__inner {
     background-color: whitesmoke;
 }
-.btn_box{
+.btn_box {
     width:632px;
     height:50px;
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
 }
-.el-button{
+.el-button {
     margin-right:8px;
 }
 </style>

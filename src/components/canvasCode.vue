@@ -1,6 +1,6 @@
 <template>
     <div style="width:100px;height:40px;float:right">
-        <canvas id="s-canvas" @click="refreshCode" width="100px" height="40px"></canvas>
+        <canvas id="s-canvas" @click="refreshCode" width="100px" height="40px"/>
     </div>
 </template>
 
@@ -9,8 +9,8 @@ export default {
     name: 'validCode',
     data () {
         return {
-            codeList: [],
-            chars:'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz0123456789',
+        codeList: [],
+        chars:'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz0123456789',
         }
     },
     mounted () {
@@ -44,34 +44,33 @@ export default {
                 ctx.translate(-x,-y);
             }
             for (let i = 0; i < 5; i++) {
-                ctx.strokeStyle = this.randomColor(40, 180)
-                ctx.beginPath()
-                ctx.moveTo(this.randomNum(0, 100), this.randomNum(0, 40))
-                ctx.lineTo(this.randomNum(0, 100), this.randomNum(0, 40))
-                ctx.stroke()
+                ctx.strokeStyle = this.randomColor(40, 180);
+                ctx.beginPath();
+                ctx.moveTo(this.randomNum(0, 100), this.randomNum(0, 40));
+                ctx.lineTo(this.randomNum(0, 100), this.randomNum(0, 40));
+                ctx.stroke();
             }
             // 绘制干扰点
             for (let i = 0; i < 50; i++) {
-                ctx.fillStyle = this.randomColor(0, 255)
-                ctx.beginPath()
-                ctx.arc(this.randomNum(0, 100), this.randomNum(0,40), 1, 0, 2 * Math.PI)
-                ctx.fill()
+                ctx.fillStyle = this.randomColor(0, 255);
+                ctx.beginPath();
+                ctx.arc(this.randomNum(0, 100), this.randomNum(0,40), 1, 0, 2 * Math.PI);
+                ctx.fill();
             }
             // 向父组件暴露验证码
-            this.$emit('update:value',this.codeList.map(item => item).join(''))
+            this.$emit('update:value',this.codeList.map(item => item).join(''));
         },
         // 生成一个随机数
         randomNum (min, max) {
-            return Math.floor(Math.random() * (max - min) + min)
+            return Math.floor(Math.random() * (max - min) + min);
         },
         // 生成一个随机的颜色
         randomColor (min, max) {
-            let r = this.randomNum(min, max)
-            let g = this.randomNum(min, max)
-            let b = this.randomNum(min, max)
-            return 'rgb(' + r + ',' + g + ',' + b + ')'
+            let r = this.randomNum(min, max);
+            let g = this.randomNum(min, max);
+            let b = this.randomNum(min, max);
+            return `rgb(${r},${g},${b})`;
         },
-
     }
 }
 </script>

@@ -6,13 +6,12 @@
         prefix-icon="el-icon-search"
         placeholder="搜索"
         @keyup.enter.native="search"
-        >
-    </el-autocomplete>
+    />
 </div>
 </template>
 
 <script>
-import req from '../api/request.js'
+import req from '@api/request.js'
 export default {
     data(){
         return {
@@ -47,9 +46,9 @@ export default {
         },
         // 搜索
         search(){
-            if(this.input.trim()!==''){// 去除空格后判断是否为空
+            if(this.input.trim()!==''){
                 this.$store.commit('searchContent',this.input);
-                this.$router.push({ path:'/search'});// 跳转到搜索结果页
+                this.$router.push({ path:'/search'});
                 req.get('search', {search:this.input}).then(({data})=>{
                     this.$store.commit('searchResult',data);
                 })
@@ -60,7 +59,7 @@ export default {
 </script>
 
 <style scoped>
-.search_box{
+.search_box {
     width: 300px;
     height: 40px;
     border-radius: 20px;
@@ -69,10 +68,10 @@ export default {
     display: flex;
     align-self: center;
 }
-div>>>.el-input__inner:focus{
+div>>>.el-input__inner:focus {
     width:250px;
 }
-div>>>.el-input__inner{
+div>>>.el-input__inner {
     border-radius:50px;
     border:none;
     background: #eee;

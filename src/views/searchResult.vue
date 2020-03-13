@@ -1,54 +1,55 @@
 <template>
-<div class="container m-auto">
+<div class="container">
     <div class="aside">
-        <div>
-            <router-link to="/search/article">
+        <div v-for="item in list" :key="item.title">
+            <router-link :to="item.link">
                 <div class="icon">
-                    <i class="iconfont">&#xe681;</i>
+                    <i class="iconfont" v-html="item.icon"></i>
                 </div>
-                <span>文章</span>
-            </router-link>
-        </div>
-        <div>
-            <router-link to="/search/news">
-                <div class="icon">
-                    <i class="iconfont">&#xe67b;</i>
-                </div>
-                <span>新闻</span>
-            </router-link>
-        </div>
-        <div>
-            <router-link to="/search/photo">
-                <div class="icon">
-                    <i class="iconfont">&#xe607;</i>
-                </div>
-                <span>相册</span>
-            </router-link>
-        </div>
-        <div>
-            <router-link to="/search/user">
-                <div class="icon">
-                    <i class="iconfont">&#xe7e9;</i>
-                </div>
-                <span>用户</span>
+                <span>{{item.title}}</span>
             </router-link>
         </div>
     </div>
     <div class="content">
-        <router-view></router-view>
+        <router-view/>
     </div>
 </div>
 </template>
 
 <script>
 export default {
-
+    data(){
+        return {
+            list:[
+                {
+                    title:'文章',
+                    icon:'&#xe681;',
+                    link:'/search/article'
+                },
+                {
+                    title:'新闻',
+                    icon:'&#xe67b;',
+                    link:'/search/news'
+                },
+                {
+                    title:'相册',
+                    icon:'&#xe607;',
+                    link:'/search/photo'
+                },
+                {
+                    title:'用户',
+                    icon:'&#xe7e9;',
+                    link:'/search/user'
+                }
+            ]
+        }
+    }
 }
 </script>
 
 <style scoped>
 .container{
-    margin-top:58px !important;
+    margin:58px auto;
     width:960px;
     min-height:800px;
     padding:30px 0;

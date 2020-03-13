@@ -1,5 +1,5 @@
 <template>
-<div class="content_box m-auto">
+<div class="content_box">
     <div class="left">
         <div class="top">
             <el-avatar shape="circle" :size="80" :src="$store.state.userIfo.avatar" style="margin-right:20px"/>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import user from '../api/user.js'
+import user from '@api/user.js'
 export default {
     data(){
         return {
@@ -81,7 +81,7 @@ export default {
         }
     },
     created(){
-        this.init();     
+        this.init();
     },
     methods:{
         init(){
@@ -103,6 +103,7 @@ export default {
     padding-top:30px;
     display:flex;
     justify-content: space-between;
+    margin: 58px auto;
 }
 .left{
     width:640px;

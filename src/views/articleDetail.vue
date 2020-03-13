@@ -13,24 +13,26 @@
             </div>
         </div>
     </div>
-    <div class="main">
-        <div class="left">
+    <el-row type="flex" justify="center">
+        <el-col :span="13" class="left">
             <div class="content">
                 <h1 class="topic">{{ detail.title }}</h1>
                 <p class="info">{{ detail.time }} 阅读{{ detail.view }} 评论{{ detail.replyCount }}</p>
                 <div class="text markdown-body" v-html="detail.html"></div>
                 <el-image v-if="detail.img" style="width:682px; height: 400px" :src="detail.img" fit="fill"></el-image>
             </div>
-            <Comment v-if="isLogin" :article="current"></Comment>
+            <Comment v-if="isLogin" :article="current"/>
             <div class="comment">
                 <h3 class="comment_header">
                     <span>全部评论 {{ comments.length }}</span>
                     <div class="sort">
-                        <span @click="function(){sortBy(item.value);active = item.value}"
-                        v-for="item in sortOption"
-                        :key="item.value"
-                        :class="{'active':active == item.value}">
-                        {{item.name}}
+                        <span 
+                            @click="function(){sortBy(item.value);active = item.value}"
+                            v-for="item in sortOption"
+                            :key="item.value"
+                            :class="{'active':active == item.value}"
+                        >
+                            {{item.name}}
                         </span>
                     </div>
                 </h3>
@@ -48,17 +50,17 @@
                 </div>
                 <div class="page">
                     <el-pagination
-                    background
-                    prev-text="上一页"
-                    next-text="下一页"
-                    @current-change="onePage"
-                    layout="prev, pager, next"
-                    :total="comments.length">
-                    </el-pagination>
+                        background
+                        prev-text="上一页"
+                        next-text="下一页"
+                        @current-change="onePage"
+                        layout="prev, pager, next"
+                        :total="comments.length"
+                    />
                 </div>
             </div>
-        </div>
-        <div class="right">
+        </el-col>
+        <el-col :span="4" class="right">
             <div class="author_info">
                 <el-avatar shape="circle" :size="45" :src="detail.avatar"/>
                 <div>
@@ -71,46 +73,48 @@
                     <p class="sign">{{ detail.sign }}</p>
                 </div>
             </div>
-        </div>
-    </div>
-    <el-backtop></el-backtop>
+        </el-col>
+    </el-row>
+    <el-backtop/>
 </div>
 </template>
 
 <script>
-import Comment from '../components/articleComment.vue'
-import user from '../api/user.js'
-import article from '../api/article.js'
+import user from '@api/user.js'
+import article from '@api/article.js'
 import 'mavon-editor/dist/css/index.css'
 import 'mavon-editor/dist/markdown/github-markdown.min.css'
 export default {
     data(){
         return {
-            sortOption:[
+            sortOption: [
                 {name:'按时间正序',value:'time'},
                 {name:'按时间倒序',value:'timereverse'},
             ],
-            active:'time',
-            comments:[],
-            detail:{},
-            currentComments:[],
-            isFollowed:false,
-            isCollected:false,
-            isMe:false,
-            isPraised:false,
-            isLogin:false,
-            current:'',
+            active: 'time',
+            comments: [],
+            detail: {},
+            currentComments: [],
+            isFollowed: false,
+            isCollected: false,
+            isMe: false,
+            isPraised: false,
+            isLogin: false,
         }
     },
-    components:{
-        Comment
+    components: {
+        Comment: ()=> import('@components/article/articleComment.vue')
     },
-    activated(){
+    computed:{
+        current:function() {
+            return this.$route.params.articleId;
+        }
+    },
+    activated() {
         this.load();
         this.isLogin = this.$store.state.loginFlag;
-        this.current = this.$route.params.articleId;
     },
-    deactivated(){
+    deactivated() {
         this.isFollowed = false;
         this.isCollected = false;
         this.isMe = false;
@@ -131,7 +135,7 @@ export default {
             }
         },
         load(){
-            article.detail(this.$route.params.articleId).then(({ data:{ detail,comments } })=>{
+            article.detail(this.current).then(({ data:{ detail,comments } })=>{
                 this.detail = detail[0];
                 this.detail.html = this.detail.html.replace(/&amp;/g, "&");
                 this.detail.html = this.detail.html.replace(/&lt;/g, "<");
@@ -228,16 +232,10 @@ export default {
     justify-content: center;
     padding-top:10px;
 }
-.main{
-    width:1000px;
-    display: flex;
-}
 .left{
-    width:730px;
     margin:0 10px 24px 0;
 }
 .right{
-    width:260px;
     background-color: #fff;
     border-radius: 4px;
     margin-bottom: 10px;
@@ -251,7 +249,6 @@ export default {
     margin-bottom: 10px;
     box-shadow: 0 1px 3px rgba(26,26,26,.1);
     min-height:500px;
-    width:730px;
     padding:24px;
 }
 .topic{
@@ -279,7 +276,6 @@ export default {
     margin-bottom: 10px;
     box-shadow: 0 1px 3px rgba(26,26,26,.1);
     min-height:400px;
-    width:730px;
     padding:24px;
 }
 .author_info{

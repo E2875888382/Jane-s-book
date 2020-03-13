@@ -1,12 +1,13 @@
 <template>
-    <div class="content col-8">
+<el-row type="flex" justify="center">
+    <el-col class="content" :span="14">
         <h3>{{ newsDetails.title }}</h3>
         <div class="time_read_box">
             <span>{{ newsDetails.source }} 发布时间：{{ newsDetails.time }}</span>
             <span>阅读：{{ newsDetails.view }}</span>
         </div>
-        <el-divider></el-divider>
-        <div class="news_content col-12">
+        <el-divider/>
+        <div class="news_content">
             <div style="width:660px">
                 <el-image width="660" :src="newsDetails.imgTop"/>
                 <div class="content_box">
@@ -17,12 +18,13 @@
                 <p class="editor">{{ newsDetails.editor }}</p>
             </div>
         </div>
-        <el-backtop></el-backtop>
-    </div>
+        <el-backtop/>
+    </el-col>
+</el-row>
 </template>
 
 <script>
-import news from '../api/news.js'
+import news from '@api/news.js'
 export default {
     data(){
         return {
@@ -52,7 +54,7 @@ export default {
                 }
                 s = s.join('')
             }
-            return  s;
+            return s;
         },
         //获取新闻详情
         getNewsDetails(){
