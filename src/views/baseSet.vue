@@ -1,8 +1,18 @@
 <template>
 <div>
     <div class="top">
-        <el-avatar shape="circle" :size="100" :src="ava" style="margin-right:50px"/>
-        <van-uploader v-model="img" :max-count="2" :after-read="afterRead" :preview-image="false">
+        <el-avatar 
+            shape="circle" 
+            :size="100" 
+            :src="ava" 
+            style="margin-right:50px"
+        />
+        <van-uploader 
+            v-model="img" 
+            :max-count="2" 
+            :after-read="afterRead" 
+            :preview-image="false"
+        >
             <el-button round size="small">更换头像</el-button>
         </van-uploader>
     </div>
@@ -29,7 +39,6 @@ export default {
     computed: {
         ava: {
             get() {
-                // eslint-disable-next-line vue/no-side-effects-in-computed-properties
                 this.avatar = this.$store.state.userIfo.avatar;
                 return this.avatar;
             },

@@ -2,8 +2,12 @@
 <div class="bg">
     <div class="oper">
         <div>
-            <div class="like" v-if="!isPraised" @click="praised(true)"><i class="iconfont">&#xe60c;</i></div>
-            <div class="like" v-if="isPraised" @click="praised(false)"><i class="iconfont" style="color:gold">&#xe60c;</i></div>
+            <div class="like" v-if="!isPraised" @click="praised(true)">
+                <i class="iconfont">&#xe60c;</i>
+            </div>
+            <div class="like" v-if="isPraised" @click="praised(false)">
+                <i class="iconfont" style="color:gold">&#xe60c;</i>
+            </div>
             <p>{{ detail.praise }}赞</p>
         </div>
         <div v-if="isLogin">
@@ -19,7 +23,12 @@
                 <h1 class="topic">{{ detail.title }}</h1>
                 <p class="info">{{ detail.time }} 阅读{{ detail.view }} 评论{{ detail.replyCount }}</p>
                 <div class="text markdown-body" v-html="detail.html"></div>
-                <el-image v-if="detail.img" style="width:682px; height: 400px" :src="detail.img" fit="fill"></el-image>
+                <el-image 
+                    v-if="detail.img" 
+                    style="width:682px; height: 400px" 
+                    :src="detail.img" 
+                    fit="fill"
+                />
             </div>
             <Comment v-if="isLogin" :article="current"/>
             <div class="comment">
@@ -43,7 +52,10 @@
                         <p>{{ item.time | dateFormat }}天前</p>
                         <p>{{ item.content }}</p>
                         <div>
-                            <span v-if="!item.isPraised"><i class="iconfont" @click="reply(item,true)">&#xe60c;</i>赞{{ item.praise }}</span>
+                            <span v-if="!item.isPraised">
+                                <i class="iconfont" @click="reply(item,true)">&#xe60c;</i>
+                                赞{{ item.praise }}
+                            </span>
                             <span v-if="item.isPraised">
                                 <i class="iconfont" style="color:gold" @click="reply(item,false)">&#xe60c;</i>
                                 赞{{ item.praise }}
@@ -69,8 +81,21 @@
                 <div>
                     <div class="author">
                         {{ detail.nickName }}
-                        <el-button round size="mini" type="primary" v-if="(isLogin&&!isFollowed)&&!isMe" @click="followed">关注</el-button>
-                        <el-button round size="mini" type="success" v-if="(isLogin&&isFollowed)&&!isMe">已关注</el-button>
+                        <el-button 
+                            round size="mini" 
+                            type="primary" 
+                            v-if="(isLogin&&!isFollowed)&&!isMe" 
+                            @click="followed"
+                        >
+                            关注
+                        </el-button>
+                        <el-button 
+                            round size="mini" 
+                            type="success" 
+                            v-if="(isLogin&&isFollowed)&&!isMe"
+                        >
+                            已关注
+                        </el-button>
                         <el-button round size="mini" type="info" v-if="isMe">我</el-button>
                     </div>
                     <p class="sign">{{ detail.sign }}</p>
@@ -91,10 +116,14 @@ export default {
     data() {
         return {
             sortOption: [
-                {name: '按时间正序',
-                    value: 'time'},
-                {name: '按时间倒序',
-                    value: 'timereverse'}
+                {
+                    name: '按时间正序',
+                    value: 'time'
+                },
+                {
+                    name: '按时间倒序',
+                    value: 'timereverse'
+                }
             ],
             active: 'time',
             comments: [],
@@ -162,7 +191,6 @@ export default {
         },
         statusCheck() {
             const author = this.detail.userID;
-
             const {streetCollection, friendsList} = this.$store.state;
 
             streetCollection.forEach(e=> {
@@ -216,7 +244,6 @@ export default {
     filters: {
         dateFormat: function(value) {
             const time = new Date(value);
-
             const now = new Date();
 
             return Math.floor((now.getTime() - time.getTime()) / (1000 * 60 * 60 * 24));
@@ -226,11 +253,12 @@ export default {
 </script>
 
 <style scoped>
-.active,.sortBy span:hover{
+.active,
+.sortBy span:hover {
     color:#ea6f5a;
     cursor: pointer;
 }
-.bg{
+.bg {
     margin-top:58px;
     min-height:1000px;
     background-color: #F7F7F7;
@@ -238,10 +266,10 @@ export default {
     justify-content: center;
     padding-top:10px;
 }
-.left{
+.left {
     margin:0 10px 24px 0;
 }
-.right{
+.right {
     background-color: #fff;
     border-radius: 4px;
     margin-bottom: 10px;
@@ -249,7 +277,7 @@ export default {
     height:80px;
     padding:16px;
 }
-.content{
+.content {
     background-color: #fff;
     border-radius: 4px;
     margin-bottom: 10px;
@@ -257,26 +285,26 @@ export default {
     min-height:500px;
     padding:24px;
 }
-.topic{
+.topic {
     font-size: 32px;
     font-weight: 700;
     word-break: break-word;
     color: #404040;
     margin-bottom: 16px;
 }
-.info{
+.info {
     line-height:19px;
     margin-bottom:32px;
     color: #969696;
     font-size: 14px;
 }
-.text{
+.text {
     margin-bottom: 20px;
     line-height: 1.7;
     font-size: 16px;
     word-break: break-word;
 }
-.comment{
+.comment {
     background-color: #fff;
     border-radius: 4px;
     margin-bottom: 10px;
@@ -284,15 +312,15 @@ export default {
     min-height:400px;
     padding:24px;
 }
-.author_info{
+.author_info {
     height:45px;
     display:flex;
 }
-.author_info>div{
+.author_info>div {
     width:175px;
     overflow: hidden;
 }
-.author{
+.author {
     color: #2d2d2d;
     font-weight: 500;
     font-size: 14px;
@@ -307,13 +335,13 @@ export default {
     display:flex;
     align-items: center;
 }
-.author .el-button{
+.author .el-button {
     height:20px;
     font-size:7px;
     padding:3px 10px; 
     margin-left:5px;
 }
-.sign{
+.sign {
     margin:0;
     height:17px;
     line-height:17px;
@@ -323,7 +351,7 @@ export default {
     text-overflow: ellipsis;
     padding-left:10px;
 }
-.comment_header{
+.comment_header {
     height:25px;
     margin-bottom:16px;
     padding-left:12px;
@@ -332,51 +360,51 @@ export default {
     justify-content: space-between;
     align-items: center;
 }
-.comment_header>span{
+.comment_header>span {
     font-size: 18px;
     font-weight: 500;
     color: #404040;
 }
-.sort{
+.sort {
     font-size:12px;
     color:#969696;
 }
-.comment_item{
+.comment_item {
     display: flex;
 }
-.comment_content{
+.comment_content {
     margin:0 0 20px 10px;
     border-bottom: 1px solid #e6e6e6;
     width:632px;
     min-height:122px;
 }
-.comment_content p:nth-child(1){
+.comment_content p:nth-child(1) {
     height:19px;
     margin:0;
     font-size:14px;
     line-height:19px;
 }
-.comment_content p:nth-child(2){
+.comment_content p:nth-child(2) {
     margin-top: 2px;
     font-size: 12px;
     color: #969696;
     margin-bottom:0;
 }
-.comment_content p:nth-child(3){
+.comment_content p:nth-child(3) {
     margin-bottom:0;
     margin-top: 10px;
     font-size: 16px;
     line-height: 1.5;
     color: #404040;
 }
-.comment_content div{
+.comment_content div {
     width:100%;
     margin-top:12px;
     height:21px;
     font-size:15px;
     color:#999;
 }
-.comment_content div span{
+.comment_content div span {
     display: flex;
     align-items: center;
 }
@@ -384,29 +412,29 @@ export default {
     cursor: pointer;
     margin-right:5px;
 }
-.page{
+.page {
     display: flex;
     justify-content: center;
 }
-.page>>>.number{
+.page>>>.number {
     border-radius: 50% !important;
     background-color: #fff !important;
     border: 1px solid #e6e6e6;
     font-weight: 400 !important;
 }
-.page>>>.active{
+.page>>>.active {
     background-color: #fff !important;
     border: 1px solid #ec7259 !important;
     color:#ec7259 !important;
 }
-.page>>>button{
+.page>>>button {
     background-color: white !important;
     border-radius: 20px !important;
     border: 1px solid #e6e6e6;
     width:68px !important;
     font-weight: 400 !important;
 }
-.oper{
+.oper {
     position: fixed;
     top: 216px;
     left: calc((100vw - 1000px)/2 - 78px);
@@ -416,14 +444,15 @@ export default {
     justify-content: space-between;
     flex-direction: column;
 }
-.oper p{
+.oper p {
     font-size: 14px;
     text-align: center;
     color: #999;
     line-height:19px;
     margin:5px 0;
 }
-.like,.col{
+.like,
+.col {
     width:48px;
     height:48px;
     font-size: 18px;

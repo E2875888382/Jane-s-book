@@ -2,7 +2,7 @@
 <div>
     <div class="item">
         <span class="label">昵称</span>
-        <el-input v-model="nickName"></el-input>
+        <el-input v-model="nickName"/>
     </div>
     <div class="item">
         <span class="label">出生日期</span>
@@ -25,8 +25,8 @@
             type="textarea"
             :rows="3"
             resize="none"
-            v-model="sign">
-        </el-input>
+            v-model="sign"
+        />
     </div>
     <el-button type="success" round size="small" @click="save">保存</el-button>
 </div>
@@ -77,33 +77,33 @@ export default {
 </script>
 
 <style scoped>
-.item{
+.item {
     height:100px;
     border-bottom: 1px solid #f0f0f0;
     display: flex;
     align-items:center;
 }
-.label{
+.label {
     font-size: 15px;
     color: #969696;
     display: inline-block;
     width:150px;
 }
-.el-button{
+.el-button {
     margin-top:30px;
     width:100px;
 }
-.el-textarea{
+.el-textarea {
     width:475px;
 }
-.el-textarea>>>.el-textarea__inner{
+.el-textarea>>>.el-textarea__inner {
     background-color: whitesmoke;
 }
-.el-input{
+.el-input {
     width:214px;
     height:33px;
 }
-.el-input>>>.el-input__inner{
+.el-input>>>.el-input__inner {
     background-color: whitesmoke;
     height:33px;
 }

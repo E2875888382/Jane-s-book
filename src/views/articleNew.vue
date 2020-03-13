@@ -86,12 +86,12 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.container {
     margin: 70px auto;
     min-height:700px;
     max-width: 900px;
 }
-.bread{
+.bread {
     height:30px;
     display: flex;
     align-items: center;

@@ -37,11 +37,16 @@
         <div class="follow_work">
             <el-tabs v-model="activeName">
                 <el-tab-pane name="article">
-                    <span slot="label" class="tabs"><i class="iconfont">&#xe681;</i>最新发布</span>
+                    <span slot="label" class="tabs">
+                        <i class="iconfont">&#xe681;</i>
+                        最新发布
+                    </span>
                     <div class="article_item" v-for="item in followerWork.article" :key="item.articleID">
                         <div :class="{'short':item.img,'long':!item.img}">
                             <p class="article_topic">
-                                <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">{{ item.title }}</router-link>
+                                <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">
+                                    {{ item.title }}
+                                </router-link>
                             </p>
                             <p class="article_ob">xaxsxaxsaxsax</p>
                             <div class="meta">
@@ -50,7 +55,7 @@
                                 <span>{{item.TIME}}</span>
                             </div>
                         </div>
-                        <el-image v-if="item.img" style="width:125px; height:100px" :src="item.img" fit="fill"></el-image>
+                        <el-image v-if="item.img" style="width:125px; height:100px" :src="item.img" fit="fill"/>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane name="photo">
@@ -58,7 +63,9 @@
                     <div class="article_item" v-for="item in followerWork.photo" :key="item.photoID">
                         <div class="short">
                             <p class="article_topic">
-                                <router-link :to="{name:'photoDetails',params:{id:item.photoID}}">{{ item.title }}</router-link>
+                                <router-link :to="{name:'photoDetails',params:{id:item.photoID}}">
+                                    {{ item.title }}
+                                </router-link>
                             </p>
                             <div class="meta">
                                 <span><i class="iconfont">&#xe640;</i>{{item.VIEW}}</span>

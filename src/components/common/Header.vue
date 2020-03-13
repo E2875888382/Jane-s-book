@@ -28,7 +28,9 @@
                 </el-dropdown-item>
             </el-dropdown-menu>
             </el-dropdown>
-            <el-button type="danger" round icon="el-icon-edit" @click="jump('articleNew')">写文章</el-button>
+            <el-button type="danger" round icon="el-icon-edit" @click="jump('articleNew')">
+                写文章
+            </el-button>
         </div>
         <!-- 登录按钮 -->
         <div class="login_btn" v-if="!$store.state.loginFlag">

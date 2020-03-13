@@ -9,13 +9,28 @@
             <div>
                 <el-avatar shape="circle" :size="52" :src="item.avatar" style="margin-right:10px;"/>
                 <div>
-                    <div class="name" v-html="highLight(item.nickName)"></div>
+                    <div class="name" v-html="highLight(item.nickName)"/>
                     <p class="sign">{{item.sign}}</p>
                 </div>
             </div>
             <div v-if="$store.state.loginFlag">
-                <el-button v-if="!item.isFollowed" type="success" round size="large" icon="el-icon-plus" @click="followed(item)">关注</el-button>
-                <el-button v-if="item.isFollowed"  type="primary" disabled round size="large">已关注</el-button>
+                <el-button 
+                    v-if="!item.isFollowed" 
+                    type="success" 
+                    round size="large" 
+                    icon="el-icon-plus" 
+                    @click="followed(item)"
+                >
+                    关注
+                </el-button>
+                <el-button 
+                    v-if="item.isFollowed"  
+                    type="primary" 
+                    disabled round 
+                    size="large"
+                >
+                    已关注
+                </el-button>
             </div>
         </div>
         <hr>
@@ -50,7 +65,7 @@ export default {
         },
         highLight:function(value){
             let search = this.$store.state.search;
-            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
+            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`);
             return value;
         },
         followed(item){
@@ -66,7 +81,7 @@ export default {
 </script>
 
 <style scoped>
-.top{
+.top {
     width:625px;
     display:flex;
     justify-content: space-between;
@@ -76,18 +91,18 @@ export default {
     color:#969696;
     font-size: 13px;
 }
-.main,.main>div{
+.main,.main>div {
     height: 57px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.name{
+.name {
     font-size: 15px;
     font-weight: 700;
     color: #333;
 }
-.sign{
+.sign {
     font-size: 12px;
     color: #969696;
     font-weight:530;

@@ -5,7 +5,7 @@
             <el-tab-pane label="登录" name="login">
                 <el-form :model="loginForm" :rules="rules" ref="loginForm">
                     <el-form-item prop="email">
-                        <el-input v-model="loginForm.email" autocomplete="off" prefix-icon="el-icon-user"></el-input>
+                        <el-input v-model="loginForm.email" autocomplete="off" prefix-icon="el-icon-user"/>
                     </el-form-item>
                     <el-form-item prop="password">
                         <el-input 
@@ -18,8 +18,13 @@
                         />
                     </el-form-item>
                     <el-form-item prop="code">
-                        <el-input v-model="loginForm.code" autocomplete="off" style="max-width:180px" prefix-icon="el-icon-key"></el-input>
-                        <canvasCode :value.sync="validCode" v-if="activeName == 'login'"></canvasCode>
+                        <el-input 
+                            v-model="loginForm.code" 
+                            autocomplete="off" 
+                            style="max-width:180px" 
+                            prefix-icon="el-icon-key"
+                        />
+                        <canvasCode :value.sync="validCode" v-if="activeName == 'login'"/>
                     </el-form-item>
                 </el-form>
                 <el-button type="primary" round @click="login">登录</el-button>
@@ -27,7 +32,11 @@
             <el-tab-pane label="注册" name="registered">
                 <el-form :model="newForm" :rules="rules" ref="newForm" label-position="right">
                     <el-form-item prop="email">
-                        <el-input v-model="newForm.email" autocomplete="off" prefix-icon="el-icon-user"></el-input>
+                        <el-input 
+                            v-model="newForm.email" 
+                            autocomplete="off" 
+                            prefix-icon="el-icon-user"
+                        />
                     </el-form-item>
                     <el-form-item prop="password">
                         <el-input 
@@ -50,8 +59,13 @@
                         />
                     </el-form-item>
                     <el-form-item prop="code">
-                        <el-input v-model="newForm.code" autocomplete="off" style="max-width:180px" prefix-icon="el-icon-key"></el-input>
-                        <canvasCode :value.sync="validCode" v-if="activeName == 'registered'"></canvasCode>
+                        <el-input 
+                            v-model="newForm.code" 
+                            autocomplete="off" 
+                            style="max-width:180px" 
+                            prefix-icon="el-icon-key"
+                        />
+                        <canvasCode :value.sync="validCode" v-if="activeName == 'registered'"/>
                     </el-form-item>
                 </el-form>
                 <el-button type="primary" round @click="newUser">注册</el-button>
@@ -75,7 +89,6 @@ export default {
                 callback();
             }
         };
-
         const checkPassword = (rule, value, callback)=> {
             const rePassword = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,30}$/;
 
@@ -85,7 +98,6 @@ export default {
                 callback();
             }
         };
-
         const checkPasswordAgain = (rule, value, callback)=> {
             if (value !== this.newForm.password) {
                 callback(new Error('请再次确认密码'));
@@ -93,7 +105,6 @@ export default {
                 callback();
             }
         };
-
         const checkCode = (rule, value, callback)=> {
             if (value.toLowerCase() !== this.validCode.toLowerCase()) {
                 callback(new Error('请再次确认验证码'));
@@ -118,32 +129,48 @@ export default {
             },
             rules: { // 模态框输入规则
                 email: [
-                    {validator: checkEmail,
-                        trigger: 'blur'},
-                    {required: 'true',
+                    {
+                        validator: checkEmail,
+                        trigger: 'blur'
+                    },
+                    {
+                        required: 'true',
                         message: '请输入邮箱',
-                        trigger: 'blur'}
+                        trigger: 'blur'
+                    }
                 ],
                 password: [
-                    {validator: checkPassword,
-                        trigger: 'blur'},
-                    {required: 'true',
+                    {
+                        validator: checkPassword,
+                        trigger: 'blur'
+                    },
+                    {
+                        required: 'true',
                         message: '请输入密码',
-                        trigger: 'blur'}
+                        trigger: 'blur'
+                    }
                 ],
                 passwordAgain: [
-                    {validator: checkPasswordAgain,
-                        trigger: 'blur'},
-                    {required: 'true',
+                    {
+                        validator: checkPasswordAgain,
+                        trigger: 'blur'
+                    },
+                    {
+                        required: 'true',
                         message: '请输入密码',
-                        trigger: 'blur'}
+                        trigger: 'blur'
+                    }
                 ],
                 code: [
-                    {validator: checkCode,
-                        trigger: 'blur'},
-                    {required: 'true',
+                    {
+                        validator: checkCode,
+                        trigger: 'blur'
+                    },
+                    {
+                        required: 'true',
                         message: '请输入验证码',
-                        trigger: 'blur'}
+                        trigger: 'blur'
+                    }
                 ]
             }
         };
@@ -220,7 +247,7 @@ export default {
 </script>
 
 <style scoped>
-.bg{
+.bg {
     margin-top:58px;
     background-color: #F7F7F7;
     height:500px;
@@ -228,7 +255,7 @@ export default {
     align-items: center;
     justify-content: center;
 }
-.main{
+.main {
     width:300px;
     height:350px;
     background-color: #fff;
@@ -237,7 +264,7 @@ export default {
     box-shadow: 0 0 8px rgba(0,0,0,.1);
     padding:20px 50px;
 }
-.el-button{
+.el-button {
     width:300px;
 }
 </style>

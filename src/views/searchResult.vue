@@ -48,37 +48,37 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.container {
     margin:58px auto;
     width:960px;
     min-height:800px;
     padding:30px 0;
 }
-.aside{
+.aside {
     position:fixed;
     width:280px;
     height:400px;
     top: 86px;
     overflow: auto;
 }
-.aside>div{
+.aside>div {
     padding:10px 15px;
     height:52px;
 }
-.aside>div:hover{
+.aside>div:hover {
     background-color: #f0f0f0;
 }
-.aside>div a{
+.aside>div a {
     display: flex;
     align-items: center;
     text-decoration: none;
 }
-.aside span{
+.aside span {
     font-size: 15px;
     cursor: pointer;
     color: #333;
 }
-.icon{
+.icon {
     margin-right: 15px;
     width: 32px;
     height: 32px;
@@ -90,7 +90,7 @@ export default {
     align-items: center;
     justify-content: center;
 }
-.content{
+.content {
     float:right;
     width:625px;
     margin-right:15px;

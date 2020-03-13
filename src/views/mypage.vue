@@ -2,7 +2,12 @@
 <div class="content_box">
     <div class="left">
         <div class="top">
-            <el-avatar shape="circle" :size="80" :src="$store.state.userIfo.avatar" style="margin-right:20px"/>
+            <el-avatar 
+                shape="circle" 
+                :size="80" 
+                :src="$store.state.userIfo.avatar" 
+                style="margin-right:20px"
+            />
             <div class="info">
                 <p class="name">{{$store.state.userIfo.nickName}}</p>
                 <div class="meta">
@@ -27,7 +32,9 @@
                 <div class="article_item" v-for="item in article" :key="item.articleID">
                     <div :class="{'short':item.img,'long':!item.img}">
                         <p class="article_topic">
-                            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">{{ item.title }}</router-link>
+                            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">
+                                {{ item.title }}
+                            </router-link>
                         </p>
                         <p class="article_ob">xaxsxaxsaxsax</p>
                         <div class="metas">
@@ -36,7 +43,7 @@
                             <span>{{item.TIME}}</span>
                         </div>
                     </div>
-                    <el-image v-if="item.img" style="width:125px; height:100px" :src="item.img" fit="fill"></el-image>
+                    <el-image v-if="item.img" style="width:125px; height:100px" :src="item.img" fit="fill"/>
                 </div>
             </el-tab-pane>
             <el-tab-pane name="photo">
@@ -44,7 +51,9 @@
                 <div class="article_item" v-for="item in photo" :key="item.photoID">
                     <div class="short">
                         <p class="article_topic">
-                            <router-link :to="{name:'photoDetails',params:{id:item.photoID}}">{{ item.title }}</router-link>
+                            <router-link :to="{name:'photoDetails',params:{id:item.photoID}}">
+                                {{ item.title }}
+                            </router-link>
                         </p>
                         <div class="metas">
                             <span><i class="iconfont">&#xe640;</i>{{item.VIEW}}</span>
@@ -52,7 +61,7 @@
                             <span>{{item.time}}</span>
                         </div>
                     </div>
-                    <el-image style="width:125px; height:100px" :src="item.src" fit="fill"></el-image>
+                    <el-image style="width:125px; height:100px" :src="item.src" fit="fill"/>
                 </div>
             </el-tab-pane>
         </el-tabs>
@@ -97,7 +106,7 @@ export default {
 </script>
 
 <style scoped>
-.content_box{
+.content_box {
     margin-top:58px !important;
     width:960px;
     min-height:500px;
@@ -106,32 +115,32 @@ export default {
     justify-content: space-between;
     margin: 58px auto;
 }
-.left{
+.left {
     width:640px;
     padding-left:15px;
 }
-.top{
+.top {
     height:80px;
     display:flex;
     margin-bottom:30px;
 }
-.info{
+.info {
     width:525px;
     height:80px;
 }
-.name{
+.name {
     margin:0;
     height:34px;
     line-height: 34px;
     font-size: 21px;
     font-weight: 700;
 }
-.meta{
+.meta {
     height:40px;
     margin-top:6px;
     display: flex;
 }
-.meta>div{
+.meta>div {
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -139,24 +148,24 @@ export default {
     border-right: 1px solid #f0f0f0;
     min-width:50px;
 }
-.meta .text{
+.meta .text {
     font-size:14px;
     line-height:16px;
     color:#969696;
 }
-.right{
+.right {
     width:280px;
     height:300px;
     font-size:14px;
 }
-a{
+a {
     color:#333;
 }
-.link{
+.link {
     display: flex;
     align-items: center;
 }
-.left>>>.el-tabs__item{
+.left>>>.el-tabs__item {
     width:120px;
     height:50px;
     font-size: 15px;
@@ -164,21 +173,21 @@ a{
     padding:0;
     margin-right:20px;
 }
-.label{
+.label {
     display: flex;
     width:120px;
     align-items: center;
     justify-content: center;
     color:#333;
 }
-.left>>>i{
+.left>>>i {
     margin-right:10px;
 }
-.left>>>.el-tabs__active-bar{
+.left>>>.el-tabs__active-bar {
     background-color:#333;
     width:120px !important;
 }
-.article_item{
+.article_item {
     height:136px;
     margin: 0 0 15px;
     padding: 15px 2px 20px 0;
@@ -186,13 +195,13 @@ a{
     display:flex;
     justify-content: space-between;
 }
-.short{
+.short {
     width:500px;
 }
-.long{
+.long {
     width:625px;
 }
-.article_topic{
+.article_topic {
     margin: -7px 0 4px;
     display: inherit;
     font-size: 18px;
@@ -200,28 +209,28 @@ a{
     line-height: 1.5;
     color: #333;
 }
-.article_ob{
+.article_ob {
     margin: 0 0 8px;
     font-size: 13px;
     line-height: 24px;
     color: #999;
 }
-.metas{
+.metas {
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
     color: #b4b4b4;
     display:flex;
 }
-.metas span{
+.metas span {
     margin-right:10px;
     display: flex;
     align-items: center;
 }
-i{
+i {
     font-size:12px;
 }
-.el-image{
+.el-image {
     border-radius: 4px;
     border: 1px solid #f0f0f0;
 }

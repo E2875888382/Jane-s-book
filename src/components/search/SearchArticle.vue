@@ -19,7 +19,10 @@
             <span class="time">{{ item.time | dateFormat }}天前</span>
         </div>
         <p class="title">
-            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}" v-html="highLight(item.title)"></router-link>
+            <router-link 
+                :to="{name:'articleDetail',params:{articleId:item.articleID}}" 
+                v-html="highLight(item.title)"
+            />
         </p>
         <div class="info">
             <span><i class="iconfont">&#xe62b;</i>{{ item.replyCount }}</span>
@@ -35,14 +38,26 @@
 export default {
     data(){
         return {
-                sortOption:[
-                        {name:'最新发布',value:'time'},
-                        {name:'最多评论',value:'replyCount'},
-                        {name:'最多浏览',value:'view'},
-                        {name:'最多喜欢',value:'praise'},
-                ],
-                active:'time',
-                article:this.$store.state.result.article,
+            sortOption:[
+                {
+                    name:'最新发布',
+                    value:'time'
+                },
+                {
+                    name:'最多评论',
+                    value:'replyCount'
+                },
+                {
+                    name:'最多浏览',
+                    value:'view'
+                },
+                {
+                    name:'最多喜欢',
+                    value:'praise'
+                },
+            ],
+            active:'time',
+            article:this.$store.state.result.article,
         }
     },
     mounted(){
@@ -62,7 +77,7 @@ export default {
         },
         highLight(value){
             let search = this.$store.state.search;
-            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
+            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`);
             return value;
         },
     },
@@ -77,10 +92,10 @@ export default {
 </script>
 
 <style scoped>
-.active,.sortBy span:hover{
+.active,.sortBy span:hover {
     color:#ea6f5a;
 }
-.top{
+.top {
     width:625px;
     display:flex;
     justify-content: space-between;
@@ -90,31 +105,31 @@ export default {
     color:#969696;
     font-size: 13px;
 }
-.sortBy span{
+.sortBy span {
     cursor: pointer;
     margin-right:10px;
 }
-.author{
+.author {
     margin-bottom: 14px;
     font-size: 13px;
     display:flex;
 }
-.nick{
+.nick {
     margin:0 10px;
 }
-.time{
+.time {
     color:#969696;
 }
-.title{
+.title {
     font-size: 18px;
     font-weight: 700;
     line-height: 1.5;
     margin-bottom: 14px;
 }
-.title a{
+.title a {
     color: #333;
 }
-.info{
+.info {
     height:20px;
     display:flex;
     align-items: center;
@@ -123,12 +138,12 @@ export default {
     line-height: 20px;
     color: #999;
 }
-.info span{
+.info span {
     margin-right:10px;
     display:flex;
     align-items: center;
 }
-.info span i{
+.info span i {
     margin-right:4px;
     font-size:12px;
 }

@@ -19,13 +19,16 @@
                     <span>{{ item.time | dateFormat }}天前</span>
                 </div>
                 <p class="title">
-                    <router-link :to="{name:'photoDetails',params:{id:item.photoID}}" v-html="highLight(item.title)"></router-link>
+                    <router-link 
+                        :to="{name:'photoDetails',params:{id:item.photoID}}" 
+                        v-html="highLight(item.title)"
+                    />
                 </p>
                 <div class="info">
                     <span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
                 </div>
             </div>
-            <el-image style="width:125px; height:94px" :src="item.src" fit="fill"></el-image>
+            <el-image style="width:125px; height:94px" :src="item.src" fit="fill"/>
         </div>
         <hr>
     </div>
@@ -37,8 +40,14 @@ export default {
     data(){
         return {
             sortOption:[
-                {name:'最新发布',value:'time'},
-                {name:'最多浏览',value:'view'},
+                {
+                    name:'最新发布',
+                    value:'time'
+                },
+                {
+                    name:'最多浏览',
+                    value:'view'
+                },
             ],
             active:'time',
             photo:this.$store.state.result.photo,
@@ -61,7 +70,7 @@ export default {
         },
         highLight:function(value){
             let search = this.$store.state.search;
-            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
+            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`);
             return value;
         },
     },
@@ -77,10 +86,11 @@ export default {
 
 
 <style scoped>
-.active,.sortBy span:hover{
+.active,
+.sortBy span:hover {
     color:#ea6f5a;
 }
-.top{
+.top {
     width:625px;
     display:flex;
     justify-content: space-between;
@@ -90,31 +100,31 @@ export default {
     color:#969696;
     font-size: 13px;
 }
-.sortBy span{
+.sortBy span {
     cursor: pointer;
     margin-right:10px;
 }
-.author{
+.author {
     margin-bottom: 14px;
     font-size: 13px;
     display:flex;
     color:#969696;
     width:500px;
 }
-.author span{
+.author span {
     margin-right:10px;
 }
-.title{
+.title {
     font-size: 18px;
     font-weight: 700;
     line-height: 1.5;
     margin-bottom: 14px;
     width:500px;
 }
-.title a{
+.title a {
     color: #333;
 }
-.info{
+.info {
     height:20px;
     display:flex;
     align-items: center;
@@ -124,18 +134,18 @@ export default {
     color: #999;
     width:500px;
 }
-.info span{
+.info span {
     margin-right:10px;
     display:flex;
     align-items: center;
 }
-.info span i{
+.info span i {
     margin-right:4px;
 }
-.content_box{
+.content_box {
     display:flex;
 }
-.el-image{
+.el-image {
     border-radius: 4px;
 }
 </style>

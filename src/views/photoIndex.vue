@@ -15,13 +15,31 @@
         </el-col>
     </el-row>
     <el-row type="flex" justify="center">
-        <ul class="box" :style="{'height':boxheight+'px'}" v-infinite-scroll="load" infinite-scroll-disabled="disabled" infinite-scroll-distance="10">
-            <vue-waterfall-easy ref="waterfall" :imgsArr="imgs" :maxCols="maxcol" :imgWidth="imgWidth" @click="clickFn" :reachBottomDistance='400'>
+        <ul 
+            class="box" 
+            :style="{'height':boxheight+'px'}" 
+            v-infinite-scroll="load" 
+            infinite-scroll-disabled="disabled" 
+            infinite-scroll-distance="10"
+        >
+            <vue-waterfall-easy 
+                ref="waterfall" 
+                :imgsArr="imgs" 
+                :maxCols="maxcol" 
+                :imgWidth="imgWidth" 
+                @click="clickFn" 
+                :reachBottomDistance='400'
+            >
                 <div slot="waterfall-over">没有更多了</div>
                 <div class="img-info" slot-scope="props">
                     <p class="some-info">{{props.value.title}}</p>
                     <div class="ifo">
-                        <el-avatar shape="circle" :size="24" :src="props.value.avatar" style="margin-right:10px;"/>
+                        <el-avatar 
+                            shape="circle" 
+                            :size="24" 
+                            :src="props.value.avatar" 
+                            style="margin-right:10px;"
+                        />
                         <span class="user">{{props.value.nickName}}</span>
                         <el-popover placement="top" trigger="hover" content="支持一下" popper-class='tip'>
                             <i @click="praise(props.value.photoID,$event)" slot="reference"></i>
@@ -46,8 +64,10 @@ export default {
             group: 1,
             maxcol:4,
             maxGroup:0,
-            banner:['https://i0.hdslb.com/bfs/vc/ef1b0509f201362abfc69e6a31e618323e07e73f.jpg@1376w_320h_1e.webp',
-                            'https://i0.hdslb.com/bfs/vc/d5df1339b718ec50ef76726fab781c50aaf4b9ba.jpg@1376w_320h_1e.webp'],
+            banner:[
+                'https://i0.hdslb.com/bfs/vc/ef1b0509f201362abfc69e6a31e618323e07e73f.jpg@1376w_320h_1e.webp',
+                'https://i0.hdslb.com/bfs/vc/d5df1339b718ec50ef76726fab781c50aaf4b9ba.jpg@1376w_320h_1e.webp'
+            ]
         }
     },
     components: {

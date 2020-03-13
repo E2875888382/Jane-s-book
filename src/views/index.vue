@@ -65,20 +65,20 @@ export default {
 </script>
 
 <style scoped>
-.bg{
+.bg {
     margin-top:58px !important;
     padding-top:30px;
 }
-.list{
+.list {
     padding-left:15px;
     width:640px;
     min-height:2000px;
 }
-.el-button{
+.el-button {
     width:625px;
     margin-bottom: 30px;
 }
-.tips{
+.tips {
     text-align:center;
     color:#999;
     margin:20px 0;

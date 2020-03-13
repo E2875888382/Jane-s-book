@@ -8,7 +8,9 @@
                 </div>
                 <div>
                     <el-tag size="mini" type="danger" effect="plain" >摄影扶持计划</el-tag>
-                    <el-tag size="mini" type="info" v-for="(item,index) in tags" :key="index">{{ item }}</el-tag>
+                    <el-tag size="mini" type="info" v-for="(item,index) in tags" :key="index">
+                        {{ item }}
+                    </el-tag>
                 </div>
                 <div class="flex_box details">
                     <div class="flex_box">
@@ -21,7 +23,8 @@
                     </div>
                 </div>
                 <hr/>
-                <el-image v-for="item in previewList" :key="item"
+                <el-image 
+                    v-for="item in previewList" :key="item"
                     style="min-width: 100%; height:auto;margin-bottom: 32px;cursor: zoom-in;"
                     :src="item" 
                     :preview-src-list="previewList"
@@ -37,7 +40,9 @@
                 </div>
                 <div class="btn" v-if="$store.state.loginFlag">
                     <el-button size="mini" type="danger" v-if="isMe" disabled>我</el-button>
-                    <el-button size="mini" type="danger" v-if="!isFollowed&&!isMe" @click="followed">关注</el-button>
+                    <el-button size="mini" type="danger" v-if="!isFollowed&&!isMe" @click="followed">
+                        关注
+                    </el-button>
                     <el-button size="mini" type="danger" v-if="isFollowed" disabled>已关注</el-button>
                     <el-button size="mini" type="danger" plain @click="sendMsg">发消息</el-button>
                 </div>
@@ -87,7 +92,7 @@ export default {
                 if (this.$store.state.loginFlag) {
                     this.statusCheck();
                 }
-                if (this.photoDetails.photo !== null) { // 如果相簿不为空，根据标志符分割图片数组，因为数据库存放的是几个图片组合的字符串，彼此用一个标志符分割
+                if (this.photoDetails.photo !== null) { // 如果相簿不为空，根据标志符分割图片数组
                     this.previewList = this.photoDetails.photo.split('@');
                 }
                 if (this.photoDetails.tags) { // 如果标签不为空，分割标签数组
@@ -98,7 +103,6 @@ export default {
         // 检查状态
         statusCheck() {
             const author = this.photoDetails.userID;
-
             const {photoCollection, friendsList} = this.$store.state;
 
             photoCollection.forEach(e=> {

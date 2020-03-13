@@ -23,7 +23,6 @@ export default {
                         msg: data.msg
                     });
                     context.commit('newMsg');
-                    // eslint-disable-next-line new-cap
                     Message({
                         offset: 100,
                         message: '收到一条新消息'

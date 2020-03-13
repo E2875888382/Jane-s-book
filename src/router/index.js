@@ -14,7 +14,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/index.vue') 
+            component: ()=> import('@views/index.vue') 
         },
         { 
             path: '/login',
@@ -25,7 +25,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/login.vue') 
+            component: ()=> import('@views/login.vue') 
         },
         { 
             path: '/article/detail/:articleId',
@@ -36,7 +36,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/articleDetail.vue')
+            component: ()=> import('@views/articleDetail.vue')
         },
         { 
             path: '/article/new',
@@ -47,7 +47,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/articleNew.vue')
+            component: ()=> import('@views/articleNew.vue')
         },
         { 
             path: '/follow',
@@ -58,7 +58,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: false
             },
-            component: ()=> import('../views/follow.vue')
+            component: ()=> import('@views/follow.vue')
         },
         { 
             path: '/collect',
@@ -69,7 +69,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/collect.vue')
+            component: ()=> import('@views/collect.vue')
         },
         {
             path: '/chat',
@@ -80,7 +80,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/chat.vue')
+            component: ()=> import('@views/chat.vue')
         },
         { 
             path: '/set',
@@ -91,7 +91,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/set.vue'),
+            component: ()=> import('@views/set.vue'),
             redirect: '/set/baseset',
             children: [
                 {
@@ -102,7 +102,7 @@ const router = new VueRouter({
                         needHeader: true,
                         needFooter: true
                     },
-                    component: ()=> import('../views/baseSet.vue')
+                    component: ()=> import('@views/baseSet.vue')
                 },
                 {
                     path: 'userset',
@@ -112,7 +112,7 @@ const router = new VueRouter({
                         needHeader: true,
                         needFooter: true
                     },
-                    component: ()=> import('../views/userSet.vue')
+                    component: ()=> import('@views/userSet.vue')
                 }
             ]
         },
@@ -125,7 +125,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/searchResult.vue'),
+            component: ()=> import('@views/searchResult.vue'),
             redirect: '/search/article',
             children: [
                 {
@@ -136,7 +136,7 @@ const router = new VueRouter({
                         needHeader: true,
                         needFooter: true
                     },
-                    component: ()=> import('../components/search/searchArticle.vue')
+                    component: ()=> import('@components/search/searchArticle.vue')
                 },
                 {
                     path: 'news',
@@ -146,7 +146,7 @@ const router = new VueRouter({
                         needHeader: true,
                         needFooter: true
                     },
-                    component: ()=> import('../components/search/searchNews.vue')
+                    component: ()=> import('@components/search/searchNews.vue')
                 },
                 {
                     path: 'user',
@@ -156,7 +156,7 @@ const router = new VueRouter({
                         needHeader: true,
                         needFooter: true
                     },
-                    component: ()=> import('../components/search/searchUser.vue')
+                    component: ()=> import('@components/search/searchUser.vue')
                 },
                 {
                     path: 'photo',
@@ -166,7 +166,7 @@ const router = new VueRouter({
                         needHeader: true,
                         needFooter: true
                     },
-                    component: ()=> import('../components/search/searchPhoto.vue')
+                    component: ()=> import('@components/search/searchPhoto.vue')
                 }
             ]
         },
@@ -179,7 +179,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/newsDetails.vue')
+            component: ()=> import('@views/newsDetails.vue')
         },
         { 
             path: '/photo',
@@ -189,7 +189,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/photoIndex.vue') 
+            component: ()=> import('@views/photoIndex.vue') 
         },
         { 
             path: '/photoDetails/:id',
@@ -200,7 +200,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/photoDetails.vue')
+            component: ()=> import('@views/photoDetails.vue')
         },
         { 
             path: '/photo/new',
@@ -210,7 +210,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/photoNew.vue')
+            component: ()=> import('@views/photoNew.vue')
         },
         { 
             path: '/mypage',
@@ -221,7 +221,7 @@ const router = new VueRouter({
                 needHeader: true,
                 needFooter: true
             },
-            component: ()=> import('../views/mypage.vue')
+            component: ()=> import('@views/mypage.vue')
         }
     ]
 });

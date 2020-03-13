@@ -3,7 +3,9 @@
     <div class="top"/>
     <div class="collect_item" v-for="item in article" :key="item.articleID">
         <p class="article_topic">
-            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">{{ item.title }}</router-link>
+            <router-link :to="{name:'articleDetail',params:{articleId:item.articleID}}">
+                {{ item.title }}
+            </router-link>
         </p>
         <p class="article_content">xxxxxx</p>
         <div class="meta">
@@ -18,7 +20,9 @@
             <span class="article_time">
                 {{item.time}}
             </span>
-            <span class="article_cancel" @click="unCollect(item.articleID)">取消收藏</span>
+            <span class="article_cancel" @click="unCollect(item.articleID)">
+                取消收藏
+            </span>
         </div>
     </div>
 </div>

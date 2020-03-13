@@ -2,11 +2,13 @@
 <div>
     <div class="top">
         <div class="sortBy">
-            <span @click="function(){sortBy(item.value);active = item.value}"
-            v-for="item in sortOption"
-            :key="item.value"
-            :class="{'active':active == item.value}">
-            {{item.name}}
+            <span 
+                @click="function(){sortBy(item.value);active = item.value}"
+                v-for="item in sortOption"
+                :key="item.value"
+                :class="{'active':active == item.value}"
+            >
+                {{item.name}}
             </span>
         </div>
         <span>{{$store.state.result.news.length}} 个结果</span>
@@ -17,7 +19,10 @@
             <span>{{ item.TIME | dateFormat }}天前</span>
         </div>
         <p class="title">
-            <router-link :to="{name:'newsDetails',params:{id:item.newID}}" v-html="highLight(item.title)"></router-link>
+            <router-link 
+                :to="{name:'newsDetails',params:{id:item.newID}}" 
+                v-html="highLight(item.title)"
+            />
         </p>
         <div class="info">
             <span><i class="iconfont">&#xe640;</i>{{ item.view }}</span>
@@ -32,8 +37,14 @@ export default {
     data(){
         return {
             sortOption:[
-                {name:'最新发布',value:'time'},
-                {name:'最多浏览',value:'view'},
+                {
+                    name:'最新发布',
+                    value:'time'
+                },
+                {
+                    name:'最多浏览',
+                    value:'view'
+                },
             ],
             active:'time',
             news:this.$store.state.result.news,
@@ -56,7 +67,7 @@ export default {
         },
         highLight(value){
             let search = this.$store.state.search;
-            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
+            value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`);
             return value;
         },
     },
@@ -72,10 +83,11 @@ export default {
 
 
 <style scoped>
-.active,.sortBy span:hover{
+.active,
+.sortBy span:hover {
     color:#ea6f5a;
 }
-.top{
+.top {
     width:625px;
     display:flex;
     justify-content: space-between;
@@ -85,29 +97,29 @@ export default {
     color:#969696;
     font-size: 13px;
 }
-.sortBy span{
+.sortBy span {
     cursor: pointer;
     margin-right:10px;
 }
-.author{
+.author {
     margin-bottom: 14px;
     font-size: 13px;
     display:flex;
     color:#969696;
 }
-.author span{
+.author span {
     margin-right:10px;
 }
-.title{
+.title {
     font-size: 18px;
     font-weight: 700;
     line-height: 1.5;
     margin-bottom: 14px;
 }
-.title a{
+.title a {
     color: #333;
 }
-.info{
+.info {
     height:20px;
     display:flex;
     align-items: center;
@@ -116,12 +128,12 @@ export default {
     line-height: 20px;
     color: #999;
 }
-.info span{
+.info span {
     margin-right:10px;
     display:flex;
     align-items: center;
 }
-.info span i{
+.info span i {
     margin-right:4px;
 }
 </style>

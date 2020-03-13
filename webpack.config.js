@@ -46,29 +46,23 @@ module.exports = {
     ],
     module:{
         rules:[
-            {test:/\.css$/,use:['style-loader','css-loader']},
-            {test:/\.(ttf|eot|svg|woff|woff2)$/,use:'url-loader'},
+            {
+                test:/\.css$/,
+                use:['style-loader','css-loader']
+            },
+            {
+                test:/\.(ttf|eot|svg|woff|woff2)$/,
+                use:'url-loader'
+            },
             {
                 test:/\.(jpg|png|webp|bmp|icon|gif|jpeg)$/,
                 use:'url-loader?limit=6000&name=[hash:8]-[name].[ext]'
             },
-            // {
-            //     test:/\.js$/,
-            //     exclude:/node_modules/,
-            //     use:'eslint-loader',
-            //     enforce: 'pre'
-            // },
             {
                 test:/\.js$/,
                 use:'babel-loader',
                 exclude:/node_modules/
             },
-            // {
-            //     test:/\.vue$/,
-            //     exclude:/node_modules/,
-            //     use:'eslint-loader',
-            //     enforce: 'pre'
-            // },
             { 
                 test:/\.vue$/,
                 use:'vue-loader'

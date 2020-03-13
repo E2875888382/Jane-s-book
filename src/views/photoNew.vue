@@ -32,11 +32,25 @@
         </el-row>
         <el-row>
             <p>添加封面：</p>
-            <van-uploader @oversize="oversize" v-model="src" multiple  :max-count="1" :max-size="1000000" preview-size="200"/>
+            <van-uploader 
+                @oversize="oversize" 
+                v-model="src" 
+                multiple  
+                :max-count="1" 
+                :max-size="1000000" 
+                preview-size="200"
+            />
         </el-row>
         <el-row>
             <p>添加相片(最多8张)：</p>
-            <van-uploader @oversize="oversize" v-model="photo" multiple  :max-count="8" :max-size="1000000" preview-size="200"/>
+            <van-uploader 
+                @oversize="oversize" 
+                v-model="photo"
+                multiple  
+                :max-count="8" 
+                :max-size="1000000" 
+                preview-size="200"
+            />
         </el-row>
         <el-row>
             <el-button type="primary" @click="addNewPhoto">发表</el-button>
@@ -94,11 +108,8 @@ export default {
         addNewPhoto() {
             if ((this.title.trim() !== '' && this.src.length !== 0) && this.photo.length !== 0) {
                 const tags = this.dynamicTags.join(',');
-
                 const src = this.src[0].content;
-
                 const time = new Date().toLocaleString();
-
                 const temp = [];
 
                 for (let i = 0; i < this.photo.length; i++) {

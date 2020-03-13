@@ -13,9 +13,14 @@
                 <div class="content_box">
                     <p>{{ newsDetails.abstract }}。</p>
                     <div v-html="cut(newsDetails.content)"></div>
-                    <el-image width="660" v-for="(item,index) in imgContent" :key="index" :src="item"/>
+                    <el-image 
+                        width="660" 
+                        v-for="(item,index) in imgContent" 
+                        :key="index" 
+                        :src="item"
+                    />
                 </div>
-                <p class="editor">{{ newsDetails.editor }}</p>
+                <p class="editor">{{newsDetails.editor}}</p>
             </div>
         </div>
         <el-backtop/>
@@ -71,28 +76,28 @@ export default {
 </script>
 
 <style scoped>
-.content{
+.content {
     margin: 70px auto;
 }
-.time_read_box{
+.time_read_box {
     display: flex;
     justify-content: space-between;
 }
-.time_read_box span{
+.time_read_box span {
     font-size: 14px;
     color: #989da2;
 }
-.news_content{
+.news_content {
     display: flex;
     justify-content: space-between;
 }
-.content_box p{
+.content_box p {
     font-size: 14px;
     line-height: 24px;
     white-space:pre-wrap;
     margin: 10px 0;
 }
-.editor{
+.editor {
     color: #1a2939;
     line-height: 24px;
     font-size: 14px;
