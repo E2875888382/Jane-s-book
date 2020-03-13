@@ -54,7 +54,7 @@ export default {
                 })
             }
         },
-        highLight:function(value){
+        highLight(value){
             let search = this.$store.state.search;
             value = value.split(search).join(`<em style="color:#ea6f5a;font-style:normal">${search}</em>`)
             return value;

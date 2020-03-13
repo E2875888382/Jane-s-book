@@ -18,16 +18,16 @@
 
 <script>
 export default {
-    props:{
-        img:String,
-        title:String,
-        id:Number,
-        author:String,
-        reply:Number,
-        view:Number,
-        praise:Number
+    props: {
+        img: String,
+        title: String,
+        id: Number,
+        author: String,
+        reply: Number,
+        view: Number,
+        praise: Number
     }
-}
+};
 </script>
 
 <style scoped>

@@ -19,26 +19,26 @@
 </template>
 
 <script>
-import article from '@api/article.js'
+import article from '@api/article.js';
 export default {
     props: ['article'],
-    data(){
+    data() {
         return {
-            comment:'',
-        }
+            comment: ''
+        };
     },
-    methods:{
-        submit(){
-            article.comment(this.article,this.comment).then((data)=>{
+    methods: {
+        submit() {
+            article.comment(this.article, this.comment).then(()=> {
                 this.$message({
-                    message:'评论成功',
-                    type:'success',
-                    offset:100,
-                })
-            })
+                    message: '评论成功',
+                    type: 'success',
+                    offset: 100
+                });
+            });
         }
     }
-}
+};
 </script>
 
 <style scoped>

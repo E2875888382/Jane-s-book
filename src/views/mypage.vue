@@ -71,28 +71,29 @@
 </template>
 
 <script>
-import user from '@api/user.js'
+import user from '@api/user.js';
 export default {
-    data(){
+    data() {
         return {
-            article:[],
-            photo:[],
-            activeName:'article'
-        }
+            article: [],
+            photo: [],
+            activeName: 'article'
+        };
     },
-    created(){
+    created() {
         this.init();
     },
-    methods:{
-        init(){
-            let current = this.$store.state.userIfo.userID;
-            user.followerWork(current).then(({ data:{ article,photo } })=>{
+    methods: {
+        init() {
+            const current = this.$store.state.userIfo.userID;
+
+            user.followerWork(current).then(({data: {article, photo}})=> {
                 this.article = article;
                 this.photo = photo;
-            })
-        },
+            });
+        }
     }
-}
+};
 </script>
 
 <style scoped>

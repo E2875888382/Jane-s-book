@@ -11,51 +11,50 @@
 </template>
 
 <script>
-import req from '@api/request.js'
+import req from '@api/request.js';
 export default {
-    data(){
+    data() {
         return {
-            input:'',
-            hot:[],
-        }
+            input: '',
+            hot: []
+        };
     },
     mounted() {
         this.hot = this.loadAll();
     },
-    methods:{
+    methods: {
         querySearch(queryString, cb) {
             var hot = this.hot;
             var results = queryString ? hot.filter(this.createFilter(queryString)) : hot;
             // 调用 callback 返回建议列表的数据
+
             cb(results);
         },
         createFilter(queryString) {
-            return (hot) => {
-            return (hot.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
+            return hot=> hot.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0;
         },
         loadAll() {
             return [
-                { "value": "梦之泪伤狂少"},
-                { "value": "这波什么水平"},
-                { "value": "jrs"},
-                { "value": "为什么"},
-                { "value": "谢邀"},
-                { "value": "高圆圆"},
+                {value: '梦之泪伤狂少'},
+                {value: '这波什么水平'},
+                {value: 'jrs'},
+                {value: '为什么'},
+                {value: '谢邀'},
+                {value: '高圆圆'}
             ];
         },
         // 搜索
-        search(){
-            if(this.input.trim()!==''){
-                this.$store.commit('searchContent',this.input);
-                this.$router.push({ path:'/search'});
-                req.get('search', {search:this.input}).then(({data})=>{
-                    this.$store.commit('searchResult',data);
-                })
+        search() {
+            if (this.input.trim() !== '') {
+                this.$store.commit('searchContent', this.input);
+                this.$router.push({path: '/search'});
+                req.get('search', {search: this.input}).then(({data})=> {
+                    this.$store.commit('searchResult', data);
+                });
             }
         }
     }
-}
+};
 </script>
 
 <style scoped>

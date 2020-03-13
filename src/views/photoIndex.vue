@@ -83,7 +83,7 @@ export default {
             event.preventDefault()
             // 只有当点击到图片时才进行操作
             if (event.target.tagName.toLowerCase() == 'img') {
-                this.$router.push({ path:`/photoDetails/${value.photoID}`});
+                this.$router.push({path: `/photoDetails/${value.photoID}`});
             }
         },
         // 点赞相簿

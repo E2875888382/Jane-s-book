@@ -5,7 +5,13 @@
             <span>全部关注</span>
             <span><i class="iconfont">&#xe61d;</i>添加关注</span>
         </p>
-        <div class="follow_item" :class="{'active':activeId == item.userID}" @click="choose(item)" v-for="item in $store.state.friendsList" :key="item.userID">
+        <div 
+            class="follow_item" 
+            :class="{'active':activeId == item.userID}" 
+            @click="choose(item)" 
+            v-for="item in $store.state.friendsList" 
+            :key="item.userID"
+        >
             <el-avatar shape="circle" :size="40" :src="item.avatar"/>
             <span>{{ item.nickName }}</span>
         </div>
@@ -70,33 +76,33 @@
 </template>
 
 <script>
-import user from '@api/user.js'
+import user from '@api/user.js';
 export default {
-    data(){
+    data() {
         return {
-            activeName:'article',
-            activeId:'',
-            follower:null,
-            followerWork:{},
-        }
+            activeName: 'article',
+            activeId: '',
+            follower: null,
+            followerWork: {}
+        };
     },
-    methods:{
+    methods: {
         choose(item) {
             this.follower = item;
             this.activeId = item.userID;
-            user.followerWork(item.userID).then(({data})=>{
+            user.followerWork(item.userID).then(({data})=> {
                 this.followerWork = data;
-            })
+            });
         },
         unFollow(friend) {
-            user.follow(friend,false).then(()=>{
+            user.follow(friend, false).then(()=> {
                 this.$store.dispatch('userIfo');
-            })
+            });
             this.follower = null;
             this.followerWork = {};
         }
     }
-}
+};
 </script>
 
 <style scoped>

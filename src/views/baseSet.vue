@@ -18,42 +18,43 @@
 </template>
 
 <script>
-import user from '@api/user.js'
+import user from '@api/user.js';
 export default {
-    data(){
+    data() {
         return {
-            img:[],
-            avatar:'',
-        }
+            img: [],
+            avatar: ''
+        };
     },
-    computed:{
-        ava:{
-            get(){
-                this.avatar = this.$store.state.userIfo.avatar
+    computed: {
+        ava: {
+            get() {
+                // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                this.avatar = this.$store.state.userIfo.avatar;
                 return this.avatar;
             },
-            set(value){
+            set(value) {
                 this.avatar = value;
             }
         }
     },
-    methods:{
-        afterRead(){
+    methods: {
+        afterRead() {
             this.ava = this.img[0].content;
-            user.avatar(this.avatar).then(({data:{code}})=>{
-                if(code == 200){
+            user.avatar(this.avatar).then(({data: {code}})=> {
+                if (code === 200) {
                     this.$message({
-                        message:' 切换头像成功',
-                        type:'success',
-                        offset:100,
+                        message: ' 切换头像成功',
+                        type: 'success',
+                        offset: 100
                     });
                     this.$store.dispatch('userIfo');
                     this.img = [];
                 }
-            })
+            });
         }
     }
-}
+};
 </script>
 
 <style scoped>

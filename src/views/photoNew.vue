@@ -47,24 +47,24 @@
 </template>
 
 <script>
-import photo from '@api/photo.js'
+import photo from '@api/photo.js';
 export default {
     data() {
         return {
-            title:'',// 标题
-            dynamicTags: ['私服', '生活', ],// 标签
+            title: '', // 标题
+            dynamicTags: ['私服', '生活'], // 标签
             inputVisible: false,
             inputValue: '',
-            src:[],
-            photo:[]
-        }
+            src: [],
+            photo: []
+        };
     },
     methods: {
-        oversize(){
+        oversize() {
             this.$message({
-                message:'请上传小于1M的图片',
-                type:'warning',
-                offset:100,
+                message: '请上传小于1M的图片',
+                type: 'warning',
+                offset: 100
             });
         },
         handleClose(tag) {
@@ -72,53 +72,59 @@ export default {
         },
         showInput() {
             this.inputVisible = true;
-            this.$nextTick(_ => {
+            this.$nextTick(()=> {
                 this.$refs.saveTagInput.$refs.input.focus();
             });
         },
         handleInputConfirm() {
-            let inputValue = this.inputValue;
+            const inputValue = this.inputValue;
+
             if (inputValue) {
                 this.dynamicTags.push(inputValue);
             }
             this.inputVisible = false;
             this.inputValue = '';
         },
-        reset(){
+        reset() {
             this.title = '';
             this.dynamicTags = ['私服', '生活'];
             this.src = [];
             this.photo = [];
         },
-        addNewPhoto(){
-            if((this.title.trim()!==''&&this.src.length !== 0)&&this.photo.length !== 0 ){
-                let tags = this.dynamicTags.join(',');
-                let src = this.src[0].content;
-                let time = new Date().toLocaleString();
-                let temp = [];
-                for(let i = 0;i<this.photo.length;i++){
-                temp.push(this.photo[i].content)
-            };
-            let photos = temp.join('@');
-            photo.newPhoto(tags,src,this.title,time,photos).then(({data:{code}})=>{
-                if(code == 200){
-                    this.$message({
-                        message:'发表成功',
-                        type:'success',
-                        offset:100,
-                        })
+        addNewPhoto() {
+            if ((this.title.trim() !== '' && this.src.length !== 0) && this.photo.length !== 0) {
+                const tags = this.dynamicTags.join(',');
+
+                const src = this.src[0].content;
+
+                const time = new Date().toLocaleString();
+
+                const temp = [];
+
+                for (let i = 0; i < this.photo.length; i++) {
+                    temp.push(this.photo[i].content);
+                };
+                const photos = temp.join('@');
+
+                photo.newPhoto(tags, src, this.title, time, photos).then(({data: {code}})=> {
+                    if (code === 200) {
+                        this.$message({
+                            message: '发表成功',
+                            type: 'success',
+                            offset: 100
+                        });
                     }
-                })
-            }else{
+                });
+            } else {
                 this.$message({
-                    message:'请把相簿内容填写完整！',
-                    type:'warning',
-                    offset:100,
-                })
+                    message: '请把相簿内容填写完整！',
+                    type: 'warning',
+                    offset: 100
+                });
             }
         }
     }
-}
+};
 </script>
 
 <style scoped>

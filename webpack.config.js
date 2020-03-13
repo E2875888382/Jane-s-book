@@ -9,14 +9,14 @@ const resolve = (src)=> {
 
 module.exports = {
     mode:'development',
-    entry:path.join(__dirname,'./src/entries/main.js'),
+    entry:resolve('./src/entries/main.js'),
     output:{
         publicPath: '/',
-        path:path.join(__dirname,'./dist'),
+        path:resolve('./dist'),
         filename:'bundle.js'
     },
     devServer: {
-        contentBase:path.join(__dirname,'./src'),
+        contentBase:resolve('./src'),
         historyApiFallback: true,
         inline: true,
         open:true,
@@ -48,12 +48,35 @@ module.exports = {
         rules:[
             {test:/\.css$/,use:['style-loader','css-loader']},
             {test:/\.(ttf|eot|svg|woff|woff2)$/,use:'url-loader'},
-            {test:/\.(jpg|png|webp|bmp|icon|gif|jpeg)$/,use:'url-loader?limit=6000&name=[hash:8]-[name].[ext]'},
-            { test:/\.js$/,use:'babel-loader',exclude:/node_modules/},
-            { test:/\.vue$/,use:'vue-loader'}
+            {
+                test:/\.(jpg|png|webp|bmp|icon|gif|jpeg)$/,
+                use:'url-loader?limit=6000&name=[hash:8]-[name].[ext]'
+            },
+            // {
+            //     test:/\.js$/,
+            //     exclude:/node_modules/,
+            //     use:'eslint-loader',
+            //     enforce: 'pre'
+            // },
+            {
+                test:/\.js$/,
+                use:'babel-loader',
+                exclude:/node_modules/
+            },
+            // {
+            //     test:/\.vue$/,
+            //     exclude:/node_modules/,
+            //     use:'eslint-loader',
+            //     enforce: 'pre'
+            // },
+            { 
+                test:/\.vue$/,
+                use:'vue-loader'
+            }
         ],
     },
     resolve:{
+        extensions: ['.js', '.vue', '.json'],
         alias:{
             "vue$":"vue/dist/vue.js",
             "@components": resolve("./src/components"),

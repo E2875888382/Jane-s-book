@@ -30,19 +30,21 @@
 export default {
     data() {
         return {
-            list:this.$store.state.friendsList,
-            userID:this.$store.state.userIfo.userID,
-            name:this.$store.state.userIfo.nickName,
-            input:'',
-            activeName:'',
-        }
+            list: this.$store.state.friendsList,
+            userID: this.$store.state.userIfo.userID,
+            name: this.$store.state.userIfo.nickName,
+            input: '',
+            activeName: ''
+        };
     },
-    computed:{
-        cur:function() {
-            let res = [];
-            let msg = this.$store.state.totalMsg;
-            for(let i = 0;i < msg.length;i++){
-                if(msg[i].uid == this.activeName|| msg[i].toUid == this.activeName){
+    computed: {
+        cur: function() {
+            const res = [];
+
+            const msg = this.$store.state.totalMsg;
+
+            for (let i = 0; i < msg.length; i++) {
+                if (msg[i].uid === this.activeName || msg[i].toUid === this.activeName) {
                     res.push(msg[i]);
                 }
             }
@@ -55,19 +57,20 @@ export default {
     },
     methods: {
         send() {
-            let msg = {
-                index:new Date().getTime(),
-                time:new Date().toLocaleString(),
-                from:0,
-                uid:this.userID,
-                toUid:this.activeName,
-                msg:this.input
+            const msg = {
+                index: new Date().getTime(),
+                time: new Date().toLocaleString(),
+                from: 0,
+                uid: this.userID,
+                toUid: this.activeName,
+                msg: this.input
             };
-            this.$store.commit('addMsg',msg);
-            this.$store.state.socket.emit('sendMsg',msg);
-        },
+
+            this.$store.commit('addMsg', msg);
+            this.$store.state.socket.emit('sendMsg', msg);
+        }
     }
-}
+};
 </script>
 
 <style scoped>

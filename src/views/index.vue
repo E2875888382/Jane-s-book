@@ -26,41 +26,42 @@
 <script>
 import article from '@api/article.js';
 export default {
-    data(){
+    data() {
         return {
-            currentPage:1,
-            articleList:[],
-            count:0,
-            finished:false,
-        }
+            currentPage: 1,
+            articleList: [],
+            count: 0,
+            finished: false
+        };
     },
-    components:{
+    components: {
         news: ()=> import('@components/news.vue'),
         articleItem: ()=> import('@components/article/articleItem.vue')
     },
-    mounted(){
+    mounted() {
         this.article(this.currentPage);
     },
-    methods:{
-        article(n){
-            article.get(n).then(({ data:{ list,count } })=>{
+    methods: {
+        article(n) {
+            article.get(n).then(({data: {list, count}})=> {
                 this.articleList = this.articleList.concat(list);
                 this.count = count[0]['COUNT(*)'];
                 this.currentPage++;
-            }).catch((err)=>{
+            }).catch(err=> {
                 console.log(err);
-            })
+            });
         },
-        load(){
-            let max = Math.ceil(this.count/10);
-            if(this.currentPage<=max){
+        load() {
+            const max = Math.ceil(this.count / 10);
+
+            if (this.currentPage <= max) {
                 this.article(this.currentPage);
-            }else{
+            } else {
                 this.finished = true;
             }
         }
     }
-}
+};
 </script>
 
 <style scoped>

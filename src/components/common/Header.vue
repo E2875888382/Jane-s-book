@@ -43,54 +43,54 @@
 </template>
 
 <script>
-import user from '@api/user.js'
+import user from '@api/user.js';
 export default {
-    components:{
+    components: {
         search: ()=> import('@components/search/search.vue')
     },
-    data(){
+    data() {
         return {
-            list:[
+            list: [
                 {
-                    title:'我的主页',
-                    handle:'mypage',
-                    icon:'&#xe7e9;'
+                    title: '我的主页',
+                    handle: 'mypage',
+                    icon: '&#xe7e9;'
                 },
                 {
-                    title:'我的收藏',
-                    handle:'collect',
-                    icon:'&#xe670;'
+                    title: '我的收藏',
+                    handle: 'collect',
+                    icon: '&#xe670;'
                 },
                 {
-                    title:'设置',
-                    handle:'set',
-                    icon:'&#xe66f;'
+                    title: '设置',
+                    handle: 'set',
+                    icon: '&#xe66f;'
                 },
                 {
-                    title:'退出',
-                    handle:'out',
-                    icon:'&#xe609;'
+                    title: '退出',
+                    handle: 'out',
+                    icon: '&#xe609;'
                 }
             ]
-        }
+        };
     },
     mounted() {
         this.$store.dispatch('userIfo');
     },
-    methods:{
-        jump(name){
-            if(name == 'out'){
-                user.logOut().then(()=>{
-                localStorage.clear();
-                this.$store.commit('userStatus',false);
-                this.$router.push('/');
-                })
-            }else{
-                this.$router.push({name:name});
+    methods: {
+        jump(name) {
+            if (name === 'out') {
+                user.logOut().then(()=> {
+                    localStorage.clear();
+                    this.$store.commit('userStatus', false);
+                    this.$router.push('/');
+                });
+            } else {
+                this.$router.push({name: name});
             }
-        },
+        }
     }
-}
+};
 </script>
 
 <style scoped>

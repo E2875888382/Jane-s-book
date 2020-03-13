@@ -17,12 +17,12 @@
 </template>
 
 <script>
-export default{
-    components:{
-        top:()=> import('@components/common/header.vue'),
-        bottom:()=> import('@components/common/footer.vue'),
-    },
-}
+export default {
+    components: {
+        top: ()=> import('@components/common/header.vue'),
+        bottom: ()=> import('@components/common/footer.vue')
+    }
+};
 </script>
 
 <style>

@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import user from '@api/user.js'
+import user from '@api/user.js';
 export default {
     data() {
         return {
-            article:null,
-        }
+            article: null
+        };
     },
     activated() {
         this.load();
@@ -40,19 +40,19 @@ export default {
             this.article = this.$store.state.streetCollection;
         },
         unCollect(articleID) {
-            new Promise((resolve)=>{
-                user.collect(articleID,false).then(()=>{
+            new Promise(resolve=> {
+                user.collect(articleID, false).then(()=> {
                     this.$store.dispatch('userIfo');
-                })
-                resolve()
-            }).then(()=>{
-                setTimeout(()=>{
+                });
+                resolve();
+            }).then(()=> {
+                setTimeout(()=> {
                     this.load();
-                },500)
-            })
+                }, 500);
+            });
         }
     }
-}
+};
 </script>
 
 <style scoped>

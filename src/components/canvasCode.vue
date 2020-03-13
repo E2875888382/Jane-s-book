@@ -1,6 +1,6 @@
 <template>
     <div style="width:100px;height:40px;float:right">
-        <canvas id="s-canvas" @click="refreshCode" width="100px" height="40px"/>
+        <canvas id="s-canvas" @click="refreshCode" width="100px" height="40px"></canvas>
     </div>
 </template>
 
@@ -9,8 +9,8 @@ export default {
     name: 'validCode',
     data () {
         return {
-        codeList: [],
-        chars:'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz0123456789',
+            codeList: [],
+            chars:'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz0123456789',
         }
     },
     mounted () {
@@ -66,9 +66,10 @@ export default {
         },
         // 生成一个随机的颜色
         randomColor (min, max) {
-            let r = this.randomNum(min, max);
-            let g = this.randomNum(min, max);
-            let b = this.randomNum(min, max);
+            const r = this.randomNum(min, max);
+            const g = this.randomNum(min, max);
+            const b = this.randomNum(min, max);
+
             return `rgb(${r},${g},${b})`;
         },
     }

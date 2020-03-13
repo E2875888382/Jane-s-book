@@ -62,108 +62,111 @@
 </template>
 
 <script>
-import user from '@api/user.js'
-import photo from '@api/photo.js'
+import user from '@api/user.js';
+import photo from '@api/photo.js';
 export default {
-    data(){
+    data() {
         return {
-            id:this.$route.params.id,
-            photoDetails:{},// 相簿详细信息
-            previewList:[],// 图片预览
-            tags:[],
-            isFollowed:false,
-            isCollected:false,
-            isMe:false,
-        }
+            id: this.$route.params.id,
+            photoDetails: {}, // 相簿详细信息
+            previewList: [], // 图片预览
+            tags: [],
+            isFollowed: false,
+            isCollected: false,
+            isMe: false
+        };
     },
-    mounted(){
+    mounted() {
         this.getPhotoDetails();
     },
     methods: {
         // 查询详情
-        getPhotoDetails(){
-            photo.detail(this.id).then(({data}) =>{
+        getPhotoDetails() {
+            photo.detail(this.id).then(({data})=> {
                 this.photoDetails = data[0];
-                if(this.$store.state.loginFlag){
+                if (this.$store.state.loginFlag) {
                     this.statusCheck();
                 }
-                if(this.photoDetails.photo !== null){// 如果相簿不为空，根据标志符分割图片数组，因为数据库存放的是几个图片组合的字符串，彼此用一个标志符分割
-                    this.previewList = this.photoDetails.photo.split('@')
+                if (this.photoDetails.photo !== null) { // 如果相簿不为空，根据标志符分割图片数组，因为数据库存放的是几个图片组合的字符串，彼此用一个标志符分割
+                    this.previewList = this.photoDetails.photo.split('@');
                 }
-                if(this.photoDetails.tags){// 如果标签不为空，分割标签数组
+                if (this.photoDetails.tags) { // 如果标签不为空，分割标签数组
                     this.tags = this.photoDetails.tags.split(',');
                 }
-            })
+            });
         },
         // 检查状态
-        statusCheck(){
-            let author = this.photoDetails.userID;
-            let {photoCollection,friendsList} = this.$store.state;
-            photoCollection.forEach(e=>{
-                if(e.photoID == this.id){
-                     this.isCollected = true;
+        statusCheck() {
+            const author = this.photoDetails.userID;
+
+            const {photoCollection, friendsList} = this.$store.state;
+
+            photoCollection.forEach(e=> {
+                if (e.photoID === this.id) {
+                    this.isCollected = true;
                 }
             });
-            friendsList.forEach(e=>{
-                if(e.userID == author){
-                        this.isFollowed = true;
+            friendsList.forEach(e=> {
+                if (e.userID === author) {
+                    this.isFollowed = true;
                 }
-            })
-            if(author == this.$store.state.userIfo.userID){
+            });
+            if (author === this.$store.state.userIfo.userID) {
                 this.isMe = true;
                 this.isFollowed = false;
             }
         },
         // 发送信息
-        sendMsg(){
-            if(this.isFollowed){
-                this.$router.push({ path:'/follow'});
-            }else if(this.isMe){
+        sendMsg() {
+            if (this.isFollowed) {
+                this.$router.push({path: '/follow'});
+            } else if (this.isMe) {
                 this.$message({
                     message: '你是作者哦！',
-                    offset:100,
+                    offset: 100
                 });
-            }else{
+            } else {
                 this.$message({
                     message: '你和他/她还没有成为好友哦！',
-                    offset:100,
+                    offset: 100
                 });
             }
         },
         // 关注作者
-        followed(){
-            let author = this.photoDetails.userID;
-            user.follow(author,true).then(()=>{
+        followed() {
+            const author = this.photoDetails.userID;
+
+            user.follow(author, true).then(()=> {
                 this.$store.dispatch('userIfo');
-            })
+            });
             this.isFollowed = true;
         },
         // 点赞
-        praise(event){
-            if(!event.target.classList.contains("gold")){
-                photo.praisePhoto(this.id,true);
+        praise(event) {
+            if (!event.target.classList.contains('gold')) {
+                photo.praisePhoto(this.id, true);
                 event.target.classList.add('gold');
                 this.photoDetails.praise++;
-            }else{
-                photo.praisePhoto(this.id,false);
+            } else {
+                photo.praisePhoto(this.id, false);
                 event.target.classList.remove('gold');
                 this.photoDetails.praise--;
             }
         },
         // 收藏
-        photoCollection(){
-            user.collectPhoto(this.id,true).then(()=>{
+        photoCollection() {
+            user.collectPhoto(this.id, true).then(()=> {
                 this.$store.dispatch('userIfo');
-            })
+            });
             this.$message({
                 message: '添加收藏成功',
                 type: 'success',
-                offset:100,
+                offset: 100
             });
             this.isCollected = true;
-        },
-    },
-}
+        }
+    }
+};
 </script>
 
 <style scoped>

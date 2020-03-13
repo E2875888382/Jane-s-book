@@ -44,7 +44,10 @@
                         <p>{{ item.content }}</p>
                         <div>
                             <span v-if="!item.isPraised"><i class="iconfont" @click="reply(item,true)">&#xe60c;</i>赞{{ item.praise }}</span>
-                            <span v-if="item.isPraised"><i class="iconfont" style="color:gold" @click="reply(item,false)">&#xe60c;</i>赞{{ item.praise }}</span>
+                            <span v-if="item.isPraised">
+                                <i class="iconfont" style="color:gold" @click="reply(item,false)">&#xe60c;</i>
+                                赞{{ item.praise }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -80,16 +83,18 @@
 </template>
 
 <script>
-import user from '@api/user.js'
-import article from '@api/article.js'
-import 'mavon-editor/dist/css/index.css'
-import 'mavon-editor/dist/markdown/github-markdown.min.css'
+import user from '@api/user.js';
+import article from '@api/article.js';
+import 'mavon-editor/dist/css/index.css';
+import 'mavon-editor/dist/markdown/github-markdown.min.css';
 export default {
-    data(){
+    data() {
         return {
             sortOption: [
-                {name:'按时间正序',value:'time'},
-                {name:'按时间倒序',value:'timereverse'},
+                {name: '按时间正序',
+                    value: 'time'},
+                {name: '按时间倒序',
+                    value: 'timereverse'}
             ],
             active: 'time',
             comments: [],
@@ -99,14 +104,14 @@ export default {
             isCollected: false,
             isMe: false,
             isPraised: false,
-            isLogin: false,
-        }
+            isLogin: false
+        };
     },
     components: {
         Comment: ()=> import('@components/article/articleComment.vue')
     },
-    computed:{
-        current:function() {
+    computed: {
+        current: function() {
             return this.$route.params.articleId;
         }
     },
@@ -120,103 +125,104 @@ export default {
         this.isMe = false;
         this.isPraised = false;
     },
-    methods:{
-        sortBy(type){
-            if(type == 'time'){
-                this.comments.sort((a,b)=>{
-                    return new Date(b.time).getTime() - new Date(a.time).getTime();
-                })
+    methods: {
+        sortBy(type) {
+            if (type === 'time') {
+                this.comments.sort((a, b)=> new Date(b.time).getTime() - new Date(a.time).getTime());
                 this.onePage(1);
-            }else{
-                this.comments.sort((a,b)=>{
-                    return new Date(a.time).getTime() - new Date(b.time).getTime();
-                })
+            } else {
+                this.comments.sort((a, b)=> new Date(a.time).getTime() - new Date(b.time).getTime());
                 this.onePage(1);
             }
         },
-        load(){
-            article.detail(this.current).then(({ data:{ detail,comments } })=>{
+        load() {
+            article.detail(this.current).then(({data: {detail, comments}})=> {
                 this.detail = detail[0];
-                this.detail.html = this.detail.html.replace(/&amp;/g, "&");
-                this.detail.html = this.detail.html.replace(/&lt;/g, "<");
-                this.detail.html = this.detail.html.replace(/&gt;/g, ">");
-                this.detail.html = this.detail.html.replace(/&nbsp;/g, " ");
-                this.detail.html = this.detail.html.replace(/&#39;/g, "\'");
-                this.detail.html = this.detail.html.replace(/&quot;/g, "\"");
+                this.detail.html = this.detail.html.replace(/&amp;/g, '&');
+                this.detail.html = this.detail.html.replace(/&lt;/g, '<');
+                this.detail.html = this.detail.html.replace(/&gt;/g, '>');
+                this.detail.html = this.detail.html.replace(/&nbsp;/g, ' ');
+                this.detail.html = this.detail.html.replace(/&#39;/g, '\'');
+                this.detail.html = this.detail.html.replace(/&quot;/g, '"');
                 this.comments = comments;
-                for(let value of this.comments){
-                    Object.assign(value,{
-                        isPraised:false,
+                for (const value of this.comments) {
+                    Object.assign(value, {
+                        isPraised: false
                     });
                 }
                 this.onePage(1);
                 this.statusCheck();
                 this.sortBy('time');
-            }).catch((err)=>{
+            }).catch(err=> {
                 console.log(err);
-            })
+            });
         },
-        onePage(page){
-            this.currentComments = this.comments.slice((page-1)*10,page*10);
+        onePage(page) {
+            this.currentComments = this.comments.slice((page - 1) * 10, page * 10);
         },
-        statusCheck(){
-            let author = this.detail.userID;
-            let {streetCollection,friendsList} = this.$store.state;
-            streetCollection.forEach(e=>{
-                if(e.articleID == this.current){
-                   this.isCollected = true;
+        statusCheck() {
+            const author = this.detail.userID;
+
+            const {streetCollection, friendsList} = this.$store.state;
+
+            streetCollection.forEach(e=> {
+                if (e.articleID === this.current) {
+                    this.isCollected = true;
                 }
             });
-            friendsList.forEach(e=>{
-                if(e.userID == author){
+            friendsList.forEach(e=> {
+                if (e.userID === author) {
                     this.isFollowed = true;
                 }
-            })
-            if(author == this.$store.state.userIfo.userID){
+            });
+            if (author === this.$store.state.userIfo.userID) {
                 this.isMe = true;
                 this.isFollowed = false;
             }
         },
-        followed(){
-            let author = this.detail.userID;
-            user.follow(author,true).then(()=>{
+        followed() {
+            const author = this.detail.userID;
+
+            user.follow(author, true).then(()=> {
                 this.$store.dispatch('userIfo');
-            })
+            });
             this.isFollowed = true;
         },
-        collected(){
-            user.collect(this.current,true).then(()=>{
+        collected() {
+            user.collect(this.current, true).then(()=> {
                 this.$store.dispatch('userIfo');
-            })
+            });
             this.isCollected = true;
         },
-        praised(status){
-            article.praise(this.current,status);
+        praised(status) {
+            article.praise(this.current, status);
             this.isPraised = status;
-            if(status){
+            if (status) {
                 this.detail.praise++;
-            }else{
+            } else {
                 this.detail.praise--;
             }      
         },
-        reply(item,status){
-            article.replyPraise(item.replyID,status);
+        reply(item, status) {
+            article.replyPraise(item.replyID, status);
             item.isPraised = status;
-            if(status){
+            if (status) {
                 item.praise++;
-            }else{
+            } else {
                 item.praise--;
             }          
-        },
+        }
     },
-    filters:{
-        dateFormat:function(value){
-            let time = new Date(value);
-            let now = new Date();
+    filters: {
+        dateFormat: function(value) {
+            const time = new Date(value);
+
+            const now = new Date();
+
             return Math.floor((now.getTime() - time.getTime()) / (1000 * 60 * 60 * 24));
         }
     }
-}
+};
 </script>
 
 <style scoped>

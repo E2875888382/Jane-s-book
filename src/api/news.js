@@ -1,10 +1,10 @@
-import req from './request.js'
+import req from './request.js';
 
-export default{
-    detail(id){
-        return req.get('newsDetail',{newId:id});
+export default {
+    detail(id) {
+        return req.get('newsDetail', {newId: id});
     },
-    getNews(){
+    getNews() {
         return req.get('news');
     }
-}
+};

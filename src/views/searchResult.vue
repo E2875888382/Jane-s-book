@@ -18,33 +18,33 @@
 
 <script>
 export default {
-    data(){
+    data() {
         return {
-            list:[
+            list: [
                 {
-                    title:'文章',
-                    icon:'&#xe681;',
-                    link:'/search/article'
+                    title: '文章',
+                    icon: '&#xe681;',
+                    link: '/search/article'
                 },
                 {
-                    title:'新闻',
-                    icon:'&#xe67b;',
-                    link:'/search/news'
+                    title: '新闻',
+                    icon: '&#xe67b;',
+                    link: '/search/news'
                 },
                 {
-                    title:'相册',
-                    icon:'&#xe607;',
-                    link:'/search/photo'
+                    title: '相册',
+                    icon: '&#xe607;',
+                    link: '/search/photo'
                 },
                 {
-                    title:'用户',
-                    icon:'&#xe7e9;',
-                    link:'/search/user'
+                    title: '用户',
+                    icon: '&#xe7e9;',
+                    link: '/search/user'
                 }
             ]
-        }
+        };
     }
-}
+};
 </script>
 
 <style scoped>

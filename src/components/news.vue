@@ -12,24 +12,24 @@
 </template>
 
 <script>
-import news from '@api/news.js'
+import news from '@api/news.js';
 export default {
     data() {
         return {
-            tenNews:[],
-        }
+            tenNews: []
+        };
     },
     mounted() {
         this.getTenNews();
     },
-    methods:{
+    methods: {
         getTenNews() {
-            news.getNews().then(({data})=>{
+            news.getNews().then(({data})=> {
                 this.tenNews = data;
-            })
+            });
         }
     }
-}
+};
 </script>
 
 <style scoped>

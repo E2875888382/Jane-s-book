@@ -33,46 +33,47 @@
 </template>
 
 <script>
-import user from '@api/user.js'
+import user from '@api/user.js';
 export default {
-    data(){
+    data() {
         return {
-            nickName:'',
-            sign:'',
-            gender:'',
-            birthday:'',
-        }
+            nickName: '',
+            sign: '',
+            gender: '',
+            birthday: ''
+        };
     },
-    activated(){
+    activated() {
         this.init();
     },
-    methods:{
-        init(){
+    methods: {
+        init() {
             this.sign = this.$store.state.userIfo.sign;
             this.gender = this.$store.state.userIfo.gender;
             this.birthday = this.$store.state.userIfo.birth;
             this.nickName = this.$store.state.userIfo.nickName;
         },
-        save(){
-            if(this.nickName.trim().length !== 0&&this.birthday!==null){
-                let ifo = {
-                    birth:this.birthday,
-                    sign:this.sign.trim().length == 0 ? '无':this.sign.trim(),
-                    gender:this.gender,
-                    nickName:this.nickName,
-                }
-                user.update(ifo).then(()=>{
+        save() {
+            if (this.nickName.trim().length !== 0 && this.birthday !== null) {
+                const ifo = {
+                    birth: this.birthday,
+                    sign: this.sign.trim().length === 0 ? '无' : this.sign.trim(),
+                    gender: this.gender,
+                    nickName: this.nickName
+                };
+
+                user.update(ifo).then(()=> {
                     this.$message({
-                        message:'已保存',
-                        type:'success',
-                        offset:100,
-                    })
+                        message: '已保存',
+                        type: 'success',
+                        offset: 100
+                    });
                     this.$store.dispatch('userIfo');
-                })
+                });
             }
         }
     }
-}
+};
 </script>
 
 <style scoped>
