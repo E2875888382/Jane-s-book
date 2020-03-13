@@ -1,37 +1,37 @@
 <template>
 <div class="list_item">
-  <div :class="{'list_item_left':img,'long':!img}">
-    <p class="title">
-      <router-link :to="{name:'articleDetail',params:{articleId:id}}">{{ title }}</router-link>
-    </p>
-    <p class="abstract">虎扑8月10日讯 据《洛杉矶时报》报道，湖人球员贾维尔-麦基以330万美元的价格出售位于加利福利亚州洛杉矶恩西诺地区的一处豪宅。</p>
-    <div class="info">
-      <span>{{ author }}</span>
-      <span><i class="iconfont">&#xe62b;</i>{{ reply }}</span>
-      <span><i class="iconfont">&#xe640;</i>{{ view }}</span>
-      <span><i class="iconfont">&#xe60c;</i>{{ praise }}</span>
+    <div :class="{'list_item_left':img,'long':!img}">
+        <p class="title">
+            <router-link :to="{name:'articleDetail',params:{articleId:id}}">{{ title }}</router-link>
+        </p>
+        <p class="abstract">虎扑8月10日讯 据《洛杉矶时报》报道，湖人球员贾维尔-麦基以330万美元的价格出售位于加利福利亚州洛杉矶恩西诺地区的一处豪宅。</p>
+        <div class="info">
+            <span>{{ author }}</span>
+            <span><i class="iconfont">&#xe62b;</i>{{ reply }}</span>
+            <span><i class="iconfont">&#xe640;</i>{{ view }}</span>
+            <span><i class="iconfont">&#xe60c;</i>{{ praise }}</span>
+        </div>
     </div>
-  </div>
-  <el-image style="width:150px; height:100px" v-if="img" :src="img" fit="fill"></el-image>
+    <el-image style="width:150px; height:100px" v-if="img" :src="img" fit="fill"></el-image>
 </div>
 </template>
 
 <script>
 export default {
-  props:{
-    img:String,
-    title:String,
-    id:Number,
-    author:String,
-    reply:Number,
-    view:Number,
-    praise:Number
-  },
-  data(){
-    return {
+    props:{
+        img:String,
+        title:String,
+        id:Number,
+        author:String,
+        reply:Number,
+        view:Number,
+        praise:Number
+    },
+    data(){
+        return {
 
+        }
     }
-  }
 }
 </script>
 

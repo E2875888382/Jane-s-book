@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import search from './search.vue'
-import user from '../api/user.js'
+import search from '@components/search/search.vue'
+import user from '@api/user.js'
 export default {
   components:{
     search

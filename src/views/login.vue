@@ -42,7 +42,7 @@
 
 <script>
 import md5 from 'js-md5';
-import canvasCode from '../components/canvasCode.vue'
+import canvasCode from '@components/canvasCode.vue'
 import user from '../api/user.js'
 export default {
   data(){

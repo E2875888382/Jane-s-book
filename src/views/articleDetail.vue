@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import Comment from '../components/articleComment.vue'
+import Comment from '@components/article/articleComment.vue'
 import user from '../api/user.js'
 import article from '../api/article.js'
 import 'mavon-editor/dist/css/index.css'

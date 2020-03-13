@@ -15,21 +15,21 @@
 
     <el-row class="tags">
       <el-tag
-      	:key="index"
-      	v-for="(tag,index) in dynamicTags"
-      	closable
-      	:disable-transitions="false"
-      	@close="handleClose(tag)">
-      	{{tag}}
+          :key="index"
+          v-for="(tag,index) in dynamicTags"
+          closable
+          :disable-transitions="false"
+          @close="handleClose(tag)">
+          {{tag}}
       </el-tag>
       <el-input
-      	class="input-new-tag"
-      	v-if="inputVisible"
-      	v-model="inputValue"
-      	ref="saveTagInput"
-      	size="small"
-      	@keyup.enter.native="handleInputConfirm"
-      	@blur="handleInputConfirm"
+          class="input-new-tag"
+          v-if="inputVisible"
+          v-model="inputValue"
+          ref="saveTagInput"
+          size="small"
+          @keyup.enter.native="handleInputConfirm"
+          @blur="handleInputConfirm"
       />
       <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加新标签</el-button>
     </el-row>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import photo from '../api/photo.js'
+import photo from '@api/photo.js'
 export default {
   data() {
     return {

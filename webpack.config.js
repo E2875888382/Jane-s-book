@@ -3,9 +3,14 @@ const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+const resolve = (src)=> {
+	return path.join(__dirname, src);
+}
+
+
 module.exports = {
 	mode:'development',
-	entry:path.join(__dirname,'./src/main.js'),
+	entry:path.join(__dirname,'./src/entries/main.js'),
 	output:{
 		publicPath: '/',
 		path:path.join(__dirname,'./dist'),
@@ -31,7 +36,7 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new VueLoaderPlugin(),
 		new htmlWebpackPlugin({
-			template:path.join(__dirname,'./index.html'),
+			template:resolve("./src/template/index.html"),
 			filename:'index.html',
 			minify:{
         collapseWhitespace: true,
@@ -51,7 +56,13 @@ module.exports = {
 	},
 	resolve:{
 		alias:{
-			"vue$":"vue/dist/vue.js"
+			"vue$":"vue/dist/vue.js",
+			"@components": resolve("./src/components"),
+			"@store": resolve("./src/store"),
+			"@api": resolve("./src/api"),
+			"@icon": resolve("./src/assets/icon"),
+			"@router": resolve("./src/router"),
+			"@views": resolve("./src/views")
 		}
 	}  
 }

@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import top from './components/header.vue'
-import bottom from './components/footer.vue'
+import top from '@components/header.vue'
+import bottom from '@components/footer.vue'
 
 export default{
 	components:{

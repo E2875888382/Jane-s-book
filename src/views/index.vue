@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import news from '../components/news.vue';
+import news from '@components/news.vue';
 import article from '../api/article.js';
-import articleItem from '../components/articleItem.vue'
+import articleItem from '@components/article/articleItem.vue'
 
 export default {
 	data(){
